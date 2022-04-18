@@ -1,0 +1,66 @@
+package com.btt.continew.member.domain;
+
+import com.btt.continew.global.domain.BaseEntity;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import lombok.Builder;
+import lombok.Getter;
+import org.hibernate.annotations.Where;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@Entity
+@Getter
+@Where(clause = "deleted_at is null")
+public class Member extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
+    private Long id;
+
+    @Column(name = "login_id", length = 32, nullable = false)
+    private String loginId;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "username", length = 20, nullable = false)
+    private String username;
+
+    @Column(name = "google_id")
+    private String googleId;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(name = "phone_auth")
+    private String phoneAuth;
+
+    protected Member() {
+    }
+
+    @Builder
+    public Member(String loginId, String password, String username, String googleId, String phoneNumber, String phoneAuth) {
+        this.loginId = loginId;
+        this.password = password;
+        this.username = username;
+        this.googleId = googleId;
+        this.phoneNumber = phoneNumber;
+        this.phoneAuth = phoneAuth;
+    }
+
+    public static Member createMember(String loginId, String password, String username) {
+        return Member.builder()
+            .loginId(loginId)
+            .password(password)
+            .username(username)
+            .build();
+    }
+
+    public void encodePassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
+    }
+}
