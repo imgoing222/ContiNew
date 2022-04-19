@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import lombok.Builder;
 import lombok.Getter;
 
 @Entity
@@ -30,6 +31,7 @@ public class HouseOption {
     public HouseOption() {
     }
 
+    @Builder
     public HouseOption(House house, Option option) {
         this.house = house;
         this.option = option;

@@ -35,6 +35,9 @@ public enum ErrorCode {
 
     // house
 
+    // option
+    OPTION_NOT_FOUND_BY_ID(HttpStatus.NOT_FOUND, "존재하지 않는 옵션입니다.", "O01"),
+
     // chatting
 
     ;
