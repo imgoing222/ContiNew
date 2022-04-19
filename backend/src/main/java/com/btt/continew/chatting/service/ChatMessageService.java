@@ -16,7 +16,7 @@ public class ChatMessageService {
 
     @Transactional
     public void createChatMessage() {
-        ChatMessage chatMessage = new ChatMessage(null,"우상준","이승기","레디스테스트");
+        ChatMessage chatMessage = new ChatMessage(null,"수신자","발신자","레디스테스트");
         chatMessageRepository.save(chatMessage);
     }
 }
