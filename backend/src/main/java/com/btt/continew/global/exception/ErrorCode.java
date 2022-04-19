@@ -24,6 +24,7 @@ public enum ErrorCode {
     INVALID_ILLEGAL_ARGUMENT_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "리프레쉬 토큰이 잘못되었습니다.", "J14"),
 
     // member
+    MEMBER_NOT_FOUND_BY_ID(HttpStatus.NOT_FOUND, "존재하지 않는 로그인 아이디입니다.", "M01"),
 
     // authority
     AUTHORITY_NOT_FOUND_BY_AUTHORITY_CODE(HttpStatus.NOT_FOUND, "존재하지 않는 권한코드입니다.", "A01"),

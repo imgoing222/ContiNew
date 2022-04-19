@@ -1,8 +1,11 @@
 package com.btt.continew.member.domain;
 
+import com.btt.continew.auth.domain.Authority;
 import com.btt.continew.global.domain.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,17 +42,23 @@ public class Member extends BaseEntity {
     @Column(name = "phone_auth")
     private String phoneAuth;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "authority")
+    private Authority authority;
+
     protected Member() {
     }
 
     @Builder
-    public Member(String loginId, String password, String username, String googleId, String phoneNumber, String phoneAuth) {
+    public Member(String loginId, String password, String username, String googleId, String phoneNumber, String phoneAuth,
+        Authority authority) {
         this.loginId = loginId;
         this.password = password;
         this.username = username;
         this.googleId = googleId;
         this.phoneNumber = phoneNumber;
         this.phoneAuth = phoneAuth;
+        this.authority = authority;
     }
 
     public static Member createMember(String loginId, String password, String username) {
@@ -57,6 +66,7 @@ public class Member extends BaseEntity {
             .loginId(loginId)
             .password(password)
             .username(username)
+            .authority(Authority.ROLE_MEMBER)
             .build();
     }
 
