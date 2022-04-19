@@ -18,13 +18,26 @@ const DUMMY_DATA = [
 	},
 ];
 
-function MainPage() {
+interface recommendDataType {
+	recommendData: { id: number; imageUrl: string }[];
+}
+
+function MainPage({ recommendData }: recommendDataType) {
 	return (
 		<>
 			<SearchSection />
-			<RecommendSection recommendData={DUMMY_DATA} />
+			<RecommendSection recommendData={recommendData} />
 		</>
 	);
 }
+
+export async function getStaticProps() {
+	return {
+		props: {
+			recommendData: DUMMY_DATA
+		},
+		revalidate: 3600
+	}
+};
 
 export default MainPage;
