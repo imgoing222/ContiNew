@@ -63,7 +63,7 @@ public class House extends BaseEntity {
     private String maintenanceDetail;
 
     @Column(name = "period")
-    private String period;
+    private Integer period;
 
     @Column(name = "description")
     private String description;
@@ -75,7 +75,7 @@ public class House extends BaseEntity {
     @Builder
     public House(Member member, String sidoName, String gunguName, String dongName, String roadName, String addressDetail,
         Integer floor, String tradeType, String houseType, Long deposit, Long monthlyRent, Long maintenanceFee,
-        String maintenanceDetail, String period, String description) {
+        String maintenanceDetail, Integer period, String description) {
         this.member = member;
         this.sidoName = sidoName;
         this.gunguName = gunguName;
