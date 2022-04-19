@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { SearchSection, RecommendSection } from "../components/main";
 
 const DUMMY_DATA = [
@@ -25,6 +26,13 @@ interface recommendDataType {
 function MainPage({ recommendData }: recommendDataType) {
 	return (
 		<>
+		<Head>
+			<title>ContiNew</title>
+			<meta 
+				name="description"
+				content="이어살기 및 쉐어하우스를 중개해주는 서비스 플랫폼입니다."
+			/>
+		</Head>
 			<SearchSection />
 			<RecommendSection recommendData={recommendData} />
 		</>
