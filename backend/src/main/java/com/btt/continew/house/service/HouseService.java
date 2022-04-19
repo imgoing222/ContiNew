@@ -30,8 +30,27 @@ public class HouseService {
         this.memberService = memberService;
     }
 
+    @Transactional
     public void create(HouseSaveRequest request, String email) {
         Member member = memberService.findByEmail(email);
+        House house = House.builder()
+            .member(member)
+            .deposit(request.getDeposit())
+            .monthlyRent(request.getMontylyRent())
+            .maintenanceFee(request.getMaintenanceFee())
+            .maintenanceDetail(request.getMaintenanceDetail())
+            .description(request.getDescription())
+            .sidoName(request.getSidoName())
+            .gunguName(request.getGunguName())
+            .dongName(request.getDongName())
+            .roadName(request.getRoadName())
+            .addressDetail(request.getAddressDetail())
+            .floor(request.getFloor())
+            .houseType(request.getHouseType())
+            .tradeType(request.getTradeType())
+            .period(request.getPeriod())
+            .build();
+        houseRepository.save(house);
 
     }
 }
