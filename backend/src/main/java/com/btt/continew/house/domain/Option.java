@@ -23,9 +23,7 @@ public class Option {
     public Option() {
     }
 
-    @Builder
-    public Option(Long id, String name) {
-        this.id = id;
+    public Option(String name) {
         this.name = name;
     }
 }
