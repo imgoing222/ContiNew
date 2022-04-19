@@ -52,5 +52,16 @@ public class HouseService {
             .build();
         houseRepository.save(house);
 
+       if (!request.getOptions().isEmpty()){
+           for(Long optionId: request.getOptions()) {
+               Option option = optionRepository.findById(optionId)
+                   .orElseThrow(() -> new BusinessException(ErrorCode.OPTION_NOT_FOUND_BY_ID));
+               HouseOption houseOption = HouseOption.builder()
+                   .house(house)
+                   .option(option)
+                   .build();
+               houseOptionRepository.save(houseOption);
+           }
+       }
     }
 }
