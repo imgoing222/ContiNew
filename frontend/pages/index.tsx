@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { SearchSection, RecommendSection } from "../components/main";
+import styled from "styled-components";
 
 const DUMMY_DATA = [
 	{
@@ -26,26 +27,30 @@ interface recommendDataType {
 function MainPage({ recommendData }: recommendDataType) {
 	return (
 		<>
-		<Head>
-			<title>ContiNew</title>
-			<meta 
-				name="description"
-				content="이어살기 및 쉐어하우스를 중개해주는 서비스 플랫폼입니다."
-			/>
-		</Head>
-			<SearchSection />
-			<RecommendSection recommendData={recommendData} />
+			<Head>
+				<title>ContiNew</title>
+				<meta
+					name="description"
+					content="이어살기 및 쉐어하우스를 중개해주는 서비스 플랫폼입니다."
+				/>
+			</Head>
+			<Main>
+				<SearchSection />
+				<RecommendSection recommendData={recommendData} />
+			</Main>
 		</>
 	);
 }
 
+const Main = styled.main``;
+
 export async function getStaticProps() {
 	return {
 		props: {
-			recommendData: DUMMY_DATA
+			recommendData: DUMMY_DATA,
 		},
-		revalidate: 3600
-	}
-};
+		revalidate: 3600,
+	};
+}
 
 export default MainPage;
