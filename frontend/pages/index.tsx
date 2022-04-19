@@ -1,6 +1,8 @@
 import Head from "next/head";
-import { SearchSection, RecommendSection } from "../components/main";
 import styled from "styled-components";
+
+import { SearchSection, RecommendSection } from "../components/main";
+import Footer from "../components/footer/Footer";
 
 const DUMMY_DATA = [
 	{
@@ -38,6 +40,7 @@ function MainPage({ recommendData }: recommendDataType) {
 				<SearchSection />
 				<RecommendSection recommendData={recommendData} />
 			</Main>
+			<Footer />
 		</>
 	);
 }
