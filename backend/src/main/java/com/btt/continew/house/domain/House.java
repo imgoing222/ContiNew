@@ -65,6 +65,9 @@ public class House extends BaseEntity {
     @Column(name = "period")
     private String period;
 
+    @Column(name = "description")
+    private String description;
+
    public House() {
 
     }
@@ -87,5 +90,6 @@ public class House extends BaseEntity {
         this.maintenanceFee = maintenanceFee;
         this.maintenanceDetail = maintenanceDetail;
         this.period = period;
+        this.description = description;
     }
 }
