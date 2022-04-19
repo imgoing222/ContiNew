@@ -57,7 +57,7 @@ public class HouseSaveRequest {
 
     @ApiModelProperty(name = "period", position = 12, example = "6")
     @JsonProperty("period")
-    private Long period;
+    private Integer period;
 
     @ApiModelProperty(name = "description", position = 13, example = "교환학생 가게 되어서 6개월 살고 급하게 내놓습니다 위치 좋고 남향에다가 어쩌고저쩌고")
     @JsonProperty("description")
@@ -72,7 +72,7 @@ public class HouseSaveRequest {
 
     public HouseSaveRequest(String sidoName, String gunguName, String dongName, String roadName, String addressDetail,
         Integer floor, String tradeType, String houseType, Long deposit, Long montylyRent, Long maintenanceFee,
-        String maintenanceDetail, Long period, String description, List<Long> options) {
+        String maintenanceDetail, Integer period, String description, List<Long> options) {
         this.sidoName = sidoName;
         this.gunguName = gunguName;
         this.dongName = dongName;
