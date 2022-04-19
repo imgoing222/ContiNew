@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import lombok.Builder;
 import lombok.Getter;
 
 @Entity
@@ -16,4 +17,15 @@ public class Option {
     @Column(name = "option_id")
     private Long id;
 
+    @Column(name = "name")
+    private String name;
+
+    public Option() {
+    }
+
+    @Builder
+    public Option(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
