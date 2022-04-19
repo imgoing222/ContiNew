@@ -1,19 +1,32 @@
 package com.btt.continew.house.service;
 
+import com.btt.continew.global.exception.BusinessException;
+import com.btt.continew.global.exception.ErrorCode;
 import com.btt.continew.house.controller.dto.request.HouseSaveRequest;
+import com.btt.continew.house.domain.House;
+import com.btt.continew.house.domain.HouseOption;
+import com.btt.continew.house.domain.HouseOptionRepository;
 import com.btt.continew.house.domain.HouseRepository;
+import com.btt.continew.house.domain.Option;
+import com.btt.continew.house.domain.OptionRepository;
 import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class HouseService {
 
     private final HouseRepository houseRepository;
+    private final OptionRepository optionRepository;
+    private final HouseOptionRepository houseOptionRepository;
     private final MemberService memberService;
 
-    public HouseService(HouseRepository houseRepository, MemberService memberService) {
+    public HouseService(HouseRepository houseRepository, OptionRepository optionRepository,
+        HouseOptionRepository houseOptionRepository, MemberService memberService) {
         this.houseRepository = houseRepository;
+        this.optionRepository = optionRepository;
+        this.houseOptionRepository = houseOptionRepository;
         this.memberService = memberService;
     }
 
