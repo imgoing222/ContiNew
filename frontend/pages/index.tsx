@@ -22,7 +22,7 @@ function MainPage() {
 	return (
 		<>
 			<SearchSection />
-			<RecommendSection />
+			<RecommendSection recommendData={DUMMY_DATA} />
 		</>
 	);
 }
