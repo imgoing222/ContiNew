@@ -38,6 +38,12 @@ public class House extends BaseEntity {
     @Column(name = "road_name")
     private String roadName;
 
+    @Column(name = "address_detail")
+    private String addressDetail;
+
+    @Column(name = "floor")
+    private Integer floor;
+
     @Column(name = "trade_type")
     private String tradeType;
 
@@ -59,20 +65,21 @@ public class House extends BaseEntity {
     @Column(name = "period")
     private String period;
 
-    public House() {
+   public House() {
 
     }
 
     @Builder
-    public House(Long id, Member member, String sidoName, String gunguName, String dongName, String roadName,
-        String tradeType, String houseType, Long deposit, Long monthlyRent, Long maintenanceFee, String maintenanceDetail,
-        String period) {
-        this.id = id;
+    public House(Member member, String sidoName, String gunguName, String dongName, String roadName, String addressDetail,
+        Integer floor, String tradeType, String houseType, Long deposit, Long monthlyRent, Long maintenanceFee,
+        String maintenanceDetail, String period, String description) {
         this.member = member;
         this.sidoName = sidoName;
         this.gunguName = gunguName;
         this.dongName = dongName;
         this.roadName = roadName;
+        this.addressDetail = addressDetail;
+        this.floor = floor;
         this.tradeType = tradeType;
         this.houseType = houseType;
         this.deposit = deposit;
