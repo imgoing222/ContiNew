@@ -26,6 +26,39 @@ public class House extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @Column(name = "sido_name")
+    private String sidoName;
+
+    @Column(name = "gungu_name")
+    private String gunguName;
+
+    @Column(name = "dong_name")
+    private String dongName;
+
+    @Column(name = "road_name")
+    private String roadName;
+
+    @Column(name = "trade_type")
+    private String tradeType;
+
+    @Column(name = "house_type")
+    private String houseType;
+
+    @Column(name = "deposit")
+    private Long deposit;
+
+    @Column(name = "monthly_rent")
+    private Long monthlyRent;
+
+    @Column(name = "maintenance_fee")
+    private Long maintenanceFee;
+
+    @Column(name = "maintenance_detail")
+    private String maintenanceDetail;
+
+    @Column(name = "period")
+    private String period;
+
     public House() {
 
     }
