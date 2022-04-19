@@ -63,4 +63,22 @@ public class House extends BaseEntity {
 
     }
 
+    @Builder
+    public House(Long id, Member member, String sidoName, String gunguName, String dongName, String roadName,
+        String tradeType, String houseType, Long deposit, Long monthlyRent, Long maintenanceFee, String maintenanceDetail,
+        String period) {
+        this.id = id;
+        this.member = member;
+        this.sidoName = sidoName;
+        this.gunguName = gunguName;
+        this.dongName = dongName;
+        this.roadName = roadName;
+        this.tradeType = tradeType;
+        this.houseType = houseType;
+        this.deposit = deposit;
+        this.monthlyRent = monthlyRent;
+        this.maintenanceFee = maintenanceFee;
+        this.maintenanceDetail = maintenanceDetail;
+        this.period = period;
+    }
 }
