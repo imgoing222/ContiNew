@@ -6,7 +6,7 @@ function SearchSection() {
 
 const Section = styled.section`
 	position: relative;
-	height: 35rem;
+	height: 30rem;
 	background: url("/main_background.jpg");
 	background-size: cover;
 	opacity: 0.7;
