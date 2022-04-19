@@ -1,5 +1,12 @@
+import { SearchSection, RecommendSection } from "../components/main";
+
 function MainPage() {
-  return <h1>The Home Page.</h1>
-};
+	return (
+		<>
+			<SearchSection />
+			<RecommendSection />
+		</>
+	);
+}
 
 export default MainPage;
