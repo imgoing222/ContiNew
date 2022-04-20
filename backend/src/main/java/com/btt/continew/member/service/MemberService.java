@@ -22,7 +22,7 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public Member findByEmail(String id) {
+    public Member findByLoginId(String id) {
         return memberRepository.findByLoginId(id)
             .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND_BY_LOGIN_ID));
     }
