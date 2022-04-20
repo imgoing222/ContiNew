@@ -58,4 +58,12 @@ public class ImageUploader {
         }
         return Optional.empty();
     }
+
+    public void deleteFile(String fileName) {
+        try {
+            amazonS3Client.deleteObject(bucket, fileName);
+        } catch (AmazonServiceException e) {
+            throw new BusinessException(ErrorCode.GLOBAL_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
