@@ -22,6 +22,7 @@ function ItemDetail() {
 
 const Container = styled.div`
 	display: flex;
+  flex: 3;
 	flex-direction: column;
 	align-items: center;
 	height: 100%;
