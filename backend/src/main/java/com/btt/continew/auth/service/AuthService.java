@@ -39,7 +39,7 @@ public class AuthService {
         Cookie accessTokenCookie = new Cookie("access_token", accessToken);
         accessTokenCookie.setMaxAge(30 * 60); // expires in 30 minutes
         accessTokenCookie.setSecure(true);
-        accessTokenCookie.setHttpOnly(true);
+//        accessTokenCookie.setHttpOnly(true);
         accessTokenCookie.setPath("/");
         response.addCookie(accessTokenCookie);
     }
