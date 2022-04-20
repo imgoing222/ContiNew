@@ -1,6 +1,16 @@
 import styled from "styled-components";
 
-function ChatList() {
+interface ChatListProps {
+  chatList: {
+    chatId: number;
+		sellerNickname: string;
+		buyerNickname: string;
+		lastContent: string;
+		updatedAt: string;
+  }[]
+}
+
+function ChatList({ chatList }: ChatListProps) {
 	return (
 		<Container>
 			<div>

@@ -29,7 +29,7 @@ const DUMMY_DATA = [
 function ChatPage() {
 	return (
 		<Container>
-			<ChatList />
+			<ChatList chatList={DUMMY_DATA} />
 		</Container>
 	);
 }
