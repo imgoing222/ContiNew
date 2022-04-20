@@ -32,4 +32,13 @@ public class ImageUploader {
             .orElseThrow(() -> new BusinessException(ErrorCode.GLOBAL_ILLEGAL_ERROR));
         return upload(uploadFile, dirName);
     }
+
+    private String upload(File uploadFile, String dirName) {
+        // s3에 올리는 메서드
+        String fileName = dirName + "/" + UUID.randomUUID() + uploadFile.getName();
+
+        String uploadImageUrl = putS3(uploadFile, fileName);
+        uploadFile.delete();
+        return uploadImageUrl;
+    }
 }
