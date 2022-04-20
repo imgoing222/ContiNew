@@ -5,23 +5,23 @@ import ChatList from "@components/chat/ChatList";
 const DUMMY_DATA = [
 	{
 		chatId: 1,
-		sellerNickname: "김싸피",
-		buyerNickname: "이싸피",
+		user: "김싸피",
+		person: "이싸피",
 		lastContent: "화장실 사진 좀 찍어주세요.",
 		updatedAt: "2022-04-20 14:22:04"
 	},
 	{
 		chatId: 2,
-		sellerNickname: "박싸피",
-		buyerNickname: "유싸피",
-		lastContent: "화장실 사진 좀 찍어주세요.",
+		user: "박싸피",
+		person: "유싸피",
+		lastContent: "벌레는 안나오나요 ?",
 		updatedAt: "2022-04-19 18:58:22"
 	},
 	{
 		chatId: 3,
-		sellerNickname: "조싸피",
-		buyerNickname: "이싸피",
-		lastContent: "화장실 사진 좀 찍어주세요.",
+		user: "조싸피",
+		person: "이싸피",
+		lastContent: "깔끔하고 좋아요 !!",
 		updatedAt: "2022-04-19 08:02:39"
 	}
 ];
