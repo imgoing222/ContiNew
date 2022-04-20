@@ -1,9 +1,11 @@
+import styled from "styled-components";
+
 function ItemDetail() {
 	return (
-		<>
-			<div>
+		<Container>
+			<Title>
 				<h3>Detail</h3>
-			</div>
+			</Title>
       <div>
         <img src="" alt="Img" />
       </div>
@@ -14,8 +16,22 @@ function ItemDetail() {
         <h3>위치</h3>
         <p>서울특별시 동작구 사당동</p>
       </div>
-		</>
+		</Container>
 	);
 }
+
+const Container = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100%;
+	border-left: solid 2px #d3d3d3;
+`;
+
+const Title = styled.div`
+  width: 100%;
+  text-align: center;
+  border-bottom: solid 2px #d3d3d3;
+`;
 
 export default ItemDetail;
