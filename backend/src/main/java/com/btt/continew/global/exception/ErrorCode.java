@@ -27,6 +27,7 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND_BY_LOGIN_ID(HttpStatus.NOT_FOUND, "존재하지 않는 로그인 아이디입니다.", "M01"),
     MEMBER_LOGIN_ID_DUPLICATED(HttpStatus.CONFLICT, "이미 존재하는 로그인 아이디 입니다.", "M02"),
     MEMBER_USERNAME_DUPLICATED(HttpStatus.CONFLICT, "이미 존재하는 닉네임 입니다.", "M03"),
+    MEMBER_LOGIN_ERROR_BY_PASSWORD(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않는 유저입니다", "M04"),
 
     // authority
     AUTHORITY_NOT_FOUND_BY_AUTHORITY_CODE(HttpStatus.NOT_FOUND, "존재하지 않는 권한코드입니다.", "A01"),
