@@ -13,9 +13,9 @@ interface ChatListProps {
 function ChatList({ chatList }: ChatListProps) {
 	return (
 		<Container>
-			<div>
+			<Title>
 				<h3>Messages</h3>
-			</div>
+			</Title>
 			<div>
 				{chatList.map((chat) => (
 					<div>
@@ -35,6 +35,12 @@ const Container = styled.div`
 	width: 300px;
 	height: 100%;
 	border-right: solid 2px #d3d3d3;
+`;
+
+const Title = styled.div`
+  width: 100%;
+  text-align: center;
+  border-bottom: solid 2px #d3d3d3;
 `;
 
 export default ChatList;
