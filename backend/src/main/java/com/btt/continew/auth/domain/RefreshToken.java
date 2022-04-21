@@ -3,6 +3,8 @@ package com.btt.continew.auth.domain;
 import javax.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
+import java.util.concurrent.TimeUnit;
+import org.springframework.data.redis.core.index.Indexed;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 
@@ -11,9 +13,11 @@ import org.springframework.data.redis.core.TimeToLive;
 public class RefreshToken {
 
     @Id
-    String id;
+    Long id;
 
     String refreshToken;
+
+    @Indexed
     String subject;
 
     @TimeToLive(unit = TimeUnit.MILLISECONDS)
