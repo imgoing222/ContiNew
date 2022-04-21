@@ -30,6 +30,7 @@ function ChatList({ chatList }: ChatListProps) {
 
 const Container = styled.div`
 	display: flex;
+  flex: 2;
 	flex-direction: column;
 	align-items: center;
 	width: 300px;
