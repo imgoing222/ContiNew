@@ -7,12 +7,18 @@ import com.btt.continew.house.domain.House;
 import com.btt.continew.house.domain.HouseOption;
 import com.btt.continew.house.domain.HouseOptionRepository;
 import com.btt.continew.house.domain.HouseRepository;
+import com.btt.continew.house.domain.Image;
+import com.btt.continew.house.domain.ImageRepository;
 import com.btt.continew.house.domain.Option;
 import com.btt.continew.house.domain.OptionRepository;
+import com.btt.continew.image.ImageUploader;
 import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
+import java.io.IOException;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class HouseService {
@@ -20,19 +26,24 @@ public class HouseService {
     private final HouseRepository houseRepository;
     private final OptionRepository optionRepository;
     private final HouseOptionRepository houseOptionRepository;
+    private final ImageRepository imageRepository;
     private final MemberService memberService;
+    private final ImageUploader imageUploader;
 
     public HouseService(HouseRepository houseRepository, OptionRepository optionRepository,
-        HouseOptionRepository houseOptionRepository, MemberService memberService) {
+        HouseOptionRepository houseOptionRepository, ImageRepository imageRepository,
+        MemberService memberService, ImageUploader imageUploader) {
         this.houseRepository = houseRepository;
         this.optionRepository = optionRepository;
         this.houseOptionRepository = houseOptionRepository;
+        this.imageRepository = imageRepository;
         this.memberService = memberService;
+        this.imageUploader = imageUploader;
     }
 
     @Transactional
-    public void create(HouseSaveRequest request, String email) {
-        Member member = memberService.findByEmail(email);
+    public void create(HouseSaveRequest request, List<MultipartFile> images, String email) {
+        Member member = memberService.findByLoginId(email);
         House house = House.builder()
             .member(member)
             .deposit(request.getDeposit())
@@ -61,6 +72,21 @@ public class HouseService {
                    .option(option)
                    .build();
                houseOptionRepository.save(houseOption);
+           }
+       }
+
+       for (MultipartFile file: images) {
+           try{
+               String url = imageUploader.upload(file, "house");
+
+               Image image = Image.builder()
+                   .house(house)
+                   .url(url)
+                   .build();
+
+               imageRepository.save(image);
+           } catch (IOException e) {
+               throw new BusinessException(ErrorCode.GLOBAL_ILLEGAL_ERROR);
            }
        }
     }
