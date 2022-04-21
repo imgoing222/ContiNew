@@ -13,7 +13,7 @@ public class MemberInfoResponse {
     private Long id;
 
     @JsonProperty("email")
-    @ApiModelProperty(notes = "이메일", example = "loling3@naver.com")
+    @ApiModelProperty(notes = "이메일", example = "continew1111@naver.com")
     private String email;
 
     @JsonProperty("username")
@@ -23,6 +23,7 @@ public class MemberInfoResponse {
     @JsonProperty("phone_nunber")
     @ApiModelProperty(notes = "전화번호", example = "01000000000")
     private String phoneNumber;
+
     @JsonProperty("social_id")
     @ApiModelProperty(notes = "소셜 아이디 (소셜 확인용)", example = "")
     private String socialId;
