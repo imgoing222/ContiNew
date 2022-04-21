@@ -10,6 +10,7 @@ import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,13 +22,16 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final long refreshTime;
 
     public AuthService(MemberService memberService, PasswordEncoder passwordEncoder,
-        JwtTokenProvider jwtTokenProvider, RefreshTokenRepository refreshTokenRepository) {
+        JwtTokenProvider jwtTokenProvider, RefreshTokenRepository refreshTokenRepository,
+        @Value("${jwt.token.refresh-time}") long refreshTime) {
         this.memberService = memberService;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
         this.refreshTokenRepository = refreshTokenRepository;
+        this.refreshTime = refreshTime;
     }
 
     @Transactional
@@ -45,8 +49,7 @@ public class AuthService {
         RefreshToken refreshToken = refreshTokenRepository.findBySubject(member.getLoginId())
             .orElse(RefreshToken.builder()
                 .subject(member.getLoginId())
-                .refreshToken(tokenResponse.getRefreshToken())
-                .authority(Authority.ROLE_MEMBER)
+                .timeout(refreshTime)
                 .build());
         refreshTokenRepository.save(refreshToken);
         return refreshToken.getRefreshToken();
