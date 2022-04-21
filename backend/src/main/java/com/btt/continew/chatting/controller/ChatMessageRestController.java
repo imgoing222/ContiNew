@@ -1,26 +1,29 @@
 package com.btt.continew.chatting.controller;
 
-import com.btt.continew.chatting.service.ChatMessageService;
-import org.springframework.http.ResponseEntity;
+import com.btt.continew.chatting.domain.ChatRoom;
+import com.btt.continew.chatting.service.ChatService;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/chatting")
 public class ChatMessageRestController {
 
-    private final ChatMessageService chatMessageService;
-
-    public ChatMessageRestController(ChatMessageService chatMessageService){
-        this.chatMessageService = chatMessageService;
-    }
+    private final ChatService chatService;
 
     @PostMapping
-    public ResponseEntity<Void> postChatting(){
+    public ChatRoom createRoom(@RequestParam String name){
+        return chatService.createRoom(name);
+    }
 
-        chatMessageService.createChatMessage();
-
-        return ResponseEntity.noContent().build();
+    @GetMapping
+    public List<ChatRoom> findAllRoom(){
+        return chatService.findAllRoom();
     }
 }
