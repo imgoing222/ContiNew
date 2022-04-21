@@ -7,12 +7,18 @@ import com.btt.continew.house.domain.House;
 import com.btt.continew.house.domain.HouseOption;
 import com.btt.continew.house.domain.HouseOptionRepository;
 import com.btt.continew.house.domain.HouseRepository;
+import com.btt.continew.house.domain.Image;
+import com.btt.continew.house.domain.ImageRepository;
 import com.btt.continew.house.domain.Option;
 import com.btt.continew.house.domain.OptionRepository;
+import com.btt.continew.image.ImageUploader;
 import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
+import java.io.IOException;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class HouseService {
@@ -20,14 +26,19 @@ public class HouseService {
     private final HouseRepository houseRepository;
     private final OptionRepository optionRepository;
     private final HouseOptionRepository houseOptionRepository;
+    private final ImageRepository imageRepository;
     private final MemberService memberService;
+    private final ImageUploader imageUploader;
 
     public HouseService(HouseRepository houseRepository, OptionRepository optionRepository,
-        HouseOptionRepository houseOptionRepository, MemberService memberService) {
+        HouseOptionRepository houseOptionRepository, ImageRepository imageRepository,
+        MemberService memberService, ImageUploader imageUploader) {
         this.houseRepository = houseRepository;
         this.optionRepository = optionRepository;
         this.houseOptionRepository = houseOptionRepository;
+        this.imageRepository = imageRepository;
         this.memberService = memberService;
+        this.imageUploader = imageUploader;
     }
 
     @Transactional
