@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import ChatList from "@components/chat/ChatList";
+import { Chat, ChatList, ItemDetail } from "@components/chat";
 
 const DUMMY_DATA = [
 	{
@@ -30,6 +30,8 @@ function ChatPage() {
 	return (
 		<Container>
 			<ChatList chatList={DUMMY_DATA} />
+			<Chat />
+			<ItemDetail />
 		</Container>
 	);
 }
