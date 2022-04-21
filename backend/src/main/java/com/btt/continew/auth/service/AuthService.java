@@ -1,16 +1,20 @@
 package com.btt.continew.auth.service;
 
 import com.btt.continew.auth.controller.dto.request.LoginRequest;
+import com.btt.continew.auth.controller.dto.request.ReissueRequest;
 import com.btt.continew.auth.controller.dto.response.TokenResponse;
-import com.btt.continew.auth.domain.Authority;
 import com.btt.continew.auth.domain.RefreshToken;
 import com.btt.continew.auth.domain.RefreshTokenRepository;
 import com.btt.continew.auth.infrastructure.JwtTokenProvider;
+import com.btt.continew.global.exception.BusinessException;
+import com.btt.continew.global.exception.ErrorCode;
 import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,13 +25,16 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final long refreshTime;
 
     public AuthService(MemberService memberService, PasswordEncoder passwordEncoder,
-        JwtTokenProvider jwtTokenProvider, RefreshTokenRepository refreshTokenRepository) {
+        JwtTokenProvider jwtTokenProvider, RefreshTokenRepository refreshTokenRepository,
+        @Value("${jwt.token.refresh-time}") long refreshTime) {
         this.memberService = memberService;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
         this.refreshTokenRepository = refreshTokenRepository;
+        this.refreshTime = refreshTime;
     }
 
     @Transactional
@@ -45,16 +52,17 @@ public class AuthService {
         RefreshToken refreshToken = refreshTokenRepository.findBySubject(member.getLoginId())
             .orElse(RefreshToken.builder()
                 .subject(member.getLoginId())
-                .refreshToken(tokenResponse.getRefreshToken())
-                .authority(Authority.ROLE_MEMBER)
+                .timeout(refreshTime)
                 .build());
+
+        refreshToken.updateRefreshToken(tokenResponse.getRefreshToken());
         refreshTokenRepository.save(refreshToken);
         return refreshToken.getRefreshToken();
     }
 
     private void setTokenToCookie(String accessToken, String refreshToken, HttpServletResponse response) {
         Cookie accessTokenCookie = new Cookie("access_token", accessToken);
-        accessTokenCookie.setMaxAge(30 * 60); // expires in 30 minutes
+        accessTokenCookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7days, 기간 지난 access token 도 필요하다고 함
         accessTokenCookie.setSecure(true);
 //        accessTokenCookie.setHttpOnly(true);
         accessTokenCookie.setPath("/");
@@ -66,5 +74,23 @@ public class AuthService {
 //        refreshTokenCookie.setHttpOnly(true);
         refreshTokenCookie.setPath("/");
         response.addCookie(refreshTokenCookie);
+    }
+
+    @Transactional
+    public void reissue(ReissueRequest request, HttpServletResponse response) {
+        jwtTokenProvider.validateRefreshToken(request.getRefreshToken());
+        Authentication authentication = jwtTokenProvider.getAuthentication(request.getAccessToken());
+
+        RefreshToken refreshToken = refreshTokenRepository.findBySubject(authentication.getName())
+            .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_LOGOUT_USER_JWT));
+
+        refreshToken.validateValue(request.getRefreshToken());
+
+        TokenResponse tokenResponse = jwtTokenProvider.createToken(authentication.getName(),
+            jwtTokenProvider.getAuthority(authentication));
+
+        refreshToken.updateRefreshToken(tokenResponse.getRefreshToken());
+        refreshTokenRepository.save(refreshToken);
+        setTokenToCookie(tokenResponse.getAccessToken(), refreshToken.getRefreshToken(), response);
     }
 }
