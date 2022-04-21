@@ -47,7 +47,7 @@ public class HouseService {
         House house = House.builder()
             .member(member)
             .deposit(request.getDeposit())
-            .monthlyRent(request.getMontylyRent())
+            .monthlyRent(request.getMonthlyRent())
             .maintenanceFee(request.getMaintenanceFee())
             .maintenanceDetail(request.getMaintenanceDetail())
             .description(request.getDescription())
