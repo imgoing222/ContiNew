@@ -1,17 +1,20 @@
 package com.btt.continew.auth.service;
 
 import com.btt.continew.auth.controller.dto.request.LoginRequest;
+import com.btt.continew.auth.controller.dto.request.ReissueRequest;
 import com.btt.continew.auth.controller.dto.response.TokenResponse;
-import com.btt.continew.auth.domain.Authority;
 import com.btt.continew.auth.domain.RefreshToken;
 import com.btt.continew.auth.domain.RefreshTokenRepository;
 import com.btt.continew.auth.infrastructure.JwtTokenProvider;
+import com.btt.continew.global.exception.BusinessException;
+import com.btt.continew.global.exception.ErrorCode;
 import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,6 +54,8 @@ public class AuthService {
                 .subject(member.getLoginId())
                 .timeout(refreshTime)
                 .build());
+
+        refreshToken.updateRefreshToken(tokenResponse.getRefreshToken());
         refreshTokenRepository.save(refreshToken);
         return refreshToken.getRefreshToken();
     }
@@ -69,5 +74,23 @@ public class AuthService {
 //        refreshTokenCookie.setHttpOnly(true);
         refreshTokenCookie.setPath("/");
         response.addCookie(refreshTokenCookie);
+    }
+
+    @Transactional
+    public void reissue(ReissueRequest request, HttpServletResponse response) {
+        jwtTokenProvider.validateRefreshToken(request.getRefreshToken());
+        Authentication authentication = jwtTokenProvider.getAuthentication(request.getAccessToken());
+
+        RefreshToken refreshToken = refreshTokenRepository.findBySubject(authentication.getName())
+            .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_LOGOUT_USER_JWT));
+
+        refreshToken.validateValue(request.getRefreshToken());
+
+        TokenResponse tokenResponse = jwtTokenProvider.createToken(authentication.getName(),
+            jwtTokenProvider.getAuthority(authentication));
+
+        refreshToken.updateRefreshToken(tokenResponse.getRefreshToken());
+        refreshTokenRepository.save(refreshToken);
+        setTokenToCookie(tokenResponse.getAccessToken(), refreshToken.getRefreshToken(), response);
     }
 }
