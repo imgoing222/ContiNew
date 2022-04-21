@@ -74,5 +74,20 @@ public class HouseService {
                houseOptionRepository.save(houseOption);
            }
        }
+
+       for (MultipartFile file: images) {
+           try{
+               String url = imageUploader.upload(file, "house");
+
+               Image image = Image.builder()
+                   .house(house)
+                   .url(url)
+                   .build();
+
+               imageRepository.save(image);
+           } catch (IOException e) {
+               throw new BusinessException(ErrorCode.GLOBAL_ILLEGAL_ERROR);
+           }
+       }
     }
 }
