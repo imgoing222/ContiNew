@@ -42,8 +42,8 @@ public class HouseService {
     }
 
     @Transactional
-    public void create(HouseSaveRequest request, String email) {
-        Member member = memberService.findByEmail(email);
+    public void create(HouseSaveRequest request, List<MultipartFile> images, String email) {
+        Member member = memberService.findByLoginId(email);
         House house = House.builder()
             .member(member)
             .deposit(request.getDeposit())
