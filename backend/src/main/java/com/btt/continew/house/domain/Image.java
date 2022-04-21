@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import lombok.Builder;
 import lombok.Getter;
 
 @Entity
@@ -29,6 +30,7 @@ public class Image {
     public Image() {
     }
 
+    @Builder
     public Image(House house, String url) {
         this.house = house;
         this.url = url;
