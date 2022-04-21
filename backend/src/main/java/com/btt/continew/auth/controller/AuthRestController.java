@@ -1,6 +1,7 @@
 package com.btt.continew.auth.controller;
 
 import com.btt.continew.auth.controller.dto.request.LoginRequest;
+import com.btt.continew.auth.controller.dto.request.ReissueRequest;
 import com.btt.continew.auth.service.AuthService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +27,13 @@ public class AuthRestController {
     @ApiOperation(value = "로그인", notes = "로그인 API")
     public ResponseEntity<Void> login(@RequestBody LoginRequest request, HttpServletResponse response) {
         authService.login(request, response);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/members/reissue")
+    @ApiOperation(value = "토큰 재발급", notes = "토큰을 재발급하는 API")
+    public ResponseEntity<Void> reissue(@RequestBody ReissueRequest tokenRequest, HttpServletResponse response) {
+        authService.reissue(tokenRequest, response);
         return ResponseEntity.noContent().build();
     }
 }
