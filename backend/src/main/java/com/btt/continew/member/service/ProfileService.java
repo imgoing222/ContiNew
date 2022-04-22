@@ -1,5 +1,9 @@
 package com.btt.continew.member.service;
 
+import com.btt.continew.global.exception.BusinessException;
+import com.btt.continew.global.exception.ErrorCode;
+import com.btt.continew.member.controller.dto.request.MemberChangeRequest;
+import com.btt.continew.member.controller.dto.request.PasswordChangeRequest;
 import com.btt.continew.member.controller.dto.response.MemberInfoResponse;
 import com.btt.continew.member.domain.Member;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,5 +25,26 @@ public class ProfileService {
     public MemberInfoResponse showMemberInfo(String loginId) {
         Member member = memberService.findByLoginId(loginId);
         return MemberInfoResponse.from(member);
+    }
+
+    public void checkSameMyName (String memberName, String requestName){
+        if (memberName.equals(requestName)) {
+            throw new BusinessException(ErrorCode.MEMBER_USERNAME_DUPLICATED_BECAUSE_OF_YOU);
+        }
+    }
+
+    @Transactional
+    public void changeMemberInfo(String loginId, MemberChangeRequest request) {
+        Member member = memberService.findByLoginId(loginId);
+
+        checkSameMyName(member.getUsername(), request.getUsername());
+        memberService.checkDuplicateUsername(request.getUsername());
+        member.changeUsername(request.getUsername());
+    }
+
+    @Transactional
+    public void changePassword(String loginId, PasswordChangeRequest request) {
+        Member member = memberService.findByLoginId(loginId);
+        member.changePassword(passwordEncoder, request);
     }
 }

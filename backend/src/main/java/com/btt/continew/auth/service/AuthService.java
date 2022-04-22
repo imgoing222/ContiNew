@@ -40,7 +40,7 @@ public class AuthService {
     @Transactional
     public void login(LoginRequest request, HttpServletResponse response) {
         Member member = memberService.findByLoginId(request.getLoginId());
-        member.CheckPasswordForLogin(passwordEncoder, request.getPassword());
+        member.checkPassword(passwordEncoder, request.getPassword());
 
         TokenResponse tokenResponse = jwtTokenProvider.createToken(member.getLoginId(), member.getAuthority());
         String refreshToken = saveRefreshToken(member, tokenResponse);
