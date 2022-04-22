@@ -89,4 +89,11 @@ public class Member extends BaseEntity {
             this.username = username;
         }
     }
+
+    public void changePassword(PasswordEncoder passwordEncoder, PasswordChangeRequest request) {
+        checkPassword(passwordEncoder, request.getBeforePassword());
+        if (!Objects.isNull(password)) {
+            this.password = passwordEncoder.encode(this.password);
+        }
+    }
 }
