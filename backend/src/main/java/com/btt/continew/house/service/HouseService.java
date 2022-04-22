@@ -56,6 +56,8 @@ public class HouseService {
             .dongName(request.getDongName())
             .roadName(request.getRoadName())
             .addressDetail(request.getAddressDetail())
+            .latitude(request.getLatitude())
+            .longitude(request.getLongitude())
             .floor(request.getFloor())
             .houseType(request.getHouseType())
             .tradeType(request.getTradeType())
