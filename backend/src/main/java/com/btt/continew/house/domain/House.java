@@ -41,6 +41,12 @@ public class House extends BaseEntity {
     @Column(name = "address_detail")
     private String addressDetail;
 
+    @Column(name = "latitude")
+    private Long latitude;
+
+    @Column(name = "longitude")
+    private Long longitude;
+
     @Column(name = "floor")
     private Integer floor;
 
@@ -74,14 +80,16 @@ public class House extends BaseEntity {
 
     @Builder
     public House(Member member, String sidoName, String gunguName, String dongName, String roadName, String addressDetail,
-        Integer floor, String tradeType, String houseType, Long deposit, Long monthlyRent, Long maintenanceFee,
-        String maintenanceDetail, Integer period, String description) {
+        Long latitude, Long longitude, Integer floor, String tradeType, String houseType, Long deposit, Long monthlyRent,
+        Long maintenanceFee, String maintenanceDetail, Integer period, String description) {
         this.member = member;
         this.sidoName = sidoName;
         this.gunguName = gunguName;
         this.dongName = dongName;
         this.roadName = roadName;
         this.addressDetail = addressDetail;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.floor = floor;
         this.tradeType = tradeType;
         this.houseType = houseType;
