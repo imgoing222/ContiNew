@@ -41,4 +41,43 @@ public class HouseSimpleResponse {
     @ApiModelProperty(position = 7, notes = "도로명", example = "신촌로 49")
     private String roadName;
 
+    @JsonProperty("address_detail")
+    @ApiModelProperty(position = 8, notes = "상세주소", example = "108동")
+    private String addressDetail;
+
+    @JsonProperty("description")
+    @ApiModelProperty(position = 9, notes = "상세설명", example = "입대하게 되어서 방 내놓습니다...")
+    private String description;
+
+    public HouseSimpleResponse() {
+    }
+
+    public HouseSimpleResponse(Long id, Long deposit, Long monthlyRent, String houseType, String sidoName, String gunguName,
+        String dongName, String roadName, String addressDetail, String description) {
+        this.id = id;
+        this.deposit = deposit;
+        this.monthlyRent = monthlyRent;
+        this.houseType = houseType;
+        this.sidoName = sidoName;
+        this.gunguName = gunguName;
+        this.dongName = dongName;
+        this.roadName = roadName;
+        this.addressDetail = addressDetail;
+        this.description = description;
+    }
+
+    public static HouseSimpleResponse from(House house) {
+        return new HouseSimpleResponse(
+            house.getId(),
+            house.getDeposit(),
+            house.getMonthlyRent(),
+            house.getHouseType(),
+            house.getSidoName(),
+            house.getGunguName(),
+            house.getDongName(),
+            house.getRoadName(),
+            house.getAddressDetail(),
+            house.getDescription()
+        );
+    }
 }
