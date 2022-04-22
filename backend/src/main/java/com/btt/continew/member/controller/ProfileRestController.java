@@ -1,6 +1,7 @@
 package com.btt.continew.member.controller;
 
 import com.btt.continew.member.controller.dto.request.MemberChangeRequest;
+import com.btt.continew.member.controller.dto.request.PasswordChangeRequest;
 import com.btt.continew.member.controller.dto.response.MemberInfoResponse;
 import com.btt.continew.member.service.ProfileService;
 import io.swagger.annotations.Api;
@@ -33,10 +34,18 @@ public class ProfileRestController {
 
     @PutMapping("/auth/members/info")
     @ApiOperation(value = "회원정보 변경", notes = "<span style=\"font-weight=550; color=#ff5f5f\">(로그인 필요)</span> 닉네임 변경\n"
-        + "현재는 닉네임밖에 없으나 추후 더 생길것을 생각해서 api 주소를 info로 하였음")
+        + "현재는 닉네임밖에 없으나 추후 더 생길 것을 생각해서 api 주소를 info로 하였음")
     public ResponseEntity<Void> changeMemberInfo(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
         @RequestBody MemberChangeRequest request) {
         profileService.changeMemberInfo(loginId, request);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/auth/members/password")
+    @ApiOperation(value = "비밀번호 변경", notes = "<span style=\"font-weight=550; color=#ff5f5f\">(로그인 필요)</span> 비밀번호 변경")
+    public ResponseEntity<Void> changePassword(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
+        @RequestBody PasswordChangeRequest request) {
+        profileService.changePassword(loginId, request);
         return ResponseEntity.noContent().build();
     }
 }
