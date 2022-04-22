@@ -42,4 +42,10 @@ public class MemberRestController {
     public ResponseEntity<CheckDuplicateResponse> checkExistLoginId(@RequestBody CheckDuplicateRequest request) {
         return ResponseEntity.ok().body(memberService.checkExistLoginId(request));
     }
+
+    @PostMapping("/members/exist-username")
+    @ApiOperation(value = "유저네임 중복검사", notes = "유저네임 중복 검사 api")
+    public ResponseEntity<CheckDuplicateResponse> checkExistUsername(@RequestBody CheckDuplicateRequest request) {
+        return ResponseEntity.ok().body(memberService.checkExistUsername(request));
+    }
 }

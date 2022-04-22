@@ -55,4 +55,9 @@ public class MemberService {
     public CheckDuplicateResponse checkExistLoginId(CheckDuplicateRequest request){
         return CheckDuplicateResponse.from(memberRepository.existsByLoginId(request.getValue()));
     }
+
+    @Transactional(readOnly = true)
+    public CheckDuplicateResponse checkExistUsername(CheckDuplicateRequest request) {
+        return CheckDuplicateResponse.from(memberRepository.existsByUsername(request.getValue()));
+    }
 }
