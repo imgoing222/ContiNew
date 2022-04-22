@@ -93,7 +93,7 @@ public class Member extends BaseEntity {
     public void changePassword(PasswordEncoder passwordEncoder, PasswordChangeRequest request) {
         checkPassword(passwordEncoder, request.getBeforePassword());
         if (!Objects.isNull(password)) {
-            this.password = passwordEncoder.encode(this.password);
+            this.password = passwordEncoder.encode(request.getNewPassword());
         }
     }
 }
