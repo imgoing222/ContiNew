@@ -3,6 +3,7 @@ package com.btt.continew.member.service;
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
 import com.btt.continew.member.controller.dto.request.MemberChangeRequest;
+import com.btt.continew.member.controller.dto.request.PasswordChangeRequest;
 import com.btt.continew.member.controller.dto.response.MemberInfoResponse;
 import com.btt.continew.member.domain.Member;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,5 +40,11 @@ public class ProfileService {
         checkSameMyName(member.getUsername(), request.getUsername());
         memberService.checkDuplicateUsername(request.getUsername());
         member.changeUsername(request.getUsername());
+    }
+
+    @Transactional
+    public void changePassword(String loginId, PasswordChangeRequest request) {
+        Member member = memberService.findByLoginId(loginId);
+        member.changePassword(passwordEncoder, request);
     }
 }
