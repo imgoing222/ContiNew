@@ -4,6 +4,8 @@ import com.btt.continew.auth.domain.Authority;
 import com.btt.continew.global.domain.BaseEntity;
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
+import com.btt.continew.member.controller.dto.request.PasswordChangeRequest;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -79,6 +81,12 @@ public class Member extends BaseEntity {
     public void checkPassword(PasswordEncoder passwordEncoder, String password) {
         if (!passwordEncoder.matches(password, this.password)) {
             throw new BusinessException(ErrorCode.MEMBER_LOGIN_ERROR_BY_PASSWORD);
+        }
+    }
+
+    public void changeUsername(String username) {
+        if (!Objects.isNull(username)) {
+            this.username = username;
         }
     }
 }
