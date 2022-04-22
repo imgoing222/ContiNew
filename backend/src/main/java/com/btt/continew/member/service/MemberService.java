@@ -2,7 +2,9 @@ package com.btt.continew.member.service;
 
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
+import com.btt.continew.member.controller.dto.request.CheckDuplicateRequest;
 import com.btt.continew.member.controller.dto.request.MemberSaveRequest;
+import com.btt.continew.member.controller.dto.response.CheckDuplicateResponse;
 import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.domain.MemberRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,5 +49,10 @@ public class MemberService {
         if (memberRepository.existsByUsername(username)) {
             throw new BusinessException(ErrorCode.MEMBER_USERNAME_DUPLICATED);
         }
+    }
+
+    @Transactional(readOnly = true)
+    public CheckDuplicateResponse checkExistLoginId(CheckDuplicateRequest request){
+        return CheckDuplicateResponse.from(memberRepository.existsByLoginId(request.getValue()));
     }
 }
