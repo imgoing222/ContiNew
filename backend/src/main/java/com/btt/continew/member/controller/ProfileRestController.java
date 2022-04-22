@@ -27,13 +27,13 @@ public class ProfileRestController {
     }
 
     @GetMapping("/auth/members")
-    @ApiOperation(value = "회원 정보 조회", notes = "<span style=\"font-weight=550; color=#ff5f5f\">(로그인 필요)</span> 회원 정보 조회")
+    @ApiOperation(value = "회원 정보 조회", notes = "(로그인 필요) 회원 정보 조회")
     public ResponseEntity<MemberInfoResponse> showMemberInfo(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
         return ResponseEntity.ok().body(profileService.showMemberInfo(loginId));
     }
 
     @PutMapping("/auth/members/info")
-    @ApiOperation(value = "회원정보 변경", notes = "<span style=\"font-weight=550; color=#ff5f5f\">(로그인 필요)</span> 닉네임 변경\n"
+    @ApiOperation(value = "회원정보 변경", notes = "(로그인 필요) 닉네임 변경\n"
         + "현재는 닉네임밖에 없으나 추후 더 생길 것을 생각해서 api 주소를 info로 하였음")
     public ResponseEntity<Void> changeMemberInfo(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
         @RequestBody MemberChangeRequest request) {
@@ -42,7 +42,7 @@ public class ProfileRestController {
     }
 
     @PutMapping("/auth/members/password")
-    @ApiOperation(value = "비밀번호 변경", notes = "<span style=\"font-weight=550; color=#ff5f5f\">(로그인 필요)</span> 비밀번호 변경")
+    @ApiOperation(value = "비밀번호 변경", notes = "(로그인 필요) 비밀번호 변경")
     public ResponseEntity<Void> changePassword(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
         @RequestBody PasswordChangeRequest request) {
         profileService.changePassword(loginId, request);
