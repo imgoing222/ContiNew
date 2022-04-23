@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Script from "next/script";
 
-function inputsearch() {
+function Search() {
 	const [search, setSearch] = useState("");
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,4 +37,4 @@ function inputsearch() {
 	);
 }
 
-export default inputsearch;
+export default Search;
