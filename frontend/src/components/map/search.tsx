@@ -1,7 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import Script from "next/script";
 
 function inputsearch() {
+	const [search, setSearch] = useState("");
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSearch(e.target.value);
+	};
+
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		naver.maps.Service.geocode({ query: search }, function (status, response) {
+			if (status === naver.maps.Service.Status.ERROR) {
+				return alert("Something wrong!");
+			}
+			if (response.v2.meta.count > 0) {
+				console.log(response.v2.addresses[0].x);
+				console.log(response.v2.addresses[0].y);
+			}
+		});
+	};
+
 	return (
 		<>
 			<Script
