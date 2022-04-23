@@ -1488,6 +1488,11 @@
   resolved "https://registry.npmjs.org/@types/json5/-/json5-0.0.29.tgz"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
+"@types/navermaps@^3.0.13":
+  version "3.0.13"
+  resolved "https://registry.yarnpkg.com/@types/navermaps/-/navermaps-3.0.13.tgz#eb06d733652e99a2e0f5699fdbbb875274d9e893"
+  integrity sha512-kA9Ss2FWm91IojmV8M6M3wtMcRjvVf4z0iAmoZD1xUqn3iJNoq2THvbOiQdbcO6Iu06a/bmXrXH7nKIlShmOZg==
+
 "@types/node@*", "@types/node@17.0.24":
   version "17.0.24"
   resolved "https://registry.npmjs.org/@types/node/-/node-17.0.24.tgz"
