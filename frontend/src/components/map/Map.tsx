@@ -1,7 +1,12 @@
-import React from "react";
 import Script from "next/script";
+import { useEffect, useState, useRef } from "react";
+import styled from "styled-components";
 
 function Map() {
+	const [myLocation, setMyLocation] = useState<{ latitude: number; longitude: number } | string>(
+		"",
+	);
+	const [zoom, setZoom] = useState(11);
 	return (
 		<>
 			<Script
