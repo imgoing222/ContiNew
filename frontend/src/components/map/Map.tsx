@@ -7,6 +7,26 @@ function Map() {
 		"",
 	);
 	const [zoom, setZoom] = useState(11);
+
+	useEffect(() => {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(success, error);
+		}
+
+		// 위치추적에 성공했을때 위치 값을 세팅 이후에 검색한 주소의 latitude, longitude로 받아오기
+		function success(position: any) {
+			setMyLocation({
+				latitude: position.coords.latitude,
+				longitude: position.coords.longitude,
+			});
+		}
+
+		// 위치 추적에 실패 했을때 초기값
+		function error() {
+			setMyLocation({ latitude: 37.3595704, longitude: 127.105399 });
+		}
+	}, []);
+
 	return (
 		<>
 			<Script
