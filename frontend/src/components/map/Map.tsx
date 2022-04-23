@@ -27,6 +27,45 @@ function Map() {
 		}
 	}, []);
 
+	const mapRef = useRef<HTMLElement | null | any>(null);
+	const markerRef = useRef<any | null>(null);
+	useEffect(() => {
+		const data = [
+			{ name: "hi", map_y_location: 37.3595706, map_x_location: 127.1054399, length: 5 },
+			{ name: "naver", map_y_location: 37.3595709, map_x_location: 127.10539, length: 2 },
+		];
+		if (typeof myLocation !== "string") {
+			mapRef.current = new naver.maps.Map("map", {
+				zoom,
+				center: new naver.maps.LatLng(myLocation.latitude, myLocation.longitude),
+				zoomControl: true,
+				zoomControlOptions: {
+					style: naver.maps.ZoomControlStyle.SMALL,
+					position: naver.maps.Position.RIGHT_TOP,
+				},
+			});
+
+			// 여러 마커 생성  함수
+			data?.map((item) => {
+				markerRef.current = new naver.maps.Marker({
+					position: new naver.maps.LatLng(item?.map_y_location, item?.map_x_location),
+					map: mapRef.current,
+					title: item.name,
+					icon: {
+						content: `
+						<div>
+						<span>${item.length}</span>
+						<span>${item.name}</span>
+			</div>`,
+						size: new naver.maps.Size(33, 44),
+						origin: new naver.maps.Point(0, 0),
+						anchor: new naver.maps.Point(11, 35),
+					},
+				});
+			});
+		}
+	}, [mapRef, myLocation]);
+
 	return (
 		<>
 			<Script
