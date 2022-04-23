@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Script from "next/script";
 
 function Search() {
+	const CLIENT_ID = process.env.REACT_APP_NAVER_CLIENT_ID;
+
 	const [search, setSearch] = useState("");
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +27,7 @@ function Search() {
 		<>
 			<Script
 				type="text/javascript"
-				src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=hbx0fr2s1r&submodules=geocoder"
+				src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${CLIENT_ID}&submodules=geocoder`}
 			></Script>
 			<div>
 				<label htmlFor="addressSearch">검색</label>

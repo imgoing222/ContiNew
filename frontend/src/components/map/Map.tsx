@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 
 function Map() {
+	const CLIENT_ID = process.env.REACT_APP_NAVER_CLIENT_ID;
 	const [myLocation, setMyLocation] = useState<{ latitude: number; longitude: number } | string>(
 		"",
 	);
@@ -70,7 +71,7 @@ function Map() {
 		<>
 			<Script
 				type="text/javascript"
-				src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=hbx0fr2s1r"
+				src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${CLIENT_ID}`}
 			></Script>
 			<div id="map" style={{ width: "70%", height: "100vh" }}></div>
 		</>
