@@ -8,23 +8,23 @@ import lombok.Getter;
 @Getter
 public class HouseSaveRequest {
 
-    @ApiModelProperty(name = "sido_name", position = 0, example = "경기도")
+    @ApiModelProperty(name = "sido_name", example = "서울")
     @JsonProperty("sido_name")
     private String sidoName;
 
-    @ApiModelProperty(name = "gungu_name", position = 1, example = "광명시")
+    @ApiModelProperty(name = "gungu_name", position = 1, example = "동대문구")
     @JsonProperty("gungu_name")
     private String gunguName;
 
-    @ApiModelProperty(name = "dong_name", position = 2, example = "소하동 1363")
+    @ApiModelProperty(name = "dong_name", position = 2, example = "이문동")
     @JsonProperty("dong_name")
     private String dongName;
 
-    @ApiModelProperty(name = "road_name", position = 3, example = "신촌로 49")
-    @JsonProperty("road_name")
-    private String roadName;
+    @ApiModelProperty(name = "jibun_address", position = 3, example = "서울 동대문구 이문동 264-295")
+    @JsonProperty("jibun_address")
+    private String jibunAddress;
 
-    @ApiModelProperty(name = "address_detail", position = 4, example = "108동")
+    @ApiModelProperty(name = "address_detail", position = 4, example = "스카이빌")
     @JsonProperty("address_detail")
     private String addressDetail;
 
@@ -79,13 +79,13 @@ public class HouseSaveRequest {
     public HouseSaveRequest() {
     }
 
-    public HouseSaveRequest(String sidoName, String gunguName, String dongName, String roadName, String addressDetail,
+    public HouseSaveRequest(String sidoName, String gunguName, String dongName, String jibunAddress, String addressDetail,
         Long latitude, Long longitude, Integer floor, String tradeType, String houseType, Long deposit, Long monthlyRent,
         Long maintenanceFee, String maintenanceDetail, Integer period, String description, List<Long> options) {
         this.sidoName = sidoName;
         this.gunguName = gunguName;
         this.dongName = dongName;
-        this.roadName = roadName;
+        this.jibunAddress = jibunAddress;
         this.addressDetail = addressDetail;
         this.latitude = latitude;
         this.longitude = longitude;
