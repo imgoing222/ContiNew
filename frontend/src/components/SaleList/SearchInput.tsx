@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { RefProps } from "./SaleListNav";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 function SearchInput({ kakaoMap }: RefProps) {
 	const [keyword, setKeyword] = useState("");
@@ -28,14 +30,22 @@ function SearchInput({ kakaoMap }: RefProps) {
 	};
 
 	return (
-		<SearchForm onSubmit={handleSubmit}>
-			<Input value={keyword} onChange={handleChange} />
-			<Button>검색</Button>
-		</SearchForm>
+		<Container>
+			<MagnifyingGlass icon={faMagnifyingGlass} />
+			<SearchForm onSubmit={handleSubmit}>
+				<Input value={keyword} onChange={handleChange} />
+				<Button>검색</Button>
+			</SearchForm>
+		</Container>
 	);
 }
 
 export default SearchInput;
+
+const Container = styled.div`
+	display: flex;
+	align-items: center;
+`;
 
 const SearchForm = styled.form`
 	width: 40rem;
@@ -43,7 +53,7 @@ const SearchForm = styled.form`
 `;
 
 const Input = styled.input`
-	width: 30rem;
+	width: 32rem;
 	height: 4rem;
 	font-size: 1.5rem;
 	outline: none;
@@ -61,4 +71,10 @@ const Button = styled.button`
 	&:hover {
 		cursor: pointer;
 	}
+`;
+
+const MagnifyingGlass = styled(FontAwesomeIcon)`
+	width: 2rem;
+	height: 2rem;
+	margin-right: 1rem;
 `;
