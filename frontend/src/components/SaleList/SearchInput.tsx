@@ -38,20 +38,20 @@ function SearchInput({ kakaoMap }: RefProps) {
 export default SearchInput;
 
 const SearchForm = styled.form`
-	width: 30rem;
+	width: 40rem;
 	display: flex;
-  a
 `;
 
 const Input = styled.input`
-	width: 15rem;
+	width: 30rem;
 	height: 4rem;
 	font-size: 1.5rem;
 	outline: none;
+	border: none;
 `;
 
 const Button = styled.button`
-	width: 4rem;
+	width: 5rem;
 	height: 4rem;
 	color: #fff;
 	background-color: ${(props) => props.theme.mainColor};

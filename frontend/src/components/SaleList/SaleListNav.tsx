@@ -19,4 +19,8 @@ export default SaleListNav;
 const Nav = styled.nav`
 	min-width: 100vw;
 	display: flex;
+	border: 1px solid ${(props) => props.theme.borderColor};
+	border-left: none;
+	border-right: none;
+	padding: 0.5rem;
 `;
