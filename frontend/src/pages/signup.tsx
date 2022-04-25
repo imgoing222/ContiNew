@@ -11,7 +11,7 @@ import authApi from "src/api/auth";
 function Signup() {
 	const router = useRouter();
 
-	const { handleFormSubmit, handleInputChange } = useForm({
+	const { buttonDisabled, handleFormSubmit, handleInputChange } = useForm({
 		initialValues: {
 			login_id: "",
 			password: "",
@@ -37,10 +37,14 @@ function Signup() {
 				<Label>닉네임</Label>
 				<Input placeholder="" name="username" onChange={handleInputChange} />
 				<Label>비밀번호</Label>
-				<Input placeholder="" name="password" type="password" onChange={handleInputChange} />
+				<Input
+					placeholder="영문, 숫자, 특수문자를 포함해주세요"
+					name="password"
+					onChange={handleInputChange}
+				/>
 				<Label>비밀번호 확인</Label>
-				<Input placeholder="영문, 숫자, 특수문자를 포함해주세요" type="password" />
-				<Button>회원가입</Button>
+				<Input />
+				<Button disabled={buttonDisabled}>회원가입</Button>
 			</FormContainer>
 			<Button>구글로 시작하기</Button>
 			<LinkButton href="/signin">로그인하러가기</LinkButton>

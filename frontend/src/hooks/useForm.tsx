@@ -16,10 +16,15 @@ interface Values {
 const useForm = ({ initialValues, onSubmit }: Props) => {
 	const [values, setValues] = useState(initialValues);
 	const [errors, setErrors] = useState<{ [key: string]: string }>({});
+	const [buttonDisabled, setButtonDisabled] = useState(true);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		setValues({ ...values, [name]: value.trim() });
+		console.log(Object(validate(values)));
+		if (Object.keys(validate(values)).length === 0) {
+			setButtonDisabled(false);
+		}
 	};
 
 	const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,12 +32,12 @@ const useForm = ({ initialValues, onSubmit }: Props) => {
 		if (Object.keys(validate(values)).length === 0) {
 			return await onSubmit(values);
 		}
-		setErrors;
+		setErrors(validate(values));
 	};
 
 	const validate = ({ login_id, username, password }: Values) => {
 		const errors: { [key: string]: string } = {};
-		if (!formValidator.validateId(login_id)) errors.email = "4~20자 사이의 아이디를 입력해주세요.";
+		if (!formValidator.validateId(login_id)) errors.id = "4~20자 사이의 아이디를 입력해주세요.";
 		if (username && !formValidator.validateUsername(username))
 			errors.username = "2자 이상의 유저네임을 입력해주세요.";
 		if (!formValidator.validatePassword(password))
@@ -40,7 +45,7 @@ const useForm = ({ initialValues, onSubmit }: Props) => {
 		return errors;
 	};
 
-	return { handleFormSubmit, handleInputChange };
+	return { errors, handleFormSubmit, handleInputChange, buttonDisabled };
 };
 
 export default useForm;
