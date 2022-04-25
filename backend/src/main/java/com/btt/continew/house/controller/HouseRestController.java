@@ -1,13 +1,18 @@
 package com.btt.continew.house.controller;
 
+import com.btt.continew.house.controller.dto.request.HouseListRequest;
 import com.btt.continew.house.controller.dto.request.HouseSaveRequest;
+import com.btt.continew.house.controller.dto.response.HouseListResponse;
 import com.btt.continew.house.service.HouseService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import java.util.List;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,5 +55,11 @@ public class HouseRestController {
         @ApiParam(hidden = true) @AuthenticationPrincipal String email) {
         houseService.create(request, images, email);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/houses/list")
+    @ApiOperation(value = "매물 목록", notes = "매물 목록 api")
+    public ResponseEntity<HouseListResponse> show(@RequestBody HouseListRequest request, Pageable pageable) {
+        return ResponseEntity.ok().body(houseService.show(request, pageable));
     }
 }
