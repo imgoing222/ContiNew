@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
+import SaleListNav from "./SaleListNav";
 
 function Map() {
 	const kakaoMap = useRef<HTMLElement | null>(null);
-	const [keyword, setKeyword] = useState("");
 
 	useEffect(() => {
 		const $script = document.createElement("script");
@@ -65,34 +65,9 @@ function Map() {
 		return () => $script.removeEventListener("load", onLoadKakaoMap);
 	}, []);
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-
-		const geocoder = new window.kakao.maps.services.Geocoder();
-		const places = new window.kakao.maps.services.Places();
-		const searchAddress = (result, status) => {
-			if (result.length === 0) return;
-			if (status === window.kakao.maps.services.Status.OK) {
-				const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
-
-				kakaoMap.current.setCenter(coords);
-			}
-		};
-
-		geocoder.addressSearch(keyword, searchAddress);
-		places.keywordSearch(keyword, searchAddress);
-	};
-
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setKeyword(e.target.value);
-	};
-
 	return (
 		<>
-			<form onSubmit={handleSubmit}>
-				검색
-				<input type="text" value={keyword} onChange={handleChange} />
-			</form>
+			<SaleListNav kakaoMap={kakaoMap} />
 			<div
 				id="map"
 				style={{
