@@ -47,6 +47,7 @@ const Input = styled.input`
 	height: 4rem;
 	font-size: 1.5rem;
 	outline: none;
+	border: none;
 `;
 
 const Button = styled.button`
