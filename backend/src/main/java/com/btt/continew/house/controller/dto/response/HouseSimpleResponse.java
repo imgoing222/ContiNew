@@ -3,7 +3,6 @@ package com.btt.continew.house.controller.dto.response;
 import com.btt.continew.house.domain.House;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
-import javax.persistence.Column;
 import lombok.Getter;
 
 @Getter
@@ -17,7 +16,7 @@ public class HouseSimpleResponse {
     @ApiModelProperty(position = 1, notes = "보증금", example = "10000000")
     private Long deposit;
 
-    @JsonProperty("montyly_rent")
+    @JsonProperty("monthly_rent")
     @ApiModelProperty(position = 2, notes = "월세", example = "500000")
     private Long monthlyRent;
 
@@ -26,23 +25,23 @@ public class HouseSimpleResponse {
     private String houseType;
 
     @JsonProperty("sido_name")
-    @ApiModelProperty(position = 4, notes = "시/도명", example = "경기도")
+    @ApiModelProperty(position = 4, notes = "시/도명", example = "서울")
     private String sidoName;
 
     @JsonProperty("gungu_name")
-    @ApiModelProperty(position = 5, notes = "시/군/구명", example = "광명시")
+    @ApiModelProperty(position = 5, notes = "시/군/구명", example = "동대문구")
     private String gunguName;
 
     @JsonProperty("dong_name")
-    @ApiModelProperty(position = 6, notes = "동/읍/면명", example = "소하동")
+    @ApiModelProperty(position = 6, notes = "동/읍/면명", example = "이문동")
     private String dongName;
 
-    @JsonProperty("road_name")
-    @ApiModelProperty(position = 7, notes = "도로명", example = "신촌로 49")
-    private String roadName;
+    @JsonProperty("jibun_address")
+    @ApiModelProperty(position = 7, notes = "지번 주소", example = "서울 동대문구 이문동 264-295")
+    private String jibunAddress;
 
     @JsonProperty("address_detail")
-    @ApiModelProperty(position = 8, notes = "상세주소", example = "108동")
+    @ApiModelProperty(position = 8, notes = "상세주소", example = "스카이빌")
     private String addressDetail;
 
     @JsonProperty("description")
@@ -53,7 +52,7 @@ public class HouseSimpleResponse {
     }
 
     public HouseSimpleResponse(Long id, Long deposit, Long monthlyRent, String houseType, String sidoName, String gunguName,
-        String dongName, String roadName, String addressDetail, String description) {
+        String dongName, String jibunAddress, String addressDetail, String description) {
         this.id = id;
         this.deposit = deposit;
         this.monthlyRent = monthlyRent;
@@ -61,7 +60,7 @@ public class HouseSimpleResponse {
         this.sidoName = sidoName;
         this.gunguName = gunguName;
         this.dongName = dongName;
-        this.roadName = roadName;
+        this.jibunAddress = jibunAddress;
         this.addressDetail = addressDetail;
         this.description = description;
     }
@@ -75,7 +74,7 @@ public class HouseSimpleResponse {
             house.getSidoName(),
             house.getGunguName(),
             house.getDongName(),
-            house.getRoadName(),
+            house.getJibunAddress(),
             house.getAddressDetail(),
             house.getDescription()
         );
