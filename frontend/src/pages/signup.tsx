@@ -4,38 +4,29 @@ import { Header } from "@components/account/Header";
 import { Input } from "@components/account/Input";
 import { Label } from "@components/account/Label";
 import { LinkButton } from "@components/account/LinkButton";
-import { formValidator } from "@utils/index";
-import { useState } from "react";
+import useForm from "@hooks/useForm";
+import { useRouter } from "next/router";
 import authApi from "src/api/auth";
 
 function Signup() {
-	const [values, setValues] = useState({ login_id: "", password: "", username: "" });
+	const router = useRouter();
 
-	const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		if (Object.keys(validate(values)).length === 0) {
-			const res = await authApi.signup(values);
-			console.log(res);
-		} else {
-			console.log(validate(values));
-		}
-	};
-
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
-		setValues({ ...values, [name]: value.trim() });
-	};
-
-	const validate = (values: { login_id: string; password: string; username: string }) => {
-		const errors: { [key: string]: string } = {};
-		if (!formValidator.validateId(values.login_id))
-			errors.email = "4~20자 사이의 아이디를 입력해주세요.";
-		if (!formValidator.validateUsername(values.username))
-			errors.username = "2자 이상의 유저네임을 입력해주세요.";
-		if (!formValidator.validatePassword(values.password))
-			errors.password = "특수문자를 1자 이상 포함해주세요.";
-		return errors;
-	};
+	const { handleFormSubmit, handleInputChange } = useForm({
+		initialValues: {
+			login_id: "",
+			password: "",
+			username: "",
+		},
+		onSubmit: async (values) => {
+			try {
+				await authApi.signup(values);
+				// 본인인증 페이지로 수정할 것
+				router.push("/");
+			} catch (err) {
+				console.log(err);
+			}
+		},
+	});
 
 	return (
 		<Container>
