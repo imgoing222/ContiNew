@@ -39,12 +39,13 @@ function Map() {
 					styles: [
 						{
 							background: "rgba(255, 80, 80, .8)",
-							width: "60px",
-							height: "60px",
+							width: "4rem",
+							height: "4rem",
 							color: "#fff",
-							borderRadius: "30px",
+							borderRadius: "3rem",
 							textAlign: "center",
-							lineHeight: "61px",
+							lineHeight: "4.1rem",
+							fontSize: "2rem",
 						},
 					],
 				});
