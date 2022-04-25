@@ -1,4 +1,6 @@
-import "@styles/globals.css";
+import GlobalStyle from "@styles/globalstyle";
+import { ThemeProvider } from "styled-components";
+import theme from "@styles/theme";
 import type { AppProps } from "next/app";
 declare global {
 	interface Window {
@@ -6,6 +8,13 @@ declare global {
 	}
 }
 function MyApp({ Component, pageProps }: AppProps) {
-	return <Component {...pageProps} />;
+	return (
+		<>
+			<GlobalStyle />
+			<ThemeProvider theme={theme}>
+				<Component {...pageProps} />
+			</ThemeProvider>
+		</>
+	);
 }
 export default MyApp;

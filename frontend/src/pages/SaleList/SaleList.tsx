@@ -1,4 +1,4 @@
-import Map from "@components/map/Map";
+import Map from "@components/SaleList/Map";
 import React from "react";
 
 function SaleList() {
