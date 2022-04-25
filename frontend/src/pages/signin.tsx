@@ -4,24 +4,27 @@ import { Header } from "@components/account/Header";
 import { Input } from "@components/account/Input";
 import { Label } from "@components/account/Label";
 import { LinkButton } from "@components/account/LinkButton";
-import { useState } from "react";
+import useForm from "@hooks/useForm";
+import { useRouter } from "next/router";
 import authApi from "src/api/auth";
 
 function Signin() {
-	const [values, setValues] = useState({ login_id: "", password: "" });
+	const router = useRouter();
 
-	const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		console.log(values);
-		const res = await authApi.signin(values);
-		console.log(res);
-		console.log("로그인!");
-	};
-
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
-		setValues({ ...values, [name]: value.trim() });
-	};
+	const { handleFormSubmit, handleInputChange } = useForm({
+		initialValues: {
+			login_id: "",
+			password: "",
+		},
+		onSubmit: async (values) => {
+			try {
+				await authApi.signin(values);
+				router.push("/");
+			} catch (err) {
+				console.log(err);
+			}
+		},
+	});
 
 	return (
 		<Container>
