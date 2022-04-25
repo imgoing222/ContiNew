@@ -5,7 +5,7 @@ interface AuthApiType {
 	signup: (userInfo: {
 		login_id: string;
 		password: string;
-		username: string;
+		username?: string;
 	}) => Promise<AxiosResponse>;
 	signin: (userInfo: { login_id: string; password: string }) => Promise<AxiosResponse>;
 }
