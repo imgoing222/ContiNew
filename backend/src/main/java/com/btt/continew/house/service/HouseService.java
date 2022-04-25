@@ -2,7 +2,9 @@ package com.btt.continew.house.service;
 
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
+import com.btt.continew.house.controller.dto.request.HouseListRequest;
 import com.btt.continew.house.controller.dto.request.HouseSaveRequest;
+import com.btt.continew.house.controller.dto.response.HouseListResponse;
 import com.btt.continew.house.domain.House;
 import com.btt.continew.house.domain.HouseOption;
 import com.btt.continew.house.domain.HouseOptionRepository;
@@ -16,6 +18,8 @@ import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
 import java.io.IOException;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,8 +58,10 @@ public class HouseService {
             .sidoName(request.getSidoName())
             .gunguName(request.getGunguName())
             .dongName(request.getDongName())
-            .roadName(request.getRoadName())
+            .jibunAddress(request.getJibunAddress())
             .addressDetail(request.getAddressDetail())
+            .latitude(request.getLatitude())
+            .longitude(request.getLongitude())
             .floor(request.getFloor())
             .houseType(request.getHouseType())
             .tradeType(request.getTradeType())
@@ -89,5 +95,12 @@ public class HouseService {
                throw new BusinessException(ErrorCode.GLOBAL_ILLEGAL_ERROR);
            }
        }
+    }
+
+    @Transactional(readOnly = true)
+    public HouseListResponse show(HouseListRequest request, Pageable pageable) {
+        Page<House> houses = houseRepository.findAllByLatitudeBetweenAndLongitudeBetween(request.getYBottom(), request.getYTop(), request.getXLeft(),
+            request.getXRight(), pageable);
+        return HouseListResponse.from(houses);
     }
 }
