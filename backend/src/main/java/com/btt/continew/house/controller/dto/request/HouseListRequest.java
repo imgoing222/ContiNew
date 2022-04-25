@@ -7,19 +7,19 @@ import lombok.Getter;
 @Getter
 public class HouseListRequest {
 
-    @ApiModelProperty(name = "y_bottom", example = "33.448093757167825", notes = "위도 남쪽")
+    @ApiModelProperty(example = "33.448093757167825", notes = "위도 남쪽")
     @JsonProperty("y_bottom")
     private Long yBottom;
 
-    @ApiModelProperty(name = "y_top", position = 1, example = "33.45451311326508", notes = "위도 북쪽")
+    @ApiModelProperty(position = 1, example = "33.45451311326508", notes = "위도 북쪽")
     @JsonProperty("y_top")
     private Long yTop;
 
-    @ApiModelProperty(name = "x_left", position = 2, example = "126.55492857215698", notes = "경도 서쪽")
+    @ApiModelProperty(position = 2, example = "126.55492857215698", notes = "경도 서쪽")
     @JsonProperty("x_left")
     private Long xLeft;
 
-    @ApiModelProperty(name = "x_right", position = 3, example = "126.58615245267431", notes = "경도 동쪽")
+    @ApiModelProperty(position = 3, example = "126.58615245267431", notes = "경도 동쪽")
     @JsonProperty("x_right")
     private Long xRight;
 
