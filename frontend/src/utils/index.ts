@@ -1,1 +1,1 @@
-export default {};
+export * as formValidator from "./formValidator";
