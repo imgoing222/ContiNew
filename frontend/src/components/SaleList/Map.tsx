@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import SaleListNav, { RefProps } from "./SaleListNav";
+import React, { useEffect } from "react";
+import { RefProps } from "./SaleListNav";
 
 function Map({ kakaoMap }: RefProps) {
 	useEffect(() => {
