@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import cookie from "react-cookies";
-import authApi from "./auth";
+// import authApi from "./auth";
 
 axios.defaults.withCredentials = true;
 
@@ -20,7 +20,7 @@ const setInterceptors = (instance: AxiosInstance, isReissue?: boolean) => {
 		},
 		(error) => {
 			const index = cookie.load("index");
-			// const access_token = cookie.load("access_token");
+			const access_token = cookie.load("access_token");
 			// if (error.response.data.error_code === "A01") {
 			// 	authApi.reissue({ index, access_token });
 			// 	return instance.request(error.config);
