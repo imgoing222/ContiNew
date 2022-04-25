@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 function Map() {
 	const kakaoMap = useRef<HTMLElement | null>(null);
 	const [keyword, setKeyword] = useState("");
+
 	useEffect(() => {
 		const $script = document.createElement("script");
 		$script.async = true;
@@ -11,12 +12,15 @@ function Map() {
 
 		const onLoadKakaoMap = () => {
 			window.kakao.maps.load(() => {
+				//  지도 생성
 				const container = document.getElementById("map");
 				const options = {
 					center: new window.kakao.maps.LatLng(37.3595316, 127.1052133),
-					level: 8,
+					level: 5,
 				};
 				kakaoMap.current = new window.kakao.maps.Map(container, options);
+
+				// 임시 데터
 				const data = [
 					{ y: 37.3595316, x: 127.1052133, content: "네이버", num: 10 },
 					{ y: 37.3595315, x: 127.1052133, content: "다음", num: 22 },
@@ -45,33 +49,28 @@ function Map() {
 		e.preventDefault();
 
 		const geocoder = new window.kakao.maps.services.Geocoder();
-		geocoder.addressSearch(keyword, function (result, status) {
-			// 정상적으로 검색이 완료됐으면
-			if (result.length === 0) alert("검색 결과가 없습니다");
+		const places = new window.kakao.maps.services.Places();
+		const searchAddress = (result, status) => {
+			if (result.length === 0) return;
 			if (status === window.kakao.maps.services.Status.OK) {
-				var coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
-
-				// 결과값으로 받은 위치를 마커로 표시합니다
-				var marker = new window.kakao.maps.Marker({
+				const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+				// 결과값으로 받은 위치를 마커로 표시
+				const marker = new window.kakao.maps.Marker({
 					map: kakaoMap.current,
 					position: coords,
 				});
-
-				// 인포윈도우로 장소에 대한 설명을 표시합니다
-				var infowindow = new window.kakao.maps.InfoWindow({
-					content: `<div style="width:150px;text-align:center;padding:6px 0;">${result[0].address_name}</div>`,
-				});
-				infowindow.open(kakaoMap.current, marker);
-
-				// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 				kakaoMap.current.setCenter(coords);
 			}
-		});
+		};
+
+		geocoder.addressSearch(keyword, searchAddress);
+		places.keywordSearch(keyword, searchAddress);
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setKeyword(e.target.value);
 	};
+
 	return (
 		<>
 			<form onSubmit={handleSubmit}>
