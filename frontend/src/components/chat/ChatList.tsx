@@ -18,7 +18,7 @@ function ChatList({ chatList }: ChatListProps) {
 			</Title>
 			<div>
 				{chatList.map((chat) => (
-					<div>
+					<div key={chat.chatId}>
 						<p>{chat.person}</p>
 						<p>{chat.lastContent}</p>
 					</div>
