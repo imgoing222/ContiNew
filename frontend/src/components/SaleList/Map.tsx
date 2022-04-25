@@ -1,9 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import SaleListNav from "./SaleListNav";
+import SaleListNav, { RefProps } from "./SaleListNav";
 
-function Map() {
-	const kakaoMap = useRef<HTMLElement | null>(null);
-
+function Map({ kakaoMap }: RefProps) {
 	useEffect(() => {
 		const $script = document.createElement("script");
 		$script.async = true;
@@ -35,7 +33,6 @@ function Map() {
 				const clusterer = new window.kakao.maps.MarkerClusterer({
 					map: kakaoMap.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
 					averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-					minLevel: 0, // 클러스터 할 최소 지도 레벨
 					styles: [
 						{
 							background: "rgba(255, 80, 80, .8)",
@@ -67,7 +64,6 @@ function Map() {
 
 	return (
 		<>
-			<SaleListNav kakaoMap={kakaoMap} />
 			<div
 				id="map"
 				style={{
