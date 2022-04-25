@@ -20,6 +20,10 @@ function Map() {
 				};
 				kakaoMap.current = new window.kakao.maps.Map(container, options);
 
+				//  줌 옵션 설정
+				const zoomControl = new window.kakao.maps.ZoomControl();
+				kakaoMap.current.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT);
+
 				// 임시 데터
 				const data = [
 					{ y: 37.3595316, x: 127.1052133, content: "네이버", num: 10 },
