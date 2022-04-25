@@ -1,11 +1,11 @@
 export const validateId = (id: string): boolean => {
-	const regExp = /^[0-9a-zA-Z-_]{4,20}$/;
+	const regExp = /^[0-9a-zA-Z-_]{3,19}$/;
 	if (id) return regExp.test(id);
 	return false;
 };
 
 export const validatePassword = (password: string): boolean => {
-	const regExp = /^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,20}$/;
+	const regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 	if (password) return regExp.test(password);
 	return false;
 };
