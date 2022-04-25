@@ -53,7 +53,7 @@ const SearchForm = styled.form`
 `;
 
 const Input = styled.input`
-	width: 32rem;
+	width: 30rem;
 	height: 4rem;
 	font-size: 1.5rem;
 	outline: none;
