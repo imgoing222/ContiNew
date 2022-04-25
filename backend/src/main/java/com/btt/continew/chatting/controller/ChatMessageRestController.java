@@ -2,6 +2,8 @@ package com.btt.continew.chatting.controller;
 
 import com.btt.continew.chatting.domain.ChatMessage;
 import com.btt.continew.chatting.domain.ChatRoom;
+import com.btt.continew.chatting.domain.ChatRoomRepository;
+import com.btt.continew.chatting.redis.RedisPublisher;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -18,13 +20,17 @@ import org.springframework.web.bind.annotation.RestController;
 //@RequestMapping("/api/chatting")
 public class ChatMessageRestController {
 
-    private SimpMessageSendingOperations messagingTemplate;
+    private final RedisPublisher redisPublisher;
+    private final ChatRoomRepository chatRoomRepository;
 
     @MessageMapping("/chat/message")
     public void message(ChatMessage message){
-        if(ChatMessage.MessageType.ENTER.equals(message.getType()))
+        if(ChatMessage.MessageType.ENTER.equals(message.getType())){
+            chatRoomRepository.enterChatRoom(message.getRoomId());
             message.setContent(message.getSender() + "님과의 대화를 시작합니다.");
-        messagingTemplate.convertAndSend("/sub/chat/room" + message.getRoomId(), message);
+        }
+
+        redisPublisher.publish(chatRoomRepository.getTopic(message.getRoomId()),message);
     }
 
 //    private final ChatService chatService;
