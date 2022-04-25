@@ -5,7 +5,7 @@ export const validateId = (id: string): boolean => {
 };
 
 export const validatePassword = (password: string): boolean => {
-	const regExp = /^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,20}$/;
+	const regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 	if (password) return regExp.test(password);
 	return false;
 };
