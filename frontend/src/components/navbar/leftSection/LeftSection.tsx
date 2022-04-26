@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import MenuItem from "./MenuItem";
+
 function LeftSection() {
 	const menu = [
 		{ name: "지도", address: "#"},
@@ -8,8 +10,9 @@ function LeftSection() {
 
 	return (
 		<Container>
-			<div>지도</div>
-			<div>방내놓기</div>
+			{menu.map((item) => (
+				<MenuItem item={item} />
+			))}
 		</Container>
 	);
 }
