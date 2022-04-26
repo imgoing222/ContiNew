@@ -37,7 +37,7 @@ public enum ErrorCode {
     AUTHORITY_ENTRY_POINT(HttpStatus.UNAUTHORIZED, "오류가 있는 권한코드입니다.", "A03"),
 
     // SMS
-    SMS_TOO_MANY_REQUEST(HttpStatus.CONFLICT, "12시간 내에 5회 이상 요청했습니다.", "P01"),
+    SMS_TOO_MANY_REQUEST(HttpStatus.CONFLICT, "휴대폰 인증은 하루에 5회만 가능합니다", "P01"),
 
     // house
 
