@@ -2,8 +2,9 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   
-  *, *::before, *::after {
+ *, *::before, *::after {
     box-sizing: border-box;
+    margin:0;
   }
   html{
     font-size: 62.5%;
