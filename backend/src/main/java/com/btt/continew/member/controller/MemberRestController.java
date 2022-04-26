@@ -1,6 +1,7 @@
 package com.btt.continew.member.controller;
 
 import com.btt.continew.member.controller.dto.request.CheckDuplicateRequest;
+import com.btt.continew.member.controller.dto.request.CheckPhoneRequest;
 import com.btt.continew.member.controller.dto.request.MemberSaveRequest;
 import com.btt.continew.member.controller.dto.request.PhoneNumberRequest;
 import com.btt.continew.member.controller.dto.response.CheckDuplicateResponse;
@@ -56,6 +57,14 @@ public class MemberRestController {
     public ResponseEntity<CheckDuplicateResponse> sendPhoneCertifiedCode(@AuthenticationPrincipal String loginId,
         @RequestBody PhoneNumberRequest request) {
         memberService.certifiedByPhoneNumber(loginId, request);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/auth/members/phone-check")
+    @ApiOperation(value = "휴대폰 인증 번호 확인", notes = "휴대폰 인증 번호 확인하는 API")
+    public ResponseEntity<CheckDuplicateResponse> checkPhoneCertifiedCode(@AuthenticationPrincipal String loginId,
+        @RequestBody CheckPhoneRequest request) {
+        memberService.checkPhoneCertifiedCode(loginId, request);
         return ResponseEntity.noContent().build();
     }
 }

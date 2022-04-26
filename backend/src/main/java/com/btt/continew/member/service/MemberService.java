@@ -3,6 +3,7 @@ package com.btt.continew.member.service;
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
 import com.btt.continew.member.controller.dto.request.CheckDuplicateRequest;
+import com.btt.continew.member.controller.dto.request.CheckPhoneRequest;
 import com.btt.continew.member.controller.dto.request.MemberSaveRequest;
 import com.btt.continew.member.controller.dto.request.PhoneNumberRequest;
 import com.btt.continew.member.controller.dto.response.CheckDuplicateResponse;
@@ -75,24 +76,20 @@ public class MemberService {
 
     @Transactional
     public void certifiedByPhoneNumber(String loginId, PhoneNumberRequest request) {
-        // 5회 이상 했는지 확인
-        isMaxCertifyRequest(loginId);
-        // 이미 인증된 휴대폰 번호인지 확인
-        checkDuplicatePhoneNumber(request.getPhoneNumber());
+        Member member = findByLoginId(loginId);
+        checkDuplicatePhoneNumber(request.getPhoneNumber()); // 휴대폰 중복 검사
 
-        // 인증 번호 생성
+        CertifyPhone certifyPhone = certifyPhoneRepository.findByMember(member)
+            .orElseGet(() -> certifyPhoneRepository.save(CertifyPhone.builder()
+                .member(member)
+                .build()));
+
+        isMaxCertifyRequest(certifyPhone);
+
         String certifiedCode = smsService.randomCode();
 
-        // 디비에 저장
-        CertifyPhone certifyPhone = CertifyPhone.builder()
-            .certificationCode(certifiedCode)
-            .phoneNumber(request.getPhoneNumber())
-            .loginId(loginId)
-            .expireTime(LocalDateTime.now().plusMinutes(EXPIRED_TIME))
-            .build();
-        certifyPhoneRepository.save(certifyPhone);
+        certifyPhone.setNewCode(request.getPhoneNumber(), certifiedCode, LocalDateTime.now().plusMinutes(EXPIRED_TIME));
 
-        // 문자 보내기
         smsService.sendCertifiedCode(request.getPhoneNumber(), certifiedCode);
     }
 
@@ -102,8 +99,8 @@ public class MemberService {
         }
     }
 
-    public void isMaxCertifyRequest(String loginId) {
-        if (certifyPhoneRepository.countByLoginId(loginId) >= MAX_REQUEST_COUNT) {
+    public void isMaxCertifyRequest(CertifyPhone certifyPhone) {
+        if (certifyPhone.getTodayCount() >= MAX_REQUEST_COUNT) {
             throw new BusinessException(ErrorCode.SMS_TOO_MANY_REQUEST);
         }
     }
@@ -111,5 +108,30 @@ public class MemberService {
     @Transactional
     public void deleteCertifyPhoneTable() {
         certifyPhoneRepository.deleteByExpireTimeBefore(LocalDateTime.now());
+    }
+
+    @Transactional
+    public void checkPhoneCertifiedCode(String loginId, CheckPhoneRequest request) {
+        Member member = findByLoginId(loginId);
+
+        CertifyPhone certifyPhone = certifyPhoneRepository.findByMember(member)
+            .orElseThrow(() -> new BusinessException(ErrorCode.CERTIFY_NOT_FOUND_MEMBER));
+
+        checkExpiredCode(certifyPhone.getExpireTime());
+        checkCertificationCode(certifyPhone.getCertificationCode(), request.getCode());
+
+        member.successPhoneAuth(certifyPhone.getPhoneNumber());
+    }
+
+    public void checkExpiredCode(LocalDateTime expireTime) {
+        if (LocalDateTime.now().isAfter(expireTime)) {
+            throw new BusinessException(ErrorCode.CERTIFY_IS_EXPIRED_CODE);
+        }
+    }
+
+    public void checkCertificationCode(String certificationCode, String requestCode) {
+        if (!certificationCode.equals(requestCode)) {
+            throw new BusinessException(ErrorCode.CERTIFY_NOT_MATCH_CODE);
+        }
     }
 }
