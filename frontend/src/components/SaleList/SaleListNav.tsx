@@ -1,12 +1,8 @@
-import React from "react";
+import { MapRefType } from "src/pages/SaleList/SaleListPage";
 import styled from "styled-components";
 import SearchInput from "./SearchInput";
 
-export interface RefProps {
-	kakaoMap: React.MutableRefObject<HTMLElement | null>;
-}
-
-function SaleListNav({ kakaoMap }: RefProps) {
+function SaleListNav({ kakaoMap }: MapRefType) {
 	return (
 		<Nav>
 			<SearchInput kakaoMap={kakaoMap} />
@@ -17,10 +13,8 @@ function SaleListNav({ kakaoMap }: RefProps) {
 export default SaleListNav;
 
 const Nav = styled.nav`
-	min-width: 100vw;
 	display: flex;
 	border: 1px solid ${(props) => props.theme.borderColor};
 	border-left: none;
 	border-right: none;
-	padding: 0.5rem;
 `;
