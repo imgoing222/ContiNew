@@ -3,8 +3,10 @@ package com.btt.continew.house.controller.dto.request;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class HouseListRequest {
 
     @ApiModelProperty(example = "33.448093757167825", notes = "위도 남쪽")
