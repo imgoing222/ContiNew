@@ -1,10 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { RefProps } from "./SaleListNav";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { MapRefType } from "src/pages/SaleList/SaleListPage";
 
-function SearchInput({ kakaoMap }: RefProps) {
+function SearchInput({ kakaoMap }: MapRefType) {
 	const [keyword, setKeyword] = useState("");
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

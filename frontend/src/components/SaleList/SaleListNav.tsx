@@ -1,12 +1,9 @@
 import React from "react";
+import { MapRefType } from "src/pages/SaleList/SaleListPage";
 import styled from "styled-components";
 import SearchInput from "./SearchInput";
 
-export interface RefProps {
-	kakaoMap: React.MutableRefObject<HTMLElement | null>;
-}
-
-function SaleListNav({ kakaoMap }: RefProps) {
+function SaleListNav({ kakaoMap }: MapRefType) {
 	return (
 		<Nav>
 			<SearchInput kakaoMap={kakaoMap} />

@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
+import { MapRefType } from "src/pages/SaleList/SaleListPage";
 import styled from "styled-components";
-import { RefProps } from "./SaleListNav";
 
-function Map({ kakaoMap }: RefProps) {
+function Map({ kakaoMap }: MapRefType) {
 	useEffect(() => {
 		const $script = document.createElement("script");
 		$script.async = true;
@@ -10,17 +10,17 @@ function Map({ kakaoMap }: RefProps) {
 		document.head.appendChild($script);
 
 		const onLoadKakaoMap = () => {
-			window.kakao.maps.load(() => {
+			kakao.maps.load(() => {
 				//  지도 생성
-				const container = document.getElementById("map");
+				const container = document.getElementById("map") as HTMLElement;
 				const options = {
-					center: new window.kakao.maps.LatLng(37.3595316, 127.1052133),
+					center: new kakao.maps.LatLng(37.3595316, 127.1052133),
 					level: 5,
 				};
-				kakaoMap.current = new window.kakao.maps.Map(container, options);
+				kakaoMap.current = new kakao.maps.Map(container, options);
 
 				//  줌 옵션 설정
-				const zoomControl = new window.kakao.maps.ZoomControl();
+				const zoomControl = new kakao.maps.ZoomControl();
 				kakaoMap.current.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT);
 
 				// 임시 데터
@@ -31,7 +31,7 @@ function Map({ kakaoMap }: RefProps) {
 					{ y: 37.5663, x: 126.9779, content: "네이버" },
 					{ y: 37.5465, x: 126.9647, content: "네이버" },
 				];
-				const clusterer = new window.kakao.maps.MarkerClusterer({
+				const clusterer = new kakao.maps.MarkerClusterer({
 					map: kakaoMap.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
 					averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
 					styles: [
