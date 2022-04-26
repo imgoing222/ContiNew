@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -18,27 +20,39 @@ public class CertifyPhone {
     @Column(name = "certify_phone_id")
     private Long id;
 
-    @Column(name = "phone_number", length = 16, nullable = false)
+    @Column(name = "phone_number", length = 16)
     private String phoneNumber;
 
-    @Column(name = "certification_code", length = 6, nullable = false)
+    @Column(name = "certification_code", length = 6)
     private String certificationCode;
 
-    @Column(name = "login_id", length = 32, nullable = false)
-    private String loginId;
+    @ManyToOne(targetEntity = Member.class)
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member member;
 
-    @Column(name="expire_time")
+    @Column(name = "expire_time")
     private LocalDateTime expireTime;
+
+    @Column(name = "today_count")
+    private Integer todayCount;
 
     public CertifyPhone() {
 
     }
 
     @Builder
-    public CertifyPhone(String phoneNumber, String certificationCode, String loginId, LocalDateTime expireTime) {
+    public CertifyPhone(String phoneNumber, String certificationCode, Member member, LocalDateTime expireTime) {
         this.phoneNumber = phoneNumber;
         this.certificationCode = certificationCode;
-        this.loginId = loginId;
+        this.member = member;
         this.expireTime = expireTime;
+        this.todayCount = 0;
+    }
+
+    public void setNewCode(String phoneNumber, String certifiedCode, LocalDateTime expireTime) {
+        this.todayCount++;
+        this.phoneNumber = phoneNumber;
+        this.expireTime = expireTime;
+        this.certificationCode = certifiedCode;
     }
 }

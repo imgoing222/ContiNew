@@ -31,6 +31,12 @@ public enum ErrorCode {
     MEMBER_USERNAME_DUPLICATED_BECAUSE_OF_YOU(HttpStatus.CONFLICT, "회원님이 이미 사용 중인 닉네임입니다.", "M05"),
     MEMBER_PHONE_NUMBER_DUPLICATED(HttpStatus.CONFLICT, "이미 인증된 전화번호 입니다.", "M06"),
 
+    // certify
+    CERTIFY_NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "해당 아이디로 인증 요청을 한 기록이 없습니다.", "I01"),
+    CERTIFY_IS_EXPIRED_CODE(HttpStatus.FORBIDDEN, "만료된 코드입니다.", "I02"),
+    CERTIFY_NOT_MATCH_CODE(HttpStatus.NOT_FOUND, "일치하지 않는 인증 코드입니다.", "I03"),
+    CERTIFY_NOT_MATCH_PHONE_NUMBER(HttpStatus.NOT_FOUND, "인증 요청 했던 번호와 다른 번호입니다.", "I04"),
+
     // authority
     AUTHORITY_NOT_FOUND_BY_AUTHORITY_CODE(HttpStatus.NOT_FOUND, "존재하지 않는 권한코드입니다.", "A01"),
     AUTHORITY_ACCESS_DENIED(HttpStatus.UNAUTHORIZED, "접근 권한이 없는 권한코드입니다.", "A02"),

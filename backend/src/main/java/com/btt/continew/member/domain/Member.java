@@ -40,11 +40,11 @@ public class Member extends BaseEntity {
     @Column(name = "google_id")
     private String googleId;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", length = 16)
     private String phoneNumber;
 
     @Column(name = "phone_auth")
-    private String phoneAuth;
+    private Boolean phoneAuth;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "authority")
@@ -54,7 +54,7 @@ public class Member extends BaseEntity {
     }
 
     @Builder
-    public Member(String loginId, String password, String username, String googleId, String phoneNumber, String phoneAuth,
+    public Member(String loginId, String password, String username, String googleId, String phoneNumber, Boolean phoneAuth,
         Authority authority) {
         this.loginId = loginId;
         this.password = password;
@@ -71,6 +71,7 @@ public class Member extends BaseEntity {
             .password(password)
             .username(username)
             .authority(Authority.ROLE_MEMBER)
+            .phoneAuth(false)
             .build();
     }
 
@@ -95,5 +96,10 @@ public class Member extends BaseEntity {
         if (!Objects.isNull(password)) {
             this.password = passwordEncoder.encode(request.getNewPassword());
         }
+    }
+
+    public void successPhoneAuth(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        this.phoneAuth = true;
     }
 }

@@ -15,4 +15,11 @@ public class PasswordChangeRequest {
     @JsonProperty("new_password")
     private String newPassword;
 
+    public PasswordChangeRequest() {
+    }
+
+    public PasswordChangeRequest(String beforePassword, String newPassword) {
+        this.beforePassword = beforePassword;
+        this.newPassword = newPassword;
+    }
 }
