@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface ChatListProps {
-	chatList: {
+	chatList?: {
 		chatId: number;
 		user: string;
 		person: string;
@@ -17,8 +17,8 @@ function ChatList({ chatList }: ChatListProps) {
 				<h3>Messages</h3>
 			</Title>
 			<div>
-				{chatList.map((chat) => (
-					<div>
+				{chatList && chatList.map((chat) => (
+					<div key={chat.chatId}>
 						<p>{chat.person}</p>
 						<p>{chat.lastContent}</p>
 					</div>
