@@ -1,12 +1,18 @@
 import { faArrowRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import cookie from "react-cookies";
 import styled from "styled-components";
 
 function UserIcon() {
-	return (
+	const token = cookie.load("access_token");
+
+	return token ? (
 		<>
-				<FontAwesome icon={faUser} />
+			<FontAwesome icon={faUser} />
+			<FontAwesome icon={faArrowRightFromBracket} />
 		</>
+	) : (
+		<FontAwesome icon={faUser} />
 	);
 }
 
