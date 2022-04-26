@@ -7,6 +7,7 @@ function Navbar() {
 				<div>지도</div>
 				<div>방내놓기</div>
 			</Section>
+      <h1>ContiNew</h1>
 			<Section>
 				<div>채팅</div>
 				<div>프로필</div>
