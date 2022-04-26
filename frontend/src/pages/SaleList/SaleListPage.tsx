@@ -4,13 +4,17 @@ import SaleListNav from "@components/SaleList/SaleListNav";
 import React, { useRef } from "react";
 import styled from "styled-components";
 
+export interface MapRefType {
+	kakaoMap: React.MutableRefObject<kakao.maps.Map | null>;
+}
+
 function SaleListPage() {
-	const kakaoMap = useRef<HTMLElement | null>(null);
+	const kakaoMap = useRef<kakao.maps.Map | null>(null);
 	return (
 		<>
 			<SaleListNav kakaoMap={kakaoMap} />
 			<Container>
-				<SaleList />
+				<SaleList kakaoMap={kakaoMap} />
 				<Map kakaoMap={kakaoMap} />
 			</Container>
 		</>
