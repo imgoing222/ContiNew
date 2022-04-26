@@ -4,14 +4,14 @@ import MenuItem from "./MenuItem";
 
 function LeftSection() {
 	const menu = [
-		{ name: "지도", address: "/"},
-		{ name: "방내놓기", address: "/"},
+		{ id: 1, name: "지도", address: "/" },
+		{ id: 2, name: "방내놓기", address: "/" },
 	];
 
 	return (
 		<Container>
 			{menu.map((item) => (
-				<MenuItem item={item} />
+				<MenuItem key={item.id} item={item} />
 			))}
 		</Container>
 	);
