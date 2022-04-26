@@ -75,24 +75,20 @@ public class MemberService {
 
     @Transactional
     public void certifiedByPhoneNumber(String loginId, PhoneNumberRequest request) {
-        // 5회 이상 했는지 확인
-        isMaxCertifyRequest(loginId);
-        // 이미 인증된 휴대폰 번호인지 확인
-        checkDuplicatePhoneNumber(request.getPhoneNumber());
+        Member member = findByLoginId(loginId);
+        checkDuplicatePhoneNumber(request.getPhoneNumber()); // 휴대폰 중복 검사
 
-        // 인증 번호 생성
+        CertifyPhone certifyPhone = certifyPhoneRepository.findByMember(member)
+            .orElseGet(() -> certifyPhoneRepository.save(CertifyPhone.builder()
+                .member(member)
+                .build()));
+
+        isMaxCertifyRequest(certifyPhone);
+
         String certifiedCode = smsService.randomCode();
 
-        // 디비에 저장
-        CertifyPhone certifyPhone = CertifyPhone.builder()
-            .certificationCode(certifiedCode)
-            .phoneNumber(request.getPhoneNumber())
-            .loginId(loginId)
-            .expireTime(LocalDateTime.now().plusMinutes(EXPIRED_TIME))
-            .build();
-        certifyPhoneRepository.save(certifyPhone);
+        certifyPhone.setNewCode(request.getPhoneNumber(), certifiedCode, LocalDateTime.now().plusMinutes(EXPIRED_TIME));
 
-        // 문자 보내기
         smsService.sendCertifiedCode(request.getPhoneNumber(), certifiedCode);
     }
 
@@ -102,8 +98,8 @@ public class MemberService {
         }
     }
 
-    public void isMaxCertifyRequest(String loginId) {
-        if (certifyPhoneRepository.countByLoginId(loginId) >= MAX_REQUEST_COUNT) {
+    public void isMaxCertifyRequest(CertifyPhone certifyPhone) {
+        if (certifyPhone.getTodayCount() >= MAX_REQUEST_COUNT) {
             throw new BusinessException(ErrorCode.SMS_TOO_MANY_REQUEST);
         }
     }
