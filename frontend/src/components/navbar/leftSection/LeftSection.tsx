@@ -4,8 +4,8 @@ import MenuItem from "./MenuItem";
 
 function LeftSection() {
 	const menu = [
-		{ name: "지도", address: "#"},
-		{ name: "방내놓기", address: "#"},
+		{ name: "지도", address: "/"},
+		{ name: "방내놓기", address: "/"},
 	];
 
 	return (
@@ -17,7 +17,7 @@ function LeftSection() {
 	);
 }
 
-const Container = styled.div`
+const Container = styled.ul`
 	display: flex;
 	align-items: center;
 `;
