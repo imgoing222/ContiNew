@@ -1,18 +1,13 @@
 import styled from "styled-components";
 
+import { LeftSection, RightSection } from "@components/navbar";
+
 function Navbar() {
 	return (
 		<Nav>
-			<Section>
-				<div>지도</div>
-				<div>방내놓기</div>
-			</Section>
+			<LeftSection />
       <h1>ContiNew</h1>
-			<Section>
-				<div>채팅</div>
-				<div>프로필</div>
-				<div>로그아웃</div>
-			</Section>
+			<RightSection />
 		</Nav>
 	);
 }
@@ -24,10 +19,6 @@ const Nav = styled.nav`
   align-items: center;
   justify-content: space-between;
 	border-bottom: 1px solid black;
-`;
-
-const Section = styled.section`
-	display: flex;
 `;
 
 export default Navbar;
