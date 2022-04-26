@@ -110,6 +110,6 @@ public class MemberService {
 
     @Transactional
     public void deleteCertifyPhoneTable() {
-        certifyPhoneRepository.deleteByExpireTimeBefore(LocalDateTime.now().minusMinutes(3));
+        certifyPhoneRepository.deleteByExpireTimeBefore(LocalDateTime.now());
     }
 }
