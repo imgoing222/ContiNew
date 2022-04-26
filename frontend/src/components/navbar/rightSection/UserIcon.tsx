@@ -5,7 +5,7 @@ import styled from "styled-components";
 function UserIcon() {
 	return (
 		<>
-			<FontAwesome icon={faUser} />
+				<FontAwesome icon={faUser} />
 		</>
 	);
 }

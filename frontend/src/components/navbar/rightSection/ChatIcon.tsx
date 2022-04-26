@@ -1,11 +1,11 @@
-import { faBell } from "@fortawesome/free-solid-svg-icons";
+import { faRocketchat } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 
-function AlertIcon() {
+function ChatIcon() {
 	return (
 		<>
-			<FontAwesome icon={faBell} />
+			<FontAwesome icon={faRocketchat} />
 		</>
 	);
 }
@@ -16,4 +16,4 @@ const FontAwesome = styled(FontAwesomeIcon)`
 	margin-right: 1.5rem;
 `;
 
-export default AlertIcon;
+export default ChatIcon;

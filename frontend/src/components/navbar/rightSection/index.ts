@@ -1,2 +1,2 @@
-export { default as AlertIcon } from "./AlertIcon";
+export { default as ChatIcon } from "./ChatIcon";
 export { default as UserIcon } from "./UserIcon";

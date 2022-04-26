@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-import { AlertIcon, UserIcon } from "./index";
+import { ChatIcon, UserIcon } from "./index";
 
 function RightSection() {
 	return (
 		<Container>
-			<AlertIcon />
+			<ChatIcon />
 			<UserIcon />
 		</Container>
 	);
