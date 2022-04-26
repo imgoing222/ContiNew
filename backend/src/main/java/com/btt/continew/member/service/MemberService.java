@@ -108,7 +108,8 @@ public class MemberService {
         }
     }
 
+    @Transactional
     public void deleteCertifyPhoneTable() {
-        certifyPhoneRepository.deleteAll();
+        certifyPhoneRepository.deleteByExpireTimeBefore(LocalDateTime.now().minusMinutes(3));
     }
 }
