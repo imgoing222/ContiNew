@@ -1,14 +1,13 @@
 import styled from "styled-components";
-import AlertIcon from "./AlertIcon";
-import UserIcon from "./UserIcon";
+import { AlertIcon, UserIcon } from "./index";
 
 function RightSection() {
-  return(
-    <Container>
+	return (
+		<Container>
 			<AlertIcon />
 			<UserIcon />
 		</Container>
-  )
+	);
 }
 
 const Container = styled.div`
