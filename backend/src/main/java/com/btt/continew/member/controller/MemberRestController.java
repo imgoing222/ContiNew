@@ -2,6 +2,7 @@ package com.btt.continew.member.controller;
 
 import com.btt.continew.member.controller.dto.request.CheckDuplicateRequest;
 import com.btt.continew.member.controller.dto.request.MemberSaveRequest;
+import com.btt.continew.member.controller.dto.request.PhoneNumberRequest;
 import com.btt.continew.member.controller.dto.response.CheckDuplicateResponse;
 import com.btt.continew.member.service.MemberService;
 import io.swagger.annotations.Api;
@@ -10,6 +11,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.net.URI;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,8 +46,16 @@ public class MemberRestController {
     }
 
     @PostMapping("/members/exist-username")
-    @ApiOperation(value = "유저네임 중복검사", notes = "유저네임 중복 검사 api")
+    @ApiOperation(value = "유저네임 중복검사", notes = "유저네임 중복 검사")
     public ResponseEntity<CheckDuplicateResponse> checkExistUsername(@RequestBody CheckDuplicateRequest request) {
         return ResponseEntity.ok().body(memberService.checkExistUsername(request));
+    }
+
+    @PostMapping("/auth/members/phone-send")
+    @ApiOperation(value = "휴대폰 인증 번호 문자 받기", notes = "휴대폰 인증 번호 문자 받는 API")
+    public ResponseEntity<CheckDuplicateResponse> sendPhoneCertifiedCode(@AuthenticationPrincipal String loginId,
+        @RequestBody PhoneNumberRequest request) {
+        memberService.certifiedByPhoneNumber(loginId, request);
+        return ResponseEntity.noContent().build();
     }
 }
