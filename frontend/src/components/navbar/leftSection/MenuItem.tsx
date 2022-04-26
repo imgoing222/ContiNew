@@ -8,13 +8,14 @@ interface ItemProps {
 function MenuItem({ item }: ItemProps) {
 	return (
 		<Container>
-			<Link href={item.address}>
-				{item.name}
-			</Link>
+			<Link href={item.address}>{item.name}</Link>
 		</Container>
 	);
 }
 
-const Container = styled.li``;
+const Container = styled.li`
+	font-size: 2rem;
+  margin-left: 2rem;
+`;
 
 export default MenuItem;
