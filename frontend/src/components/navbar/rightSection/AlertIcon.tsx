@@ -1,7 +1,7 @@
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function Alert() {
+function AlertIcon() {
 	return (
 		<>
 			<FontAwesomeIcon icon={faBell} />
@@ -9,4 +9,4 @@ function Alert() {
 	);
 }
 
-export default Alert;
+export default AlertIcon;

@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import Alert from "./Alert";
+import AlertIcon from "./AlertIcon";
 
 function RightSection() {
   return(
     <Container>
-			<Alert />
+			<AlertIcon />
 			<div>프로필</div>
 			<div>로그아웃</div>
 		</Container>
