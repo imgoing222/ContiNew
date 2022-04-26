@@ -33,6 +33,7 @@ function ChatDetail() {
 
 	return (
 		<Container>
+			<ChatList />
 			<Chat />
 			<ItemDetail />
 		</Container>
