@@ -15,7 +15,6 @@ public class ContinewScheduleTasks {
 
     @Scheduled(cron = "0 3 0 * * *")
     // 초 분 시 일 월 요일
-    // 즉 매월 1일 0시 1분에 새로고침
     public void deleteCertifyPhoneTable() {
         memberService.deleteCertifyPhoneTable();
     }
