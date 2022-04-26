@@ -3,6 +3,7 @@ package com.btt.continew.member.service;
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
 import com.btt.continew.member.controller.dto.request.CheckDuplicateRequest;
+import com.btt.continew.member.controller.dto.request.CheckPhoneRequest;
 import com.btt.continew.member.controller.dto.request.MemberSaveRequest;
 import com.btt.continew.member.controller.dto.request.PhoneNumberRequest;
 import com.btt.continew.member.controller.dto.response.CheckDuplicateResponse;
@@ -107,5 +108,30 @@ public class MemberService {
     @Transactional
     public void deleteCertifyPhoneTable() {
         certifyPhoneRepository.deleteByExpireTimeBefore(LocalDateTime.now());
+    }
+
+    @Transactional
+    public void checkPhoneCertifiedCode(String loginId, CheckPhoneRequest request) {
+        Member member = findByLoginId(loginId);
+
+        CertifyPhone certifyPhone = certifyPhoneRepository.findByMember(member)
+            .orElseThrow(() -> new BusinessException(ErrorCode.CERTIFY_NOT_FOUND_MEMBER));
+
+        checkExpiredCode(certifyPhone.getExpireTime());
+        checkCertificationCode(certifyPhone.getCertificationCode(), request.getCode());
+
+        member.successPhoneAuth(certifyPhone.getPhoneNumber());
+    }
+
+    public void checkExpiredCode(LocalDateTime expireTime) {
+        if (LocalDateTime.now().isAfter(expireTime)) {
+            throw new BusinessException(ErrorCode.CERTIFY_IS_EXPIRED_CODE);
+        }
+    }
+
+    public void checkCertificationCode(String certificationCode, String requestCode) {
+        if (!certificationCode.equals(requestCode)) {
+            throw new BusinessException(ErrorCode.CERTIFY_NOT_MATCH_CODE);
+        }
     }
 }
