@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import styled from "styled-components";
 import { RefProps } from "./SaleListNav";
 
 function Map({ kakaoMap }: RefProps) {
@@ -64,15 +65,14 @@ function Map({ kakaoMap }: RefProps) {
 
 	return (
 		<>
-			<div
-				id="map"
-				style={{
-					width: "70%",
-					height: "700px",
-				}}
-			></div>
+			<Container id="map" />
 		</>
 	);
 }
 
 export default Map;
+
+const Container = styled.div`
+	width: 100%;
+	height: calc(100vh - 5rem);
+`;
