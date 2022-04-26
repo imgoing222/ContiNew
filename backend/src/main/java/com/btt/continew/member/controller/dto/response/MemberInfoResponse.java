@@ -9,30 +9,35 @@ import lombok.Getter;
 public class MemberInfoResponse {
 
     @JsonProperty("id")
-    @ApiModelProperty(notes = "ID", example = "1")
+    @ApiModelProperty(position = 1, notes = "ID", example = "1")
     private Long id;
 
     @JsonProperty("email")
-    @ApiModelProperty(notes = "이메일", example = "continew1111@naver.com")
+    @ApiModelProperty(position = 2, notes = "이메일", example = "continew1111@naver.com")
     private String email;
 
     @JsonProperty("username")
-    @ApiModelProperty(notes = "유저네임", example = "컨티뉴")
+    @ApiModelProperty(position = 3, notes = "유저네임", example = "컨티뉴")
     private String username;
 
     @JsonProperty("phone_nunber")
-    @ApiModelProperty(notes = "전화번호", example = "01000000000")
+    @ApiModelProperty(position = 4, notes = "전화번호", example = "01000000000")
     private String phoneNumber;
 
+    @JsonProperty("phone_auth")
+    @ApiModelProperty(position = 5, notes = "번호인증여부", example = "true")
+    private Boolean phoneAuth;
+
     @JsonProperty("social_id")
-    @ApiModelProperty(notes = "소셜 아이디 (소셜 확인용)", example = "")
+    @ApiModelProperty(position = 6, notes = "소셜 아이디 (소셜 확인용)", example = "아직 안만듦")
     private String socialId;
 
-    public MemberInfoResponse(Long id, String email, String username, String phoneNumber, String socialId) {
+    public MemberInfoResponse(Long id, String email, String username, String phoneNumber, Boolean phoneAuth, String socialId) {
         this.id = id;
         this.email = email;
         this.username = username;
         this.phoneNumber = phoneNumber;
+        this.phoneAuth = phoneAuth;
         this.socialId = socialId;
     }
 
@@ -42,6 +47,7 @@ public class MemberInfoResponse {
             member.getLoginId(),
             member.getUsername(),
             member.getPhoneNumber(),
+            member.getPhoneAuth(),
             member.getGoogleId()
         );
     }
