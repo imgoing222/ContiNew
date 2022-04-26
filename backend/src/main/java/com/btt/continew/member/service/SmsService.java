@@ -16,9 +16,6 @@ public class SmsService {
     public SmsService(@Value("${oauth.coolsms.api-key}") String apiKey,
         @Value("${oauth.coolsms.api-secret}") String apiSecret,
         @Value("${oauth.coolsms.api-phone-number}") String apiPhoneNumber) {
-        System.out.println(apiKey);
-        System.out.println(apiSecret);
-        System.out.println(apiPhoneNumber);
         this.apiPhoneNumber = apiPhoneNumber;
         this.coolSMS = new Message(apiKey, apiSecret);
     }
