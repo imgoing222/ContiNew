@@ -107,4 +107,8 @@ public class MemberService {
             throw new BusinessException(ErrorCode.SMS_TOO_MANY_REQUEST);
         }
     }
+
+    public void deleteCertifyPhoneTable() {
+        certifyPhoneRepository.deleteAll();
+    }
 }
