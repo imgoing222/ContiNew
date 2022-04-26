@@ -48,7 +48,6 @@ const Container = styled.div`
 `;
 
 const SearchForm = styled.form`
-	width: 40rem;
 	display: flex;
 `;
 
