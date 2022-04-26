@@ -44,15 +44,23 @@ public class HouseSimpleResponse {
     @ApiModelProperty(position = 8, notes = "상세주소", example = "스카이빌")
     private String addressDetail;
 
+    @JsonProperty("latitude")
+    @ApiModelProperty(position = 9, notes = "위도", example = "33.448093757167825")
+    private Long latitude;
+
+    @JsonProperty("longitude")
+    @ApiModelProperty(position = 10, notes = "경도", example = "126.55492857215698")
+    private Long longitude;
+
     @JsonProperty("description")
-    @ApiModelProperty(position = 9, notes = "상세설명", example = "입대하게 되어서 방 내놓습니다...")
+    @ApiModelProperty(position = 11, notes = "상세설명", example = "입대하게 되어서 방 내놓습니다...")
     private String description;
 
     public HouseSimpleResponse() {
     }
 
     public HouseSimpleResponse(Long id, Long deposit, Long monthlyRent, String houseType, String sidoName, String gunguName,
-        String dongName, String jibunAddress, String addressDetail, String description) {
+        String dongName, String jibunAddress, String addressDetail, Long latitude, Long longitude, String description) {
         this.id = id;
         this.deposit = deposit;
         this.monthlyRent = monthlyRent;
@@ -62,6 +70,8 @@ public class HouseSimpleResponse {
         this.dongName = dongName;
         this.jibunAddress = jibunAddress;
         this.addressDetail = addressDetail;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.description = description;
     }
 
@@ -76,6 +86,8 @@ public class HouseSimpleResponse {
             house.getDongName(),
             house.getJibunAddress(),
             house.getAddressDetail(),
+            house.getLatitude(),
+            house.getLongitude(),
             house.getDescription()
         );
     }
