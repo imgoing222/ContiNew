@@ -1,6 +1,12 @@
 import { useEffect, useState, useRef } from "react";
+import styled from "styled-components";
+
+import { Chat, ChatList, ItemDetail } from "@components/chat";
 
 function ChatDetail() {
+	const [socketConnected, setSocketConnected] = useState(false);
+	const [sendMessage, setSendMessage] = useState("");
+
 	const webSocketUrl = "ws://localhost:8080/ws/chat";
 	let ws = useRef<WebSocket | null>(null);
 
@@ -9,6 +15,7 @@ function ChatDetail() {
 			ws.current = new WebSocket(webSocketUrl);
 			ws.current.onopen = () => {
 				console.log("connected to " + webSocketUrl);
+				setSocketConnected(true);
 			};
 			ws.current.onclose = () => {
 				console.log("disconnect from " + webSocketUrl);
@@ -23,7 +30,21 @@ function ChatDetail() {
 			};
 		}
 	});
-	return <></>;
+
+	return (
+		<Container>
+			<Chat />
+			<ItemDetail />
+		</Container>
+	);
 }
+
+const Container = styled.div`
+	height: 70vh;
+	display: flex;
+	align-items: center;
+	margin: 10rem;
+	border: solid 2px #d3d3d3;
+`;
 
 export default ChatDetail;
