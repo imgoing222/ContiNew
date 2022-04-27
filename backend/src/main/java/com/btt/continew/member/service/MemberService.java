@@ -117,8 +117,9 @@ public class MemberService {
         CertifyPhone certifyPhone = certifyPhoneRepository.findByMember(member)
             .orElseThrow(() -> new BusinessException(ErrorCode.CERTIFY_NOT_FOUND_MEMBER));
 
-        checkExpiredCode(certifyPhone.getExpireTime());
-        checkCertificationCode(certifyPhone.getCertificationCode(), request.getCode());
+        checkDuplicatePhoneNumber(certifyPhone.getPhoneNumber()); // 번호 중복 이중 체크
+        checkExpiredCode(certifyPhone.getExpireTime()); // 인증 번호 만료기한 확인
+        checkCertificationCode(certifyPhone.getCertificationCode(), request.getCode()); // 인증번호 일치 여부 확인
 
         member.successPhoneAuth(certifyPhone.getPhoneNumber());
     }
