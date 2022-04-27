@@ -88,4 +88,25 @@ public class HouseDetailResponse {
         this.description = description;
         this.options = options;
     }
+
+    public static HouseDetailResponse of(House house, List<HouseOption> houseOptions) {
+        return new HouseDetailResponse(
+            house.getId(),
+            house.getMember().getUsername(),
+            house.getMember().getPhoneAuth(),
+            house.getJibunAddress(),
+            house.getAddressDetail(),
+            house.getTradeType(),
+            house.getHouseType(),
+            house.getDeposit(),
+            house.getMonthlyRent(),
+            house.getMaintenanceFee(),
+            house.getMaintenanceDetail(),
+            house.getPeriod(),
+            house.getDescription(),
+            houseOptions.stream()
+                .map(h -> h.getId())
+                .collect(Collectors.toList())
+        );
+    }
 }
