@@ -1,5 +1,5 @@
 export const validateId = (id: string): boolean => {
-	const regExp = /^[0-9a-zA-Z-_]{3,19}$/;
+	const regExp = /^[0-9a-zA-Z-_]{4,20}$/;
 	if (id) return regExp.test(id);
 	return false;
 };
