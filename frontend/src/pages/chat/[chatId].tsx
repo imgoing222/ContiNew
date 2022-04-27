@@ -1,4 +1,6 @@
 import { useEffect, useState, useRef } from "react";
+import SockJs from "sockjs-client";
+import StompJs from "stompjs";
 import styled from "styled-components";
 
 import { Chat, ChatList, ItemDetail } from "@components/chat";
