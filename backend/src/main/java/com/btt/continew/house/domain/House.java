@@ -1,6 +1,8 @@
 package com.btt.continew.house.domain;
 
 import com.btt.continew.global.domain.BaseEntity;
+import com.btt.continew.global.exception.BusinessException;
+import com.btt.continew.global.exception.ErrorCode;
 import com.btt.continew.member.domain.Member;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -99,5 +101,11 @@ public class House extends BaseEntity {
         this.maintenanceDetail = maintenanceDetail;
         this.period = period;
         this.description = description;
+    }
+
+    public void checkHouseByLoginId(String loginId) {
+       if (!member.getLoginId().equals(loginId)) {
+           throw new BusinessException(ErrorCode.HOUSE_NOT_MATCH_BY_LOGINID);
+       }
     }
 }

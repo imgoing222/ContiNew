@@ -4,6 +4,7 @@ import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
 import com.btt.continew.house.controller.dto.request.HouseListRequest;
 import com.btt.continew.house.controller.dto.request.HouseSaveRequest;
+import com.btt.continew.house.controller.dto.response.HouseDetailResponse;
 import com.btt.continew.house.controller.dto.response.HouseListResponse;
 import com.btt.continew.house.domain.House;
 import com.btt.continew.house.domain.HouseOption;
@@ -98,9 +99,24 @@ public class HouseService {
     }
 
     @Transactional(readOnly = true)
-    public HouseListResponse show(HouseListRequest request, Pageable pageable) {
+    public HouseListResponse showHouses(HouseListRequest request, Pageable pageable) {
         Page<House> houses = houseRepository.findAllByLatitudeBetweenAndLongitudeBetween(request.getYBottom(), request.getYTop(), request.getXLeft(),
             request.getXRight(), pageable);
         return HouseListResponse.from(houses);
+    }
+
+    @Transactional(readOnly = true)
+    public House findById(Long houseId) {
+        return houseRepository.findById(houseId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.HOUSE_NOT_FOUND_BY_ID));
+    }
+
+    @Transactional
+    public HouseDetailResponse show(Long houseId) {
+        House house = houseRepository.findById(houseId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.HOUSE_NOT_FOUND_BY_ID));
+        List<HouseOption> houseOptions = houseOptionRepository.findAllByHouse(house);
+        List<Image> images = imageRepository.findAllByHouse(house);
+        return HouseDetailResponse.of(house, houseOptions, images);
     }
 }
