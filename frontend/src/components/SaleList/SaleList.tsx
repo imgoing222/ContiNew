@@ -2,13 +2,9 @@ import { useEffect, useState } from "react";
 import { MapRefType } from "src/pages/SaleList/SaleListPage";
 import styled from "styled-components";
 
-function SaleList({ kakaoMap }: MapRefType) {
+function SaleList() {
 	const [zoomLevel, setZoomLevel] = useState(0);
-	// useEffect(() => {
-	// 	const level = kakaoMap.current.getLevel();
-	// 	setZoomLevel(level);
-	// 	console.log(level);
-	// }, [zoomLevel]);
+
 	return <Container></Container>;
 }
 

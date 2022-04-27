@@ -14,7 +14,7 @@ function SaleListPage() {
 		<>
 			<SaleListNav kakaoMap={kakaoMap} />
 			<Container>
-				<SaleList kakaoMap={kakaoMap} />
+				<SaleList />
 				<Map kakaoMap={kakaoMap} />
 			</Container>
 		</>
