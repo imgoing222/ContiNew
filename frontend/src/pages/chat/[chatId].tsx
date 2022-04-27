@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
-import SockJs from "sockjs-client";
-import StompJs from "stompjs";
+import SockJS from "sockjs-client";
+import StompJS from "stompjs";
 import styled from "styled-components";
 
 import { Chat, ChatList, ItemDetail } from "@components/chat";
@@ -9,14 +9,14 @@ function ChatDetail() {
 	const [socketConnected, setSocketConnected] = useState(false);
 	const [sendMessage, setSendMessage] = useState("");
 
-	// const sock = new SockJs("ws://localhost:8080/ws-stomp");
-	// const stomp = StompJs.over(sock);
+	const sock = new SockJS("http://localohst:8080/ws-stomp");
+	const stomp = StompJS.over(sock);
 
-	// useEffect(() => {
-	// 	stomp.connect({}, () => {
-	// 		console.log("Connected");
-	// 	})
-	// });
+	useEffect(() => {
+		stomp.connect({}, () => {
+			console.log("Connected");
+		});
+	});
 
 	// const webSocketUrl = "ws://localhost:8080/ws/chat";
 	// let ws = useRef<WebSocket | null>(null);
