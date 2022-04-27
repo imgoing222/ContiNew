@@ -12,9 +12,9 @@ public class MemberInfoResponse {
     @ApiModelProperty(position = 1, notes = "ID", example = "1")
     private Long id;
 
-    @JsonProperty("email")
-    @ApiModelProperty(position = 2, notes = "이메일", example = "continew1111@naver.com")
-    private String email;
+    @JsonProperty("login_id")
+    @ApiModelProperty(position = 2, notes = "로그인 아이디", example = "continew1111")
+    private String loginId;
 
     @JsonProperty("username")
     @ApiModelProperty(position = 3, notes = "유저네임", example = "컨티뉴")
@@ -32,9 +32,9 @@ public class MemberInfoResponse {
     @ApiModelProperty(position = 6, notes = "소셜 아이디 (소셜 확인용)", example = "아직 안만듦")
     private String socialId;
 
-    public MemberInfoResponse(Long id, String email, String username, String phoneNumber, Boolean phoneAuth, String socialId) {
+    public MemberInfoResponse(Long id, String loginId, String username, String phoneNumber, Boolean phoneAuth, String socialId) {
         this.id = id;
-        this.email = email;
+        this.loginId = loginId;
         this.username = username;
         this.phoneNumber = phoneNumber;
         this.phoneAuth = phoneAuth;
