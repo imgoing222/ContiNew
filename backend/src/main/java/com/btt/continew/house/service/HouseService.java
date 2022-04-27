@@ -116,6 +116,7 @@ public class HouseService {
         House house = houseRepository.findById(houseId)
             .orElseThrow(() -> new BusinessException(ErrorCode.HOUSE_NOT_FOUND_BY_ID));
         List<HouseOption> houseOptions = houseOptionRepository.findAllByHouse(house);
-        return HouseDetailResponse.of(house, houseOptions);
+        List<Image> images = imageRepository.findAllByHouse(house);
+        return HouseDetailResponse.of(house, houseOptions, images);
     }
 }
