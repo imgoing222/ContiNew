@@ -56,6 +56,9 @@ function Map({ kakaoMap }: MapRefType) {
 				);
 
 				clusterer.addMarkers(markers);
+				kakao.maps.event.addListener(kakaoMap.current, "bounds_changed", function () {
+					console.log(kakaoMap.current.getBounds());
+				});
 			});
 		};
 		$script.addEventListener("load", onLoadKakaoMap);
