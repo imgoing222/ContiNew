@@ -1,27 +1,26 @@
 package com.btt.continew.chatting.controller;
 
+import com.btt.continew.auth.infrastructure.JwtTokenProvider;
 import com.btt.continew.chatting.domain.ChatRoom;
 import com.btt.continew.chatting.domain.ChatRoomRepository;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/api/chatting")
+@RequestMapping("/chat")
 public class ChatRoomRestController {
 
-    private ChatRoomRepository chatRoomRepository;
+    private final ChatRoomRepository chatRoomRepository;
 
-    @GetMapping("/rooms")
+    private final JwtTokenProvider jwtTokenProvider;
+
+
+    @GetMapping("/room")
     @ResponseBody
     public List<ChatRoom> room() {
         return chatRoomRepository.findAllRoom();
@@ -38,4 +37,5 @@ public class ChatRoomRestController {
     public ChatRoom roomInfo(@PathVariable String roomId) {
         return chatRoomRepository.findRoomById(roomId);
     }
+
 }
