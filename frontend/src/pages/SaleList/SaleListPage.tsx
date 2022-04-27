@@ -5,16 +5,16 @@ import React, { useRef } from "react";
 import styled from "styled-components";
 
 export interface MapRefType {
-	kakaoMap: React.MutableRefObject<kakao.maps.Map | null>;
+	kakaoMap: React.MutableRefObject<kakao.maps.Map>;
 }
 
 function SaleListPage() {
-	const kakaoMap = useRef<kakao.maps.Map | null>(null);
+	const kakaoMap = useRef<kakao.maps.Map>();
 	return (
 		<>
 			<SaleListNav kakaoMap={kakaoMap} />
 			<Container>
-				<SaleList kakaoMap={kakaoMap} />
+				<SaleList />
 				<Map kakaoMap={kakaoMap} />
 			</Container>
 		</>
