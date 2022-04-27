@@ -1,47 +1,33 @@
 package com.btt.continew.chatting.controller;
 
+import com.btt.continew.auth.infrastructure.JwtTokenProvider;
 import com.btt.continew.chatting.domain.ChatMessage;
-import com.btt.continew.chatting.domain.ChatRoom;
-import com.btt.continew.chatting.domain.ChatRoomRepository;
-import com.btt.continew.chatting.redis.RedisPublisher;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
-//@RequestMapping("/api/chatting")
 public class ChatMessageRestController {
 
-    private final RedisPublisher redisPublisher;
-    private final ChatRoomRepository chatRoomRepository;
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final ChannelTopic channelTopic;
+
 
     @MessageMapping("/chat/message")
-    public void message(ChatMessage message){
-        if(ChatMessage.MessageType.ENTER.equals(message.getType())){
-            chatRoomRepository.enterChatRoom(message.getRoomId());
-            message.setContent(message.getSender() + "님과의 대화를 시작합니다.");
+    public void message(ChatMessage message, @Header("token") String token) {
+
+
+        if (ChatMessage.MessageType.ENTER.equals(message.getType())) {
+            message.setSender("[입장]");
         }
 
-        redisPublisher.publish(chatRoomRepository.getTopic(message.getRoomId()),message);
+        redisTemplate.convertAndSend(channelTopic.getTopic(), message);
     }
-
-//    private final ChatService chatService;
-//
-//    @PostMapping
-//    public ChatRoom createRoom(@RequestParam String name){
-//        return chatService.createRoom(name);
-//    }
-//
-//    @GetMapping
-//    public List<ChatRoom> findAllRoom(){
-//        return chatService.findAllRoom();
-//    }
 }
