@@ -72,4 +72,11 @@ public class HouseRestController {
     public ResponseEntity<HouseListResponse> showHouses(@RequestBody HouseListRequest request, Pageable pageable) {
         return ResponseEntity.ok().body(houseService.showHouses(request, pageable));
     }
+
+    @GetMapping("/houses/{house_id}")
+    @ApiOperation(value = "매물 상세 조회", notes = "매물 상세 조회 api")
+    @ApiImplicitParam(name = "house_id", value = "매물 id", required = true)
+    public ResponseEntity<HouseDetailResponse> show(@PathVariable(value = "house_id") Long houseId) {
+        return ResponseEntity.ok().body(houseService.show(houseId));
+    }
 }
