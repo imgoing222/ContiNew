@@ -1,5 +1,6 @@
 package com.btt.continew.house.domain;
 
+import com.btt.continew.global.domain.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +14,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class Image {
+public class Image extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

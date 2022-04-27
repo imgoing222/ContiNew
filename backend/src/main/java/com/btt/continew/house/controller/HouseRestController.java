@@ -2,17 +2,21 @@ package com.btt.continew.house.controller;
 
 import com.btt.continew.house.controller.dto.request.HouseListRequest;
 import com.btt.continew.house.controller.dto.request.HouseSaveRequest;
+import com.btt.continew.house.controller.dto.response.HouseDetailResponse;
 import com.btt.continew.house.controller.dto.response.HouseListResponse;
 import com.btt.continew.house.service.HouseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +37,10 @@ public class HouseRestController {
 
     @PostMapping("/houses")
     @ApiOperation(value = "매물 등록", notes = "매물 등록 api")
+    @ApiResponses({
+        @ApiResponse(code = 404, message = "NOT_FOUND\n옵션이 존재하지 않을 때(O01)"),
+        @ApiResponse(code = 400, message = "BAD_REQUEST\n이미지 등록에 실패했을 때(Z01)")
+    })
     @ApiImplicitParam(name = "house", value = "{\n"
         + "  \"sido_name\": \"서울\",\n"
         + "  \"gunguName\": \"동대문구\",\n"
@@ -61,7 +69,14 @@ public class HouseRestController {
 
     @PostMapping("/houses/list")
     @ApiOperation(value = "매물 목록", notes = "매물 목록 api")
-    public ResponseEntity<HouseListResponse> show(@RequestBody HouseListRequest request, Pageable pageable) {
-        return ResponseEntity.ok().body(houseService.show(request, pageable));
+    public ResponseEntity<HouseListResponse> showHouses(@RequestBody HouseListRequest request, Pageable pageable) {
+        return ResponseEntity.ok().body(houseService.showHouses(request, pageable));
+    }
+
+    @GetMapping("/houses/{house_id}")
+    @ApiOperation(value = "매물 상세 조회", notes = "매물 상세 조회 api")
+    @ApiImplicitParam(name = "house_id", value = "매물 id", required = true)
+    public ResponseEntity<HouseDetailResponse> show(@PathVariable(value = "house_id") Long houseId) {
+        return ResponseEntity.ok().body(houseService.show(houseId));
     }
 }
