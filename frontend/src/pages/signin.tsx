@@ -31,9 +31,9 @@ function Signin() {
 			<Header>로그인</Header>
 			<FormContainer onSubmit={handleFormSubmit}>
 				<Label>아이디</Label>
-				<Input placeholder="" name="login_id" onChange={handleInputChange} />
+				<Input placeholder="" name="login_id" onKeyDown={handleInputChange} />
 				<Label>비밀번호</Label>
-				<Input placeholder="" name="password" type="password" onChange={handleInputChange} />
+				<Input placeholder="" name="password" type="password" onKeyDown={handleInputChange} />
 				<Button>로그인</Button>
 			</FormContainer>
 			<Button>구글로 시작하기</Button>
