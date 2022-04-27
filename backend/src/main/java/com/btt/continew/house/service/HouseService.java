@@ -104,4 +104,15 @@ public class HouseService {
             request.getXRight(), pageable);
         return HouseListResponse.from(houses);
     }
+
+    @Transactional(readOnly = true)
+    public House findById(Long houseId) {
+        return houseRepository.findById(houseId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.HOUSE_NOT_FOUND_BY_ID));
+    }
+
+//    @Transactional
+//    public HouseDetailResponse show(String loginId, Long houseId) {
+//
+//    }
 }
