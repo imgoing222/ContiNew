@@ -7,11 +7,12 @@ import { LinkButton } from "@components/account/LinkButton";
 import useForm from "@hooks/useForm";
 import { useRouter } from "next/router";
 import authApi from "src/api/auth";
+import styled from "styled-components";
 
 function Signup() {
 	const router = useRouter();
 
-	const { buttonDisabled, handleFormSubmit, handleInputChange } = useForm({
+	const { disabled, handleFormSubmit, handleInputChange, errors } = useForm({
 		initialValues: {
 			login_id: "",
 			password: "",
@@ -33,18 +34,17 @@ function Signup() {
 			<Header>회원가입</Header>
 			<FormContainer onSubmit={handleFormSubmit}>
 				<Label>아이디</Label>
-				<Input placeholder="" name="login_id" onChange={handleInputChange} />
+				<Input name="login_id" onKeyUp={handleInputChange} />
+				<ErrorText>{errors.id}</ErrorText>
 				<Label>닉네임</Label>
-				<Input placeholder="" name="username" onChange={handleInputChange} />
+				<Input name="username" onKeyUp={handleInputChange} />
+				<ErrorText>{errors.username}</ErrorText>
 				<Label>비밀번호</Label>
-				<Input
-					placeholder="영문, 숫자, 특수문자를 포함해주세요"
-					name="password"
-					onChange={handleInputChange}
-				/>
+				<Input name="password" onKeyUp={handleInputChange} />
+				<ErrorText>{errors.password}</ErrorText>
 				<Label>비밀번호 확인</Label>
-				<Input />
-				<Button disabled={buttonDisabled}>회원가입</Button>
+				<Input name="passwordConfirm" />
+				<Button disabled={disabled}>회원가입</Button>
 			</FormContainer>
 			<Button>구글로 시작하기</Button>
 			<LinkButton href="/signin">로그인하러가기</LinkButton>
@@ -52,4 +52,7 @@ function Signup() {
 	);
 }
 
+const ErrorText = styled.p`
+	color: red;
+`;
 export default Signup;
