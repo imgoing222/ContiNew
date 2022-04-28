@@ -44,9 +44,9 @@ public class HouseRestController {
     })
     @ApiImplicitParam(name = "house", value = "{\n"
         + "  \"sido_name\": \"서울\",\n"
-        + "  \"gunguName\": \"동대문구\",\n"
-        + "  \"dongName\": \"이문동\",\n"
-        + "  \"jibunAddress\": \"서울 동대문구 이문동 294-295\",\n"
+        + "  \"gungu_name\": \"동대문구\",\n"
+        + "  \"dong_name\": \"이문동\",\n"
+        + "  \"jibun_address\": \"서울 동대문구 이문동 294-295\",\n"
         + "  \"address_detail\": \"스카이빌\",\n"
         + "  \"latitude\": 33.448093757167825,\n"
         + "  \"longitude\": 126.55492857215698,\n"
