@@ -4,6 +4,7 @@ import SaleInfo from "@components/createSale/SaleInfo";
 import React, { useState } from "react";
 import { HouseInfo } from "src/types/houseInfo";
 import styled from "styled-components";
+import Head from "next/head";
 
 export interface EventProps {
 	changeEvent: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -42,10 +43,15 @@ function index() {
 		setHouseInfo({ ...houseInfo, [event.target.name]: event.target.value });
 	};
 	return (
-		<Container>
-			<SaleInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
-			<PriceInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
-		</Container>
+		<>
+			<Head>
+				<title>매물 등록</title>
+			</Head>
+			<Container>
+				<SaleInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
+				<PriceInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
+			</Container>
+		</>
 	);
 }
 
@@ -55,5 +61,5 @@ const Conatiner = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	min-width: 120rem;
+	width: 120rem;
 `;
