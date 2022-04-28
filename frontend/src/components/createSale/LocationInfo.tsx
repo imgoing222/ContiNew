@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { EventProps } from "src/pages/createSale";
 import { Button, DivBox, InputText, Layout, Title } from "./index";
 import { Table, Td, Text, Th, Tr, Ul } from "./Table";
 import axios from "axios";
-function LocationInfo({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
-	const [address, setAddress] = useState("");
+function LocationInfo({ houseInfo, changeEvent }: EventProps) {
 	useEffect(() => {
 		const script = document.createElement("script");
 		script.src = "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
@@ -20,20 +19,15 @@ function LocationInfo({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 				},
 			},
 		);
-		if (setHouseInfo) {
-			setHouseInfo({
-				...houseInfo,
-				["longitude"]: +result.data.documents[0].x,
-				["latitude"]: +result.data.documents[0].y,
-			});
-		}
+		const longitude = result.data.documents[0].x;
+		const latitude = result.data.documents[0].y;
 	};
 	const loadLayout = () => {
 		window.daum.postcode.load(() => {
 			const postcode = new window.daum.Postcode({
 				oncomplete: function (data) {
-					searchCoordinate();
-					setAddress(data.jibunAddress);
+					// searchCoordinate();
+					console.log(data.jibunAddress);
 				},
 			});
 			postcode.open();
@@ -53,10 +47,9 @@ function LocationInfo({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 									<DivBox>
 										<InputText
 											width={40}
-											value={address}
+											value={houseInfo.jibunAddress}
 											name="jibunAddress"
 											placeholder="예) 서울 동대문구 이문동 294-295"
-											onChange={changeEvent}
 											readOnly
 										/>
 										<Button onClick={loadLayout}>주소 검색</Button>
