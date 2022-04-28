@@ -23,7 +23,7 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 
 	return (
 		<Layout>
-			<Title>가격 정보</Title>
+			<Title>거래 정보</Title>
 			<Table>
 				<tbody>
 					<Tr>
