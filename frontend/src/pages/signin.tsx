@@ -25,6 +25,10 @@ function Signin() {
 		},
 	});
 
+	const handleGoogleLoginClick = () => {
+		window.location.href = `http://localhost:8080/oauth2/authorization/google`;
+	};
+
 	return (
 		<Container>
 			<Header>로그인</Header>
@@ -35,7 +39,7 @@ function Signin() {
 				<Input placeholder="" name="password" type="password" onChange={handleInputChange} />
 				<Button>로그인</Button>
 			</FormContainer>
-			<Button>구글로 시작하기</Button>
+			<Button onClick={handleGoogleLoginClick}>구글로 시작하기</Button>
 			<LinkButton href="/signin">로그인하러가기</LinkButton>
 		</Container>
 	);
