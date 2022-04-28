@@ -18,6 +18,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -78,5 +79,15 @@ public class HouseRestController {
     @ApiImplicitParam(name = "house_id", value = "매물 id", required = true)
     public ResponseEntity<HouseDetailResponse> show(@PathVariable(value = "house_id") Long houseId) {
         return ResponseEntity.ok().body(houseService.show(houseId));
+    }
+
+    @PutMapping("/houses/{house_id}")
+    @ApiOperation(value = "매물 수정", notes = "매물 수정 api")
+    @ApiImplicitParam(name = "house_id", value = "매물 id", required = true)
+    public ResponseEntity<Void> update(@PathVariable(value = "house_id") Long houseId,
+        @RequestPart(value = "house") HouseSaveRequest request, @RequestPart(value = "images") List<MultipartFile> images,
+        @ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
+        houseService.update(houseId, request, images, loginId);
+        return ResponseEntity.noContent().build();
     }
 }
