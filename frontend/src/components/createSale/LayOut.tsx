@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
-export const Layout = styled.section`
+const Layout = styled.section`
 	border: 1px solid ${(props) => props.theme.borderColor};
 	width: 100%;
+	margin-bottom: 4rem;
 `;
+
+export default Layout;

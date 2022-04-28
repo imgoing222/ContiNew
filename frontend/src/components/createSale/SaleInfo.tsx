@@ -1,7 +1,6 @@
 import { EventProps } from "src/pages/createSale";
-import { Layout } from "./LayOut";
+import { Layout, Title } from "./index";
 import { Input, Label, Pbox, Table, Td, Th, Tr, Ul } from "./Table";
-import { Title } from "./Title";
 
 function SaleInfo({ changeEvent, checked }: EventProps) {
 	return (
