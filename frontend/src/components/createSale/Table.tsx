@@ -50,8 +50,16 @@ export const InputRadio = styled.input`
 `;
 
 export const InputText = styled.input`
-	width: 5rem;
-	height: 1rem;
+	width: 20rem;
+	height: 2rem;
+	font-size: 1.2rem;
+	padding: 2rem;
+	outline: none;
+`;
+
+export const Text = styled.p`
+	display: inline;
+	font-size: 2rem;
 `;
 
 export const Pbox = styled.p<CheckedProps>`

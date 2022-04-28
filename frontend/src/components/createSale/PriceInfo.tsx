@@ -1,6 +1,6 @@
 import { EventProps } from "src/pages/createSale";
-import { Layout, Title } from "./index";
-import { InputText, Label, Table, Td, Th, Tr, Ul } from "./Table";
+import { DivBox, Layout, Title } from "./index";
+import { InputText, Label, Table, Td, Text, Th, Tr, Ul } from "./Table";
 
 function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 	return (
@@ -13,14 +13,24 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 						<Td>
 							<Ul>
 								<li>
-									<Label htmlFor="deposit">
+									<DivBox>
 										<InputText
 											type="text"
 											name="deposit"
 											onChange={changeEvent}
 											value={houseInfo.deposit}
+											placeholder="보증금"
 										/>
-									</Label>
+										<Text> / </Text>
+										<InputText
+											type="text"
+											name="monthlyRent"
+											onChange={changeEvent}
+											value={houseInfo.monthlyRent}
+											placeholder="월세"
+										/>
+										<Text> 만원 </Text>
+									</DivBox>
 								</li>
 							</Ul>
 						</Td>
