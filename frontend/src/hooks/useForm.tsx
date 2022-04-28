@@ -19,7 +19,7 @@ const useForm = ({ initialValues, onSubmit }: Props) => {
 	const [errors, setErrors] = useState<{ [key: string]: string }>({});
 	const [disabled, setDisabled] = useState(true);
 
-	const handleInputChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target as HTMLInputElement;
 		const tempValues = { ...values, [name]: value.trim() };
 		setValues(tempValues);
@@ -33,6 +33,7 @@ const useForm = ({ initialValues, onSubmit }: Props) => {
 	const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (Object.keys(validate(values)).length === 0) {
+			console.log(values);
 			return await onSubmit(values);
 		}
 	};
