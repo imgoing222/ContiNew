@@ -26,6 +26,15 @@ public class ChatRoomRestController {
 
     private final ChatService chatService;
 
+    @GetMapping("/room")
+    @ResponseBody
+    public ResponseEntity<ChatRoomsResponse> getRoom(
+        @PageableDefault(sort = "last_message_time", direction = Direction.DESC)Pageable pageable,
+        @ApiParam(hidden = true) @AuthenticationPrincipal String loginId
+    ) {
+        System.out.println("겟룸");
+        return ResponseEntity.ok().body(chatService.showChatRoom(pageable,loginId));
+    }
 
     @PostMapping("/room")
     @ResponseBody
@@ -33,7 +42,5 @@ public class ChatRoomRestController {
         System.out.println("포스트 룸");
         return chatService.createChatRoom(request);
     }
-
-
 
 }
