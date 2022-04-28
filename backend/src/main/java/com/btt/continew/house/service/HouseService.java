@@ -91,6 +91,20 @@ public class HouseService {
        }
     }
 
+    private void saveHouseOptions(HouseSaveRequest request, House house) {
+        if (!request.getOptions().isEmpty()){
+            for(Long optionId: request.getOptions()) {
+                Option option = optionRepository.findById(optionId)
+                    .orElseThrow(() -> new BusinessException(ErrorCode.OPTION_NOT_FOUND_BY_ID));
+                HouseOption houseOption = HouseOption.builder()
+                    .house(house)
+                    .option(option)
+                    .build();
+                houseOptionRepository.save(houseOption);
+            }
+        }
+    }
+
     @Transactional(readOnly = true)
     public HouseListResponse showHouses(HouseListRequest request, Pageable pageable) {
         Page<House> houses = houseRepository.findAllByLatitudeBetweenAndLongitudeBetween(request.getYBottom(), request.getYTop(), request.getXLeft(),
