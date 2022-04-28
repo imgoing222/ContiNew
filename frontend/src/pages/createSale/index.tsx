@@ -55,5 +55,5 @@ const Conatiner = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	min-width: 120rem;
+	width: 120rem;
 `;
