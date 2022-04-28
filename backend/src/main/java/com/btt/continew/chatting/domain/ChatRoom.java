@@ -1,7 +1,9 @@
 package com.btt.continew.chatting.domain;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 import javax.persistence.Id;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,13 +13,21 @@ public class ChatRoom {
 
     @Id
     String roomId;
-    String name;
+    String seller;
+    String buyer;
+    Long sale;
 
-    public static ChatRoom create(String name){
-        ChatRoom chatRoom = new ChatRoom();
-        chatRoom.roomId = UUID.randomUUID().toString();
-        chatRoom.name = name;
+    String lastMessage;
+    LocalDateTime lastMessageTime;
 
-        return chatRoom;
+
+    @Builder
+    public ChatRoom (String seller, String buyer, Long sale){
+
+        this.roomId = UUID.randomUUID().toString();
+        this.seller = seller;
+        this.buyer = buyer;
+        this.sale = sale;
+
     }
 }
