@@ -1,32 +1,15 @@
 import { Container } from "@components/account/Container";
+import PriceInfo from "@components/createSale/PriceInfo";
 import SaleInfo from "@components/createSale/SaleInfo";
 import React, { useState } from "react";
+import { HouseInfo } from "src/types/houseInfo";
 import styled from "styled-components";
-
-interface HouseInfo {
-	sidoName: string;
-	gunguName: string;
-	dongName: string;
-	jibunAddress: string;
-	addressDetail: string;
-	latitude: number;
-	longitude: number;
-	floor: number;
-	saleType: string;
-	houseType: string;
-	deposit: number;
-	monthlyRent: number;
-	maintenanceFee: number;
-	maintenanceDetail: string;
-	period: number;
-	description: string;
-	option: number[];
-}
 
 export interface EventProps {
 	changeEvent: (event: React.ChangeEvent<HTMLInputElement>) => void;
-	checked: HouseInfo;
+	houseInfo: HouseInfo;
 }
+const numberKey = ["deposit", "monthlyRent", "maintenanceFee", "period"];
 
 function index() {
 	const [houseInfo, setHouseInfo] = useState<HouseInfo>({
@@ -37,24 +20,31 @@ function index() {
 		addressDetail: "",
 		latitude: 0,
 		longitude: 0,
-		floor: 0,
+		floor: "",
 		saleType: "",
 		houseType: "",
-		deposit: 0,
-		monthlyRent: 0,
-		maintenanceFee: 0,
+		monthlyRent: "",
+		maintenanceFee: "",
 		maintenanceDetail: "",
-		period: 0,
+		period: "",
 		description: "",
 		option: [],
+		deposit: "",
 	});
 
 	const handleHouseInfo = (event: React.ChangeEvent<HTMLInputElement>) => {
+		if (numberKey.includes(event.target.name)) {
+			return setHouseInfo({
+				...houseInfo,
+				[event.target.name]: event.target.value.replace(/\D/, ""),
+			});
+		}
 		setHouseInfo({ ...houseInfo, [event.target.name]: event.target.value });
 	};
 	return (
 		<Container>
-			<SaleInfo checked={houseInfo} changeEvent={handleHouseInfo} />
+			<SaleInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
+			<PriceInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 		</Container>
 	);
 }
