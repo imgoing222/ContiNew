@@ -4,3 +4,4 @@ export { default as DivBox } from "./DivBox";
 export { default as InputText } from "./InputText";
 export { default as MoneyText } from "./MoneyText";
 export { default as InputCheck } from "./InputCheck";
+export { default as Button } from "./Button";
