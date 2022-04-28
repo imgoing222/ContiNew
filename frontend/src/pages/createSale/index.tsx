@@ -1,4 +1,3 @@
-import { Container } from "@components/account/Container";
 import PriceInfo from "@components/createSale/PriceInfo";
 import SaleInfo from "@components/createSale/SaleInfo";
 import React, { useState } from "react";
@@ -57,9 +56,9 @@ function index() {
 
 export default index;
 
-const Conatiner = styled.div`
+const Container = styled.div`
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	margin: 0 auto;
 	width: 120rem;
 `;
