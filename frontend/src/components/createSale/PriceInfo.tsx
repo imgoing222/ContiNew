@@ -3,6 +3,15 @@ import { InputText, DivBox, Layout, Title } from "./index";
 import { Table, Td, Text, Th, Tr, Ul } from "./Table";
 
 function PriceInfo({ changeEvent, houseInfo }: EventProps) {
+	const changeMoneyUnit = (money: string) => {
+		if (money) {
+			const len = money.length;
+			if (money.length > 4) return ` ${money.slice(0, len - 4)} 억 ${money.slice(len - 4)}만원`;
+			return `${money} 만원`;
+		}
+		return "";
+	};
+
 	return (
 		<Layout>
 			<Title>가격 정보</Title>
@@ -30,6 +39,9 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 											placeholder="월세"
 										/>
 										<Text> 만원 </Text>
+										{`${changeMoneyUnit(houseInfo.deposit)} / ${changeMoneyUnit(
+											houseInfo.monthlyRent,
+										)}`}
 									</DivBox>
 								</li>
 							</Ul>
