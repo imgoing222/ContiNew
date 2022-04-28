@@ -3,6 +3,7 @@ package com.btt.continew.house.domain;
 import com.btt.continew.global.domain.BaseEntity;
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
+import com.btt.continew.house.controller.dto.request.HouseSaveRequest;
 import com.btt.continew.member.domain.Member;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -107,5 +108,25 @@ public class House extends BaseEntity {
        if (!member.getLoginId().equals(loginId)) {
            throw new BusinessException(ErrorCode.HOUSE_NOT_MATCH_BY_LOGINID);
        }
+    }
+
+    public void update(HouseSaveRequest request) {
+       this.sidoName = request.getSidoName();
+       this.gunguName = request.getGunguName();
+       this.dongName = request.getDongName();
+       this.dongName = request.getDongName();
+       this.jibunAddress = request.getJibunAddress();
+       this.addressDetail = request.getAddressDetail();
+       this.latitude = request.getLatitude();
+       this.longitude = request.getLongitude();
+       this.floor = request.getFloor();
+       this.tradeType = request.getTradeType();
+       this.houseType = request.getHouseType();
+       this.deposit = request.getDeposit();
+       this.monthlyRent = request.getMonthlyRent();
+       this.maintenanceFee = request.getMaintenanceFee();
+       this.maintenanceDetail = request.getMaintenanceDetail();
+       this.period = request.getPeriod();
+       this.description = request.getDescription();
     }
 }
