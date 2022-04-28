@@ -5,6 +5,7 @@ import { HouseInfo } from "src/types/houseInfo";
 import styled from "styled-components";
 import Head from "next/head";
 import OptionInfo from "@components/createSale/OptionInfo";
+import LocationInfo from "@components/createSale/LocationInfo";
 
 export interface EventProps {
 	changeEvent: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -59,6 +60,7 @@ function index() {
 				<SaleInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 				<PriceInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 				<OptionInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
+				<LocationInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 			</Container>
 		</>
 	);
