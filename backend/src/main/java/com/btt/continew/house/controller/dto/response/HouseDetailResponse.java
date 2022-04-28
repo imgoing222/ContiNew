@@ -32,9 +32,9 @@ public class HouseDetailResponse {
     @ApiModelProperty(notes = "상세 주소", example = "스카이빌")
     private String addressDetail;
 
-    @JsonProperty("trade_type")
+    @JsonProperty("sale_type")
     @ApiModelProperty(notes = "거래유형", example = "이어살기")
-    private String tradeType;
+    private String saleType;
 
     @JsonProperty("house_type")
     @ApiModelProperty(notes = "매물유형", example = "원룸")
@@ -76,14 +76,14 @@ public class HouseDetailResponse {
     }
 
     public HouseDetailResponse(Long id, String username, Boolean phoneAuth, String jibunAddress, String addressDetail,
-        String tradeType, String houseType, Long deposit, Long monthlyRent, Long maintenanceFee, String maintenanceDetail,
+        String saleType, String houseType, Long deposit, Long monthlyRent, Long maintenanceFee, String maintenanceDetail,
         Integer period, String description, List<Long> options, List<String> images) {
         this.id = id;
         this.username = username;
         this.phoneAuth = phoneAuth;
         this.jibunAddress = jibunAddress;
         this.addressDetail = addressDetail;
-        this.tradeType = tradeType;
+        this.saleType = saleType;
         this.houseType = houseType;
         this.deposit = deposit;
         this.monthlyRent = monthlyRent;
@@ -102,7 +102,7 @@ public class HouseDetailResponse {
             house.getMember().getPhoneAuth(),
             house.getJibunAddress(),
             house.getAddressDetail(),
-            house.getTradeType(),
+            house.getSaleType(),
             house.getHouseType(),
             house.getDeposit(),
             house.getMonthlyRent(),
