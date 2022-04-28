@@ -34,13 +34,13 @@ function Signup() {
 			<Header>회원가입</Header>
 			<FormContainer onSubmit={handleFormSubmit}>
 				<Label>아이디</Label>
-				<Input name="login_id" onKeyUp={handleInputChange} />
+				<Input name="login_id" onChange={handleInputChange} />
 				<ErrorText>{errors.id}</ErrorText>
 				<Label>닉네임</Label>
-				<Input name="username" onKeyUp={handleInputChange} />
+				<Input name="username" onChange={handleInputChange} />
 				<ErrorText>{errors.username}</ErrorText>
 				<Label>비밀번호</Label>
-				<Input name="password" onKeyUp={handleInputChange} />
+				<Input name="password" onChange={handleInputChange} />
 				<ErrorText>{errors.password}</ErrorText>
 				<Label>비밀번호 확인</Label>
 				<Input name="passwordConfirm" />
