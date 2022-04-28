@@ -119,4 +119,13 @@ public class HouseService {
         List<Image> images = imageRepository.findAllByHouse(house);
         return HouseDetailResponse.of(house, houseOptions, images);
     }
+
+    @Transactional
+    public void update(Long houseId, HouseSaveRequest request, List<MultipartFile> images, String loginId) {
+        House house = houseRepository.findById(houseId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.HOUSE_NOT_FOUND_BY_ID));
+
+        house.checkHouseByLoginId(loginId);
+        house.update(request);
+    }
 }
