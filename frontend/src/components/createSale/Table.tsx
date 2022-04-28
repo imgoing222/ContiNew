@@ -49,14 +49,6 @@ export const InputRadio = styled.input`
 	cursor: pointer;
 `;
 
-export const InputText = styled.input`
-	width: 20rem;
-	height: 2rem;
-	font-size: 1.2rem;
-	padding: 2rem;
-	outline: none;
-`;
-
 export const Text = styled.p`
 	display: inline;
 	font-size: 2rem;
