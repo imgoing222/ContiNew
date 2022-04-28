@@ -3,7 +3,7 @@ import { EventProps } from "src/pages/createSale";
 import { Button, DivBox, InputText, Layout, Title } from "./index";
 import { Table, Td, Text, Th, Tr, Ul } from "./Table";
 import axios from "axios";
-function LocationInfo({ houseInfo, changeEvent }: EventProps) {
+function LocationInfo({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 	const [address, setAddress] = useState("");
 	useEffect(() => {
 		const script = document.createElement("script");
@@ -20,9 +20,13 @@ function LocationInfo({ houseInfo, changeEvent }: EventProps) {
 				},
 			},
 		);
-		console.log(result.data.documents[0].x);
-		console.log(result.data.documents[0].y);
-		return result;
+		if (setHouseInfo) {
+			setHouseInfo({
+				...houseInfo,
+				["longitude"]: +result.data.documents[0].x,
+				["latitude"]: +result.data.documents[0].y,
+			});
+		}
 	};
 	const loadLayout = () => {
 		window.daum.postcode.load(() => {
