@@ -65,24 +65,17 @@ public class HouseService {
             .longitude(request.getLongitude())
             .floor(request.getFloor())
             .houseType(request.getHouseType())
-            .tradeType(request.getTradeType())
+            .saleType(request.getSaleType())
             .period(request.getPeriod())
             .build();
         houseRepository.save(house);
 
-       if (!request.getOptions().isEmpty()){
-           for(Long optionId: request.getOptions()) {
-               Option option = optionRepository.findById(optionId)
-                   .orElseThrow(() -> new BusinessException(ErrorCode.OPTION_NOT_FOUND_BY_ID));
-               HouseOption houseOption = HouseOption.builder()
-                   .house(house)
-                   .option(option)
-                   .build();
-               houseOptionRepository.save(houseOption);
-           }
-       }
+        saveHouseOptions(request, house);
+        saveImages(images, house);
+    }
 
-       for (MultipartFile file: images) {
+    private void saveImages(List<MultipartFile> images, House house) {
+        for (MultipartFile file: images) {
            try{
                String url = imageUploader.upload(file, "house");
 
@@ -98,6 +91,20 @@ public class HouseService {
        }
     }
 
+    private void saveHouseOptions(HouseSaveRequest request, House house) {
+        if (!request.getOptions().isEmpty()){
+            for(Long optionId: request.getOptions()) {
+                Option option = optionRepository.findById(optionId)
+                    .orElseThrow(() -> new BusinessException(ErrorCode.OPTION_NOT_FOUND_BY_ID));
+                HouseOption houseOption = HouseOption.builder()
+                    .house(house)
+                    .option(option)
+                    .build();
+                houseOptionRepository.save(houseOption);
+            }
+        }
+    }
+
     @Transactional(readOnly = true)
     public HouseListResponse showHouses(HouseListRequest request, Pageable pageable) {
         Page<House> houses = houseRepository.findAllByLatitudeBetweenAndLongitudeBetween(request.getYBottom(), request.getYTop(), request.getXLeft(),
@@ -111,12 +118,27 @@ public class HouseService {
             .orElseThrow(() -> new BusinessException(ErrorCode.HOUSE_NOT_FOUND_BY_ID));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public HouseDetailResponse show(Long houseId) {
         House house = houseRepository.findById(houseId)
             .orElseThrow(() -> new BusinessException(ErrorCode.HOUSE_NOT_FOUND_BY_ID));
         List<HouseOption> houseOptions = houseOptionRepository.findAllByHouse(house);
         List<Image> images = imageRepository.findAllByHouse(house);
         return HouseDetailResponse.of(house, houseOptions, images);
+    }
+
+    @Transactional
+    public void update(Long houseId, HouseSaveRequest request, List<MultipartFile> images, String loginId) {
+        House house = houseRepository.findById(houseId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.HOUSE_NOT_FOUND_BY_ID));
+
+        house.checkHouseByLoginId(loginId);
+        house.update(request);
+
+        houseOptionRepository.deleteHouseOptionsByHouse(houseId);
+        saveHouseOptions(request, house);
+
+        imageRepository.deleteImagesByHouses(houseId);
+        saveImages(images, house);
     }
 }

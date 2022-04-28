@@ -40,9 +40,9 @@ public class HouseSaveRequest {
     @JsonProperty("floor")
     private Integer floor;
 
-    @ApiModelProperty(name = "trade_type", position = 8, example = "이어살기")
-    @JsonProperty("trade_type")
-    private String tradeType;
+    @ApiModelProperty(name = "sale_type", position = 8, example = "이어살기")
+    @JsonProperty("sale_type")
+    private String saleType;
 
     @ApiModelProperty(name = "house_type", position = 9, example = "원룸")
     @JsonProperty("house_type")
@@ -80,7 +80,7 @@ public class HouseSaveRequest {
     }
 
     public HouseSaveRequest(String sidoName, String gunguName, String dongName, String jibunAddress, String addressDetail,
-        Long latitude, Long longitude, Integer floor, String tradeType, String houseType, Long deposit, Long monthlyRent,
+        Long latitude, Long longitude, Integer floor, String saleType, String houseType, Long deposit, Long monthlyRent,
         Long maintenanceFee, String maintenanceDetail, Integer period, String description, List<Long> options) {
         this.sidoName = sidoName;
         this.gunguName = gunguName;
@@ -90,7 +90,7 @@ public class HouseSaveRequest {
         this.latitude = latitude;
         this.longitude = longitude;
         this.floor = floor;
-        this.tradeType = tradeType;
+        this.saleType = saleType;
         this.houseType = houseType;
         this.deposit = deposit;
         this.monthlyRent = monthlyRent;
