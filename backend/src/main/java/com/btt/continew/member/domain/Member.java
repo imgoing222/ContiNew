@@ -1,6 +1,7 @@
 package com.btt.continew.member.domain;
 
 import com.btt.continew.auth.domain.Authority;
+import com.btt.continew.auth.domain.Provider;
 import com.btt.continew.global.domain.BaseEntity;
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
@@ -50,12 +51,16 @@ public class Member extends BaseEntity {
     @Column(name = "authority")
     private Authority authority;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "provider")
+    private Provider provider;
+
     protected Member() {
     }
 
     @Builder
     public Member(String loginId, String password, String username, String googleId, String phoneNumber, Boolean phoneAuth,
-        Authority authority) {
+        Authority authority, Provider provider) {
         this.loginId = loginId;
         this.password = password;
         this.username = username;
@@ -63,15 +68,18 @@ public class Member extends BaseEntity {
         this.phoneNumber = phoneNumber;
         this.phoneAuth = phoneAuth;
         this.authority = authority;
+        this.provider = provider;
     }
 
-    public static Member createMember(String loginId, String password, String username) {
+
+    public static Member createMember(String loginId, String password, String username, Provider provider) {
         return Member.builder()
             .loginId(loginId)
             .password(password)
             .username(username)
             .authority(Authority.ROLE_MEMBER)
             .phoneAuth(false)
+            .provider(provider)
             .build();
     }
 
