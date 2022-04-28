@@ -1,4 +1,4 @@
-import { faArrowRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cookie from "react-cookies";
 import styled from "styled-components";
