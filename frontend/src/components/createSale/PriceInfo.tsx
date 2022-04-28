@@ -1,6 +1,6 @@
 import { EventProps } from "src/pages/createSale";
 import { Layout, Title } from "./index";
-import { Input, Label, Table, Td, Th, Tr, Ul } from "./Table";
+import { InputText, Label, Table, Td, Th, Tr, Ul } from "./Table";
 
 function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 	return (
@@ -14,7 +14,7 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 							<Ul>
 								<li>
 									<Label htmlFor="deposit">
-										<Input
+										<InputText
 											type="text"
 											name="deposit"
 											onChange={changeEvent}

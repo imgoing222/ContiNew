@@ -39,7 +39,7 @@ export const Label = styled.label`
 	margin-right: 1rem;
 `;
 
-export const Input = styled.input`
+export const InputRadio = styled.input`
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -47,6 +47,11 @@ export const Input = styled.input`
 	left: 0;
 	opacity: 0;
 	cursor: pointer;
+`;
+
+export const InputText = styled.input`
+	width: 5rem;
+	height: 1rem;
 `;
 
 export const Pbox = styled.p<CheckedProps>`

@@ -1,6 +1,6 @@
 import { EventProps } from "src/pages/createSale";
 import { Layout, Title } from "./index";
-import { Input, Label, Pbox, Table, Td, Th, Tr, Ul } from "./Table";
+import { InputRadio, Label, Pbox, Table, Td, Th, Tr, Ul } from "./Table";
 
 function SaleInfo({ changeEvent, houseInfo }: EventProps) {
 	return (
@@ -14,7 +14,7 @@ function SaleInfo({ changeEvent, houseInfo }: EventProps) {
 							<Ul>
 								<li>
 									<Label htmlFor="saleType">
-										<Input
+										<InputRadio
 											type="radio"
 											name="saleType"
 											value="이어살기"
@@ -28,7 +28,7 @@ function SaleInfo({ changeEvent, houseInfo }: EventProps) {
 								</li>
 								<li>
 									<Label htmlFor="saleType">
-										<Input
+										<InputRadio
 											type="radio"
 											name="saleType"
 											value="쉐어하우스"
@@ -49,7 +49,7 @@ function SaleInfo({ changeEvent, houseInfo }: EventProps) {
 							<Ul>
 								<li>
 									<Label htmlFor="houseType">
-										<Input
+										<InputRadio
 											type="radio"
 											name="houseType"
 											value="원룸"
@@ -63,7 +63,7 @@ function SaleInfo({ changeEvent, houseInfo }: EventProps) {
 								</li>
 								<li>
 									<Label htmlFor="houseType">
-										<Input
+										<InputRadio
 											type="radio"
 											name="houseType"
 											value="투룸"
@@ -77,7 +77,7 @@ function SaleInfo({ changeEvent, houseInfo }: EventProps) {
 								</li>
 								<li>
 									<Label htmlFor="houseType">
-										<Input
+										<InputRadio
 											type="radio"
 											name="houseType"
 											value="쓰리룸"
