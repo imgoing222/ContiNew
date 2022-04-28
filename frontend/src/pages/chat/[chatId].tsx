@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import SockJS from "sockjs-client";
 import StompJS from "stompjs";
+import cookie from "react-cookies";
 import styled from "styled-components";
 
 import { Chat, ChatList, ItemDetail } from "@components/chat";
@@ -8,13 +9,18 @@ import { Chat, ChatList, ItemDetail } from "@components/chat";
 function ChatDetail() {
 	const [socketConnected, setSocketConnected] = useState(false);
 	const [sendMessage, setSendMessage] = useState("");
-
-	const sock = new SockJS("http://localohst:8080/ws-stomp");
+	
+	const token = cookie.load("access_token");
+	const sock = new SockJS("http://localhost:8080/ws-stomp");
 	const stomp = StompJS.over(sock);
 
 	useEffect(() => {
-		stomp.connect({}, () => {
+		stomp.connect({ Authorization: `Bearer ${token}` }, () => {
 			console.log("Connected");
+
+			// stomp.subscribe("/chat/1", (message) => {
+			// 	console.log(message);
+			// })
 		});
 	});
 
