@@ -1,6 +1,6 @@
-import Map from "@components/SaleList/Map";
-import SaleList from "@components/SaleList/SaleList";
-import SaleListNav from "@components/SaleList/SaleListNav";
+import Map from "@components/saleList/Map";
+import SaleList from "@components/saleList/SaleList";
+import SaleListNav from "@components/saleList/SaleListNav";
 import React, { useRef } from "react";
 import styled from "styled-components";
 
@@ -8,7 +8,7 @@ export interface MapRefType {
 	kakaoMap: React.MutableRefObject<kakao.maps.Map>;
 }
 
-function SaleListPage() {
+function index() {
 	const kakaoMap = useRef<kakao.maps.Map>();
 	return (
 		<>
@@ -20,7 +20,7 @@ function SaleListPage() {
 		</>
 	);
 }
-export default SaleListPage;
+export default index;
 
 const Container = styled.div`
 	display: flex;
