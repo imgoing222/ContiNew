@@ -33,4 +33,12 @@ public class ChatService {
         return chatRoom;
     }
 
+    @Transactional
+    public ChatRoomsResponse showChatRoom(Pageable pageable, String id){
+        Member member = memberService.findByLoginId(id);
+
+        Page<ChatRoom> chatRooms = chatRoomRepository.findAllBySellerOrBuyer(member,member,pageable);
+
+        return ChatRoomsResponse.from(chatRooms);
+    }
 }
