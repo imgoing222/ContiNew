@@ -1,9 +1,18 @@
 package com.btt.continew.chatting.controller;
 
 import com.btt.continew.auth.infrastructure.JwtTokenProvider;
+import com.btt.continew.chatting.controller.dto.request.ChatRoomRequest;
+import com.btt.continew.chatting.controller.dto.response.ChatRoomsResponse;
 import com.btt.continew.chatting.domain.ChatRoom;
 import com.btt.continew.chatting.domain.ChatRoomRepository;
+import com.btt.continew.chatting.service.ChatService;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,27 +24,16 @@ import java.util.List;
 @RequestMapping("/chat")
 public class ChatRoomRestController {
 
-    private final ChatRoomRepository chatRoomRepository;
+    private final ChatService chatService;
 
-    private final JwtTokenProvider jwtTokenProvider;
-
-
-    @GetMapping("/room")
-    @ResponseBody
-    public List<ChatRoom> room() {
-        return chatRoomRepository.findAllRoom();
-    }
 
     @PostMapping("/room")
     @ResponseBody
-    public ChatRoom createRoom(@RequestParam String name) {
-        return chatRoomRepository.createChatRoom(name);
+    public ChatRoom postRoom(@RequestBody ChatRoomRequest request) {
+        System.out.println("포스트 룸");
+        return chatService.createChatRoom(request);
     }
 
-    @GetMapping("/room/{roomId}")
-    @ResponseBody
-    public ChatRoom roomInfo(@PathVariable String roomId) {
-        return chatRoomRepository.findRoomById(roomId);
-    }
+
 
 }
