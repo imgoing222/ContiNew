@@ -134,5 +134,11 @@ public class HouseService {
 
         house.checkHouseByLoginId(loginId);
         house.update(request);
+
+        houseOptionRepository.deleteHouseOptionsByHouse(houseId);
+        saveHouseOptions(request, house);
+
+        imageRepository.deleteImagesByHouses(houseId);
+        saveImages(images, house);
     }
 }
