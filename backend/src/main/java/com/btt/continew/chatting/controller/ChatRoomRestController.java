@@ -1,10 +1,9 @@
 package com.btt.continew.chatting.controller;
 
-import com.btt.continew.auth.infrastructure.JwtTokenProvider;
+
 import com.btt.continew.chatting.controller.dto.request.ChatRoomRequest;
 import com.btt.continew.chatting.controller.dto.response.ChatRoomsResponse;
 import com.btt.continew.chatting.domain.ChatRoom;
-import com.btt.continew.chatting.domain.ChatRoomRepository;
 import com.btt.continew.chatting.service.ChatService;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
