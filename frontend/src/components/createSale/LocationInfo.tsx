@@ -15,7 +15,7 @@ function LocationInfo({ houseInfo, changeEvent }: EventProps) {
 			"https://dapi.kakao.com/v2/local/search/address.json?query=산격1동",
 			{
 				headers: {
-					Authorization: `KakaoAK cac93a0239e06151f08da334787b2819`,
+					Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API}`,
 				},
 			},
 		);
