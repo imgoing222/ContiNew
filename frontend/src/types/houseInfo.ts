@@ -6,14 +6,14 @@ export interface HouseInfo {
 	addressDetail: string;
 	latitude: number;
 	longitude: number;
-	floor: number;
+	floor: string;
 	saleType: string;
 	houseType: string;
-	deposit: number;
-	monthlyRent: number;
-	maintenanceFee: number;
+	deposit: string;
+	monthlyRent: string;
+	maintenanceFee: string;
 	maintenanceDetail: string;
-	period: number;
+	period: string;
 	description: string;
 	option: number[];
 }
