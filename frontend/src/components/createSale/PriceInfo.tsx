@@ -12,6 +12,15 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 		return "";
 	};
 
+	const changeMonthToYear = (month: string) => {
+		if (month) {
+			if (+month > 12)
+				return `${Math.floor(+month / 12)}년  ${+month % 12 > 0 ? (+month % 12) + "개월" : ""}`;
+			return `${month}개월`;
+		}
+		return "";
+	};
+
 	return (
 		<Layout>
 			<Title>가격 정보</Title>
@@ -89,6 +98,7 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 											placeholder="임대기간"
 										/>
 										<Text> 개월 </Text>
+										<MoneyText>{`${changeMonthToYear(houseInfo.period)}`}</MoneyText>
 									</DivBox>
 								</li>
 							</Ul>
