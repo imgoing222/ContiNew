@@ -17,6 +17,10 @@ function ChatDetail() {
 	useEffect(() => {
 		stomp.connect({ Authorization: `Bearer ${token}` }, () => {
 			console.log("Connected");
+
+			// stomp.subscribe("/chat/1", (message) => {
+			// 	console.log(message);
+			// })
 		});
 	});
 
