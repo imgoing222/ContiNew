@@ -74,7 +74,8 @@ public class HouseService {
         saveImages(images, house);
     }
 
-       for (MultipartFile file: images) {
+    private void saveImages(List<MultipartFile> images, House house) {
+        for (MultipartFile file: images) {
            try{
                String url = imageUploader.upload(file, "house");
 
