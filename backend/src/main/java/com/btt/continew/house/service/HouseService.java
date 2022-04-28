@@ -111,7 +111,7 @@ public class HouseService {
             .orElseThrow(() -> new BusinessException(ErrorCode.HOUSE_NOT_FOUND_BY_ID));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public HouseDetailResponse show(Long houseId) {
         House house = houseRepository.findById(houseId)
             .orElseThrow(() -> new BusinessException(ErrorCode.HOUSE_NOT_FOUND_BY_ID));
