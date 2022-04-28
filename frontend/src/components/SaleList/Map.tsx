@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { MapRefType } from "src/pages/SaleList/SaleListPage";
+import { MapRefType } from "src/pages/saleList";
 import { saleListApi } from "../../api/index";
 function Map({ kakaoMap }: MapRefType) {
 	useEffect(() => {
@@ -64,7 +64,7 @@ function Map({ kakaoMap }: MapRefType) {
 						x_left: coordinate.ha,
 						y_bottom: coordinate.qa,
 					};
-					const Sales = await saleListApi.getSales(coordinates);
+					const sales = await saleListApi.getSales(coordinates);
 				};
 				kakao.maps.event.addListener(kakaoMap.current, "bounds_changed", getSales);
 			});

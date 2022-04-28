@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { MapRefType } from "src/pages/SaleList/SaleListPage";
+import { MapRefType } from "src/pages/saleList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 

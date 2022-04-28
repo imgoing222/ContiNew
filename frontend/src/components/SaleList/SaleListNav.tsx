@@ -1,4 +1,4 @@
-import { MapRefType } from "src/pages/SaleList/SaleListPage";
+import { MapRefType } from "src/pages/saleList";
 import styled from "styled-components";
 import SearchInput from "./SearchInput";
 
