@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { HouseInfo } from "src/types/houseInfo";
 import styled from "styled-components";
 import Head from "next/head";
+import OptionInfo from "@components/createSale/OptionInfo";
 
 export interface EventProps {
 	changeEvent: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -28,11 +29,19 @@ function index() {
 		maintenanceDetail: "",
 		period: "",
 		description: "",
-		option: [],
+		options: [],
 		deposit: "",
 	});
 
 	const handleHouseInfo = (event: React.ChangeEvent<HTMLInputElement>) => {
+		if (event.target.name === "options") {
+			const idx = houseInfo.options.indexOf(event.target.value);
+			if (idx !== -1) {
+				return setHouseInfo({ ...houseInfo, ...[houseInfo.options.splice(idx, 1)] });
+			}
+			setHouseInfo({ ...houseInfo, ...[houseInfo.options.push(event.target.value)] });
+			return;
+		}
 		if (numberKey.includes(event.target.name)) {
 			return setHouseInfo({
 				...houseInfo,
@@ -49,6 +58,7 @@ function index() {
 			<Container>
 				<SaleInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 				<PriceInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
+				<OptionInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 			</Container>
 		</>
 	);
