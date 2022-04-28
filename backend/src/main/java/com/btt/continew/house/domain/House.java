@@ -3,6 +3,7 @@ package com.btt.continew.house.domain;
 import com.btt.continew.global.domain.BaseEntity;
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
+import com.btt.continew.house.controller.dto.request.HouseSaveRequest;
 import com.btt.continew.member.domain.Member;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,8 +53,8 @@ public class House extends BaseEntity {
     @Column(name = "floor")
     private Integer floor;
 
-    @Column(name = "trade_type")
-    private String tradeType;
+    @Column(name = "sale_type")
+    private String saleType;
 
     @Column(name = "house_type")
     private String houseType;
@@ -82,7 +83,7 @@ public class House extends BaseEntity {
 
     @Builder
     public House(Member member, String sidoName, String gunguName, String dongName, String jibunAddress, String addressDetail,
-        Long latitude, Long longitude, Integer floor, String tradeType, String houseType, Long deposit, Long monthlyRent,
+        Long latitude, Long longitude, Integer floor, String saleType, String houseType, Long deposit, Long monthlyRent,
         Long maintenanceFee, String maintenanceDetail, Integer period, String description) {
         this.member = member;
         this.sidoName = sidoName;
@@ -93,7 +94,7 @@ public class House extends BaseEntity {
         this.latitude = latitude;
         this.longitude = longitude;
         this.floor = floor;
-        this.tradeType = tradeType;
+        this.saleType = saleType;
         this.houseType = houseType;
         this.deposit = deposit;
         this.monthlyRent = monthlyRent;
@@ -107,5 +108,25 @@ public class House extends BaseEntity {
        if (!member.getLoginId().equals(loginId)) {
            throw new BusinessException(ErrorCode.HOUSE_NOT_MATCH_BY_LOGINID);
        }
+    }
+
+    public void update(HouseSaveRequest request) {
+       this.sidoName = request.getSidoName();
+       this.gunguName = request.getGunguName();
+       this.dongName = request.getDongName();
+       this.dongName = request.getDongName();
+       this.jibunAddress = request.getJibunAddress();
+       this.addressDetail = request.getAddressDetail();
+       this.latitude = request.getLatitude();
+       this.longitude = request.getLongitude();
+       this.floor = request.getFloor();
+       this.saleType = request.getSaleType();
+       this.houseType = request.getHouseType();
+       this.deposit = request.getDeposit();
+       this.monthlyRent = request.getMonthlyRent();
+       this.maintenanceFee = request.getMaintenanceFee();
+       this.maintenanceDetail = request.getMaintenanceDetail();
+       this.period = request.getPeriod();
+       this.description = request.getDescription();
     }
 }
