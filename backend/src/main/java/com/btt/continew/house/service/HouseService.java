@@ -65,7 +65,7 @@ public class HouseService {
             .longitude(request.getLongitude())
             .floor(request.getFloor())
             .houseType(request.getHouseType())
-            .tradeType(request.getTradeType())
+            .saleType(request.getSaleType())
             .period(request.getPeriod())
             .build();
         houseRepository.save(house);
