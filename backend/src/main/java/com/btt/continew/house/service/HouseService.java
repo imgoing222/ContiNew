@@ -141,4 +141,16 @@ public class HouseService {
         imageRepository.deleteImagesByHouses(houseId);
         saveImages(images, house);
     }
+
+    @Transactional
+    public void delete(Long houseId, String loginId) {
+        House house = houseRepository.findById(houseId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.HOUSE_NOT_FOUND_BY_ID));
+
+        house.checkHouseByLoginId(loginId);
+
+        houseOptionRepository.deleteHouseOptionsByHouse(houseId);
+        imageRepository.deleteImagesByHouses(houseId);
+        house.saveDeletedTime();
+    }
 }

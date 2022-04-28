@@ -15,6 +15,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,7 +52,7 @@ public class HouseRestController {
         + "  \"latitude\": 33.448093757167825,\n"
         + "  \"longitude\": 126.55492857215698,\n"
         + "  \"floor\": 3,\n"
-        + "  \"trade_type\": \"이어살기\",\n"
+        + "  \"sale_type\": \"이어살기\",\n"
         + "  \"house_type\": \"원룸\",\n"
         + "  \"deposit\": 10000000,\n"
         + "  \"monthly_rent\": 500000,\n"
@@ -88,6 +89,14 @@ public class HouseRestController {
         @RequestPart(value = "house") HouseSaveRequest request, @RequestPart(value = "images") List<MultipartFile> images,
         @ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
         houseService.update(houseId, request, images, loginId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/houses/{house_id}")
+    @ApiOperation(value = "매물 삭제", notes = "매물 삭제 api")
+    @ApiImplicitParam(name = "house_id", value = "매물 id", readOnly = true)
+    public ResponseEntity<Void> delete(@PathVariable(value = "house_id") Long houseId, @ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
+        houseService.delete(houseId, loginId);
         return ResponseEntity.noContent().build();
     }
 }
