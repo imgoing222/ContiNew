@@ -1,8 +1,6 @@
 import { EventProps } from "src/pages/createSale";
-import InputCheck from "./InputCheck";
-import Layout from "./Layout";
+import { InputCheck, Layout, Title } from "./index";
 import { Label, Pbox, Table, Td, Th, Tr, Ul } from "./Table";
-import Title from "./Title";
 
 function OptionInfo({ changeEvent, houseInfo }: EventProps) {
 	return (

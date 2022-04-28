@@ -5,12 +5,14 @@ import { HouseInfo } from "src/types/houseInfo";
 import styled from "styled-components";
 import Head from "next/head";
 import OptionInfo from "@components/createSale/OptionInfo";
+import LocationInfo from "@components/createSale/LocationInfo";
 
 export interface EventProps {
 	changeEvent: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	houseInfo: HouseInfo;
 }
-const numberKey = ["deposit", "monthlyRent", "maintenanceFee", "period"];
+
+const numberKey = ["deposit", "monthlyRent", "maintenanceFee", "period", "floor"];
 
 function index() {
 	const [houseInfo, setHouseInfo] = useState<HouseInfo>({
@@ -34,6 +36,7 @@ function index() {
 	});
 
 	const handleHouseInfo = (event: React.ChangeEvent<HTMLInputElement>) => {
+		console.log(houseInfo);
 		if (event.target.name === "options") {
 			const idx = houseInfo.options.indexOf(event.target.value);
 			if (idx !== -1) {
@@ -59,6 +62,7 @@ function index() {
 				<SaleInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 				<PriceInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 				<OptionInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
+				<LocationInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 			</Container>
 		</>
 	);

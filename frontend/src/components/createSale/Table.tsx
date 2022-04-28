@@ -29,7 +29,7 @@ export const Th = styled.th`
 
 export const Td = styled.td`
 	display: block;
-	padding: 1rem 0;
+	padding: 2rem 0;
 	margin-left: 1rem;
 `;
 
