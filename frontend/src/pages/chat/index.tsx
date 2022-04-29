@@ -29,22 +29,20 @@ const DUMMY_DATA = [
 ];
 
 function ChatPage() {
-	const [chatListData, setChatListData] = useState([
-		{
-			chat_rooms: [
-				{
-					buyer: "",
-					last_message: "",
-					last_message_time: "",
-					room_id: "",
-					sale: 0,
-					seller: "",
-				},
-			],
-			current_page_count: 0,
-			total_page_count: 0,
-		},
-	]);
+	const [chatListData, setChatListData] = useState({
+		chat_rooms: [
+			{
+				buyer: "",
+				last_message: "",
+				last_message_time: "",
+				room_id: "",
+				sale: 0,
+				seller: "",
+			},
+		],
+		current_page_count: 0,
+		total_page_count: 0,
+	});
 
 	const getChatList = async () => {
 		try {
@@ -62,7 +60,7 @@ function ChatPage() {
 
 	return (
 		<Container>
-			<ChatList chatList={DUMMY_DATA} />
+			<ChatList chatList={chatListData} />
 			<Chat />
 			<ItemDetail />
 		</Container>
