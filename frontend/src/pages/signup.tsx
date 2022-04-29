@@ -21,8 +21,7 @@ function Signup() {
 		onSubmit: async (values) => {
 			try {
 				await authApi.signup(values);
-				// 본인인증 페이지로 수정할 것
-				router.push("/");
+				router.push("/smsVerification");
 			} catch (err) {
 				console.log(err);
 			}
