@@ -8,7 +8,7 @@ interface AuthApiType {
 		username?: string;
 	}) => Promise<AxiosResponse>;
 	signin: (userInfo: { login_id: string; password: string }) => Promise<AxiosResponse>;
-	sendCode: (phoneNumber: string) => Promise<AxiosResponse>;
+	sendCode: (phoneNumber: { phone_number: string }) => Promise<AxiosResponse>;
 }
 
 const authApi: AuthApiType = {

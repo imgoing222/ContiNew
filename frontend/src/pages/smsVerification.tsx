@@ -8,12 +8,19 @@ import { useState } from "react";
 import authApi from "src/api/auth";
 
 function smsVerification() {
-	const [values, setValues] = useState();
+	const [phoneNumber, setPhoneNumber] = useState({ phone_number: "" });
 
-	const handleInputChange = () => {};
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setPhoneNumber({ phone_number: e.target.value });
+	};
 
 	const handleSendClick = async () => {
-		// await authApi.sendCode();
+		try {
+			const res = await authApi.sendCode(phoneNumber);
+			console.log(res);
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (
