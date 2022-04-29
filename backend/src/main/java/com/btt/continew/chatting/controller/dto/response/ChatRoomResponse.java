@@ -9,7 +9,7 @@ import lombok.Getter;
 public class ChatRoomResponse {
 
     @JsonProperty("room_id")
-    private String roomId;
+    private String Id;
 
     @JsonProperty("seller")
     private String seller;
@@ -30,8 +30,8 @@ public class ChatRoomResponse {
 
     }
 
-    public ChatRoomResponse(String roomId, String seller, String buyer, Long sale, String lastMessage, LocalDateTime lastMessageTime){
-        this.roomId = roomId;
+    public ChatRoomResponse(String Id, String seller, String buyer, Long sale, String lastMessage, LocalDateTime lastMessageTime){
+        this.Id = Id;
         this.seller = seller;
         this.buyer = buyer;
         this.sale = sale;
@@ -41,7 +41,7 @@ public class ChatRoomResponse {
 
     public static ChatRoomResponse from (ChatRoom chatRoom){
         return new ChatRoomResponse(
-            chatRoom.getRoomId(),
+            chatRoom.getId(),
             chatRoom.getSeller(),
             chatRoom.getBuyer(),
             chatRoom.getSale(),
