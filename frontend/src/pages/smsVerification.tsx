@@ -22,8 +22,7 @@ function smsVerification() {
 
 	const handleSendClick = async () => {
 		try {
-			const res = await authApi.sendCode(phoneNumber);
-			console.log(res);
+			await authApi.sendCode(phoneNumber);
 			setDisabled(false);
 		} catch (err) {
 			console.log(err);
