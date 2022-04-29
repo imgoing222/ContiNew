@@ -1,4 +1,4 @@
-import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cookie from "react-cookies";
 import styled from "styled-components";
@@ -9,7 +9,7 @@ function LogOutIcon() {
 	return (
 		token && (
 			<>
-				<FontAwesome icon={faArrowRightFromBracket} />
+				<FontAwesome icon={faRightFromBracket} />
 			</>
 		)
 	);
