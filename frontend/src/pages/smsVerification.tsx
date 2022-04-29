@@ -30,9 +30,8 @@ function smsVerification() {
 
 	const handleConfirmClick = async () => {
 		try {
-			const res = await authApi.confirmCode(code);
-			console.log(code);
-			console.log(res);
+			await authApi.confirmCode(code);
+			alert("휴대폰 인증이 완료되었습니다");
 		} catch (err) {
 			console.log(err);
 		}
@@ -48,7 +47,12 @@ function smsVerification() {
 			</div>
 			<Label>인증 번호</Label>
 			<div>
-				<Input placeholder="인증 번호 입력" name="code" onChange={handleInputChange} />
+				<Input
+					placeholder="인증 번호 입력"
+					disabled={disabled}
+					name="code"
+					onChange={handleInputChange}
+				/>
 				<Button disabled={disabled} onClick={handleConfirmClick}>
 					인증번호 확인
 				</Button>
