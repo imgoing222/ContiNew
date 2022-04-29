@@ -40,10 +40,10 @@ function Signup() {
 				<Input name="username" onChange={handleInputChange} />
 				<ErrorText>{errors.username}</ErrorText>
 				<Label>비밀번호</Label>
-				<Input name="password" onChange={handleInputChange} />
+				<Input name="password" type="password" onChange={handleInputChange} />
 				<ErrorText>{errors.password}</ErrorText>
 				<Label>비밀번호 확인</Label>
-				<Input name="passwordConfirm" />
+				<Input name="passwordConfirm" type="password" />
 				<Button disabled={disabled}>회원가입</Button>
 			</FormContainer>
 			<Button>구글로 시작하기</Button>
