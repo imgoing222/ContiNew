@@ -4,6 +4,7 @@ import { Header } from "@components/account/Header";
 import { Input } from "@components/account/Input";
 import { Label } from "@components/account/Label";
 import { LinkButton } from "@components/account/LinkButton";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import authApi from "src/api/auth";
 
@@ -12,10 +13,11 @@ function smsVerification() {
 	const [code, setCode] = useState({ code: "" });
 	const [disabled, setDisabled] = useState(true);
 
+	const router = useRouter();
+
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.name === "phoneNumber") setPhoneNumber({ phone_number: e.target.value });
 		else if (e.target.name === "code") setCode({ code: e.target.value });
-		console.log(phoneNumber, code);
 	};
 
 	const handleSendClick = async () => {
@@ -32,6 +34,7 @@ function smsVerification() {
 		try {
 			await authApi.confirmCode(code);
 			alert("휴대폰 인증이 완료되었습니다");
+			router.push("/signupComplete");
 		} catch (err) {
 			console.log(err);
 		}
