@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
-import { ChatIcon, UserIcon } from "./index";
+import { ChatIcon, UserIcon, LogOutIcon } from "./index";
 
 function RightSection() {
 	return (
 		<Container>
 			<ChatIcon />
 			<UserIcon />
+			{/* <LogOutIcon /> */}
 		</Container>
 	);
 }
