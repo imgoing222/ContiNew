@@ -21,8 +21,7 @@ function Signup() {
 		onSubmit: async (values) => {
 			try {
 				await authApi.signup(values);
-				// 본인인증 페이지로 수정할 것
-				router.push("/");
+				router.push("/smsVerification");
 			} catch (err) {
 				console.log(err);
 			}
@@ -40,10 +39,10 @@ function Signup() {
 				<Input name="username" onChange={handleInputChange} />
 				<ErrorText>{errors.username}</ErrorText>
 				<Label>비밀번호</Label>
-				<Input name="password" onChange={handleInputChange} />
+				<Input name="password" type="password" onChange={handleInputChange} />
 				<ErrorText>{errors.password}</ErrorText>
 				<Label>비밀번호 확인</Label>
-				<Input name="passwordConfirm" />
+				<Input name="passwordConfirm" type="password" />
 				<Button disabled={disabled}>회원가입</Button>
 			</FormContainer>
 			<Button>구글로 시작하기</Button>

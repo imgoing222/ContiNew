@@ -19,6 +19,7 @@ function Signin() {
 		onSubmit: async (values) => {
 			try {
 				await authApi.signin(values);
+				router.push("/");
 			} catch (err) {
 				console.log(err);
 			}
