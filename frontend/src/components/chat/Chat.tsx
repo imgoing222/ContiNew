@@ -1,11 +1,37 @@
+import { useState } from "react";
 import styled from "styled-components";
 
+import { chatApi } from "src/api";
+
 function Chat() {
+	const [chatData, setChatData] = useState({
+		buyer: "",
+		lastMessage: "",
+		lastMessageTime: "",
+		roomId: "",
+		sale: 0,
+		seller: ""
+	});
+	const DATA_SET = {
+		buyer: "Buyer",
+		seller: "Seller",
+		sale: 1,
+	};
+
+	const createChattingRoom = async () => {
+		try {
+			const res = await chatApi.createChat(DATA_SET);
+			setChatData(res.data);
+			console.log(res.data);
+		}
+	};
+
 	return (
 		<Container>
 			<Title>
 				<h3>여긴 채팅창</h3>
 			</Title>
+			<button>채팅방생성[임시]</button>
 		</Container>
 	);
 }
