@@ -2,12 +2,17 @@ import styled from "styled-components";
 
 interface ChatListProps {
 	chatList?: {
-		chatId: number;
-		user: string;
-		person: string;
-		lastContent: string;
-		updatedAt: string;
-	}[];
+		chat_rooms: {
+			buyer: string;
+			last_message: string;
+			last_message_time: string;
+			room_id: string;
+			sale: number;
+			seller: string;
+		}[];
+		current_page_count: number;
+		total_page_count: number;
+	};
 }
 
 function ChatList({ chatList }: ChatListProps) {
@@ -17,12 +22,13 @@ function ChatList({ chatList }: ChatListProps) {
 				<h3>Messages</h3>
 			</Title>
 			<div>
-				{chatList && chatList.map((chat) => (
-					<div key={chat.chatId}>
-						<p>{chat.person}</p>
-						<p>{chat.lastContent}</p>
-					</div>
-				))}
+				{chatList?.chat_rooms &&
+					chatList.chat_rooms.map((chat) => (
+						<div key={chat.room_id}>
+							<p>{chat.buyer}</p>
+							<p>{chat.last_message}</p>
+						</div>
+					))}
 			</div>
 		</Container>
 	);
@@ -30,7 +36,7 @@ function ChatList({ chatList }: ChatListProps) {
 
 const Container = styled.div`
 	display: flex;
-  flex: 2;
+	flex: 2;
 	flex-direction: column;
 	align-items: center;
 	width: 300px;
@@ -39,9 +45,9 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  width: 100%;
-  text-align: center;
-  border-bottom: solid 2px #d3d3d3;
+	width: 100%;
+	text-align: center;
+	border-bottom: solid 2px #d3d3d3;
 `;
 
 export default ChatList;
