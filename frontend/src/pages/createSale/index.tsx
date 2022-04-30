@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Head from "next/head";
 import OptionInfo from "@components/createSale/OptionInfo";
 import LocationInfo from "@components/createSale/LocationInfo";
+import Description from "@components/createSale/Description";
 
 export interface EventProps {
 	changeEvent: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -36,7 +37,7 @@ function index() {
 		deposit: "",
 	});
 
-	const handleHouseInfo = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleHouseInfo = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		console.log(houseInfo);
 		if (event.target.name === "options") {
 			const idx = houseInfo.options.indexOf(event.target.value);
@@ -68,6 +69,7 @@ function index() {
 					changeEvent={handleHouseInfo}
 					setHouseInfo={setHouseInfo}
 				/>
+				<Description houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 			</Container>
 		</>
 	);
@@ -75,7 +77,7 @@ function index() {
 
 export default index;
 
-const Container = styled.div`
+const Container = styled.form`
 	display: flex;
 	flex-direction: column;
 	margin: 0 auto;
