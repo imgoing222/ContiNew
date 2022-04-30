@@ -25,7 +25,8 @@ function LocationInfo({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 		if (setHouseInfo)
 			setHouseInfo({ ...houseInfo, longitude, latitude, jibunAddress, sido, sigungu, bname });
 	};
-	const loadLayout = () => {
+	const loadLayout = (e: React.FormEvent<HTMLButtonElement>) => {
+		e.preventDefault();
 		window.daum.postcode.load(() => {
 			const postcode = new window.daum.Postcode({
 				oncomplete: function (data) {
