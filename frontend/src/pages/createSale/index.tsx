@@ -10,15 +10,16 @@ import LocationInfo from "@components/createSale/LocationInfo";
 export interface EventProps {
 	changeEvent: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	houseInfo: HouseInfo;
+	setHouseInfo?: React.Dispatch<React.SetStateAction<HouseInfo>>;
 }
 
 const numberKey = ["deposit", "monthlyRent", "maintenanceFee", "period", "floor"];
 
 function index() {
 	const [houseInfo, setHouseInfo] = useState<HouseInfo>({
-		sidoName: "",
-		gunguName: "",
-		dongName: "",
+		sido: "",
+		sigungu: "",
+		bname: "",
 		jibunAddress: "",
 		addressDetail: "",
 		latitude: 0,
@@ -62,7 +63,11 @@ function index() {
 				<SaleInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 				<PriceInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 				<OptionInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
-				<LocationInfo houseInfo={houseInfo} changeEvent={handleHouseInfo} />
+				<LocationInfo
+					houseInfo={houseInfo}
+					changeEvent={handleHouseInfo}
+					setHouseInfo={setHouseInfo}
+				/>
 			</Container>
 		</>
 	);
