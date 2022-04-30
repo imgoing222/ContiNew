@@ -7,6 +7,7 @@ const Button = styled.button`
 	margin-left: 2rem;
 	background-color: #fff;
 	border: 1px solid ${(props) => props.theme.borderColor};
+	cursor: pointer;
 `;
 
 export default Button;
