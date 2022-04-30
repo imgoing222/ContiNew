@@ -10,8 +10,12 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
+import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
+@EnableRedisRepositories
 public class RedisConfig {
 
     @Value("${spring.redis.host}")
@@ -27,7 +31,7 @@ public class RedisConfig {
 
     @Bean
     public ChannelTopic channelTopic() {
-        return new ChannelTopic("chatroom");
+        return new ChannelTopic("chat_room");
     }
 
     @Bean
@@ -46,9 +50,12 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<?,?> redisTemplate(){
+    public RedisTemplate<?,?> redisTemplate(RedisConnectionFactory connectionFactory){
         RedisTemplate<?,?> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(String.class));
+
         return redisTemplate;
     }
 }
