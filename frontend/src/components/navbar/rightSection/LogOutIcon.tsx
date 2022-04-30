@@ -9,7 +9,8 @@ function LogOutIcon() {
 	return (
 		token && (
 			<>
-				<FontAwesome icon={faRightFromBracket} />
+				{/* <FontAwesome icon={faRightFromBracket} /> */}
+				<button>로그아웃</button>
 			</>
 		)
 	);
