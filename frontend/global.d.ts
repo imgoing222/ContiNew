@@ -8,6 +8,10 @@ declare module globalThis {
 		noSelected: "Y" | "N";
 		userLanguageType: "K" | "E";
 		roadAddress: string;
+		jibunAddress: string;
+		sido: string;
+		sigungu: string;
+		bname: string;
 	};
 
 	type DaumPostcodeSearchData = {

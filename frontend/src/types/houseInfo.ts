@@ -1,7 +1,7 @@
 export interface HouseInfo {
-	sidoName: string;
-	gunguName: string;
-	dongName: string;
+	sido: string;
+	sigungu: string;
+	bname: string;
 	jibunAddress: string;
 	addressDetail: string;
 	latitude: number;
