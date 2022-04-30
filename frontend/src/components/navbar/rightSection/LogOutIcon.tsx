@@ -6,11 +6,16 @@ import styled from "styled-components";
 function LogOutIcon() {
 	const token = cookie.load("access_token");
 
+	const handleLogoutClick = () => {
+		cookie.remove("access_token");
+		window.location.replace("/");
+	};
+
 	return (
 		token && (
 			<>
 				{/* <FontAwesome icon={faRightFromBracket} /> */}
-				<button>로그아웃</button>
+				<button onClick={handleLogoutClick}>로그아웃</button>
 			</>
 		)
 	);
