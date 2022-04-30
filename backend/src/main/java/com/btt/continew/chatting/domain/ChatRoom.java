@@ -1,18 +1,20 @@
 package com.btt.continew.chatting.domain;
 
+import com.btt.continew.chatting.controller.dto.request.ChatRoomRequest;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
-import javax.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 
-@Setter
 @Getter
-public class ChatRoom {
+@RedisHash("chat_room")
+public class ChatRoom implements Serializable {
 
     @Id
-    String roomId;
+    String id;
     String seller;
     String buyer;
     Long sale;
@@ -21,13 +23,17 @@ public class ChatRoom {
     LocalDateTime lastMessageTime;
 
 
-    @Builder
-    public ChatRoom (String seller, String buyer, Long sale){
 
-        this.roomId = UUID.randomUUID().toString();
-        this.seller = seller;
-        this.buyer = buyer;
-        this.sale = sale;
+    public static ChatRoom create (ChatRoomRequest request){
+        ChatRoom chatRoom = new ChatRoom();
 
+        chatRoom.id = UUID.randomUUID().toString();
+        chatRoom.seller = request.getSeller();
+        chatRoom.buyer = request.getBuyer();
+        chatRoom.sale = request.getSale();
+        chatRoom.lastMessage = "";
+        chatRoom.lastMessageTime = LocalDateTime.now();
+
+        return chatRoom;
     }
 }
