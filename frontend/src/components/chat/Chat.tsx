@@ -8,7 +8,7 @@ function Chat() {
 		buyer: "",
 		lastMessage: "",
 		lastMessageTime: "",
-		roomId: "",
+		id: "",
 		sale: 0,
 		seller: "",
 	});
@@ -28,6 +28,7 @@ function Chat() {
 		}
 	};
 
+	
 	return (
 		<Container>
 			<Title>
