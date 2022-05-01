@@ -32,18 +32,13 @@ public class MemberInfoResponse {
     @ApiModelProperty(position = 6, notes = "회원 구분 (일반회원 혹은 소셜회원)", example = "continew 혹은 google")
     private String provider;
 
-    @JsonProperty("social_id")
-    @ApiModelProperty(position = 7, notes = "소셜 아이디 (소셜 확인용)", example = "아직 안만듦")
-    private String socialId;
-
-    public MemberInfoResponse(Long id, String loginId, String username, String phoneNumber, Boolean phoneAuth, String socialId,
+    public MemberInfoResponse(Long id, String loginId, String username, String phoneNumber, Boolean phoneAuth,
         String provider) {
         this.id = id;
         this.loginId = loginId;
         this.username = username;
         this.phoneNumber = phoneNumber;
         this.phoneAuth = phoneAuth;
-        this.socialId = socialId;
         this.provider = provider;
     }
 
@@ -54,7 +49,6 @@ public class MemberInfoResponse {
             member.getUsername(),
             member.getPhoneNumber(),
             member.getPhoneAuth(),
-            member.getGoogleId(),
             member.getProvider().getProviderName()
         );
     }
