@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import { chatApi } from "src/api";
 
 function Chat() {
+	const router = useRouter();
 	const [chatData, setChatData] = useState({
 		buyer: "",
 		lastMessage: "",
@@ -28,7 +30,10 @@ function Chat() {
 		}
 	};
 
-	
+	const toChattingRoom = () => {
+		router.push(`chat/${chatData.id}`)
+	};
+
 	return (
 		<Container>
 			<Title>
