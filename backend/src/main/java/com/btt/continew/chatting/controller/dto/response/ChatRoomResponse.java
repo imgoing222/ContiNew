@@ -18,7 +18,6 @@ public class ChatRoomResponse {
     private String buyer;
 
     @JsonProperty("sale")
-
     private Long sale;
 
     @JsonProperty("last_message")
