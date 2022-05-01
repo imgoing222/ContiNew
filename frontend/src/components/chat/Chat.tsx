@@ -30,7 +30,10 @@ function Chat() {
 	};
 
 	const toChattingRoom = (chatData: chatDataType) => {
-		router.push(`chat/${chatData.id}`);
+		router.push({
+			pathname: `chat/${chatData.id}`,
+			query: { roomId: chatData.id },
+		});
 	};
 
 	return (
