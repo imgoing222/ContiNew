@@ -1,19 +1,19 @@
-import { useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import { chatApi } from "src/api";
 
+interface chatDataType {
+	buyer: string;
+	lastMessage: string;
+	lastMessageTime: string;
+	id: string;
+	sale: number;
+	seller: string;
+}
+
 function Chat() {
 	const router = useRouter();
-	const [chatData, setChatData] = useState({
-		buyer: "",
-		lastMessage: "",
-		lastMessageTime: "",
-		id: "",
-		sale: 0,
-		seller: "",
-	});
 	const DATA_SET = {
 		buyer: "Buyer",
 		seller: "Seller",
@@ -23,15 +23,14 @@ function Chat() {
 	const createChattingRoom = async () => {
 		try {
 			const res = await chatApi.createChat(DATA_SET);
-			setChatData(res.data);
-			console.log(res.data);
+			toChattingRoom(res.data);
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
-	const toChattingRoom = () => {
-		router.push(`chat/${chatData.id}`)
+	const toChattingRoom = (chatData: chatDataType) => {
+		router.push(`chat/${chatData.id}`);
 	};
 
 	return (
