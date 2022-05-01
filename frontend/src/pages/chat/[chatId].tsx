@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/router";
 import SockJS from "sockjs-client";
 import StompJS from "stompjs";
 import cookie from "react-cookies";
@@ -7,6 +8,7 @@ import styled from "styled-components";
 import { Chat, ChatList, ItemDetail } from "@components/chat";
 
 function ChatDetail() {
+	const router = useRouter();
 	const [socketConnected, setSocketConnected] = useState(false);
 	const [sendMessage, setSendMessage] = useState("");
 	
@@ -18,9 +20,9 @@ function ChatDetail() {
 		stomp.connect({ Authorization: `Bearer ${token}` }, () => {
 			console.log("Connected");
 
-			// stomp.subscribe("/chat/1", (message) => {
-			// 	console.log(message);
-			// })
+			stomp.subscribe(`/chat/${router.query.roomId}`, (message) => {
+				console.log(message);
+			})
 		});
 	});
 
