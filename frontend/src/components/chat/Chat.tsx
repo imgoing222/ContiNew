@@ -15,7 +15,7 @@ interface chatDataType {
 function Chat() {
 	const router = useRouter();
 	const DATA_SET = {
-		buyer: "Buyer",
+		buyer: "mmmm",
 		seller: "Seller",
 		sale: 1,
 	};
@@ -53,6 +53,7 @@ const Container = styled.div`
 
 const Title = styled.div`
 	width: 100%;
+	height: 5rem;
 	text-align: center;
 	border-bottom: solid 2px #d3d3d3;
 `;

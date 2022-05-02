@@ -7,7 +7,7 @@ function RightSection() {
 		<Container>
 			<ChatIcon />
 			<UserIcon />
-			<LogOutIcon />
+			{/* <LogOutIcon /> */}
 		</Container>
 	);
 }

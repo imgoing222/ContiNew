@@ -20,8 +20,9 @@ function ChatDetail() {
 		stomp.connect({ Authorization: `Bearer ${token}` }, () => {
 			console.log("Connected");
 
-			stomp.subscribe(`/chat/${router.query.roomId}`, (message) => {
+			stomp.subscribe(`/sub/chat/room/${router.query.roomId}`, (message) => {
 				console.log(message);
+				console.log("111");
 			})
 		});
 	});
