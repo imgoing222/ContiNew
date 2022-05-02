@@ -18,9 +18,10 @@ function Signup() {
 			password: "",
 			username: "",
 		},
-		onSubmit: async (values) => {
+		onSubmit: async ({ login_id, password, username }) => {
 			try {
-				await authApi.signup(values);
+				await authApi.signup({ login_id, password, username });
+				await authApi.signin({ login_id, password });
 				router.push("/smsVerification");
 			} catch (err) {
 				console.log(err);
