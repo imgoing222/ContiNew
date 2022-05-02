@@ -5,6 +5,7 @@ import cookie from "react-cookies";
 import styled from "styled-components";
 
 import { Chat, ChatList, ItemDetail } from "@components/chat";
+import { type } from "os";
 
 function ChatDetail({ params }: any) {
 	const roomId = params;
@@ -24,7 +25,14 @@ function ChatDetail({ params }: any) {
 				console.log(receivedChatting);
 			});
 		});
-	});
+	}, []);
+
+	const sendMessage = (type: string) => {
+		stomp.send(
+			"/pup/chat/message",
+			{ Authorization: `Bearer ${token}` },
+			JSON.stringify({type: type, roomId: roomId, message: "hello"})
+		)};
 
 	return (
 		<Container>
