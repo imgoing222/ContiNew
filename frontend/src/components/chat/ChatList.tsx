@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import { chatApi } from "src/api";
@@ -17,11 +18,16 @@ interface ChatListDataType {
 }
 
 function ChatList() {
+	const router = useRouter();
 	const [chatListData, setChatListData] = useState<ChatListDataType>({
 		chat_rooms: [],
 		current_page_count: 0,
 		total_page_count: 0,
 	});
+	
+	useEffect(() => {
+		getChatList();
+	}, []);
 
 	const getChatList = async () => {
 		try {
@@ -32,9 +38,11 @@ function ChatList() {
 		}
 	};
 
-	useEffect(() => {
-		getChatList();
-	}, []);
+	const toChattingRoom = (roomId: string) => {
+		router.push({
+			pathname: `chat/${roomId}`,
+		});
+	};
 
 	return (
 		<Container>
@@ -44,7 +52,7 @@ function ChatList() {
 			<div>
 				{chatListData.chat_rooms &&
 					chatListData.chat_rooms.slice(0).map((chat) => (
-						<Content key={chat.room_id}>
+						<Content key={chat.room_id} onClick={() => toChattingRoom(chat.room_id)}>
 							<p>{chat.buyer}</p>
 							<p>{chat.last_message}</p>
 						</Content>
