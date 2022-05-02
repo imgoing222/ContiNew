@@ -40,7 +40,7 @@ function index() {
 		description: "",
 		options: [],
 		deposit: "",
-		images: null,
+		images: {},
 	});
 
 	const handleHouseInfo = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -102,6 +102,7 @@ const Button = styled.button<ButtonProps>`
 	margin-right: 2rem;
 	background-color: ${(props) => props.isApplyBtn && props.theme.mainColor};
 	color: ${(props) => props.isApplyBtn && "#fff"};
+	cursor: pointer;
 `;
 
 const Div = styled.div`
