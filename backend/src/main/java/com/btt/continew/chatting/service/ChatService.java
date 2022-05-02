@@ -1,6 +1,7 @@
 package com.btt.continew.chatting.service;
 
 import com.btt.continew.chatting.controller.dto.request.ChatRoomRequest;
+import com.btt.continew.chatting.controller.dto.response.ChatRoomResponse;
 import com.btt.continew.chatting.controller.dto.response.ChatRoomsResponse;
 import com.btt.continew.chatting.domain.ChatRoom;
 import com.btt.continew.member.domain.Member;
@@ -73,5 +74,9 @@ public class ChatService {
 
 
         return ChatRoomsResponse.from(chatRooms);
+    }
+
+    public ChatRoomResponse showChatRoomDetail(String roomId) {
+        return ChatRoomResponse.from(opsHashChatRoom.get(CHAT_ROOMS,roomId));
     }
 }

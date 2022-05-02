@@ -4,6 +4,7 @@ import com.btt.continew.chatting.controller.dto.request.ChatRoomRequest;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import javax.persistence.Column;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -15,11 +16,19 @@ public class ChatRoom implements Serializable {
 
     @Id
     String id;
+    @Column(name = "seller")
     String seller;
+
+    @Column(name = "buyer")
     String buyer;
+
+    @Column(name = "sale")
     Long sale;
 
+    @Column(name = "last_message")
     String lastMessage;
+
+    @Column(name = "last_message_time")
     LocalDateTime lastMessageTime;
 
 
