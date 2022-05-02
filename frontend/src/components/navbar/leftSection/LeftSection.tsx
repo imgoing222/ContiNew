@@ -4,8 +4,8 @@ import MenuItem from "./MenuItem";
 
 function LeftSection() {
 	const menu = [
-		{ id: 1, name: "지도", address: "/" },
-		{ id: 2, name: "방내놓기", address: "/" },
+		{ id: 1, name: "지도", address: "/saleList" },
+		{ id: 2, name: "방내놓기", address: "/createSale" },
 	];
 
 	return (
