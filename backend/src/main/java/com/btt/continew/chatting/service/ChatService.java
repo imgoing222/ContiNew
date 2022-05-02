@@ -74,4 +74,8 @@ public class ChatService {
 
         return ChatRoomsResponse.from(chatRooms);
     }
+
+    public ChatRoom showChatRoomDetail(String roomId) {
+        return opsHashChatRoom.get(CHAT_ROOMS,roomId);
+    }
 }
