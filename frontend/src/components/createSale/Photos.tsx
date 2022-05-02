@@ -28,8 +28,13 @@ function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 				imgs.push(URL.createObjectURL(selectedImages[i]));
 			}
 			if (imgs.length > 10) imgs.splice(0, 9);
-			setPreviewImgs(imgs);
+			setPreviewImgs([...previewImgs, ...imgs]);
 		}
+	};
+
+	const DeletePhoto = (idx: number) => {
+		previewImgs.splice(idx, 1);
+		setPreviewImgs([...previewImgs]);
 	};
 
 	return (
@@ -42,7 +47,14 @@ function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 			</Container>
 			<Container height={32} background={true} grid={true}>
 				{previewImgs.length > 0 &&
-					previewImgs.map((img, idx) => <PreviewImg key={idx} src={img} alt="" />)}
+					previewImgs.map((img, idx) => (
+						<PhotoDiv key={idx + 100}>
+							<PreviewImg src={img} alt="" />
+							<DeleteButton key={idx} onClick={() => DeletePhoto(idx)}>
+								X
+							</DeleteButton>
+						</PhotoDiv>
+					))}
 				<Div isImgs={previewImgs.length > 0 && true}>
 					<Label isImgs={previewImgs.length > 0 && true} htmlFor="images">
 						사진 추가하기
@@ -123,4 +135,17 @@ const PreviewImg = styled.img`
 	height: 12rem;
 	margin-right: 2.5rem;
 	margin-bottom: 2.5rem;
+`;
+
+const PhotoDiv = styled.div`
+	width: 20rem;
+	height: 12rem;
+	position: relative;
+`;
+
+const DeleteButton = styled.button`
+	position: absolute;
+	top: -1rem;
+	right: -1rem;
+	cursor: pointer;
 `;
