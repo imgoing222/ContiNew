@@ -29,13 +29,14 @@ function ChatDetail({ params }: any) {
 		stomp.send(
 			"/pup/chat/message",
 			{ Authorization: `Bearer ${token}` },
-			JSON.stringify({type: type, roomId: roomId, message: "hello"})
-		)};
+			JSON.stringify({ type: type, roomId: roomId, message: "hello" }),
+		);
+	};
 
 	return (
 		<Container>
 			<ChatList />
-			<Chat />
+			<Chat sendMessage={sendMessage} />
 			<ItemDetail />
 		</Container>
 	);

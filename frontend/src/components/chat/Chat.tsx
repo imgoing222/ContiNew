@@ -3,6 +3,10 @@ import styled from "styled-components";
 
 import { chatApi } from "src/api";
 
+interface SendMessageProps {
+	sendMessage: (type: string) => void;
+}
+
 interface chatDataType {
 	buyer: string;
 	lastMessage: string;
@@ -12,7 +16,7 @@ interface chatDataType {
 	seller: string;
 }
 
-function Chat() {
+function Chat({ sendMessage }: SendMessageProps) {
 	const router = useRouter();
 	const DATA_SET = {
 		buyer: "mmmm",
