@@ -24,7 +24,7 @@ function ChatList() {
 		current_page_count: 0,
 		total_page_count: 0,
 	});
-	
+
 	useEffect(() => {
 		getChatList();
 	}, []);
@@ -39,9 +39,7 @@ function ChatList() {
 	};
 
 	const toChattingRoom = (roomId: string) => {
-		router.push({
-			pathname: `chat/${roomId}`
-		});
+		router.push(`chat/${roomId}`);
 	};
 
 	return (
