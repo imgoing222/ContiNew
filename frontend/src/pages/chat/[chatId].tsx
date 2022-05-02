@@ -9,9 +9,10 @@ import { Chat, ChatList, ItemDetail } from "@components/chat";
 
 function ChatDetail() {
 	const router = useRouter();
+	const roomId = router.query.params;
 	const [socketConnected, setSocketConnected] = useState(false);
 	const [sendMessage, setSendMessage] = useState("");
-	
+
 	const token = cookie.load("access_token");
 	const sock = new SockJS("http://localhost:8080/ws-stomp");
 	const stomp = StompJS.over(sock);
@@ -20,10 +21,9 @@ function ChatDetail() {
 		stomp.connect({ Authorization: `Bearer ${token}` }, () => {
 			console.log("Connected");
 
-			stomp.subscribe(`/sub/chat/room/${router.query.roomId}`, (message) => {
+			stomp.subscribe(`/sub/chat/room/${roomId}`, (message) => {
 				console.log(message);
-				console.log("111");
-			})
+			});
 		});
 	});
 
