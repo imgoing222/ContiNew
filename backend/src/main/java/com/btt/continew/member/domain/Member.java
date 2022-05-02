@@ -105,4 +105,10 @@ public class Member extends BaseEntity {
         this.phoneNumber = phoneNumber;
         this.phoneAuth = true;
     }
+
+    public void checkSocialMember() {
+        if (provider.equals(Provider.CONTINEW)) {
+            throw new BusinessException(ErrorCode.MEMBER_NOT_SOCIAL_USER);
+        }
+    }
 }
