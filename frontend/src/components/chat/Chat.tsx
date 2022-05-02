@@ -3,6 +3,10 @@ import styled from "styled-components";
 
 import { chatApi } from "src/api";
 
+interface SendMessageProps {
+	sendMessage: (type: string) => void;
+}
+
 interface chatDataType {
 	buyer: string;
 	lastMessage: string;
@@ -12,7 +16,7 @@ interface chatDataType {
 	seller: string;
 }
 
-function Chat() {
+function Chat({ sendMessage }: SendMessageProps) {
 	const router = useRouter();
 	const DATA_SET = {
 		buyer: "mmmm",
@@ -39,6 +43,10 @@ function Chat() {
 				<h3>여긴 채팅창</h3>
 			</Title>
 			<button onClick={createChattingRoom}>채팅방생성[임시]</button>
+			<form onSubmit={() => sendMessage("type")}>
+				<textarea />
+				<button>보내기</button>
+			</form>
 		</Container>
 	);
 }
