@@ -4,6 +4,7 @@ import { Header } from "@components/account/Header";
 import { Input } from "@components/account/Input";
 import { Label } from "@components/account/Label";
 import { LinkButton } from "@components/account/LinkButton";
+import Timer from "@components/account/Timer";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import authApi from "src/api/auth";
@@ -58,6 +59,7 @@ function smsVerification() {
 				<Button disabled={disabled} onClick={handleConfirmClick}>
 					인증번호 확인
 				</Button>
+				{!disabled && <Timer />}
 			</div>
 			<LinkButton href="/">본인 인증 다음에 하기</LinkButton>
 		</Container>
