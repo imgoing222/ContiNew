@@ -8,6 +8,11 @@ interface ContainerProps {
 	height?: number;
 	background?: boolean;
 	border?: boolean;
+	grid?: boolean;
+}
+
+interface DivProps {
+	isImgs?: boolean;
 }
 
 function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
@@ -35,10 +40,15 @@ function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 				<Text>- 사진 용량은 최대 100MB까지 가능합니다.</Text>
 				<Text>- 사진은 가로로 찍은 사진을 권장합니다.</Text>
 			</Container>
-			<Container height={32} background={true}>
-				{previewImgs && previewImgs.map((img) => <PreviewImg src={img} alt="" />)}
-				<Button htmlFor="images">사진 업로드하기</Button>
-				<Input type="file" id="images" multiple accept="image/*" onChange={handleImageChange} />
+			<Container height={32} background={true} grid={true}>
+				{previewImgs.length > 0 &&
+					previewImgs.map((img, idx) => <PreviewImg key={idx} src={img} alt="" />)}
+				<Div isImgs={previewImgs.length > 0 && true}>
+					<Label isImgs={previewImgs.length > 0 && true} htmlFor="images">
+						사진 추가하기
+					</Label>
+					<Input type="file" id="images" multiple accept="image/*" onChange={handleImageChange} />
+				</Div>
 			</Container>
 		</Layout>
 	);
@@ -54,29 +64,54 @@ const Container = styled.div<ContainerProps>`
 	border: ${(props) => (props.background ? "none" : `1px solid ${props.theme.borderColor}`)};
 	background-color: ${({ background }) => (background ? `rgb(244,244,244)` : "none")};
 	position: relative;
+	display: ${({ grid }) => grid && "grid"};
+	grid-template-columns: repeat(5, 1fr);
 `;
 
 const Text = styled.p`
 	font-size: 1.3rem;
 `;
 
-const Button = styled.label`
-	width: 12rem;
-	height: 4rem;
+const Div = styled.div<DivProps>`
+	width: 20rem;
+	height: 12rem;
 	cursor: pointer;
-	background-color: ${(props) => props.theme.mainColor};
-	border: none;
-	border-radius: 0.5rem;
+	background-color: rgba(244, 244, 244);
+	border: 3px solid #fff;
 	font-size: 1.3rem;
 	font-weight: 800;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	color: #fff;
-	position: absolute;
+	margin-right: 2.5rem;
+	margin-bottom: 2.5rem;
+	${(props) =>
+		!props.isImgs &&
+		`
+    border: none;
+    width: 12rem;
+    height:5rem;
+    position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+  background-color: ${props.theme.mainColor};
+  color: #fff;
+  border-radius: 0.5rem;
+  margin:0;
+  `}
+`;
+
+const Label = styled.label<DivProps>`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	${(props) =>
+		!props.isImgs &&
+		`
+    border: none;
+  color: #fff;
+  border-radius: 0.5rem;
+  `}
 `;
 
 const Input = styled.input`
