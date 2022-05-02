@@ -44,10 +44,10 @@ function ChatList() {
 			<div>
 				{chatListData.chat_rooms &&
 					chatListData.chat_rooms.slice(0).map((chat) => (
-						<div key={chat.room_id}>
+						<Content key={chat.room_id}>
 							<p>{chat.buyer}</p>
 							<p>{chat.last_message}</p>
-						</div>
+						</Content>
 					))}
 			</div>
 		</Container>
@@ -68,6 +68,11 @@ const Title = styled.div`
 	height: 5rem;
 	text-align: center;
 	border-bottom: solid 2px #d3d3d3;
+`;
+
+const Content = styled.div`
+	width: 100%;
+	height: 8rem;
 `;
 
 export default ChatList;
