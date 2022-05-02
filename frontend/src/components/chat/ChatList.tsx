@@ -43,7 +43,7 @@ function ChatList() {
 			</Title>
 			<div>
 				{chatListData.chat_rooms &&
-					chatListData.chat_rooms.map((chat) => (
+					chatListData.chat_rooms.slice(0).map((chat) => (
 						<div key={chat.room_id}>
 							<p>{chat.buyer}</p>
 							<p>{chat.last_message}</p>
