@@ -60,7 +60,7 @@ public class AuthService {
         return refreshToken.getRefreshToken();
     }
 
-    private void setTokenToCookie(String accessToken, String refreshToken, HttpServletResponse response) {
+    public void setTokenToCookie(String accessToken, String refreshToken, HttpServletResponse response) {
         Cookie accessTokenCookie = new Cookie("access_token", accessToken);
         accessTokenCookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7days, 기간 지난 access token 도 필요하다고 함
         accessTokenCookie.setSecure(true);

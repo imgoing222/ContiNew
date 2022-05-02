@@ -1,7 +1,5 @@
 package com.btt.continew.global.config;
 
-import static org.springframework.http.HttpMethod.POST;
-
 import com.btt.continew.auth.domain.Authority;
 import com.btt.continew.auth.infrastructure.JwtTokenProvider;
 import com.btt.continew.global.security.JwtAccessDeniedHandler;
@@ -73,7 +71,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
 
             .authorizeRequests()
-            .antMatchers(POST, "/api/members/join").permitAll()
             .antMatchers("/swagger-resources/**").permitAll()
             .antMatchers("/api/auth/**").hasAnyAuthority(Authority.ROLE_MEMBER.getAuthorityCode(), Authority.ROLE_ADMIN.getAuthorityCode())
             .and()
@@ -82,8 +79,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .apply(new JwtSecurityConfig(jwtTokenProvider))
             .and()
         ;
-
     }
-
-
 }
