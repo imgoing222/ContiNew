@@ -7,6 +7,7 @@ import Head from "next/head";
 import OptionInfo from "@components/createSale/OptionInfo";
 import LocationInfo from "@components/createSale/LocationInfo";
 import Description from "@components/createSale/Description";
+import Photos from "@components/createSale/Photos";
 
 export interface EventProps {
 	changeEvent: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -69,6 +70,7 @@ function index() {
 					changeEvent={handleHouseInfo}
 					setHouseInfo={setHouseInfo}
 				/>
+				<Photos houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 				<Description houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 			</Container>
 		</>
