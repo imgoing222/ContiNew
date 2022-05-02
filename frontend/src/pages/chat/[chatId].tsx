@@ -8,6 +8,7 @@ import { Chat, ChatList, ItemDetail } from "@components/chat";
 
 function ChatDetail({ params }: any) {
 	const roomId = params;
+	const [chattings, setChattings] = useState();
 
 	const token = cookie.load("access_token");
 	const sock = new SockJS("http://localhost:8080/ws-stomp");
@@ -19,6 +20,8 @@ function ChatDetail({ params }: any) {
 
 			stomp.subscribe(`/sub/chat/room/${roomId}`, (message) => {
 				console.log(message);
+				const receivedChatting = JSON.parse(message.body);
+				console.log(receivedChatting);
 			});
 		});
 	});
