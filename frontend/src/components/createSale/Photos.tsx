@@ -1,3 +1,4 @@
+import { faTruckPlane } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
 import { EventProps } from "src/pages/createSale";
 import styled from "styled-components";
@@ -13,6 +14,7 @@ interface ContainerProps {
 
 interface DivProps {
 	isImgs?: boolean;
+	hide?: boolean;
 }
 
 function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
@@ -55,7 +57,7 @@ function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 							</DeleteButton>
 						</PhotoDiv>
 					))}
-				<Div isImgs={previewImgs.length > 0 && true}>
+				<Div isImgs={previewImgs.length > 0 && true} hide={previewImgs.length >= 10 && true}>
 					<Label isImgs={previewImgs.length > 0 && true} htmlFor="images">
 						사진 추가하기
 					</Label>
@@ -85,6 +87,7 @@ const Text = styled.p`
 `;
 
 const Div = styled.div<DivProps>`
+	display: ${({ hide }) => hide && "none"};
 	width: 20rem;
 	height: 12rem;
 	cursor: pointer;
@@ -93,7 +96,7 @@ const Div = styled.div<DivProps>`
 	font-size: 1.3rem;
 	font-weight: 800;
 	margin-right: 2.5rem;
-	margin-bottom: 2.5rem;
+	margin-bottom: 2rem;
 	${(props) =>
 		!props.isImgs &&
 		`
@@ -133,13 +136,12 @@ const Input = styled.input`
 const PreviewImg = styled.img`
 	width: 20rem;
 	height: 12rem;
-	margin-right: 2.5rem;
-	margin-bottom: 2.5rem;
 `;
 
 const PhotoDiv = styled.div`
 	width: 20rem;
 	height: 12rem;
+	margin-bottom: 3rem;
 	position: relative;
 `;
 
