@@ -43,6 +43,10 @@ function Chat({ sendMessage }: SendMessageProps) {
 				<h3>여긴 채팅창</h3>
 			</Title>
 			<button onClick={createChattingRoom}>채팅방생성[임시]</button>
+			<form onSubmit={() => sendMessage("type")}>
+				<textarea />
+				<button>보내기</button>
+			</form>
 		</Container>
 	);
 }
