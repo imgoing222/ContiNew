@@ -5,7 +5,6 @@ import cookie from "react-cookies";
 import styled from "styled-components";
 
 import { Chat, ChatList, ItemDetail } from "@components/chat";
-import { type } from "os";
 
 function ChatDetail({ params }: any) {
 	const roomId = params;
@@ -20,7 +19,6 @@ function ChatDetail({ params }: any) {
 			console.log("Connected");
 
 			stomp.subscribe(`/sub/chat/room/${roomId}`, (message) => {
-				console.log(message);
 				const receivedChatting = JSON.parse(message.body);
 				console.log(receivedChatting);
 			});
