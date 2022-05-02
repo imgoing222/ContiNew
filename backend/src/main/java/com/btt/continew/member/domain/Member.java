@@ -35,11 +35,8 @@ public class Member extends BaseEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "username", length = 20, nullable = false)
+    @Column(name = "username", length = 32, nullable = false)
     private String username;
-
-    @Column(name = "google_id")
-    private String googleId;
 
     @Column(name = "phone_number", length = 16)
     private String phoneNumber;
@@ -59,18 +56,16 @@ public class Member extends BaseEntity {
     }
 
     @Builder
-    public Member(String loginId, String password, String username, String googleId, String phoneNumber, Boolean phoneAuth,
-        Authority authority, Provider provider) {
+    public Member(String loginId, String password, String username, String phoneNumber, Boolean phoneAuth, Authority authority,
+        Provider provider) {
         this.loginId = loginId;
         this.password = password;
         this.username = username;
-        this.googleId = googleId;
         this.phoneNumber = phoneNumber;
         this.phoneAuth = phoneAuth;
         this.authority = authority;
         this.provider = provider;
     }
-
 
     public static Member createMember(String loginId, String password, String username, Provider provider) {
         return Member.builder()
