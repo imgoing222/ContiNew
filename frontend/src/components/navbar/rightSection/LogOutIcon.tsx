@@ -8,6 +8,7 @@ function LogOutIcon() {
 
 	const handleLogoutClick = () => {
 		cookie.remove("access_token");
+		cookie.remove("refresh_token");
 		window.location.replace("/");
 	};
 
