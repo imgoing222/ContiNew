@@ -18,11 +18,13 @@ interface DivProps {
 }
 
 function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
+	const [uploadImgs, setUploadImgs] = useState<FileList | {}>({});
 	const [previewImgs, setPreviewImgs] = useState<string[]>([]);
 
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const selectedImages = e.target.files;
-		if (setHouseInfo) setHouseInfo({ ...houseInfo, images: selectedImages });
+		setUploadImgs({ ...uploadImgs, ...selectedImages });
+		if (setHouseInfo) setHouseInfo({ ...houseInfo, images: uploadImgs });
 
 		const imgs = [];
 		if (selectedImages) {
