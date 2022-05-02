@@ -15,7 +15,7 @@ interface chatDataType {
 function Chat() {
 	const router = useRouter();
 	const DATA_SET = {
-		buyer: "Buyer",
+		buyer: "mmmm",
 		seller: "Seller",
 		sale: 1,
 	};
