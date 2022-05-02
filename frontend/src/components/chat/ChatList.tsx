@@ -40,7 +40,7 @@ function ChatList() {
 
 	const toChattingRoom = (roomId: string) => {
 		router.push({
-			pathname: `chat/${roomId}`,
+			pathname: `chat/${roomId}`
 		});
 	};
 
@@ -81,6 +81,7 @@ const Title = styled.div`
 const Content = styled.div`
 	width: 100%;
 	height: 8rem;
+	cursor: pointer;
 `;
 
 export default ChatList;
