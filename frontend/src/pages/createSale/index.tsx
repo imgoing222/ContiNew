@@ -7,6 +7,7 @@ import Head from "next/head";
 import OptionInfo from "@components/createSale/OptionInfo";
 import LocationInfo from "@components/createSale/LocationInfo";
 import Description from "@components/createSale/Description";
+import Photos from "@components/createSale/Photos";
 
 export interface EventProps {
 	changeEvent: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -35,6 +36,7 @@ function index() {
 		description: "",
 		options: [],
 		deposit: "",
+		images: null,
 	});
 
 	const handleHouseInfo = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -69,6 +71,7 @@ function index() {
 					changeEvent={handleHouseInfo}
 					setHouseInfo={setHouseInfo}
 				/>
+				<Photos houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 				<Description houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 			</Container>
 		</>
@@ -77,7 +80,7 @@ function index() {
 
 export default index;
 
-const Container = styled.form`
+const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin: 0 auto;
