@@ -20,9 +20,10 @@ public class StompHandler implements ChannelInterceptor {
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
-
+        System.out.println(message);
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
-        System.out.println(accessor.getFirstNativeHeader("Authorization").substring(7));
+
+
         if (StompCommand.CONNECT == accessor.getCommand()) {
             jwtTokenProvider.resolveAccessToken(accessor.getFirstNativeHeader("Authorization").substring(7));
         }
