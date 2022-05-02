@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { EventProps } from "src/pages/createSale";
 import styled from "styled-components";
 import Layout from "./Layout";
@@ -9,7 +10,23 @@ interface ContainerProps {
 	border?: boolean;
 }
 
-function Photos({ houseInfo, changeEvent }: EventProps) {
+function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
+	const [previewImgs, setPreviewImgs] = useState<string[]>([]);
+
+	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const selectedImages = e.target.files;
+		if (setHouseInfo) setHouseInfo({ ...houseInfo, images: selectedImages });
+
+		const imgs = [];
+		if (selectedImages) {
+			for (let i = 0; i < selectedImages.length; i++) {
+				imgs.push(URL.createObjectURL(selectedImages[i]));
+			}
+			if (imgs.length > 10) imgs.splice(0, 9);
+			setPreviewImgs(imgs);
+		}
+	};
+
 	return (
 		<Layout>
 			<Title>사진 등록</Title>
@@ -19,8 +36,9 @@ function Photos({ houseInfo, changeEvent }: EventProps) {
 				<Text>- 사진은 가로로 찍은 사진을 권장합니다.</Text>
 			</Container>
 			<Container height={32} background={true}>
+				{previewImgs && previewImgs.map((img) => <PreviewImg src={img} alt="" />)}
 				<Button htmlFor="images">사진 업로드하기</Button>
-				<Input type="file" id="images" />
+				<Input type="file" id="images" multiple accept="image/*" onChange={handleImageChange} />
 			</Container>
 		</Layout>
 	);
@@ -63,4 +81,11 @@ const Button = styled.label`
 
 const Input = styled.input`
 	display: none;
+`;
+
+const PreviewImg = styled.img`
+	width: 20rem;
+	height: 12rem;
+	margin-right: 2.5rem;
+	margin-bottom: 2.5rem;
 `;
