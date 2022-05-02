@@ -41,4 +41,11 @@ public class ChatRoomRestController {
         return chatService.createChatRoom(request);
     }
 
+    @GetMapping("/room/{room_id}")
+    public ChatRoom getRoomDetail(
+        @RequestParam(value = "room_id") String roomId){
+
+        System.out.println("겟룸 디테일");
+        return chatService.showChatRoomDetail(roomId);
+    }
 }
