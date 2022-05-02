@@ -9,6 +9,10 @@ import LocationInfo from "@components/createSale/LocationInfo";
 import Description from "@components/createSale/Description";
 import Photos from "@components/createSale/Photos";
 
+interface ButtonProps {
+	isApplyBtn?: boolean;
+}
+
 export interface EventProps {
 	changeEvent: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	houseInfo: HouseInfo;
@@ -73,6 +77,10 @@ function index() {
 				/>
 				<Photos houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 				<Description houseInfo={houseInfo} changeEvent={handleHouseInfo} />
+				<Div>
+					<Button>취소</Button>
+					<Button isApplyBtn={true}>매물 등록</Button>
+				</Div>
 			</Container>
 		</>
 	);
@@ -85,4 +93,18 @@ const Container = styled.div`
 	flex-direction: column;
 	margin: 0 auto;
 	width: 120rem;
+`;
+
+const Button = styled.button<ButtonProps>`
+	width: 12rem;
+	height: 4rem;
+	border: none;
+	margin-right: 2rem;
+	background-color: ${(props) => props.isApplyBtn && props.theme.mainColor};
+	color: ${(props) => props.isApplyBtn && "#fff"};
+`;
+
+const Div = styled.div`
+	display: flex;
+	justify-content: center;
 `;
