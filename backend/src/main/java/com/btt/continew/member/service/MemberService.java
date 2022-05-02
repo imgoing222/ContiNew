@@ -1,5 +1,6 @@
 package com.btt.continew.member.service;
 
+import com.btt.continew.auth.controller.dto.response.GoogleUserInfoResponse;
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
 import com.btt.continew.member.controller.dto.request.CheckDuplicateRequest;
@@ -134,5 +135,13 @@ public class MemberService {
         if (!certificationCode.equals(requestCode)) {
             throw new BusinessException(ErrorCode.CERTIFY_NOT_MATCH_CODE);
         }
+    }
+
+    @Transactional
+    public Member loadGoogleUser(GoogleUserInfoResponse response) {
+        Member member = memberRepository.findByLoginId(response.getEmail())
+            .orElse(response.toEntity());
+        member.checkSocialMember();
+        return memberRepository.save(member);
     }
 }

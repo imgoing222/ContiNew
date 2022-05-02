@@ -1,6 +1,7 @@
 package com.btt.continew.member.domain;
 
 import com.btt.continew.auth.domain.Authority;
+import com.btt.continew.auth.domain.Provider;
 import com.btt.continew.global.domain.BaseEntity;
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
@@ -34,11 +35,8 @@ public class Member extends BaseEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "username", length = 20, nullable = false)
+    @Column(name = "username", length = 32, nullable = false)
     private String username;
-
-    @Column(name = "google_id")
-    private String googleId;
 
     @Column(name = "phone_number", length = 16)
     private String phoneNumber;
@@ -50,28 +48,33 @@ public class Member extends BaseEntity {
     @Column(name = "authority")
     private Authority authority;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "provider")
+    private Provider provider;
+
     protected Member() {
     }
 
     @Builder
-    public Member(String loginId, String password, String username, String googleId, String phoneNumber, Boolean phoneAuth,
-        Authority authority) {
+    public Member(String loginId, String password, String username, String phoneNumber, Boolean phoneAuth, Authority authority,
+        Provider provider) {
         this.loginId = loginId;
         this.password = password;
         this.username = username;
-        this.googleId = googleId;
         this.phoneNumber = phoneNumber;
         this.phoneAuth = phoneAuth;
         this.authority = authority;
+        this.provider = provider;
     }
 
-    public static Member createMember(String loginId, String password, String username) {
+    public static Member createMember(String loginId, String password, String username, Provider provider) {
         return Member.builder()
             .loginId(loginId)
             .password(password)
             .username(username)
             .authority(Authority.ROLE_MEMBER)
             .phoneAuth(false)
+            .provider(provider)
             .build();
     }
 
@@ -101,5 +104,11 @@ public class Member extends BaseEntity {
     public void successPhoneAuth(String phoneNumber) {
         this.phoneNumber = phoneNumber;
         this.phoneAuth = true;
+    }
+
+    public void checkSocialMember() {
+        if (provider.equals(Provider.CONTINEW)) {
+            throw new BusinessException(ErrorCode.MEMBER_NOT_SOCIAL_USER);
+        }
     }
 }
