@@ -35,6 +35,7 @@ public enum ErrorCode {
     MEMBER_USERNAME_DUPLICATED_BECAUSE_OF_YOU(HttpStatus.CONFLICT, "회원님이 이미 사용 중인 닉네임입니다.", "M05"),
     MEMBER_PHONE_NUMBER_DUPLICATED(HttpStatus.CONFLICT, "이미 인증된 전화번호 입니다.", "M06"),
     MEMBER_NOT_SOCIAL_USER(HttpStatus.CONFLICT, "해당 회원은 소셜 아이디 로그인 회원이 아닙니다.", "M07"),
+    MEMBER_NOT_YOUR_PHONE_NUMBER(HttpStatus.CONFLICT, "회원의 전화번호가 아닙니다.", "M08"),
 
     // certify
     CERTIFY_NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "해당 아이디로 인증 요청을 한 기록이 없습니다.", "I01"),
