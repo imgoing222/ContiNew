@@ -7,11 +7,6 @@ export const Ul = styled.ul`
 	display: flex;
 `;
 
-export const Table = styled.table`
-	width: 100%;
-	border-collapse: collapse;
-`;
-
 export const Tr = styled.tr`
 	width: 100%;
 	height: 7rem;

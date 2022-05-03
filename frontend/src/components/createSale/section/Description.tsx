@@ -1,14 +1,11 @@
 import { EventProps } from "src/pages/createSale";
 import styled from "styled-components";
-import Layout from "../Layout";
-import Title from "../Title";
-
+import { SmallContainer } from "../Container";
 function Description({ houseInfo, changeEvent }: EventProps) {
 	return (
-		<Layout>
-			<Title>상세 설명</Title>
+		<SmallContainer title="상세 설명">
 			<Textarea name="description" onChange={changeEvent} value={houseInfo.description} />
-		</Layout>
+		</SmallContainer>
 	);
 }
 

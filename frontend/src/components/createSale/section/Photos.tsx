@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { EventProps } from "src/pages/createSale";
 import styled from "styled-components";
-import Layout from "../Layout";
+import Layout from "../Container";
 import Title from "../Title";
 
 interface ContainerProps {
