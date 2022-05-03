@@ -16,24 +16,26 @@ function Signup() {
 	const router = useRouter();
 	const dispatch = useDispatch();
 
-	const { disabled, handleFormSubmit, handleInputChange, errors } = useForm({
-		initialValues: {
-			login_id: "",
-			password: "",
-			username: "",
+	const { disabled, handleFormSubmit, handleInputChange, handleGoogleLoginClick, errors } = useForm(
+		{
+			initialValues: {
+				login_id: "",
+				password: "",
+				username: "",
+			},
+			onSubmit: async ({ login_id, password, username }) => {
+				try {
+					await authApi.signup({ login_id, password, username });
+					await authApi.signin({ login_id, password });
+					const userInfo = await profileApi.getUserInfo();
+					dispatch(SET_USER(userInfo.data));
+					router.push("/smsVerification");
+				} catch (err) {
+					console.log(err);
+				}
+			},
 		},
-		onSubmit: async ({ login_id, password, username }) => {
-			try {
-				await authApi.signup({ login_id, password, username });
-				await authApi.signin({ login_id, password });
-				const userInfo = await profileApi.getUserInfo();
-				dispatch(SET_USER(userInfo.data));
-				router.push("/smsVerification");
-			} catch (err) {
-				console.log(err);
-			}
-		},
-	});
+	);
 
 	return (
 		<Container>
@@ -52,7 +54,7 @@ function Signup() {
 				<Input name="passwordConfirm" type="password" />
 				<Button disabled={disabled}>회원가입</Button>
 			</FormContainer>
-			<Button>구글로 시작하기</Button>
+			<Button onClick={handleGoogleLoginClick}>구글로 시작하기</Button>
 			<LinkButton href="/signin">로그인하러가기</LinkButton>
 		</Container>
 	);

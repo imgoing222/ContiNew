@@ -1,6 +1,7 @@
 import { formValidator } from "@utils/index";
 import { debounce } from "lodash";
 import { useState } from "react";
+import authApi from "src/api/auth";
 
 interface Props {
 	initialValues: Values;
@@ -49,7 +50,11 @@ const useForm = ({ initialValues, onSubmit }: Props) => {
 		return errors;
 	};
 
-	return { errors, handleFormSubmit, handleInputChange, disabled };
+	const handleGoogleLoginClick = () => {
+		authApi.google();
+	};
+
+	return { errors, handleFormSubmit, handleInputChange, handleGoogleLoginClick, disabled };
 };
 
 export default useForm;

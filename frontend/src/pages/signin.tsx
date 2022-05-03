@@ -15,7 +15,7 @@ function Signin() {
 	const router = useRouter();
 	const dispatch = useDispatch();
 
-	const { handleFormSubmit, handleInputChange } = useForm({
+	const { handleFormSubmit, handleInputChange, handleGoogleLoginClick } = useForm({
 		initialValues: {
 			login_id: "",
 			password: "",
@@ -31,10 +31,6 @@ function Signin() {
 			}
 		},
 	});
-
-	const handleGoogleLoginClick = () => {
-		authApi.google();
-	};
 
 	return (
 		<Container>

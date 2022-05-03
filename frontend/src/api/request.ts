@@ -19,7 +19,7 @@ const setInterceptors = (instance: AxiosInstance, isReissue?: boolean) => {
 			return response;
 		},
 		(error) => {
-			const index = cookie.load("index");
+			const refresh_token = cookie.load("refresh_token");
 			const access_token = cookie.load("access_token");
 			// if (error.response.data.error_code === "A01") {
 			// 	authApi.reissue({ index, access_token });
