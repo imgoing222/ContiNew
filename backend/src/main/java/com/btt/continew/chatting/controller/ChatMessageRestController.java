@@ -36,7 +36,7 @@ public class ChatMessageRestController {
 
     }
 
-    @GetMapping("/chat/messages/{room_id}")
+    @GetMapping("/api/chat/messages/{room_id}")
     @ResponseBody
     public ChatMessagesResponse getChatMessage(
         @PageableDefault(sort = "created_at", direction = Direction.DESC)Pageable pageable,
