@@ -10,7 +10,6 @@ import { Chat, ChatList, ItemDetail } from "@components/chat";
 function ChatDetail() {
 	const router = useRouter();
 	const { roomId } = router.query;
-	console.log(roomId);
 	const [chattings, setChattings] = useState();
 
 	const token = cookie.load("access_token");
