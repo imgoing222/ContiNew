@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
 @Getter
-public class ChangePwSendRequest {
+public class FindPwSendRequest {
 
     @ApiModelProperty(position = 1, notes = "로그인 아이디", example = "continew123")
     @JsonProperty("login_id")
@@ -15,10 +15,10 @@ public class ChangePwSendRequest {
     @JsonProperty("phone_number")
     private String phoneNumber;
 
-    public ChangePwSendRequest() {
+    public FindPwSendRequest() {
     }
 
-    public ChangePwSendRequest(String loginId, String phoneNumber) {
+    public FindPwSendRequest(String loginId, String phoneNumber) {
         this.loginId = loginId;
         this.phoneNumber = phoneNumber;
     }

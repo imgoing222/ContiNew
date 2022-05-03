@@ -2,7 +2,7 @@ package com.btt.continew.member.service;
 
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
-import com.btt.continew.member.controller.dto.request.ChangePwSendRequest;
+import com.btt.continew.member.controller.dto.request.FindPwSendRequest;
 import com.btt.continew.member.controller.dto.request.CheckPhoneRequest;
 import com.btt.continew.member.controller.dto.request.MemberChangeRequest;
 import com.btt.continew.member.controller.dto.request.PasswordChangeRequest;
@@ -127,7 +127,7 @@ public class ProfileService {
     }
 
     @Transactional
-    public void sendChangePwCode(ChangePwSendRequest request) {
+    public void sendFindPwCode(FindPwSendRequest request) {
         Member member = memberService.findByLoginId(request.getLoginId());
         checkYourPhoneNumber(member.getPhoneNumber(), request.getPhoneNumber());
 
@@ -152,7 +152,7 @@ public class ProfileService {
     }
 
     @Transactional
-    public ChangeTokenResponse changePwCheckCertifyCode(CheckPhoneRequest request) {
+    public ChangeTokenResponse findPwCheckCertifyCode(CheckPhoneRequest request) {
         CertifyPassword certifyPassword = certifyPasswordRepository.findByCertificationCode(request.getCode())
             .orElseThrow(() -> new BusinessException(ErrorCode.CERTIFY_NOT_MATCH_CODE)); // 인증 번호로 찾기
 
