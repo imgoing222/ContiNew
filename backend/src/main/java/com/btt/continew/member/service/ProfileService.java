@@ -7,6 +7,7 @@ import com.btt.continew.member.controller.dto.request.CheckPhoneRequest;
 import com.btt.continew.member.controller.dto.request.MemberChangeRequest;
 import com.btt.continew.member.controller.dto.request.PasswordChangeRequest;
 import com.btt.continew.member.controller.dto.request.PhoneNumberRequest;
+import com.btt.continew.member.controller.dto.response.ChangeTokenResponse;
 import com.btt.continew.member.controller.dto.response.MemberInfoResponse;
 import com.btt.continew.member.domain.CertifyPassword;
 import com.btt.continew.member.domain.CertifyPasswordRepository;
@@ -21,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProfileService {
 
-    private final int MAX_REQUEST_COUNT = 5;
+    private final int MAX_REQUEST_COUNT = 3;
     private final int EXPIRED_TIME = 3;
     private final int RANDOM_CODE_LENGTH = 6;
     private final int CHANGE_TOKEN_LENGTH = 12;
@@ -148,5 +149,16 @@ public class ProfileService {
         if (!memberPhoneNumber.equals(requestPhoneNumber)) {
             throw new BusinessException(ErrorCode.MEMBER_NOT_YOUR_PHONE_NUMBER);
         }
+    }
+
+    @Transactional
+    public ChangeTokenResponse changePwCheckCertifyCode(CheckPhoneRequest request) {
+        CertifyPassword certifyPassword = certifyPasswordRepository.findByCertificationCode(request.getCode())
+            .orElseThrow(() -> new BusinessException(ErrorCode.CERTIFY_NOT_MATCH_CODE)); // 인증 번호로 찾기
+
+        checkExpiredCode(certifyPassword.getExpireTime()); // 만료 시간 확인
+        certifyPassword.setChangeToken(smsService.randomCode(CHANGE_TOKEN_LENGTH)); // 비밀번호 변경 토큰 발행
+
+        return ChangeTokenResponse.from(certifyPassword.getChangeToken()); // 토큰을 response body 로 전송
     }
 }

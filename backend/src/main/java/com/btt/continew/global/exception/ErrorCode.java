@@ -49,7 +49,7 @@ public enum ErrorCode {
     AUTHORITY_ENTRY_POINT(HttpStatus.UNAUTHORIZED, "오류가 있는 권한코드입니다.", "A03"),
 
     // SMS
-    SMS_TOO_MANY_REQUEST(HttpStatus.CONFLICT, "휴대폰 인증은 하루에 5회만 가능합니다", "P01"),
+    SMS_TOO_MANY_REQUEST(HttpStatus.CONFLICT, "휴대폰 인증은 하루에 3회만 가능합니다", "P01"),
 
     // house
     HOUSE_NOT_FOUND_BY_ID(HttpStatus.NOT_FOUND, "존재하지 않는 매물입니다", "H01"),
