@@ -1,6 +1,6 @@
 import { HouseInfo } from "src/types/houseInfo";
-import InputCheck from "../InputCheck";
-import { Label, Pbox } from "../Table";
+import InputCheck from "./InputCheck";
+import { Label, Pbox } from "./Table";
 
 interface OptionInfoListProps {
 	value: string;

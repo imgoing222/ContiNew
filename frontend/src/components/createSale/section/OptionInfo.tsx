@@ -1,9 +1,7 @@
 import { EventProps } from "src/pages/createSale";
 import { Container } from "../Container";
-import { InputCheck } from "../index";
-import { Label, Pbox } from "../Table";
 import { TableRow } from "../TableRow";
-import OptionInfoList from "./OptionInfoList";
+import OptionInfoList from "../OptionInfoList";
 
 function OptionInfo({ changeEvent, houseInfo }: EventProps) {
 	const options = [
