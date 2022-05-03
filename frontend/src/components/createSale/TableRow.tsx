@@ -1,5 +1,6 @@
 import TableProps from "src/types/TableProps";
 import styled from "styled-components";
+import DivBox from "./DivBox";
 
 export function TableRow({ title, children }: TableProps) {
 	return (
@@ -18,6 +19,16 @@ export function TableRowAndHead({ title, children }: TableProps) {
 			<Th>{title}</Th>
 			{children}
 		</Tr>
+	);
+}
+
+export function TableRowAndDivBox({ title, children }: TableProps) {
+	return (
+		<TableRow title={title}>
+			<li>
+				<DivBox>{children}</DivBox>
+			</li>
+		</TableRow>
 	);
 }
 

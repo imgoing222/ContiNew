@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import DivBox from "./DivBox";
 import { Td, Ul } from "./TableRow";
 
