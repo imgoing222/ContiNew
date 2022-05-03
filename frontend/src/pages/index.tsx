@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 import { SearchSection, RecommendSection } from "@components/main";
 import Footer from "@components/footer/Footer";
+import { useSelector } from "react-redux";
+import { RootState } from "src/store";
 
 const DUMMY_DATA = [
 	{
