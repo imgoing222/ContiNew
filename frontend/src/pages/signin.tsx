@@ -6,10 +6,14 @@ import { Label } from "@components/account/Label";
 import { LinkButton } from "@components/account/LinkButton";
 import useForm from "@hooks/useForm";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 import authApi from "src/api/auth";
+import profileApi from "src/api/profile";
+import { SET_USER } from "src/store/user";
 
 function Signin() {
 	const router = useRouter();
+	const dispatch = useDispatch();
 
 	const { handleFormSubmit, handleInputChange } = useForm({
 		initialValues: {
@@ -19,6 +23,8 @@ function Signin() {
 		onSubmit: async (values) => {
 			try {
 				await authApi.signin(values);
+				const userInfo = await profileApi.getUserInfo();
+				dispatch(SET_USER(userInfo.data));
 				router.push("/");
 			} catch (err) {
 				console.log(err);
