@@ -8,12 +8,14 @@ interface Coordinate {
 	x_right: number;
 }
 
-interface SaleListApiType {
+interface SaleApiType {
 	getSales: (coordinateInfo: Coordinate) => Promise<AxiosResponse>;
+	createSale: (data: FormData) => Promise<AxiosResponse>;
 }
 
-const saleListApi: SaleListApiType = {
+const saleApi: SaleApiType = {
 	getSales: (coordinateInfo) => request.post("houses/list", coordinateInfo),
+	createSale: (data) => request.post("houses", data),
 };
 
-export default saleListApi;
+export default saleApi;
