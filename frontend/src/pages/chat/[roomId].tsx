@@ -31,7 +31,7 @@ function ChatDetail() {
 		stomp.send(
 			"/pub/chat/message",
 			{ Authorization: `Bearer ${token}` },
-			JSON.stringify({ type: "TALK", roomId: roomId, sender: "mmmm", message: "hello" }),
+			JSON.stringify({ type: "TALK", roomId: roomId, sender: "mmmm", content: "hello" }),
 		);
 	};
 
