@@ -1,9 +1,8 @@
-import { faTruckPlane } from "@fortawesome/free-solid-svg-icons";
-import React, { useState } from "react";
+import { useState } from "react";
 import { EventProps } from "src/pages/createSale";
 import styled from "styled-components";
-import Layout from "./Layout";
-import Title from "./Title";
+import Layout from "../Layout";
+import Title from "../Title";
 
 interface ContainerProps {
 	height?: number;

@@ -1,6 +1,6 @@
 import { EventProps } from "src/pages/createSale";
-import { Layout, Title } from "./index";
-import { InputRadio, Label, Pbox, Table, Td, Th, Tr, Ul } from "./Table";
+import { Layout, Title } from "../index";
+import { InputRadio, Label, Pbox, Table, Td, Th, Tr, Ul } from "../Table";
 
 function SaleInfo({ changeEvent, houseInfo }: EventProps) {
 	return (

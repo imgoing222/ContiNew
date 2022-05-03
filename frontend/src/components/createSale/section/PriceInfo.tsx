@@ -1,6 +1,6 @@
 import { EventProps } from "src/pages/createSale";
-import { InputText, DivBox, Layout, Title, MoneyText } from "./index";
-import { Table, Td, Text, Th, Tr, Ul } from "./Table";
+import { InputText, DivBox, Layout, Title, MoneyText } from "../index";
+import { Table, Td, Text, Th, Tr, Ul } from "../Table";
 
 function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 	const changeMoneyUnit = (money: string) => {

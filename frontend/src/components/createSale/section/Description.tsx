@@ -1,7 +1,7 @@
 import { EventProps } from "src/pages/createSale";
 import styled from "styled-components";
-import Layout from "./Layout";
-import Title from "./Title";
+import Layout from "../Layout";
+import Title from "../Title";
 
 function Description({ houseInfo, changeEvent }: EventProps) {
 	return (

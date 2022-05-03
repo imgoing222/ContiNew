@@ -4,10 +4,10 @@ import React, { useState } from "react";
 import { HouseInfo } from "src/types/houseInfo";
 import styled from "styled-components";
 import Head from "next/head";
-import OptionInfo from "@components/createSale/OptionInfo";
-import LocationInfo from "@components/createSale/LocationInfo";
-import Description from "@components/createSale/Description";
-import Photos from "@components/createSale/Photos";
+import OptionInfo from "@components/createSale/section/OptionInfo";
+import LocationInfo from "@components/createSale/section/LocationInfo";
+import Description from "@components/createSale/section/Description";
+import Photos from "@components/createSale/section/Photos";
 import { saleApi } from "src/api";
 
 interface ButtonProps {
@@ -68,11 +68,11 @@ function index() {
 	const handleHouseInfo = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		console.log(houseInfo);
 		if (event.target.name === "options") {
-			const idx = houseInfo.options.indexOf(+event.target.value);
+			const idx = houseInfo.options.indexOf(event.target.value);
 			if (idx !== -1) {
 				return setHouseInfo({ ...houseInfo, ...[houseInfo.options.splice(idx, 1)] });
 			}
-			setHouseInfo({ ...houseInfo, ...[houseInfo.options.push(+event.target.value)] });
+			setHouseInfo({ ...houseInfo, ...[houseInfo.options.push(event.target.value)] });
 			return;
 		}
 		if (numberKey.includes(event.target.name)) {
