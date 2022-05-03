@@ -1,5 +1,5 @@
 import { EventProps } from "src/pages/createSale";
-import Container from "../Container";
+import { Container } from "../Container";
 import { InputText, DivBox, MoneyText } from "../index";
 import { Td, Text, Th, Tr, Ul } from "../Table";
 
