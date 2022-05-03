@@ -2,7 +2,7 @@ import { HouseInfo } from "src/types/houseInfo";
 import InputCheck from "./InputCheck";
 import { Label, Pbox } from "./Table";
 
-interface OptionInfoListProps {
+export interface OptionInfoListProps {
 	value: string;
 	changeEvent: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	title: string;
