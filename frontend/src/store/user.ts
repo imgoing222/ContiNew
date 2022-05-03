@@ -1,12 +1,12 @@
 const LOGIN = "user/setUserInfo";
 const DELETE = "user/deleteUserInfo";
 interface dataType {
-	email: string;
-	gender: number;
 	id: number;
-	image: string;
-	social_id: string;
+	login_id: string;
 	username: string;
+	phone_nunber: string;
+	phone_auth: boolean;
+	provider: string;
 }
 
 interface userName {
@@ -35,21 +35,21 @@ function userInfo(state = initialState, action: actionType) {
 		case LOGIN:
 			return {
 				...state,
-				email: action.data.email,
-				gender: action.data.gender,
 				id: action.data.id,
-				image: action.data.image,
-				social_id: action.data.social_id,
+				login_id: action.data.login_id,
 				username: action.data.username,
+				phone_nunber: action.data.phone_nunber,
+				phone_auth: action.data.phone_auth,
+				provider: action.data.provider,
 			};
 		case DELETE:
 			return {
-				email: "",
-				gender: 0,
 				id: 0,
-				image: "",
-				social_id: "",
+				login_id: "",
 				username: "",
+				phone_nunber: "",
+				phone_auth: false,
+				provider: "",
 			};
 		default:
 			return state;
