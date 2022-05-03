@@ -9,4 +9,6 @@ public interface CertifyPhoneRepository extends JpaRepository<CertifyPhone, Long
     Optional<CertifyPhone> findByMember(Member member);
 
     int deleteByExpireTimeBefore(LocalDateTime time);
+
+    Boolean existsByCertificationCode(String code);
 }
