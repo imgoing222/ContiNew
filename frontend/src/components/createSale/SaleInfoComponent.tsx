@@ -6,20 +6,35 @@ interface SaleInfoComponentProps {
 	value: string;
 	changeEvent: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	houseInfo: HouseInfo;
+	type: string;
 }
 
-function SaleInfoComponent({ value, houseInfo, changeEvent }: SaleInfoComponentProps) {
+function SaleInfoComponent({ value, houseInfo, changeEvent, type }: SaleInfoComponentProps) {
 	return (
 		<li>
-			<Label htmlFor="saleType">
+			<Label htmlFor={type}>
 				<InputRadio
 					type="radio"
-					name="saleType"
+					name={type}
 					value={value}
-					checked={houseInfo.saleType === value}
+					checked={
+						type === "saleType" ? houseInfo.saleType === value : houseInfo.houseType === value
+					}
 					onChange={changeEvent}
 				/>
-				<Pbox isCheck={houseInfo.saleType === value ? "checked" : undefined}>{value}</Pbox>
+				<Pbox
+					isCheck={
+						type === "saleType"
+							? houseInfo.saleType === value
+								? "checked"
+								: undefined
+							: houseInfo.houseType === value
+							? "checked"
+							: undefined
+					}
+				>
+					{value}
+				</Pbox>
 			</Label>
 		</li>
 	);

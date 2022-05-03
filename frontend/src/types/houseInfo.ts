@@ -16,5 +16,5 @@ export interface HouseInfo {
 	period: string;
 	description: string;
 	options: string[];
-	images: FileList | null;
+	images: FileList | File[] | null;
 }
