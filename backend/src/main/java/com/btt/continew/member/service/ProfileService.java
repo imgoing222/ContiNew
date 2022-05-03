@@ -145,7 +145,7 @@ public class ProfileService {
     }
 
     public void checkYourPhoneNumber(String memberPhoneNumber, String requestPhoneNumber) {
-        if (memberPhoneNumber.equals(requestPhoneNumber)) {
+        if (!memberPhoneNumber.equals(requestPhoneNumber)) {
             throw new BusinessException(ErrorCode.MEMBER_NOT_YOUR_PHONE_NUMBER);
         }
     }
