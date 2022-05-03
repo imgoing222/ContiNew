@@ -1,12 +1,8 @@
 import styled from "styled-components";
 import React from "react";
+import TableProps from "src/types/TableProps";
 
-interface PropsType {
-	title: string;
-	children: React.ReactNode;
-}
-
-export const Container = ({ title, children }: PropsType) => (
+export const Container = ({ title, children }: TableProps) => (
 	<Layout>
 		<Title>{title}</Title>
 		<Table>
@@ -15,7 +11,7 @@ export const Container = ({ title, children }: PropsType) => (
 	</Layout>
 );
 
-export const SmallContainer = ({ title, children }: PropsType) => (
+export const SmallContainer = ({ title, children }: TableProps) => (
 	<Layout>
 		<Title>{title}</Title>
 		{children}
