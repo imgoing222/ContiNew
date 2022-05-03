@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
 export const Label = styled.label`
-	font-size: 1.5rem;
+	font-size: 1.7rem;
+	margin-top: 2rem;
 `;

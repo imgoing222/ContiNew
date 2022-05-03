@@ -52,7 +52,9 @@ function Signup() {
 				<ErrorText>{errors.password}</ErrorText>
 				<Label>비밀번호 확인</Label>
 				<Input name="passwordConfirm" type="password" />
-				<Button disabled={disabled}>회원가입</Button>
+				<Button disabled={disabled} backgroundColor="#DC143C" color="white">
+					회원가입
+				</Button>
 			</FormContainer>
 			<Button onClick={handleGoogleLoginClick}>구글로 시작하기</Button>
 			<LinkButton href="/signin">로그인하러가기</LinkButton>
