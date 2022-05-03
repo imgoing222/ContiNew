@@ -18,19 +18,17 @@ interface DivProps {
 }
 
 function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
-	const [uploadImgs, setUploadImgs] = useState<FileList | {}>({});
+	const [uploadImgs, setUploadImgs] = useState<FileList | null>(null);
 	const [previewImgs, setPreviewImgs] = useState<string[]>([]);
 
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const selectedImages = e.target.files;
-		setUploadImgs({ ...uploadImgs, ...selectedImages });
+		if (uploadImgs) setUploadImgs({ ...uploadImgs, ...selectedImages });
 		if (setHouseInfo) setHouseInfo({ ...houseInfo, images: uploadImgs });
 
-		const imgs = [];
+		const imgs: string[] = [];
 		if (selectedImages) {
-			for (let i = 0; i < selectedImages.length; i++) {
-				imgs.push(URL.createObjectURL(selectedImages[i]));
-			}
+			[...selectedImages].forEach((img) => imgs.push(URL.createObjectURL(img)));
 			if (imgs.length > 10) imgs.splice(0, 9);
 			setPreviewImgs([...previewImgs, ...imgs]);
 		}
