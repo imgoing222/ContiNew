@@ -1,13 +1,16 @@
-import PriceInfo from "@components/createSale/PriceInfo";
-import SaleInfo from "@components/createSale/SaleInfo";
+import {
+	PriceInfo,
+	SaleInfo,
+	OptionInfo,
+	LocationInfo,
+	Description,
+	Photos,
+} from "@components/createSale";
 import React, { useState } from "react";
 import { HouseInfo } from "src/types/houseInfo";
 import styled from "styled-components";
 import Head from "next/head";
-import OptionInfo from "@components/createSale/OptionInfo";
-import LocationInfo from "@components/createSale/LocationInfo";
-import Description from "@components/createSale/Description";
-import Photos from "@components/createSale/Photos";
+import { saleApi } from "src/api";
 
 interface ButtonProps {
 	isApplyBtn?: boolean;
@@ -40,8 +43,29 @@ function index() {
 		description: "",
 		options: [],
 		deposit: "",
-		images: {},
+		images: null,
 	});
+
+	const {
+		sido,
+		sigungu,
+		bname,
+		jibunAddress,
+		addressDetail,
+		latitude,
+		longitude,
+		floor,
+		saleType,
+		houseType,
+		monthlyRent,
+		maintenanceFee,
+		maintenanceDetail,
+		period,
+		description,
+		options,
+		deposit,
+		images,
+	} = houseInfo;
 
 	const handleHouseInfo = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		console.log(houseInfo);
@@ -61,6 +85,37 @@ function index() {
 		}
 		setHouseInfo({ ...houseInfo, [event.target.name]: event.target.value });
 	};
+
+	const onSubmit = () => {
+		const formData = new FormData();
+		const article = {
+			sido_name: sido,
+			gungu_name: sigungu,
+			dong_name: bname,
+			jibun_address: jibunAddress,
+			address_detail: addressDetail,
+			latitude,
+			longitude,
+			floor: +floor,
+			sale_type: saleType,
+			house_type: houseType,
+			deposit: +deposit,
+			monthly_rent: +monthlyRent,
+			maintenance_fee: +maintenanceFee,
+			maintenance_detail: maintenanceDetail,
+			period: +period,
+			description,
+			options,
+			images,
+		};
+
+		formData.append("house", new Blob([JSON.stringify(article)], { type: "application/json" })),
+			images !== null
+				? [...images].forEach((file) => formData.append("image", file))
+				: formData.append("image", new Blob([]));
+		saleApi.createSale(formData);
+	};
+
 	return (
 		<>
 			<Head>
@@ -79,7 +134,9 @@ function index() {
 				<Description houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 				<Div>
 					<Button>취소</Button>
-					<Button isApplyBtn={true}>매물 등록</Button>
+					<Button isApplyBtn={true} onClick={onSubmit}>
+						매물 등록
+					</Button>
 				</Div>
 			</Container>
 		</>

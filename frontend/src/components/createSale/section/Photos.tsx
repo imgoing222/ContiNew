@@ -1,10 +1,7 @@
-import { faTruckPlane } from "@fortawesome/free-solid-svg-icons";
-import React, { useState } from "react";
+import { useState } from "react";
 import { EventProps } from "src/pages/createSale";
 import styled from "styled-components";
-import Layout from "./Layout";
-import Title from "./Title";
-
+import { SmallContainer } from "../Container";
 interface ContainerProps {
 	height?: number;
 	background?: boolean;
@@ -18,19 +15,17 @@ interface DivProps {
 }
 
 function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
-	const [uploadImgs, setUploadImgs] = useState<FileList | {}>({});
+	const [uploadImgs, setUploadImgs] = useState<FileList | null>(null);
 	const [previewImgs, setPreviewImgs] = useState<string[]>([]);
 
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const selectedImages = e.target.files;
-		setUploadImgs({ ...uploadImgs, ...selectedImages });
+		if (uploadImgs) setUploadImgs({ ...uploadImgs, ...selectedImages });
 		if (setHouseInfo) setHouseInfo({ ...houseInfo, images: uploadImgs });
 
-		const imgs = [];
+		const imgs: string[] = [];
 		if (selectedImages) {
-			for (let i = 0; i < selectedImages.length; i++) {
-				imgs.push(URL.createObjectURL(selectedImages[i]));
-			}
+			[...selectedImages].forEach((img) => imgs.push(URL.createObjectURL(img)));
 			if (imgs.length > 10) imgs.splice(0, 9);
 			setPreviewImgs([...previewImgs, ...imgs]);
 		}
@@ -42,8 +37,7 @@ function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 	};
 
 	return (
-		<Layout>
-			<Title>사진 등록</Title>
+		<SmallContainer title="사진 등록">
 			<Container>
 				<Text>- 사진은 최소 3장 최대 10장 까지 업로드가 가능합니다.</Text>
 				<Text>- 사진 용량은 최대 100MB까지 가능합니다.</Text>
@@ -66,7 +60,7 @@ function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 					<Input type="file" id="images" multiple accept="image/*" onChange={handleImageChange} />
 				</Div>
 			</Container>
-		</Layout>
+		</SmallContainer>
 	);
 }
 
