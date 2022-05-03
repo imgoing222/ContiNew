@@ -39,7 +39,7 @@ function ChatList() {
 	};
 
 	const toChattingRoom = (roomId: string) => {
-		router.push(`chat/${roomId}`);
+		router.push(`/chat/${roomId}`);
 	};
 
 	return (
