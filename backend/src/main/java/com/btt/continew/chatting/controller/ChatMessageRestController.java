@@ -1,7 +1,9 @@
 package com.btt.continew.chatting.controller;
 
 import com.btt.continew.auth.infrastructure.JwtTokenProvider;
+import com.btt.continew.chatting.controller.dto.request.ChatMessageRequest;
 import com.btt.continew.chatting.domain.ChatMessage;
+import com.btt.continew.chatting.service.ChatMessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,17 +17,15 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class ChatMessageRestController {
 
-    private final RedisTemplate<String, Object> redisTemplate;
     private final ChannelTopic channelTopic;
-
+    private final ChatMessageService chatMessageService;
 
     @MessageMapping("/chat/message")
-    public void message(ChatMessage message) {
+    public void message(ChatMessageRequest request) {
 
         System.out.println("2-1. 메시징");
-        if (ChatMessage.MessageType.ENTER.equals(message.getType())) {
-            message.setSender("[입장]");
-        }
-        redisTemplate.convertAndSend(channelTopic.getTopic(), message);
+
+        chatMessageService.createMessage(channelTopic, request);
+
     }
 }
