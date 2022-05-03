@@ -16,18 +16,16 @@ import org.springframework.stereotype.Controller;
 public class ChatMessageRestController {
 
     private final RedisTemplate<String, Object> redisTemplate;
-    private final JwtTokenProvider jwtTokenProvider;
     private final ChannelTopic channelTopic;
 
 
     @MessageMapping("/chat/message")
-    public void message(ChatMessage message, @Header("token") String token) {
+    public void message(ChatMessage message) {
 
-
+        System.out.println("2-1. 메시징");
         if (ChatMessage.MessageType.ENTER.equals(message.getType())) {
             message.setSender("[입장]");
         }
-
         redisTemplate.convertAndSend(channelTopic.getTopic(), message);
     }
 }
