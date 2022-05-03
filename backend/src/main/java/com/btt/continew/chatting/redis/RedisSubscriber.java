@@ -17,6 +17,7 @@ public class RedisSubscriber {
 
 
     public void sendMessage(String publishMessage) {
+        System.out.println("2-2. 레디스 구독 샌드 메시지");
         try {
 
             ChatMessage chatMessage = objectMapper.readValue(publishMessage, ChatMessage.class);
