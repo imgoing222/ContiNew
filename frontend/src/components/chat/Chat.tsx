@@ -35,7 +35,7 @@ function Chat({ sendMessage }: SendMessageProps) {
 	};
 
 	const toChattingRoom = (chatData: chatDataType) => {
-		router.push(`chat/${chatData.id}`);
+		router.push(`/chat/${chatData.id}`);
 	};
 
 	const sendMessageHandler = (event: React.FormEvent<HTMLFormElement>) => {
