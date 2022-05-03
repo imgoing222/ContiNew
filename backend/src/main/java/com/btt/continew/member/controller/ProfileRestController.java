@@ -5,6 +5,7 @@ import com.btt.continew.member.controller.dto.request.CheckPhoneRequest;
 import com.btt.continew.member.controller.dto.request.MemberChangeRequest;
 import com.btt.continew.member.controller.dto.request.PasswordChangeRequest;
 import com.btt.continew.member.controller.dto.request.PhoneNumberRequest;
+import com.btt.continew.member.controller.dto.response.ChangeTokenResponse;
 import com.btt.continew.member.controller.dto.response.MemberInfoResponse;
 import com.btt.continew.member.service.ProfileService;
 import io.swagger.annotations.Api;
@@ -96,13 +97,19 @@ public class ProfileRestController {
     @ApiOperation(value = "비밀번호 찾기(1) 인증 번호 문자 받기", notes = "비밀번호를 찾기 위한 여정 - 1\n"
         + "휴대폰으로 인증 번호 받기 API\n"
         + "error response 는 나중에 추가됩니다.")
-    public ResponseEntity<Void> sendChangePwCode(@RequestBody FindPwSendRequest request){
+    public ResponseEntity<Void> sendFindPwCode(@RequestBody FindPwSendRequest request){
         profileService.sendFindPwCode(request);
         return ResponseEntity.noContent().build();
     }
 
     // 비밀번호 인증 번호 확인 request: certified_code / response: HttpStatus 200 OK (body: change_token)
-    //@PostMapping("/members/find-pw/phone-check")
+    @PostMapping("/members/find-pw/phone-check")
+    @ApiOperation(value = "비밀번호 찾기(2) 인증 번호 확인", notes = "비밀번호를 찾기 위한 여정 - 2\n"
+        + "인증 번호를 확인하고 change Token 받는 API\n"
+        + "error response 는 나중에 추가됩니다.")
+    public ResponseEntity<ChangeTokenResponse> findPwCheckCertifyCode(@RequestBody CheckPhoneRequest request){
+        return ResponseEntity.ok().body(profileService.findPwCheckCertifyCode(request));
+    }
 
     // 인증된 토큰으로 비밀번호 바꾸기 request: change_token, password / response: HttpStatus 204 No content
     //@PostMapping("/members/find-pw/change-pw")
