@@ -5,10 +5,9 @@ import com.btt.continew.chatting.controller.dto.request.ChatRoomRequest;
 import com.btt.continew.chatting.controller.dto.response.ChatRoomResponse;
 import com.btt.continew.chatting.controller.dto.response.ChatRoomsResponse;
 import com.btt.continew.chatting.domain.ChatRoom;
-import com.btt.continew.chatting.service.ChatService;
+import com.btt.continew.chatting.service.ChatRoomService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -20,15 +19,13 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Controller
 @Api(tags = {"채팅방"})
 @RequestMapping("/api/chat")
 public class ChatRoomRestController {
 
-    private final ChatService chatService;
+    private final ChatRoomService chatRoomService;
 
     @GetMapping("/room")
     @ApiOperation(value = "채팅방 목록 조회", notes = "<b>(로그인 필요)</b> 채팅방 목록 조회 API API")
@@ -39,7 +36,7 @@ public class ChatRoomRestController {
         @ApiParam(hidden = true) @AuthenticationPrincipal String loginId
     ) {
         System.out.println("겟룸");
-        return ResponseEntity.ok().body(chatService.showChatRoom(pageable,loginId));
+        return ResponseEntity.ok().body(chatRoomService.showChatRoom(pageable,loginId));
     }
 
     @PostMapping("/room")
@@ -47,7 +44,7 @@ public class ChatRoomRestController {
     @ResponseBody
     public ChatRoom postRoom(@RequestBody ChatRoomRequest request) {
         System.out.println("포스트 룸");
-        return chatService.createChatRoom(request);
+        return chatRoomService.createChatRoom(request);
     }
 
     @GetMapping("/room/{room_id}")
@@ -58,6 +55,6 @@ public class ChatRoomRestController {
         @RequestParam(value = "room_id") String roomId){
 
         System.out.println("겟룸 디테일");
-        return chatService.showChatRoomDetail(roomId);
+        return chatRoomService.showChatRoomDetail(roomId);
     }
 }
