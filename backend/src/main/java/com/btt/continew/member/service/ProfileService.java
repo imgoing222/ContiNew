@@ -2,6 +2,7 @@ package com.btt.continew.member.service;
 
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
+import com.btt.continew.member.controller.dto.request.FindPwChangeRequest;
 import com.btt.continew.member.controller.dto.request.FindPwSendRequest;
 import com.btt.continew.member.controller.dto.request.CheckPhoneRequest;
 import com.btt.continew.member.controller.dto.request.MemberChangeRequest;
@@ -160,5 +161,21 @@ public class ProfileService {
         certifyPassword.setChangeToken(smsService.randomCode(CHANGE_TOKEN_LENGTH)); // 비밀번호 변경 토큰 발행
 
         return ChangeTokenResponse.from(certifyPassword.getChangeToken()); // 토큰을 response body 로 전송
+    }
+
+    @Transactional
+    public void findPwChangePw(FindPwChangeRequest request) {
+        CertifyPassword certifyPassword = certifyPasswordRepository.findByChangeToken(request.getChangeToken())
+            .orElseThrow(() -> new BusinessException(ErrorCode.CERTIFY_NOT_MATCH_CHANGE_TOKEN)); // 체인지 토큰으로 찾기
+        checkTokenExpired(certifyPassword.getExpired());
+
+        certifyPassword.getMember().setNewPassword(passwordEncoder, request.getNewPassword());
+        certifyPassword.setExpired();
+    }
+
+    public void checkTokenExpired(Boolean expired){
+        if (expired){
+            throw new BusinessException(ErrorCode.CERTIFY_IS_EXPIRED_TOKEN);
+        }
     }
 }
