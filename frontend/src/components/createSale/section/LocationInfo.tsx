@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { EventProps } from "src/pages/createSale";
-import { Button, DivBox, InputText, Layout, Title } from "../index";
-import { Table, Td, Text, Th, Tr, Ul } from "../Table";
+import { Button, DivBox, InputText } from "../index";
+import { Td, Text, Th, Tr, Ul } from "../Table";
 import axios from "axios";
+import { Container } from "../Container";
 function LocationInfo({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 	useEffect(() => {
 		const script = document.createElement("script");
@@ -38,62 +39,57 @@ function LocationInfo({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 	};
 
 	return (
-		<Layout>
-			<Title>위치 정보</Title>
-			<Table>
-				<tbody>
-					<Tr>
-						<Th>주소</Th>
-						<Td>
-							<Ul>
-								<li>
-									<DivBox>
-										<InputText
-											width={40}
-											value={houseInfo.jibunAddress}
-											name="jibunAddress"
-											placeholder="예) 서울 동대문구 이문동 294-295"
-											readOnly
-										/>
-										<Button onClick={loadLayout}>주소 검색</Button>
-									</DivBox>
-								</li>
-							</Ul>
-						</Td>
-						<Td>
-							<Ul>
-								<li>
-									<DivBox>
-										<InputText
-											value={houseInfo.addressDetail}
-											name="addressDetail"
-											placeholder="상세 주소"
-											onChange={changeEvent}
-										/>
-									</DivBox>
-								</li>
-							</Ul>
-						</Td>
-						<Td>
-							<Ul>
-								<li>
-									<DivBox>
-										<InputText
-											width={10}
-											value={houseInfo.floor}
-											name="floor"
-											placeholder="층수"
-											onChange={changeEvent}
-										/>
-										<Text>층</Text>
-									</DivBox>
-								</li>
-							</Ul>
-						</Td>
-					</Tr>
-				</tbody>
-			</Table>
-		</Layout>
+		<Container title="위치 정보">
+			<Tr>
+				<Th>주소</Th>
+				<Td>
+					<Ul>
+						<li>
+							<DivBox>
+								<InputText
+									width={40}
+									value={houseInfo.jibunAddress}
+									name="jibunAddress"
+									placeholder="예) 서울 동대문구 이문동 294-295"
+									readOnly
+								/>
+								<Button onClick={loadLayout}>주소 검색</Button>
+							</DivBox>
+						</li>
+					</Ul>
+				</Td>
+				<Td>
+					<Ul>
+						<li>
+							<DivBox>
+								<InputText
+									value={houseInfo.addressDetail}
+									name="addressDetail"
+									placeholder="상세 주소"
+									onChange={changeEvent}
+								/>
+							</DivBox>
+						</li>
+					</Ul>
+				</Td>
+				<Td>
+					<Ul>
+						<li>
+							<DivBox>
+								<InputText
+									width={10}
+									value={houseInfo.floor}
+									name="floor"
+									placeholder="층수"
+									onChange={changeEvent}
+								/>
+								<Text>층</Text>
+							</DivBox>
+						</li>
+					</Ul>
+				</Td>
+			</Tr>
+		</Container>
 	);
 }
 
