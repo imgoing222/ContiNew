@@ -33,7 +33,7 @@ function Signin() {
 	});
 
 	const handleGoogleLoginClick = () => {
-		window.location.href = `http://localhost:8080/oauth2/authorization/google`;
+		window.location.href = `http://localhost:8080/api/members/login/google`;
 	};
 
 	return (
@@ -47,7 +47,7 @@ function Signin() {
 				<Button>로그인</Button>
 			</FormContainer>
 			<Button onClick={handleGoogleLoginClick}>구글로 시작하기</Button>
-			<LinkButton href="/signin">로그인하러가기</LinkButton>
+			<LinkButton href="/signup">회원가입 하러가기</LinkButton>
 		</Container>
 	);
 }
