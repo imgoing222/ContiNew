@@ -14,18 +14,21 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class CertifyPhone {
+public class CertifyPassword {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "certify_phone_id")
+    @Column(name = "certify_password_id")
     private Long id;
-
-    @Column(name = "phone_number", length = 16)
-    private String phoneNumber;
 
     @Column(name = "certification_code", length = 6)
     private String certificationCode;
+
+    @Column(name = "change_token", length = 12)
+    private String changeToken;
+
+    @Column(name = "expired")
+    private Boolean expired;
 
     @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
@@ -37,23 +40,31 @@ public class CertifyPhone {
     @Column(name = "today_count")
     private Integer todayCount;
 
-    public CertifyPhone() {
-
-    }
-
     @Builder
-    public CertifyPhone(String phoneNumber, String certificationCode, Member member, LocalDateTime expireTime) {
-        this.phoneNumber = phoneNumber;
+    public CertifyPassword(String certificationCode, Member member, LocalDateTime expireTime) {
         this.certificationCode = certificationCode;
+        this.expired = false;
         this.member = member;
         this.expireTime = expireTime;
         this.todayCount = 0;
     }
 
-    public void setNewCode(String phoneNumber, String certifiedCode, LocalDateTime expireTime) {
+    public CertifyPassword() {
+    }
+
+    public void setChangeToken(String changeToken) {
+        this.changeToken = changeToken;
+    }
+
+    public void setNewCode(String certificationCode, LocalDateTime expireTime) {
         this.todayCount++;
-        this.phoneNumber = phoneNumber;
+        this.certificationCode = certificationCode;
+        this.changeToken = null;
+        this.expired = false;
         this.expireTime = expireTime;
-        this.certificationCode = certifiedCode;
+    }
+
+    public void setExpired(){
+        this.expired = true;
     }
 }

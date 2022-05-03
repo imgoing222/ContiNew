@@ -111,4 +111,10 @@ public class Member extends BaseEntity {
             throw new BusinessException(ErrorCode.MEMBER_NOT_SOCIAL_USER);
         }
     }
+
+    public void setNewPassword(PasswordEncoder passwordEncoder, String newPassword){
+        if (!Objects.isNull(password)) {
+            this.password = passwordEncoder.encode(newPassword);
+        }
+    }
 }

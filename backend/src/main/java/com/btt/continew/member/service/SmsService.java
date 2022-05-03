@@ -35,11 +35,11 @@ public class SmsService {
         }
     }
 
-    public String randomCode() {
+    public String randomCode(int codeLength) {
         StringBuilder temp = new StringBuilder();
 
         Random rnd = new Random();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < codeLength; i++) {
             int rIndex = rnd.nextInt(3);
             switch (rIndex) {
                 case 0:
