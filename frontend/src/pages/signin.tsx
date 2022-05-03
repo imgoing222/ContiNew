@@ -33,7 +33,7 @@ function Signin() {
 	});
 
 	const handleGoogleLoginClick = () => {
-		window.location.href = `http://localhost:8080/api/members/login/google`;
+		authApi.google();
 	};
 
 	return (
