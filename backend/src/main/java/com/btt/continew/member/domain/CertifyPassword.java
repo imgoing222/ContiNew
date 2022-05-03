@@ -63,4 +63,8 @@ public class CertifyPassword {
         this.expired = false;
         this.expireTime = expireTime;
     }
+
+    public void setExpired(){
+        this.expired = true;
+    }
 }
