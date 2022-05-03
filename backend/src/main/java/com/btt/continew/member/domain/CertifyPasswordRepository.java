@@ -10,4 +10,8 @@ public interface CertifyPasswordRepository extends JpaRepository<CertifyPassword
     Optional<CertifyPassword> findByCertificationCode(String certifyCode);
 
     Optional<CertifyPassword> findByChangeToken(String changeToken);
+
+    Boolean existsByChangeToken(String changeToken);
+
+    Boolean existsByCertificationCode(String certifyCode);
 }
