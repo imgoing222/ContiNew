@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { EventProps } from "src/pages/createSale";
 import styled from "styled-components";
-import Layout from "../Container";
-import Title from "../Title";
-
+import { SmallContainer } from "../Container";
 interface ContainerProps {
 	height?: number;
 	background?: boolean;
@@ -39,8 +37,7 @@ function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 	};
 
 	return (
-		<Layout>
-			<Title>사진 등록</Title>
+		<SmallContainer title="사진 등록">
 			<Container>
 				<Text>- 사진은 최소 3장 최대 10장 까지 업로드가 가능합니다.</Text>
 				<Text>- 사진 용량은 최대 100MB까지 가능합니다.</Text>
@@ -63,7 +60,7 @@ function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 					<Input type="file" id="images" multiple accept="image/*" onChange={handleImageChange} />
 				</Div>
 			</Container>
-		</Layout>
+		</SmallContainer>
 	);
 }
 
