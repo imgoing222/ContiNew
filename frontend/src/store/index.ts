@@ -1,7 +1,10 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { HYDRATE, createWrapper } from "next-redux-wrapper";
+import userInfo from "./user";
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+	userInfo,
+});
 
 const reducer = (state: any, action: any) => {
 	if (action.type === HYDRATE) {
