@@ -24,11 +24,15 @@ const useForm = ({ initialValues, onSubmit }: Props) => {
 		const { name, value } = e.target as HTMLInputElement;
 		const tempValues = { ...values, [name]: value.trim() };
 		setValues(tempValues);
+		const { login_id, username, password } = tempValues;
 		// 에러 세팅 함수화
 		// debounce 적용 (유효성 검사 및 에러 세팅)
 		const tempErrors = validate(tempValues);
 		setErrors(tempErrors);
-		Object.keys(tempErrors).length > 0 ? setDisabled(true) : setDisabled(false);
+		// 버튼 상태 변경
+		if (login_id && username && password) {
+			Object.keys(tempErrors).length > 0 ? setDisabled(true) : setDisabled(false);
+		}
 	};
 
 	const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
