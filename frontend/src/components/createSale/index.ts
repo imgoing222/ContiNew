@@ -1,8 +1,8 @@
 export { default as DivBox } from "./DivBox";
 export { default as InputText } from "./InputText";
-export { default as MoneyText } from "./MoneyText";
 export { default as InputCheck } from "./InputCheck";
 export { default as Button } from "./Button";
+export { default as LocationComponent } from "./LocationComponent";
 export { default as Description } from "./section/Description";
 export { default as LocationInfo } from "./section/LocationInfo";
 export { default as OptionInfo } from "./section/OptionInfo";
