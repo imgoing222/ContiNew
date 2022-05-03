@@ -2,11 +2,13 @@ package com.btt.continew.member.service;
 
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
+import com.btt.continew.member.controller.dto.request.ChangePwSendRequest;
 import com.btt.continew.member.controller.dto.request.CheckPhoneRequest;
 import com.btt.continew.member.controller.dto.request.MemberChangeRequest;
 import com.btt.continew.member.controller.dto.request.PasswordChangeRequest;
 import com.btt.continew.member.controller.dto.request.PhoneNumberRequest;
 import com.btt.continew.member.controller.dto.response.MemberInfoResponse;
+import com.btt.continew.member.domain.CertifyPassword;
 import com.btt.continew.member.domain.CertifyPasswordRepository;
 import com.btt.continew.member.domain.CertifyPhone;
 import com.btt.continew.member.domain.CertifyPhoneRepository;
@@ -22,6 +24,7 @@ public class ProfileService {
     private final int MAX_REQUEST_COUNT = 5;
     private final int EXPIRED_TIME = 3;
     private final int RANDOM_CODE_LENGTH = 6;
+    private final int CHANGE_TOKEN_LENGTH = 12;
 
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
@@ -76,7 +79,7 @@ public class ProfileService {
                 .member(member)
                 .build()));
 
-        isMaxCertifyRequest(certifyPhone);
+        isMaxCertifyRequest(certifyPhone.getTodayCount());
 
         String certifiedCode = smsService.randomCode(RANDOM_CODE_LENGTH);
 
@@ -85,8 +88,8 @@ public class ProfileService {
         smsService.sendCertifiedCode(request.getPhoneNumber(), certifiedCode);
     }
 
-    public void isMaxCertifyRequest(CertifyPhone certifyPhone) {
-        if (certifyPhone.getTodayCount() >= MAX_REQUEST_COUNT) {
+    public void isMaxCertifyRequest(int todayCount) {
+        if (todayCount >= MAX_REQUEST_COUNT) {
             throw new BusinessException(ErrorCode.SMS_TOO_MANY_REQUEST);
         }
     }
@@ -119,6 +122,31 @@ public class ProfileService {
     public void checkCertificationCode(String certificationCode, String requestCode) {
         if (!certificationCode.equals(requestCode)) {
             throw new BusinessException(ErrorCode.CERTIFY_NOT_MATCH_CODE);
+        }
+    }
+
+    @Transactional
+    public void sendChangePwCode(ChangePwSendRequest request) {
+        Member member = memberService.findByLoginId(request.getLoginId());
+        checkYourPhoneNumber(member.getPhoneNumber(), request.getPhoneNumber());
+
+        CertifyPassword certifyPassword = certifyPasswordRepository.findByMember(member)
+            .orElseGet(() -> certifyPasswordRepository.save(CertifyPassword.builder()
+                .member(member)
+                .build()));
+
+        isMaxCertifyRequest(certifyPassword.getTodayCount());
+
+        String certifyCode = smsService.randomCode(RANDOM_CODE_LENGTH);
+
+        certifyPassword.setNewCode(certifyCode, LocalDateTime.now().plusMinutes(EXPIRED_TIME));
+
+        smsService.sendCertifiedCode(request.getPhoneNumber(), certifyCode);
+    }
+
+    public void checkYourPhoneNumber(String memberPhoneNumber, String requestPhoneNumber) {
+        if (memberPhoneNumber.equals(requestPhoneNumber)) {
+            throw new BusinessException(ErrorCode.MEMBER_NOT_YOUR_PHONE_NUMBER);
         }
     }
 }
