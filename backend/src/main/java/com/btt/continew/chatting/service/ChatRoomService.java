@@ -63,8 +63,6 @@ public class ChatRoomService {
             // 판매자
             if (temp.getSeller().equals(member.getLoginId())){
                 chatRoomList.add(temp);
-
-                continue;
             }
         }
 
