@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { EventProps } from "src/pages/createSale";
-import { Button, DivBox, InputText } from "../index";
-import { Td, Text, Th, Tr, Ul } from "../Table";
+import { Button, InputText } from "../index";
+import { Text } from "../Table";
 import axios from "axios";
 import { Container } from "../Container";
 import { TableRowAndHead } from "../TableRow";
 import LocationTableData from "../LocationComponent";
+
 function LocationInfo({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 	useEffect(() => {
 		const script = document.createElement("script");

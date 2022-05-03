@@ -1,7 +1,7 @@
 import { EventProps } from "src/pages/createSale";
 import { Container } from "../Container";
 import { InputRadio, Label, Pbox } from "../Table";
-import TableRow from "../TableRow";
+import { TableRow } from "../TableRow";
 
 function SaleInfo({ changeEvent, houseInfo }: EventProps) {
 	return (
