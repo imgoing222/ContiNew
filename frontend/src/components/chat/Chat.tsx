@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { chatApi } from "src/api";
 
 interface SendMessageProps {
-	sendMessage: (type: string) => void;
+	sendMessage: () => void;
 }
 
 interface chatDataType {
@@ -43,7 +43,7 @@ function Chat({ sendMessage }: SendMessageProps) {
 				<h3>여긴 채팅창</h3>
 			</Title>
 			<button onClick={createChattingRoom}>채팅방생성[임시]</button>
-			<form onSubmit={() => sendMessage("type")}>
+			<form onSubmit={() => sendMessage()}>
 				<textarea />
 				<button>보내기</button>
 			</form>

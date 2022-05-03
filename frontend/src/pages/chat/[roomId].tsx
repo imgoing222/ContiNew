@@ -24,14 +24,20 @@ function ChatDetail() {
 				const receivedChatting = JSON.parse(message.body);
 				console.log(receivedChatting);
 			});
+
+			stomp.send(
+				"/pup/chat/message",
+				{ Authorization: `Bearer ${token}` },
+				JSON.stringify({ type: "TALK", roomId: roomId, sender: "mmmm", message: "hello" }),
+			);
 		});
 	}, []);
 
-	const sendMessage = (type: string) => {
+	const sendMessage = () => {
 		stomp.send(
 			"/pup/chat/message",
 			{ Authorization: `Bearer ${token}` },
-			JSON.stringify({ type: type, roomId: roomId, message: "hello" }),
+			JSON.stringify({ type: "TALK", roomId: roomId, sender: "mmmm", message: "hello" }),
 		);
 	};
 
