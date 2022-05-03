@@ -40,17 +40,26 @@ public class CertifyPassword {
     private Integer todayCount;
 
     @Builder
-    public CertifyPassword(String certificationCode, String changeToken, Boolean expired,
-        Member member, LocalDateTime expireTime, Integer todayCount) {
+    public CertifyPassword(String certificationCode, Member member, LocalDateTime expireTime) {
         this.certificationCode = certificationCode;
-        this.changeToken = changeToken;
-        this.expired = expired;
+        this.expired = false;
         this.member = member;
         this.expireTime = expireTime;
-        this.todayCount = todayCount;
+        this.todayCount = 0;
     }
 
     public CertifyPassword() {
+    }
 
+    public void setChangeToken(String changeToken) {
+        this.changeToken = changeToken;
+    }
+
+    public void setNewCode(String certificationCode, LocalDateTime expireTime) {
+        this.todayCount++;
+        this.certificationCode = certificationCode;
+        this.changeToken = null;
+        this.expired = false;
+        this.expireTime = expireTime;
     }
 }
