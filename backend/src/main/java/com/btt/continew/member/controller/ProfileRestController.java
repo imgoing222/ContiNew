@@ -1,5 +1,6 @@
 package com.btt.continew.member.controller;
 
+import com.btt.continew.member.controller.dto.request.ChangePwSendRequest;
 import com.btt.continew.member.controller.dto.request.CheckPhoneRequest;
 import com.btt.continew.member.controller.dto.request.MemberChangeRequest;
 import com.btt.continew.member.controller.dto.request.PasswordChangeRequest;
@@ -89,4 +90,19 @@ public class ProfileRestController {
         profileService.checkPhoneCertifiedCode(loginId, request);
         return ResponseEntity.noContent().build();
     }
+
+    // 비밀번호 인증 문자 받기 request: login_id, phone_number / response: HttpStatus 204 No content
+    @PostMapping("/members/find-pw/phone-send")
+    @ApiOperation(value = "비밀번호 찾기(1) 인증 번호 문자 받기", notes = "비밀번호를 찾기 위한 여정1, 휴대폰으로 인증 번호 받기 API\n"
+        + "error response 는 나중에 추가됩니다.")
+    public ResponseEntity<Void> sendChangePwCode(@RequestBody ChangePwSendRequest request){
+        profileService.sendChangePwCode(request);
+        return ResponseEntity.noContent().build();
+    }
+
+    // 비밀번호 인증 번호 확인 request: certified_code / response: HttpStatus 200 OK (body: change_token)
+    //@PostMapping("/members/find-pw/phone-check")
+
+    // 인증된 토큰으로 비밀번호 바꾸기 request: change_token, password / response: HttpStatus 204 No content
+    //@PostMapping("/members/find-pw/change-pw")
 }
