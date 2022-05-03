@@ -15,7 +15,7 @@ function Signin() {
 	const router = useRouter();
 	const dispatch = useDispatch();
 
-	const { handleFormSubmit, handleInputChange } = useForm({
+	const { handleFormSubmit, handleInputChange, handleGoogleLoginClick } = useForm({
 		initialValues: {
 			login_id: "",
 			password: "",
@@ -32,10 +32,6 @@ function Signin() {
 		},
 	});
 
-	const handleGoogleLoginClick = () => {
-		window.location.href = `http://localhost:8080/oauth2/authorization/google`;
-	};
-
 	return (
 		<Container>
 			<Header>로그인</Header>
@@ -47,7 +43,7 @@ function Signin() {
 				<Button>로그인</Button>
 			</FormContainer>
 			<Button onClick={handleGoogleLoginClick}>구글로 시작하기</Button>
-			<LinkButton href="/signin">로그인하러가기</LinkButton>
+			<LinkButton href="/signup">회원가입 하러가기</LinkButton>
 		</Container>
 	);
 }
