@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import { chatApi } from "src/api";
+import React from "react";
 
 interface SendMessageProps {
 	sendMessage: () => void;
@@ -37,13 +38,18 @@ function Chat({ sendMessage }: SendMessageProps) {
 		router.push(`chat/${chatData.id}`);
 	};
 
+	const sendMessageHandler = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		sendMessage();
+	};
+
 	return (
 		<Container>
 			<Title>
 				<h3>여긴 채팅창</h3>
 			</Title>
 			<button onClick={createChattingRoom}>채팅방생성[임시]</button>
-			<form onSubmit={() => sendMessage()}>
+			<form onSubmit={sendMessageHandler}>
 				<textarea />
 				<button>보내기</button>
 			</form>
