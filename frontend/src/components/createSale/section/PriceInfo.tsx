@@ -1,8 +1,9 @@
 import { EventProps } from "src/pages/createSale";
 import { Container } from "../Container";
-import { InputText, DivBox, MoneyText } from "../index";
+import { InputText, DivBox } from "../index";
 import { Text } from "../Table";
-import {TableRow} from "../TableRow";
+import { TableRow } from "../TableRow";
+import styled from "styled-components";
 
 function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 	const changeMoneyUnit = (money: string) => {
@@ -95,3 +96,9 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 }
 
 export default PriceInfo;
+
+const MoneyText = styled.p`
+	margin-left: 3rem;
+	color: gray;
+	font-size: 1.25rem;
+`;
