@@ -1,13 +1,15 @@
-import PriceInfo from "@components/createSale/PriceInfo";
-import SaleInfo from "@components/createSale/SaleInfo";
+import {
+	PriceInfo,
+	SaleInfo,
+	OptionInfo,
+	LocationInfo,
+	Description,
+	Photos,
+} from "@components/createSale";
 import React, { useState } from "react";
 import { HouseInfo } from "src/types/houseInfo";
 import styled from "styled-components";
 import Head from "next/head";
-import OptionInfo from "@components/createSale/section/OptionInfo";
-import LocationInfo from "@components/createSale/section/LocationInfo";
-import Description from "@components/createSale/section/Description";
-import Photos from "@components/createSale/section/Photos";
 import { saleApi } from "src/api";
 
 interface ButtonProps {
