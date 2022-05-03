@@ -9,13 +9,25 @@ function SaleInfo({ changeEvent, houseInfo }: EventProps) {
 	return (
 		<Container title="매물정보">
 			<TableRow title="매물 정보">
-				{saleType.map((sale) => (
-					<SaleInfoComponent value={sale} houseInfo={houseInfo} changeEvent={changeEvent} />
+				{saleType.map((sale, idx) => (
+					<SaleInfoComponent
+						value={sale}
+						houseInfo={houseInfo}
+						changeEvent={changeEvent}
+						type="saleType"
+						key={idx}
+					/>
 				))}
 			</TableRow>
 			<TableRow title="종류 선택">
-				{roomType.map((room) => (
-					<SaleInfoComponent value={room} houseInfo={houseInfo} changeEvent={changeEvent} />
+				{roomType.map((room, idx) => (
+					<SaleInfoComponent
+						value={room}
+						houseInfo={houseInfo}
+						changeEvent={changeEvent}
+						type="houseType"
+						key={idx}
+					/>
 				))}
 			</TableRow>
 		</Container>
