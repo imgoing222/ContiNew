@@ -29,8 +29,6 @@ interface recommendDataType {
 }
 
 function MainPage({ recommendData }: recommendDataType) {
-	console.log(useSelector((state: RootState) => state.userInfo));
-
 	return (
 		<>
 			<Head>

@@ -1,8 +1,10 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { HYDRATE, createWrapper } from "next-redux-wrapper";
 import userInfo from "./user";
+import storage from "redux-persist/lib/storage";
+import { persistReducer } from "redux-persist";
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
 	userInfo,
 });
 
@@ -16,6 +18,14 @@ const reducer = (state: any, action: any) => {
 	}
 	return rootReducer(state, action);
 };
+
+const persistConfig = {
+	key: "root",
+	storage,
+	whitelist: ["userInfo"],
+};
+
+export const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export type RootState = ReturnType<typeof rootReducer>;
 
