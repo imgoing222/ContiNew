@@ -5,7 +5,7 @@ import { chatApi } from "src/api";
 import React from "react";
 
 interface SendMessageProps {
-	sendMessage: () => void;
+	sendMessage?: () => void;
 }
 
 interface chatDataType {
@@ -40,7 +40,7 @@ function Chat({ sendMessage }: SendMessageProps) {
 
 	const sendMessageHandler = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		sendMessage();
+		if (sendMessage) sendMessage();
 	};
 
 	return (
@@ -49,10 +49,12 @@ function Chat({ sendMessage }: SendMessageProps) {
 				<h3>여긴 채팅창</h3>
 			</Title>
 			<button onClick={createChattingRoom}>채팅방생성[임시]</button>
-			<form onSubmit={sendMessageHandler}>
-				<textarea />
-				<button>보내기</button>
-			</form>
+			{sendMessage && (
+				<form onSubmit={sendMessageHandler}>
+					<textarea />
+					<button>보내기</button>
+				</form>
+			)}
 		</Container>
 	);
 }
