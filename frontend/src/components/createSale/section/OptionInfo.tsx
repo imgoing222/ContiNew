@@ -25,6 +25,7 @@ function OptionInfo({ changeEvent, houseInfo }: EventProps) {
 						value={(idx + 1).toString()}
 						changeEvent={changeEvent}
 						houseInfo={houseInfo}
+						key={idx + 1}
 					/>
 				))}
 			</TableRow>
