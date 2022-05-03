@@ -42,6 +42,8 @@ public enum ErrorCode {
     CERTIFY_IS_EXPIRED_CODE(HttpStatus.FORBIDDEN, "만료된 코드입니다.", "I02"),
     CERTIFY_NOT_MATCH_CODE(HttpStatus.NOT_FOUND, "일치하지 않는 인증 코드입니다.", "I03"),
     CERTIFY_NOT_MATCH_PHONE_NUMBER(HttpStatus.NOT_FOUND, "인증 요청 했던 번호와 다른 번호입니다.", "I04"),
+    CERTIFY_NOT_MATCH_CHANGE_TOKEN(HttpStatus.NOT_FOUND, "비밀번호 변경 토큰을 찾을 수 없습니다.", "I05"),
+    CERTIFY_IS_EXPIRED_TOKEN(HttpStatus.FORBIDDEN, "이미 사용된 토큰입니다.", "I06"),
 
     // authority
     AUTHORITY_NOT_FOUND_BY_AUTHORITY_CODE(HttpStatus.NOT_FOUND, "존재하지 않는 권한코드입니다.", "A01"),
