@@ -1,6 +1,7 @@
 package com.btt.continew.chatting.domain;
 
 import com.btt.continew.chatting.controller.dto.request.ChatMessageRequest;
+import com.btt.continew.global.domain.BaseEntity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -14,7 +15,7 @@ import org.springframework.data.redis.core.RedisHash;
 @Setter
 @Getter
 @RedisHash("message")
-public class ChatMessage implements Serializable {
+public class ChatMessage extends BaseEntity implements Serializable {
     public enum MessageType{
         ENTER, TALK
     }
