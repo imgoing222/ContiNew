@@ -35,12 +35,15 @@ public enum ErrorCode {
     MEMBER_USERNAME_DUPLICATED_BECAUSE_OF_YOU(HttpStatus.CONFLICT, "회원님이 이미 사용 중인 닉네임입니다.", "M05"),
     MEMBER_PHONE_NUMBER_DUPLICATED(HttpStatus.CONFLICT, "이미 인증된 전화번호 입니다.", "M06"),
     MEMBER_NOT_SOCIAL_USER(HttpStatus.CONFLICT, "해당 회원은 소셜 아이디 로그인 회원이 아닙니다.", "M07"),
+    MEMBER_NOT_YOUR_PHONE_NUMBER(HttpStatus.CONFLICT, "회원의 전화번호가 아닙니다.", "M08"),
 
     // certify
     CERTIFY_NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "해당 아이디로 인증 요청을 한 기록이 없습니다.", "I01"),
     CERTIFY_IS_EXPIRED_CODE(HttpStatus.FORBIDDEN, "만료된 코드입니다.", "I02"),
     CERTIFY_NOT_MATCH_CODE(HttpStatus.NOT_FOUND, "일치하지 않는 인증 코드입니다.", "I03"),
     CERTIFY_NOT_MATCH_PHONE_NUMBER(HttpStatus.NOT_FOUND, "인증 요청 했던 번호와 다른 번호입니다.", "I04"),
+    CERTIFY_NOT_MATCH_CHANGE_TOKEN(HttpStatus.NOT_FOUND, "비밀번호 변경 토큰을 찾을 수 없습니다.", "I05"),
+    CERTIFY_IS_EXPIRED_TOKEN(HttpStatus.FORBIDDEN, "이미 사용된 토큰입니다.", "I06"),
 
     // authority
     AUTHORITY_NOT_FOUND_BY_AUTHORITY_CODE(HttpStatus.NOT_FOUND, "존재하지 않는 권한코드입니다.", "A01"),
@@ -48,7 +51,7 @@ public enum ErrorCode {
     AUTHORITY_ENTRY_POINT(HttpStatus.UNAUTHORIZED, "오류가 있는 권한코드입니다.", "A03"),
 
     // SMS
-    SMS_TOO_MANY_REQUEST(HttpStatus.CONFLICT, "휴대폰 인증은 하루에 5회만 가능합니다", "P01"),
+    SMS_TOO_MANY_REQUEST(HttpStatus.CONFLICT, "휴대폰 인증은 하루에 3회만 가능합니다", "P01"),
 
     // house
     HOUSE_NOT_FOUND_BY_ID(HttpStatus.NOT_FOUND, "존재하지 않는 매물입니다", "H01"),
