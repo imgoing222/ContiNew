@@ -5,17 +5,29 @@ import { TableRow } from "../TableRow";
 
 function SaleInfo({ changeEvent, houseInfo }: EventProps) {
 	const saleType = ["이어살기", "쉐어하우스"];
-	const roomType = ["원룸", "투룸", "쓰리룸"];
+	const houseType = ["원룸", "투룸", "쓰리룸"];
 	return (
 		<Container title="매물정보">
 			<TableRow title="매물 정보">
-				{saleType.map((sale) => (
-					<SaleInfoComponent value={sale} houseInfo={houseInfo} changeEvent={changeEvent} />
+				{saleType.map((sale, idx) => (
+					<SaleInfoComponent
+						value={sale}
+						houseInfo={houseInfo}
+						changeEvent={changeEvent}
+						type="saleType"
+						key={idx}
+					/>
 				))}
 			</TableRow>
 			<TableRow title="종류 선택">
-				{roomType.map((room) => (
-					<SaleInfoComponent value={room} houseInfo={houseInfo} changeEvent={changeEvent} />
+				{houseType.map((room, idx) => (
+					<SaleInfoComponent
+						value={room}
+						houseInfo={houseInfo}
+						changeEvent={changeEvent}
+						type="houseType"
+						key={idx}
+					/>
 				))}
 			</TableRow>
 		</Container>
