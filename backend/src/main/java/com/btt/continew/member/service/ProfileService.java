@@ -83,7 +83,10 @@ public class ProfileService {
 
         isMaxCertifyRequest(certifyPhone.getTodayCount());
 
-        String certifiedCode = smsService.randomCode(RANDOM_CODE_LENGTH);
+        String certifiedCode;
+        do {
+            certifiedCode = smsService.randomCode(RANDOM_CODE_LENGTH);
+        } while (certifyPhoneRepository.existsByCertificationCode(certifiedCode));
 
         certifyPhone.setNewCode(request.getPhoneNumber(), certifiedCode, LocalDateTime.now().plusMinutes(EXPIRED_TIME));
 
@@ -139,7 +142,10 @@ public class ProfileService {
 
         isMaxCertifyRequest(certifyPassword.getTodayCount());
 
-        String certifyCode = smsService.randomCode(RANDOM_CODE_LENGTH);
+        String certifyCode;
+        do {
+            certifyCode = smsService.randomCode(RANDOM_CODE_LENGTH);
+        } while (certifyPasswordRepository.existsByCertificationCode(certifyCode));
 
         certifyPassword.setNewCode(certifyCode, LocalDateTime.now().plusMinutes(EXPIRED_TIME));
 
@@ -158,7 +164,13 @@ public class ProfileService {
             .orElseThrow(() -> new BusinessException(ErrorCode.CERTIFY_NOT_MATCH_CODE)); // 인증 번호로 찾기
 
         checkExpiredCode(certifyPassword.getExpireTime()); // 만료 시간 확인
-        certifyPassword.setChangeToken(smsService.randomCode(CHANGE_TOKEN_LENGTH)); // 비밀번호 변경 토큰 발행
+
+        String changeToken;
+        do {
+            changeToken = smsService.randomCode(CHANGE_TOKEN_LENGTH);
+        } while (certifyPasswordRepository.existsByChangeToken(changeToken));
+
+        certifyPassword.setChangeToken(changeToken); // 비밀번호 변경 토큰 발행
 
         return ChangeTokenResponse.from(certifyPassword.getChangeToken()); // 토큰을 response body 로 전송
     }
@@ -173,8 +185,8 @@ public class ProfileService {
         certifyPassword.setExpired();
     }
 
-    public void checkTokenExpired(Boolean expired){
-        if (expired){
+    public void checkTokenExpired(Boolean expired) {
+        if (expired) {
             throw new BusinessException(ErrorCode.CERTIFY_IS_EXPIRED_TOKEN);
         }
     }
