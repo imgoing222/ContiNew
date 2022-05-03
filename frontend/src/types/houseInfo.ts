@@ -15,6 +15,6 @@ export interface HouseInfo {
 	maintenanceDetail: string;
 	period: string;
 	description: string;
-	options: string[];
+	options: number[];
 	images: FileList | null;
 }

@@ -68,11 +68,11 @@ function index() {
 	const handleHouseInfo = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		console.log(houseInfo);
 		if (event.target.name === "options") {
-			const idx = houseInfo.options.indexOf(event.target.value);
+			const idx = houseInfo.options.indexOf(+event.target.value);
 			if (idx !== -1) {
 				return setHouseInfo({ ...houseInfo, ...[houseInfo.options.splice(idx, 1)] });
 			}
-			setHouseInfo({ ...houseInfo, ...[houseInfo.options.push(event.target.value)] });
+			setHouseInfo({ ...houseInfo, ...[houseInfo.options.push(+event.target.value)] });
 			return;
 		}
 		if (numberKey.includes(event.target.name)) {
@@ -97,11 +97,11 @@ function index() {
 			floor: +floor,
 			sale_type: saleType,
 			house_type: houseType,
-			deposit,
-			monthly_rent: monthlyRent,
-			maintenance_fee: maintenanceFee,
+			deposit: +deposit,
+			monthly_rent: +monthlyRent,
+			maintenance_fee: +maintenanceFee,
 			maintenance_detail: maintenanceDetail,
-			period,
+			period: +period,
 			description,
 			options,
 			images,
