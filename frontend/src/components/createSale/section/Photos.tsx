@@ -43,8 +43,13 @@ function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 	};
 
 	const DeletePhoto = (idx: number) => {
-		previewImgs.splice(idx, 1);
-		setPreviewImgs([...previewImgs]);
+		if (setHouseInfo && houseInfo.images) {
+			previewImgs.splice(idx, 1);
+			setPreviewImgs([...previewImgs]);
+			const img = [...houseInfo.images];
+			img.splice(idx, 1);
+			setHouseInfo({ ...houseInfo, images: img });
+		}
 	};
 
 	return (
@@ -127,6 +132,7 @@ const Label = styled.label<DivProps>`
 	align-items: center;
 	width: 100%;
 	height: 100%;
+	cursor: pointer;
 	${(props) =>
 		!props.isImgs &&
 		`
