@@ -3,6 +3,7 @@ package com.btt.continew.member.domain;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ public class CertifyPhone {
     @Column(name = "certification_code", length = 6)
     private String certificationCode;
 
-    @ManyToOne(targetEntity = Member.class)
+    @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 

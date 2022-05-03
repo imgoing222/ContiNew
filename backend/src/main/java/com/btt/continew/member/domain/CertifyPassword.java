@@ -3,6 +3,7 @@ package com.btt.continew.member.domain;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,7 +30,7 @@ public class CertifyPassword {
     @Column(name = "expired")
     private Boolean expired;
 
-    @ManyToOne(targetEntity = Member.class)
+    @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
