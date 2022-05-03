@@ -20,14 +20,25 @@ function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const selectedImages = e.target.files;
-		if (uploadImgs) setUploadImgs({ ...uploadImgs, ...selectedImages });
-		if (setHouseInfo) setHouseInfo({ ...houseInfo, images: uploadImgs });
+		if (setHouseInfo) {
+			if (uploadImgs) {
+				setUploadImgs({ ...uploadImgs, ...selectedImages });
+			} else {
+				setUploadImgs(selectedImages);
+			}
 
-		const imgs: string[] = [];
-		if (selectedImages) {
-			[...selectedImages].forEach((img) => imgs.push(URL.createObjectURL(img)));
-			if (imgs.length > 10) imgs.splice(0, 9);
-			setPreviewImgs([...previewImgs, ...imgs]);
+			if (houseInfo.images) {
+				setHouseInfo({ ...houseInfo, images: { ...houseInfo.images, ...selectedImages } });
+			} else {
+				setHouseInfo({ ...houseInfo, images: selectedImages });
+			}
+
+			const imgs: string[] = [];
+			if (selectedImages) {
+				[...selectedImages].forEach((img) => imgs.push(URL.createObjectURL(img)));
+				if (imgs.length > 10) imgs.splice(0, 9);
+				setPreviewImgs([...previewImgs, ...imgs]);
+			}
 		}
 	};
 
