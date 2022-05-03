@@ -2,9 +2,9 @@ import { useRouter } from "next/router";
 
 function GoogleLogin() {
 	const router = useRouter();
-	console.log(router);
+	const code = router.query.code;
 
-	return <p>구글로그인</p>;
+	return;
 }
 
 export default GoogleLogin;
