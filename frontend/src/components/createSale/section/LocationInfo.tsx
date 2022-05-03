@@ -21,6 +21,7 @@ function LocationInfo({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 				headers: {
 					Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API}`,
 				},
+				withCredentials: false,
 			},
 		);
 		const { jibunAddress, sido, sigungu, bname } = data;

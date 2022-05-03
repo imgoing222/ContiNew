@@ -6,7 +6,7 @@ export interface HouseInfo {
 	addressDetail: string;
 	latitude: number;
 	longitude: number;
-	floor: string;
+	floor: number | string;
 	saleType: string;
 	houseType: string;
 	deposit: string;
@@ -16,5 +16,5 @@ export interface HouseInfo {
 	period: string;
 	description: string;
 	options: string[];
-	images: FileList | null;
+	images: FileList | null | File[];
 }

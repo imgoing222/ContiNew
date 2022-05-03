@@ -88,6 +88,7 @@ function index() {
 
 	const onSubmit = () => {
 		const formData = new FormData();
+		const optionss = options.map((option) => +option);
 		const article = {
 			sido_name: sido,
 			gungu_name: sigungu,
@@ -105,14 +106,12 @@ function index() {
 			maintenance_detail: maintenanceDetail,
 			period: +period,
 			description,
-			options,
-			images,
+			options: optionss,
 		};
-
 		formData.append("house", new Blob([JSON.stringify(article)], { type: "application/json" })),
 			images !== null
-				? [...images].forEach((file) => formData.append("image", file))
-				: formData.append("image", new Blob([]));
+				? [...images].forEach((file) => formData.append("images", file))
+				: formData.append("images", new Blob([]));
 		saleApi.createSale(formData);
 	};
 
@@ -130,7 +129,7 @@ function index() {
 					changeEvent={handleHouseInfo}
 					setHouseInfo={setHouseInfo}
 				/>
-				<Photos houseInfo={houseInfo} changeEvent={handleHouseInfo} />
+				<Photos houseInfo={houseInfo} changeEvent={handleHouseInfo} setHouseInfo={setHouseInfo} />
 				<Description houseInfo={houseInfo} changeEvent={handleHouseInfo} />
 				<Div>
 					<Button>취소</Button>

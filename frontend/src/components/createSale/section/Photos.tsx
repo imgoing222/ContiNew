@@ -20,20 +20,36 @@ function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const selectedImages = e.target.files;
-		if (uploadImgs) setUploadImgs({ ...uploadImgs, ...selectedImages });
-		if (setHouseInfo) setHouseInfo({ ...houseInfo, images: uploadImgs });
+		if (setHouseInfo) {
+			if (uploadImgs) {
+				setUploadImgs({ ...uploadImgs, ...selectedImages });
+			} else {
+				setUploadImgs(selectedImages);
+			}
 
-		const imgs: string[] = [];
-		if (selectedImages) {
-			[...selectedImages].forEach((img) => imgs.push(URL.createObjectURL(img)));
-			if (imgs.length > 10) imgs.splice(0, 9);
-			setPreviewImgs([...previewImgs, ...imgs]);
+			if (houseInfo.images) {
+				setHouseInfo({ ...houseInfo, images: { ...houseInfo.images, ...selectedImages } });
+			} else {
+				setHouseInfo({ ...houseInfo, images: selectedImages });
+			}
+
+			const imgs: string[] = [];
+			if (selectedImages) {
+				[...selectedImages].forEach((img) => imgs.push(URL.createObjectURL(img)));
+				if (imgs.length > 10) imgs.splice(0, 9);
+				setPreviewImgs([...previewImgs, ...imgs]);
+			}
 		}
 	};
 
 	const DeletePhoto = (idx: number) => {
-		previewImgs.splice(idx, 1);
-		setPreviewImgs([...previewImgs]);
+		if (setHouseInfo && houseInfo.images) {
+			previewImgs.splice(idx, 1);
+			setPreviewImgs([...previewImgs]);
+			const img = [...houseInfo.images];
+			img.splice(idx, 1);
+			setHouseInfo({ ...houseInfo, images: img });
+		}
 	};
 
 	return (
@@ -116,6 +132,7 @@ const Label = styled.label<DivProps>`
 	align-items: center;
 	width: 100%;
 	height: 100%;
+	cursor: pointer;
 	${(props) =>
 		!props.isImgs &&
 		`
