@@ -2,9 +2,11 @@ package com.btt.continew.chatting.controller;
 
 
 import com.btt.continew.chatting.controller.dto.request.ChatRoomRequest;
+import com.btt.continew.chatting.controller.dto.response.ChatMessagesResponse;
 import com.btt.continew.chatting.controller.dto.response.ChatRoomResponse;
 import com.btt.continew.chatting.controller.dto.response.ChatRoomsResponse;
 import com.btt.continew.chatting.domain.ChatRoom;
+import com.btt.continew.chatting.service.ChatMessageService;
 import com.btt.continew.chatting.service.ChatRoomService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -20,16 +22,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 @Api(tags = {"채팅방"})
 @RequestMapping("/api/chat")
 public class ChatRoomRestController {
 
     private final ChatRoomService chatRoomService;
 
-    @GetMapping("/room")
+    @GetMapping("/room/list/")
     @ApiOperation(value = "채팅방 목록 조회", notes = "<b>(로그인 필요)</b> 채팅방 목록 조회 API API")
-
     @ResponseBody
     public ResponseEntity<ChatRoomsResponse> getRoom(
         @PageableDefault(sort = "last_message_time", direction = Direction.DESC)Pageable pageable,
@@ -47,12 +48,12 @@ public class ChatRoomRestController {
         return chatRoomService.createChatRoom(request);
     }
 
-    @GetMapping("/room/{room_id}")
+    @GetMapping("/room/detail")
     @ApiOperation(value = "채팅방 조회", notes = "<b>(로그인 필요)</b> 채팅방 조회 API")
-    @ApiImplicitParam(name = "room_id", value = "방 번호",example = "e1757da8-81c5-40e4-8fe0-f22d4031f6a4",required = true, type = "REQUEST_HEADER")
+    @ApiImplicitParam(name = "room_id", value = "방 번호",example = "e1757da8-81c5-40e4-8fe0-f22d4031f6a4",required = true)
     @ResponseBody
     public ChatRoomResponse getRoomDetail(
-        @RequestParam(value = "room_id") String roomId){
+        @RequestParam(name = "room_id") String roomId){
 
         System.out.println("겟룸 디테일");
         return chatRoomService.showChatRoomDetail(roomId);
