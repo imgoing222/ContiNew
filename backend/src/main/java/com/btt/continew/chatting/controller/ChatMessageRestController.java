@@ -34,7 +34,7 @@ public class ChatMessageRestController {
     @MessageMapping("/chat/message")
     public void message(ChatMessageRequest request) {
 
-        System.out.println("2-1. 메시지 매핑");
+        System.out.println("4-1. 메시지 매핑");
         chatMessageService.createMessage(channelTopic, request);
 
     }
@@ -48,7 +48,7 @@ public class ChatMessageRestController {
         @PageableDefault(sort = "created_at", direction = Direction.DESC)Pageable pageable,
         @RequestParam("room_id") String roomId){
 
-        System.out.println("3-1. 겟 챗 메시지");
+        System.out.println("5-1. 겟 챗 메시지");
 
         return chatMessageService.showChatMessage(roomId, pageable);
     }

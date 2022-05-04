@@ -36,7 +36,7 @@ public class ChatRoomRestController {
         @PageableDefault(sort = "last_message_time", direction = Direction.DESC)Pageable pageable,
         @ApiParam(hidden = true) @AuthenticationPrincipal String loginId
     ) {
-        System.out.println("겟룸");
+        System.out.println("2-1. 겟룸");
         return ResponseEntity.ok().body(chatRoomService.showChatRoom(pageable,loginId));
     }
 
@@ -44,7 +44,7 @@ public class ChatRoomRestController {
     @ApiOperation(value = "채팅방 생성", notes = "<b>(로그인 필요)</b> 채팅방 생성 API")
     @ResponseBody
     public ChatRoom postRoom(@RequestBody ChatRoomRequest request) {
-        System.out.println("포스트 룸");
+        System.out.println("1-1. 포스트 룸");
         return chatRoomService.createChatRoom(request);
     }
 
@@ -55,7 +55,7 @@ public class ChatRoomRestController {
     public ChatRoomResponse getRoomDetail(
         @RequestParam(name = "room_id") String roomId){
 
-        System.out.println("겟룸 디테일");
+        System.out.println("3-1. 겟룸 디테일");
         return chatRoomService.showChatRoomDetail(roomId);
     }
 }
