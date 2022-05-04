@@ -58,6 +58,19 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
                 optionsEq(request.getOptions())
                 )
             .fetch();
+
+        JPAQuery<House> countQuery = jpaQueryFactory
+            .selectFrom(house)
+            .where(house.latitude.between(request.getYTop(), request.getYBottom()),
+                house.longitude.between(request.getXLeft(), request.getXRight()),
+                houseTypeEq(request.getHouseType()),
+                house.deposit.between(request.getMinDeposit(), request.getMaxDeposit()),
+                house.monthlyRent.between(request.getMinMonthlyRent(), request.getMaxMonthlyRent()),
+                house.maintenanceFee.between(request.getMinMaintenanceFee(), request.getMaxMaintenanceFee()),
+                optionsEq(request.getOptions())
+            );
+
+        return PageableExecutionUtils.getPage(responses, pageable, () -> countQuery.fetch().size());
     }
 
     private BooleanExpression houseTypeEq(String houseType) {
