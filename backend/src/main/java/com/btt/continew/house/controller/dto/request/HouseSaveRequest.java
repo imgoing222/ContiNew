@@ -48,31 +48,35 @@ public class HouseSaveRequest {
     @JsonProperty("house_type")
     private String houseType;
 
-    @ApiModelProperty(name = "deposit", position = 10, example = "10000000")
+    @ApiModelProperty(name = "is_monthly", position = 10, example = "true")
+    @JsonProperty("is_monthly")
+    private Boolean isMonthly;
+
+    @ApiModelProperty(name = "deposit", position = 11, example = "10000000")
     @JsonProperty("deposit")
     private Long deposit;
 
-    @ApiModelProperty(name = "monthly_rent", position = 11, example = "500000")
+    @ApiModelProperty(name = "monthly_rent", position = 12, example = "500000")
     @JsonProperty("monthly_rent")
     private Long monthlyRent;
 
-    @ApiModelProperty(name = "maintenance_fee", position = 12, example = "50000")
+    @ApiModelProperty(name = "maintenance_fee", position = 13, example = "50000")
     @JsonProperty("maintenance_fee")
     private Long maintenanceFee;
 
-    @ApiModelProperty(name = "maintenance_detail", position = 13, example = "전기요금")
+    @ApiModelProperty(name = "maintenance_detail", position = 14, example = "전기요금")
     @JsonProperty("maintenance_detail")
     private String maintenanceDetail;
 
-    @ApiModelProperty(name = "period", position = 14, example = "6")
+    @ApiModelProperty(name = "period", position = 15, example = "6")
     @JsonProperty("period")
     private Integer period;
 
-    @ApiModelProperty(name = "description", position = 15, example = "교환학생 가게 되어서 6개월 살고 급하게 내놓습니다 위치 좋고 남향에다가 어쩌고저쩌고")
+    @ApiModelProperty(name = "description", position = 16, example = "교환학생 가게 되어서 6개월 살고 급하게 내놓습니다 위치 좋고 남향에다가 어쩌고저쩌고")
     @JsonProperty("description")
     private String description;
 
-    @ApiModelProperty(name = "option", position = 16, example = "[1,2,3]")
+    @ApiModelProperty(name = "option", position = 17, example = "[1,2,3]")
     @JsonProperty("options")
     private List<Long> options;
 
@@ -80,8 +84,9 @@ public class HouseSaveRequest {
     }
 
     public HouseSaveRequest(String sidoName, String gunguName, String dongName, String jibunAddress, String addressDetail,
-        Long latitude, Long longitude, Integer floor, String saleType, String houseType, Long deposit, Long monthlyRent,
-        Long maintenanceFee, String maintenanceDetail, Integer period, String description, List<Long> options) {
+        Long latitude, Long longitude, Integer floor, String saleType, String houseType, Boolean isMonthly, Long deposit,
+        Long monthlyRent, Long maintenanceFee, String maintenanceDetail, Integer period, String description,
+        List<Long> options) {
         this.sidoName = sidoName;
         this.gunguName = gunguName;
         this.dongName = dongName;
@@ -92,6 +97,7 @@ public class HouseSaveRequest {
         this.floor = floor;
         this.saleType = saleType;
         this.houseType = houseType;
+        this.isMonthly = isMonthly;
         this.deposit = deposit;
         this.monthlyRent = monthlyRent;
         this.maintenanceFee = maintenanceFee;
