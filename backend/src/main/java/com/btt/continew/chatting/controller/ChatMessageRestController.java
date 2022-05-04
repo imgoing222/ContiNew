@@ -1,9 +1,7 @@
 package com.btt.continew.chatting.controller;
 
-import com.btt.continew.auth.infrastructure.JwtTokenProvider;
 import com.btt.continew.chatting.controller.dto.request.ChatMessageRequest;
 import com.btt.continew.chatting.controller.dto.response.ChatMessagesResponse;
-import com.btt.continew.chatting.domain.ChatMessage;
 import com.btt.continew.chatting.service.ChatMessageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -12,10 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
