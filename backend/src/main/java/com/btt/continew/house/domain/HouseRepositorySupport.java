@@ -60,4 +60,16 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
     private BooleanExpression houseTypeEq(String houseType) {
         return hasText(houseType) ? house.houseType.eq(houseType) : null;
     }
+
+    private BooleanBuilder optionsEq(List<Long> optionIds){
+        BooleanBuilder builder = new BooleanBuilder();
+        List<HouseOption> houseOptions;
+        if(!optionIds.isEmpty()) {
+            houseOptions = houseOptionRepository.findAllById(optionIds);
+            for(HouseOption houseOption: houseOptions) {
+                builder.and(house.options.contains(houseOption));
+            }
+        }
+        return builder;
+    }
 }
