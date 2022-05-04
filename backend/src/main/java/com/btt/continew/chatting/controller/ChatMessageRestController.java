@@ -5,6 +5,8 @@ import com.btt.continew.chatting.controller.dto.request.ChatMessageRequest;
 import com.btt.continew.chatting.controller.dto.response.ChatMessagesResponse;
 import com.btt.continew.chatting.domain.ChatMessage;
 import com.btt.continew.chatting.service.ChatMessageService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -37,6 +39,8 @@ public class ChatMessageRestController {
 
 
     @GetMapping("/api/chat/messages/")
+    @ApiOperation(value = "메시지 조회", notes = "<b>(로그인 필요)</b> 메시지 조회 API")
+    @ApiImplicitParam(name = "room_id", value = "방 번호",example = "e1757da8-81c5-40e4-8fe0-f22d4031f6a4",required = true)
     @ResponseBody
     public ChatMessagesResponse getChatMessage(
         @PageableDefault(sort = "created_at", direction = Direction.DESC)Pageable pageable,

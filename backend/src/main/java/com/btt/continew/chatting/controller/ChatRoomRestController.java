@@ -50,7 +50,7 @@ public class ChatRoomRestController {
 
     @GetMapping("/room/detail")
     @ApiOperation(value = "채팅방 조회", notes = "<b>(로그인 필요)</b> 채팅방 조회 API")
-    @ApiImplicitParam(name = "room_id", value = "방 번호",example = "e1757da8-81c5-40e4-8fe0-f22d4031f6a4",required = true, type = "REQUEST_HEADER")
+    @ApiImplicitParam(name = "room_id", value = "방 번호",example = "e1757da8-81c5-40e4-8fe0-f22d4031f6a4",required = true)
     @ResponseBody
     public ChatRoomResponse getRoomDetail(
         @RequestParam(name = "room_id") String roomId){
