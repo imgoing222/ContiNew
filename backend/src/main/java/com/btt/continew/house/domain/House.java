@@ -85,6 +85,9 @@ public class House extends BaseEntity {
     @Column(name = "description")
     private String description;
 
+    @OneToMany(mappedBy = "house")
+    private List<HouseOption> options = new ArrayList<>();
+
    public House() {
 
     }
