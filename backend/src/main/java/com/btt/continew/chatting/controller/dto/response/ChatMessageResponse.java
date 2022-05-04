@@ -27,15 +27,21 @@ public class ChatMessageResponse {
     @ApiModelProperty(position = 3, notes = "마지막 메시지 시간", example = "2022-3-13 14:59:51 // null 이면 읽지 않음")
     private LocalDateTime read_at;
 
+    @JsonProperty("created_at")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    @ApiModelProperty(position = 4, notes = "생성 시간", example = "2022-3-13 14:59:51")
+    private LocalDateTime created_at;
+
     public ChatMessageResponse(){
 
     }
 
-    public ChatMessageResponse(String room_id, String sender, String content, LocalDateTime read_at){
+    public ChatMessageResponse(String room_id, String sender, String content, LocalDateTime read_at, LocalDateTime created_at){
         this.room_id = room_id;
         this.sender = sender;
         this.content = content;
         this.read_at = read_at;
+        this.created_at = created_at;
     }
 
     public static ChatMessageResponse from (ChatMessage chatMessage){
@@ -43,7 +49,9 @@ public class ChatMessageResponse {
             chatMessage.getRoomId(),
             chatMessage.getSender(),
             chatMessage.getContent(),
-            chatMessage.getRead_at()
+            chatMessage.getRead_at(),
+            chatMessage.getCreatedAt()
+
         );
     }
 }
