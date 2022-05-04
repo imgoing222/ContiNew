@@ -18,4 +18,5 @@ export interface HouseInfo {
 	options: string[];
 	images: FileList | File[] | null;
 	contractType: string;
+	agreement: string;
 }
