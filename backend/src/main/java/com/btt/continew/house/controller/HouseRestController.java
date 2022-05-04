@@ -55,7 +55,7 @@ public class HouseRestController {
         + "  \"floor\": 3,\n"
         + "  \"sale_type\": \"이어살기\",\n"
         + "  \"house_type\": \"원룸\",\n"
-        + "  \"is_monthly\": true,\n"
+        + "  \"contract_type\": \"월세\",\n"
         + "  \"deposit\": 10000000,\n"
         + "  \"monthly_rent\": 500000,\n"
         + "  \"maintenance_fee\": 50000,\n"
@@ -73,7 +73,7 @@ public class HouseRestController {
 
     @PostMapping("/houses/list")
     @ApiOperation(value = "매물 목록", notes = "매물 목록 api")
-    public ResponseEntity<List<HouseSimpleResponse>> showHouses(@RequestBody HouseListRequest request, Pageable pageable) {
+    public ResponseEntity<HouseListResponse> showHouses(@RequestBody HouseListRequest request, Pageable pageable) {
         return ResponseEntity.ok().body(houseService.showHouses(request, pageable));
     }
 

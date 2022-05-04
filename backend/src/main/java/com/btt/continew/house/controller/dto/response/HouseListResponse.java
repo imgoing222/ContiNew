@@ -32,11 +32,9 @@ public class HouseListResponse {
         this.currentPageCount = currentPageCount;
     }
 
-    public static HouseListResponse from(Page<House> houses) {
+    public static HouseListResponse from(Page<HouseSimpleResponse> houses) {
         return new HouseListResponse(
-            houses.stream()
-                .map(HouseSimpleResponse::from)
-                .collect(Collectors.toList()),
+            houses.toList(),
             houses.getTotalPages(),
             houses.getNumber()
         );

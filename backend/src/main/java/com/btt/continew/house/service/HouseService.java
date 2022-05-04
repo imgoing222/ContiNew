@@ -21,7 +21,6 @@ import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -57,7 +56,6 @@ public class HouseService {
         Member member = memberService.findByLoginId(email);
         House house = House.builder()
             .member(member)
-            .isMonthly(request.getIsMonthly())
             .deposit(request.getDeposit())
             .monthlyRent(request.getMonthlyRent())
             .maintenanceFee(request.getMaintenanceFee())
@@ -73,6 +71,7 @@ public class HouseService {
             .floor(request.getFloor())
             .houseType(request.getHouseType())
             .saleType(request.getSaleType())
+            .contractType(request.getContractType())
             .period(request.getPeriod())
             .build();
         houseRepository.save(house);
@@ -113,11 +112,9 @@ public class HouseService {
     }
 
     @Transactional(readOnly = true)
-    public List<HouseSimpleResponse> showHouses(HouseListRequest request, Pageable pageable) {
-//        Page<House> houses = houseRepository.findAllByLatitudeBetweenAndLongitudeBetween(request.getYBottom(), request.getYTop(), request.getXLeft(),
-//            request.getXRight(), pageable);
-
-        return houseRepositorySupport.findHousesByLatitude(request);
+    public HouseListResponse showHouses(HouseListRequest request, Pageable pageable) {
+        Page<HouseSimpleResponse> responses = houseRepositorySupport.findHouses(request, pageable);
+        return HouseListResponse.from(responses);
     }
 
     @Transactional(readOnly = true)

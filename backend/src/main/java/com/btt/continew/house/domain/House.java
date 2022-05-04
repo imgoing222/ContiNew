@@ -50,10 +50,10 @@ public class House extends BaseEntity {
     private String addressDetail;
 
     @Column(name = "latitude")
-    private Long latitude;
+    private Double latitude;
 
     @Column(name = "longitude")
-    private Long longitude;
+    private Double longitude;
 
     @Column(name = "floor")
     private Integer floor;
@@ -64,8 +64,8 @@ public class House extends BaseEntity {
     @Column(name = "house_type")
     private String houseType;
 
-    @Column(name = "is_monthly")
-    private Boolean isMonthly;
+    @Column(name = "contract_type")
+    private String contractType;
 
     @Column(name = "deposit")
     private Long deposit;
@@ -94,8 +94,8 @@ public class House extends BaseEntity {
 
     @Builder
     public House(Member member, String sidoName, String gunguName, String dongName, String jibunAddress,
-        String addressDetail, Long latitude, Long longitude, Integer floor, String saleType, String houseType,
-        Boolean isMonthly, Long deposit, Long monthlyRent, Long maintenanceFee, String maintenanceDetail, Integer period,
+        String addressDetail, Double latitude, Double longitude, Integer floor, String saleType, String houseType,
+        String contractType, Long deposit, Long monthlyRent, Long maintenanceFee, String maintenanceDetail, Integer period,
         String description) {
         this.member = member;
         this.sidoName = sidoName;
@@ -108,7 +108,7 @@ public class House extends BaseEntity {
         this.floor = floor;
         this.saleType = saleType;
         this.houseType = houseType;
-        this.isMonthly = isMonthly;
+        this.contractType = contractType;
         this.deposit = deposit;
         this.monthlyRent = monthlyRent;
         this.maintenanceFee = maintenanceFee;
@@ -135,6 +135,7 @@ public class House extends BaseEntity {
        this.floor = request.getFloor();
        this.saleType = request.getSaleType();
        this.houseType = request.getHouseType();
+       this.contractType = request.getContractType();
        this.deposit = request.getDeposit();
        this.monthlyRent = request.getMonthlyRent();
        this.maintenanceFee = request.getMaintenanceFee();

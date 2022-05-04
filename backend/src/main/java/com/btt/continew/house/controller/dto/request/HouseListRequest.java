@@ -12,19 +12,19 @@ public class HouseListRequest {
 
     @ApiModelProperty(name = "y_bottom", position = 0, example = "33.448093757167825")
     @JsonProperty("y_bottom")
-    private Long yBottom;
+    private Double yBottom;
 
     @ApiModelProperty(name = "y_top", position = 1, example = "33.45451311326508")
     @JsonProperty("y_top")
-    private Long yTop;
+    private Double yTop;
 
     @ApiModelProperty(name = "x_left", position = 2, example = "126.55492857215698")
     @JsonProperty("x_left")
-    private Long xLeft;
+    private Double xLeft;
 
     @ApiModelProperty(name = "x_right", position = 3, example = "126.58615245267431")
     @JsonProperty("x_right")
-    private Long xRight;
+    private Double xRight;
 
     @ApiModelProperty(name = "sale_type", position = 4, example = "이어살기")
     @JsonProperty("sale_type")
@@ -34,9 +34,9 @@ public class HouseListRequest {
     @JsonProperty("house_type")
     private String houseType;
 
-    @ApiModelProperty(name = "is_monthly", position = 6, example = "true")
-    @JsonProperty("is_monthly")
-    private Boolean isMonthly;
+    @ApiModelProperty(name = "contract_type", position = 6, example = "전세")
+    @JsonProperty("contract_type")
+    private String contractType;
 
     @ApiModelProperty(name = "min_deposit", position = 6, example = "3000000")
     @JsonProperty("min_deposit")
@@ -73,8 +73,8 @@ public class HouseListRequest {
     public HouseListRequest() {
     }
 
-    public HouseListRequest(Long yBottom, Long yTop, Long xLeft, Long xRight, String saleType, String houseType,
-        Boolean isMonthly, Long minDeposit, Long maxDeposit, Long minMonthlyRent, Long maxMonthlyRent,
+    public HouseListRequest(Double yBottom, Double yTop, Double xLeft, Double xRight, String saleType, String houseType,
+        String contractType, Long minDeposit, Long maxDeposit, Long minMonthlyRent, Long maxMonthlyRent,
         Long minMaintenanceFee, Long maxMaintenanceFee, Integer period, List<Long> options) {
         this.yBottom = yBottom;
         this.yTop = yTop;
@@ -82,7 +82,7 @@ public class HouseListRequest {
         this.xRight = xRight;
         this.saleType = saleType;
         this.houseType = houseType;
-        this.isMonthly = isMonthly;
+        this.contractType = contractType;
         this.minDeposit = minDeposit;
         this.maxDeposit = maxDeposit;
         this.minMonthlyRent = minMonthlyRent;
