@@ -34,6 +34,10 @@ public class HouseListRequest {
     @JsonProperty("house_type")
     private String houseType;
 
+    @ApiModelProperty(name = "is_monthly", position = 6, example = "true")
+    @JsonProperty("is_monthly")
+    private Boolean isMonthly;
+
     @ApiModelProperty(name = "min_deposit", position = 6, example = "3000000")
     @JsonProperty("min_deposit")
     private Long minDeposit;
@@ -70,14 +74,15 @@ public class HouseListRequest {
     }
 
     public HouseListRequest(Long yBottom, Long yTop, Long xLeft, Long xRight, String saleType, String houseType,
-        Long minDeposit, Long maxDeposit, Long minMonthlyRent, Long maxMonthlyRent, Long minMaintenanceFee,
-        Long maxMaintenanceFee, Integer period, List<Long> options) {
+        Boolean isMonthly, Long minDeposit, Long maxDeposit, Long minMonthlyRent, Long maxMonthlyRent,
+        Long minMaintenanceFee, Long maxMaintenanceFee, Integer period, List<Long> options) {
         this.yBottom = yBottom;
         this.yTop = yTop;
         this.xLeft = xLeft;
         this.xRight = xRight;
         this.saleType = saleType;
         this.houseType = houseType;
+        this.isMonthly = isMonthly;
         this.minDeposit = minDeposit;
         this.maxDeposit = maxDeposit;
         this.minMonthlyRent = minMonthlyRent;
