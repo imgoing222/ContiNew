@@ -30,11 +30,11 @@ public class HouseSaveRequest {
 
     @ApiModelProperty(name = "latitude", position = 5, example = "37.33124")
     @JsonProperty("latitude")
-    private Long latitude;
+    private Double latitude;
 
     @ApiModelProperty(name = "longitude", position = 6, example = "125.3432")
     @JsonProperty("longitude")
-    private Long longitude;
+    private Double longitude;
 
     @ApiModelProperty(name = "floor", position = 7, example = "5")
     @JsonProperty("floor")
@@ -48,9 +48,9 @@ public class HouseSaveRequest {
     @JsonProperty("house_type")
     private String houseType;
 
-    @ApiModelProperty(name = "is_monthly", position = 10, example = "true")
-    @JsonProperty("is_monthly")
-    private Boolean isMonthly;
+    @ApiModelProperty(name = "contract_type", position = 10, example = "월세")
+    @JsonProperty("contract_type")
+    private String contractType;
 
     @ApiModelProperty(name = "deposit", position = 11, example = "10000000")
     @JsonProperty("deposit")
@@ -84,8 +84,8 @@ public class HouseSaveRequest {
     }
 
     public HouseSaveRequest(String sidoName, String gunguName, String dongName, String jibunAddress, String addressDetail,
-        Long latitude, Long longitude, Integer floor, String saleType, String houseType, Boolean isMonthly, Long deposit,
-        Long monthlyRent, Long maintenanceFee, String maintenanceDetail, Integer period, String description,
+        Double latitude, Double longitude, Integer floor, String saleType, String houseType, String contractType,
+        Long deposit, Long monthlyRent, Long maintenanceFee, String maintenanceDetail, Integer period, String description,
         List<Long> options) {
         this.sidoName = sidoName;
         this.gunguName = gunguName;
@@ -97,7 +97,7 @@ public class HouseSaveRequest {
         this.floor = floor;
         this.saleType = saleType;
         this.houseType = houseType;
-        this.isMonthly = isMonthly;
+        this.contractType = contractType;
         this.deposit = deposit;
         this.monthlyRent = monthlyRent;
         this.maintenanceFee = maintenanceFee;

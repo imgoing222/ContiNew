@@ -1,8 +1,6 @@
 package com.btt.continew.house.domain;
 
 import static com.btt.continew.house.domain.QHouse.house;
-import static com.btt.continew.house.domain.QHouseOption.houseOption;
-import static com.btt.continew.house.domain.QOption.option;
 import static org.springframework.util.StringUtils.hasText;
 
 import com.btt.continew.house.controller.dto.request.HouseListRequest;
@@ -10,11 +8,14 @@ import com.btt.continew.house.controller.dto.response.HouseSimpleResponse;
 import com.btt.continew.house.controller.dto.response.QHouseSimpleResponse;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
 
 @Repository
 public class HouseRepositorySupport extends QuerydslRepositorySupport {
@@ -28,14 +29,16 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
         this.houseOptionRepository = houseOptionRepository;
     }
 
-    public List<HouseSimpleResponse> findHousesByLatitude(HouseListRequest request) {
+    public Page<HouseSimpleResponse> findHouses(HouseListRequest request, Pageable pageable) {
         // 이미지 한장 포함
-        return jpaQueryFactory
+        List<HouseSimpleResponse> responses = jpaQueryFactory
             .select(new QHouseSimpleResponse(
                 house.id,
                 house.deposit,
                 house.monthlyRent,
+                house.saleType,
                 house.houseType,
+                house.contractType,
                 house.sidoName,
                 house.gunguName,
                 house.dongName,
@@ -46,7 +49,7 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
                 house.description
             ))
             .from(house)
-            .where(house.latitude.between(request.getYTop(), request.getYBottom()),
+            .where(house.latitude.between(request.getYBottom(), request.getYTop()),
                 house.longitude.between(request.getXLeft(), request.getXRight()),
                 houseTypeEq(request.getHouseType()),
                 house.deposit.between(request.getMinDeposit(), request.getMaxDeposit()),
@@ -55,6 +58,19 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
                 optionsEq(request.getOptions())
                 )
             .fetch();
+
+        JPAQuery<House> countQuery = jpaQueryFactory
+            .selectFrom(house)
+            .where(house.latitude.between(request.getYBottom(), request.getYTop()),
+                house.longitude.between(request.getXLeft(), request.getXRight()),
+                houseTypeEq(request.getHouseType()),
+                house.deposit.between(request.getMinDeposit(), request.getMaxDeposit()),
+                house.monthlyRent.between(request.getMinMonthlyRent(), request.getMaxMonthlyRent()),
+                house.maintenanceFee.between(request.getMinMaintenanceFee(), request.getMaxMaintenanceFee()),
+                optionsEq(request.getOptions())
+            );
+
+        return PageableExecutionUtils.getPage(responses, pageable, () -> countQuery.fetch().size());
     }
 
     private BooleanExpression houseTypeEq(String houseType) {
