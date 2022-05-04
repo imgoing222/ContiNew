@@ -44,6 +44,7 @@ function index() {
 		options: [],
 		deposit: "",
 		images: null,
+		contractType: "",
 	});
 
 	const {
@@ -65,6 +66,7 @@ function index() {
 		options,
 		deposit,
 		images,
+		contractType,
 	} = houseInfo;
 
 	const handleHouseInfo = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -107,6 +109,7 @@ function index() {
 			period: +period,
 			description,
 			options: optionList,
+			contract_type: contractType,
 		};
 
 		formData.append("house", new Blob([JSON.stringify(article)], { type: "application/json" })),
