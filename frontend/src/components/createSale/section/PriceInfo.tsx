@@ -2,7 +2,7 @@ import { EventProps } from "src/pages/createSale";
 import { Container } from "../Container";
 import { InputText } from "../index";
 import { Text } from "../Table";
-import { TableRowAndDivBox } from "../TableRow";
+import { TableRow, TableRowAndDivBox } from "../TableRow";
 import styled from "styled-components";
 import SaleInfoComponent from "../SaleInfoComponent";
 
@@ -29,7 +29,7 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 
 	return (
 		<Container title="거래정보">
-			<TableRowAndDivBox title="계약 정보">
+			<TableRow title="계약 정보">
 				{contractType.map((contract, idx) => (
 					<SaleInfoComponent
 						value={contract}
@@ -39,7 +39,7 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 						key={idx}
 					/>
 				))}
-			</TableRowAndDivBox>
+			</TableRow>
 			{houseInfo.contractType === "월세" && (
 				<TableRowAndDivBox title="가격 정보">
 					<InputText
