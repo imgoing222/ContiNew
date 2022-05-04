@@ -109,9 +109,12 @@ public class ProfileRestController {
     // 비밀번호 인증 번호 확인 request: code / response: HttpStatus 200 OK (body: change_token)
     @PostMapping("/members/find-pw/phone-check")
     @ApiOperation(value = "비밀번호 찾기(2) 인증 번호 확인", notes = "비밀번호를 찾기 위한 여정 - 2\n"
-        + "인증 번호를 확인하고 change Token 받는 API\n"
-        + "error response 는 나중에 추가됩니다.")
-    public ResponseEntity<ChangeTokenResponse> findPwCheckCertifyCode(@RequestBody CheckPhoneRequest request){
+        + "인증 번호를 확인하고 change Token 받는 API")
+    @ApiResponses({
+        @ApiResponse(code = 403, message = "FORBIDDEN\n만료된 인증 번호(I02)"),
+        @ApiResponse(code = 404, message = "NOT FOUND\n일치하지 않는 인증 코드(I03)")
+    })
+    public ResponseEntity<ChangeTokenResponse> findPwCheckCertifyCode(@RequestBody CheckPhoneRequest request) {
         return ResponseEntity.ok().body(profileService.findPwCheckCertifyCode(request));
     }
 
