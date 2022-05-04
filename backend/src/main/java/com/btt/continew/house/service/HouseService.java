@@ -6,10 +6,12 @@ import com.btt.continew.house.controller.dto.request.HouseListRequest;
 import com.btt.continew.house.controller.dto.request.HouseSaveRequest;
 import com.btt.continew.house.controller.dto.response.HouseDetailResponse;
 import com.btt.continew.house.controller.dto.response.HouseListResponse;
+import com.btt.continew.house.controller.dto.response.HouseSimpleResponse;
 import com.btt.continew.house.domain.House;
 import com.btt.continew.house.domain.HouseOption;
 import com.btt.continew.house.domain.HouseOptionRepository;
 import com.btt.continew.house.domain.HouseRepository;
+import com.btt.continew.house.domain.HouseRepositorySupport;
 import com.btt.continew.house.domain.Image;
 import com.btt.continew.house.domain.ImageRepository;
 import com.btt.continew.house.domain.Option;
@@ -19,6 +21,7 @@ import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -34,16 +37,19 @@ public class HouseService {
     private final ImageRepository imageRepository;
     private final MemberService memberService;
     private final ImageUploader imageUploader;
+    private final HouseRepositorySupport houseRepositorySupport;
 
     public HouseService(HouseRepository houseRepository, OptionRepository optionRepository,
         HouseOptionRepository houseOptionRepository, ImageRepository imageRepository,
-        MemberService memberService, ImageUploader imageUploader) {
+        MemberService memberService, ImageUploader imageUploader,
+        HouseRepositorySupport houseRepositorySupport) {
         this.houseRepository = houseRepository;
         this.optionRepository = optionRepository;
         this.houseOptionRepository = houseOptionRepository;
         this.imageRepository = imageRepository;
         this.memberService = memberService;
         this.imageUploader = imageUploader;
+        this.houseRepositorySupport = houseRepositorySupport;
     }
 
     @Transactional
@@ -51,6 +57,7 @@ public class HouseService {
         Member member = memberService.findByLoginId(email);
         House house = House.builder()
             .member(member)
+            .isMonthly(request.getIsMonthly())
             .deposit(request.getDeposit())
             .monthlyRent(request.getMonthlyRent())
             .maintenanceFee(request.getMaintenanceFee())
@@ -106,10 +113,11 @@ public class HouseService {
     }
 
     @Transactional(readOnly = true)
-    public HouseListResponse showHouses(HouseListRequest request, Pageable pageable) {
-        Page<House> houses = houseRepository.findAllByLatitudeBetweenAndLongitudeBetween(request.getYBottom(), request.getYTop(), request.getXLeft(),
-            request.getXRight(), pageable);
-        return HouseListResponse.from(houses);
+    public List<HouseSimpleResponse> showHouses(HouseListRequest request, Pageable pageable) {
+//        Page<House> houses = houseRepository.findAllByLatitudeBetweenAndLongitudeBetween(request.getYBottom(), request.getYTop(), request.getXLeft(),
+//            request.getXRight(), pageable);
+
+        return houseRepositorySupport.findHousesByLatitude(request);
     }
 
     @Transactional(readOnly = true)

@@ -2,6 +2,7 @@ package com.btt.continew.house.controller.dto.response;
 
 import com.btt.continew.house.domain.House;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
@@ -59,6 +60,7 @@ public class HouseSimpleResponse {
     public HouseSimpleResponse() {
     }
 
+    @QueryProjection
     public HouseSimpleResponse(Long id, Long deposit, Long monthlyRent, String houseType, String sidoName, String gunguName,
         String dongName, String jibunAddress, String addressDetail, Long latitude, Long longitude, String description) {
         this.id = id;
