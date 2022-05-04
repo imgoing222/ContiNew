@@ -24,7 +24,7 @@ public enum ErrorCode {
     INVALID_ILLEGAL_ARGUMENT_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "리프레쉬 토큰이 잘못되었습니다.", "J14"),
 
     // login
-    LOGIN_GOOGLE_RESPONSE_FAIL(HttpStatus.BAD_REQUEST, "구글 요청을 얻는데 실패했습니다.", "L01"),
+    LOGIN_GOOGLE_RESPONSE_FAIL(HttpStatus.BAD_REQUEST, "구글의 응답을 받는데 실패했습니다.", "L01"),
     LOGIN_GOOGLE_USER_INFO_RESPONSE_FAIL(HttpStatus.BAD_REQUEST, "구글 유저 정보를 얻는데 실패했습니다.", "L02"),
 
     // member
