@@ -30,23 +30,23 @@ public class ChatMessageService {
 
     @Transactional
     public void createMessage(ChannelTopic channelTopic, ChatMessageRequest request) {
-        System.out.println("2-3. 메시지 생성 ");
+        System.out.println("4-3. 메시지 생성 ");
         ChatMessage chatMessage = ChatMessage.create(request);
 
 
-        System.out.println("2-4. 메시지 저장 및 전달 ");
+        System.out.println("4-4. 메시지 저장 및 전달 ");
         opsHashChatMessage.put(CHAT_MESSAGE, chatMessage.getId(), chatMessage);
         redisTemplate.convertAndSend(channelTopic.getTopic(), chatMessage);
     }
 
     @Transactional
     public ChatMessagesResponse showChatMessage(String roomId,Pageable pageable) {
-        System.out.println("3-2. 메시지 조회");
+        System.out.println("5-2. 메시지 조회");
         List<ChatMessage> temps = opsHashChatMessage.values(CHAT_MESSAGE);
 
         List<ChatMessage> chatMessageList = new ArrayList<>();
 
-        System.out.println("3-3. 메시지 골라내기");
+        System.out.println("5-3. 메시지 골라내기");
         for (ChatMessage temp : temps){
 
             if(temp.getRoomId().equals(roomId)){
@@ -54,12 +54,12 @@ public class ChatMessageService {
             }
         }
 
-        System.out.println("3-4. 메시지 페이지 네이션");
+        System.out.println("5-4. 메시지 페이지 네이션");
         int start = (int)pageable.getOffset();
         int end = Math.min((start+pageable.getPageSize()), chatMessageList.size());
         Page<ChatMessage> chatMessages = new PageImpl<>(chatMessageList.subList(start,end),pageable,chatMessageList.size());
 
-        System.out.println("3-4. 메시지 리스트 반환");
+        System.out.println("5-4. 메시지 리스트 반환");
         return ChatMessagesResponse.from(chatMessages);
     }
 }
