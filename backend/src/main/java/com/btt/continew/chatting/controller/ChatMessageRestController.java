@@ -5,6 +5,7 @@ import com.btt.continew.chatting.controller.dto.request.ChatMessageRequest;
 import com.btt.continew.chatting.controller.dto.response.ChatMessagesResponse;
 import com.btt.continew.chatting.domain.ChatMessage;
 import com.btt.continew.chatting.service.ChatMessageService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Slf4j
 @RequiredArgsConstructor
 @Controller
+@Api(tags = {"메시지"})
 public class ChatMessageRestController {
 
     private final ChannelTopic channelTopic;
