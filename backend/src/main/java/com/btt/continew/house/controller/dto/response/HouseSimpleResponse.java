@@ -55,11 +55,11 @@ public class HouseSimpleResponse {
 
     @JsonProperty("latitude")
     @ApiModelProperty(position = 11, notes = "위도", example = "33.448093757167825")
-    private Long latitude;
+    private Double latitude;
 
     @JsonProperty("longitude")
     @ApiModelProperty(position = 12, notes = "경도", example = "126.55492857215698")
-    private Long longitude;
+    private Double longitude;
 
     @JsonProperty("description")
     @ApiModelProperty(position = 13, notes = "상세설명", example = "입대하게 되어서 방 내놓습니다...")
@@ -71,7 +71,7 @@ public class HouseSimpleResponse {
     @QueryProjection
     public HouseSimpleResponse(Long id, Long deposit, Long monthlyRent, String saleType, String houseType,
         String contractType, String sidoName, String gunguName, String dongName, String jibunAddress, String addressDetail,
-        Long latitude, Long longitude, String description) {
+        Double latitude, Double longitude, String description) {
         this.id = id;
         this.deposit = deposit;
         this.monthlyRent = monthlyRent;
