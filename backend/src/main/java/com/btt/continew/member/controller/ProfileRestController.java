@@ -121,9 +121,12 @@ public class ProfileRestController {
     // 인증된 토큰으로 비밀번호 바꾸기 request: change_token, new_password / response: HttpStatus 204 No content
     @PostMapping("/members/find-pw/change-pw")
     @ApiOperation(value = "비밀번호 찾기(3) change Token 과 함께 비빌번호 변경", notes = "비밀번호를 찾기 위한 여정 - 3\n"
-        + "change token 으로 인증을 거친 회원의 비밀번호를 변경하는 API\n"
-        + "error response 는 나중에 추가됩니다.")
-    private ResponseEntity<Void> findPwChangePw(@RequestBody FindPwChangeRequest request){
+        + "change token 으로 인증을 거친 회원의 비밀번호를 변경하는 API")
+    @ApiResponses({
+        @ApiResponse(code = 403, message = "FORBIDDEN\n이미 사용된 토큰(I06)"),
+        @ApiResponse(code = 404, message = "NOT FOUND\n존재하지 않는 비밀번호 변경 토큰(I05)")
+    })
+    private ResponseEntity<Void> findPwChangePw(@RequestBody FindPwChangeRequest request) {
         profileService.findPwChangePw(request);
         return ResponseEntity.noContent().build();
     }
