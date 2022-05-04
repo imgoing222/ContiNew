@@ -113,10 +113,11 @@ public class HouseService {
     }
 
     @Transactional(readOnly = true)
-    public HouseListResponse showHouses(HouseListRequest request, Pageable pageable) {
-        Page<House> houses = houseRepository.findAllByLatitudeBetweenAndLongitudeBetween(request.getYBottom(), request.getYTop(), request.getXLeft(),
-            request.getXRight(), pageable);
-        return HouseListResponse.from(houses);
+    public List<HouseSimpleResponse> showHouses(HouseListRequest request, Pageable pageable) {
+//        Page<House> houses = houseRepository.findAllByLatitudeBetweenAndLongitudeBetween(request.getYBottom(), request.getYTop(), request.getXLeft(),
+//            request.getXRight(), pageable);
+
+        return houseRepositorySupport.findHousesByLatitude(request);
     }
 
     @Transactional(readOnly = true)
