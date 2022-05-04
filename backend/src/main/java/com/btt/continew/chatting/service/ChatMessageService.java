@@ -3,6 +3,8 @@ package com.btt.continew.chatting.service;
 import com.btt.continew.chatting.controller.dto.request.ChatMessageRequest;
 import com.btt.continew.chatting.controller.dto.response.ChatMessagesResponse;
 import com.btt.continew.chatting.domain.ChatMessage;
+import com.btt.continew.chatting.domain.ChatRoom;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -12,7 +14,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,22 +22,31 @@ import org.springframework.transaction.annotation.Transactional;
 public class ChatMessageService {
 
     private static final String CHAT_MESSAGE = "CHAT_MESSAGE";
+    private static final String CHAT_ROOMS = "CHAT_ROOM";
     private final RedisTemplate<String, Object> redisTemplate;
     private HashOperations<String, String, ChatMessage> opsHashChatMessage;
+    private HashOperations<String, String, ChatRoom> opsHasChatRoom;
 
     @PostConstruct
-    private void init() { opsHashChatMessage = redisTemplate.opsForHash(); }
+    private void init() {
+        opsHashChatMessage = redisTemplate.opsForHash();
+        opsHasChatRoom = redisTemplate.opsForHash();
+    }
 
 
     @Transactional
-    public void createMessage(ChannelTopic channelTopic, ChatMessageRequest request) {
+    public void createMessage(ChatMessageRequest request) {
         System.out.println("4-3. 메시지 생성 ");
         ChatMessage chatMessage = ChatMessage.create(request);
 
+        System.out.println("4-4. 라스트 메시지 세팅 ");
+        ChatRoom chatRoom = opsHasChatRoom.get(CHAT_ROOMS, request.getRoomId());
+        chatRoom.setLastMessage(request.getContent());
+        chatRoom.setLastMessageTime(LocalDateTime.now());
+        opsHasChatRoom.put(CHAT_ROOMS, chatRoom.getId(), chatRoom);
 
-        System.out.println("4-4. 메시지 저장 및 전달 ");
+        System.out.println("4-5. 메시지 저장 및 전달 ");
         opsHashChatMessage.put(CHAT_MESSAGE, chatMessage.getId(), chatMessage);
-        redisTemplate.convertAndSend(channelTopic.getTopic(), chatMessage);
     }
 
     @Transactional
