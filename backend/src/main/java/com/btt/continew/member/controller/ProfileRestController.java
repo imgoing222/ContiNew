@@ -71,7 +71,7 @@ public class ProfileRestController {
     @ApiOperation(value = "휴대폰 인증 번호 문자 받기", notes = "(로그인 필요) 휴대폰 인증 번호 문자 받는 API")
     @ApiResponses({
         @ApiResponse(code = 404, message = "NOT FOUND\n존재하지 않는 로그인 아이디(M01)"),
-        @ApiResponse(code = 409, message = "CONFLICT\n이미 인증된 휴대폰 번호(M06)\n휴대폰 인증 일일 5회 초과(P01)")
+        @ApiResponse(code = 409, message = "CONFLICT\n이미 인증된 휴대폰 번호(M06)\n휴대폰 인증 일일 3회 초과(P01)")
     })
     public ResponseEntity<Void> sendPhoneCertifiedCode(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
         @RequestBody PhoneNumberRequest request) {
@@ -96,9 +96,12 @@ public class ProfileRestController {
     // 비밀번호 인증 문자 받기 request: login_id, phone_number / response: HttpStatus 204 No content
     @PostMapping("/members/find-pw/phone-send")
     @ApiOperation(value = "비밀번호 찾기(1) 인증 번호 문자 받기", notes = "비밀번호를 찾기 위한 여정 - 1\n"
-        + "휴대폰으로 인증 번호 받기 API\n"
-        + "error response 는 나중에 추가됩니다.")
-    public ResponseEntity<Void> sendFindPwCode(@RequestBody FindPwSendRequest request){
+        + "휴대폰으로 인증 번호 받기 API")
+    @ApiResponses({
+        @ApiResponse(code = 404, message = "NOT FOUND\n존재하지 않는 로그인 아이디(M01)"),
+        @ApiResponse(code = 409, message = "CONFLICT\n본인의 전화번호가 아님(M08)\n휴대폰 인증 일일 3회 초과(P01)")
+    })
+    public ResponseEntity<Void> sendFindPwCode(@RequestBody FindPwSendRequest request) {
         profileService.sendFindPwCode(request);
         return ResponseEntity.noContent().build();
     }
