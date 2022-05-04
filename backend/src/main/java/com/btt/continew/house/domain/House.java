@@ -50,10 +50,10 @@ public class House extends BaseEntity {
     private String addressDetail;
 
     @Column(name = "latitude")
-    private Long latitude;
+    private Double latitude;
 
     @Column(name = "longitude")
-    private Long longitude;
+    private Double longitude;
 
     @Column(name = "floor")
     private Integer floor;
@@ -94,7 +94,7 @@ public class House extends BaseEntity {
 
     @Builder
     public House(Member member, String sidoName, String gunguName, String dongName, String jibunAddress,
-        String addressDetail, Long latitude, Long longitude, Integer floor, String saleType, String houseType,
+        String addressDetail, Double latitude, Double longitude, Integer floor, String saleType, String houseType,
         String contractType, Long deposit, Long monthlyRent, Long maintenanceFee, String maintenanceDetail, Integer period,
         String description) {
         this.member = member;
