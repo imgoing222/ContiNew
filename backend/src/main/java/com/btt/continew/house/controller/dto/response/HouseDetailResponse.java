@@ -40,9 +40,9 @@ public class HouseDetailResponse {
     @ApiModelProperty(notes = "매물유형", example = "원룸")
     private String houseType;
 
-    @JsonProperty("is_monthly")
-    @ApiModelProperty(name = "월세여부", example = "true")
-    private Boolean isMonthly;
+    @JsonProperty("contract_type")
+    @ApiModelProperty(name = "전/월세", example = "월세")
+    private String contractType;
 
     @JsonProperty("deposit")
     @ApiModelProperty(notes = "보증금", example = "10000000")
@@ -80,7 +80,7 @@ public class HouseDetailResponse {
     }
 
     public HouseDetailResponse(Long id, String username, Boolean phoneAuth, String jibunAddress, String addressDetail,
-        String saleType, String houseType, Boolean isMonthly, Long deposit, Long monthlyRent, Long maintenanceFee,
+        String saleType, String houseType, String contractType, Long deposit, Long monthlyRent, Long maintenanceFee,
         String maintenanceDetail, Integer period, String description, List<Long> options, List<String> images) {
         this.id = id;
         this.username = username;
@@ -89,7 +89,7 @@ public class HouseDetailResponse {
         this.addressDetail = addressDetail;
         this.saleType = saleType;
         this.houseType = houseType;
-        this.isMonthly = isMonthly;
+        this.contractType = contractType;
         this.deposit = deposit;
         this.monthlyRent = monthlyRent;
         this.maintenanceFee = maintenanceFee;
@@ -109,7 +109,7 @@ public class HouseDetailResponse {
             house.getAddressDetail(),
             house.getSaleType(),
             house.getHouseType(),
-            house.getIsMonthly(),
+            house.getContractType(),
             house.getDeposit(),
             house.getMonthlyRent(),
             house.getMaintenanceFee(),
