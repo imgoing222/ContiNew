@@ -8,6 +8,8 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const store = createStore(persistedReducer);
 export const persistor = persistStore(store);
@@ -21,6 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 					<ThemeProvider theme={theme}>
 						<Navbar />
 						<Component {...pageProps} />
+						<ToastContainer style={{ fontSize: "1.4rem" }} />
 					</ThemeProvider>
 				</Container>
 			</PersistGate>
