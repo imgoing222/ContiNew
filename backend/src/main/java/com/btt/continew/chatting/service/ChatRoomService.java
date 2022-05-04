@@ -3,6 +3,7 @@ package com.btt.continew.chatting.service;
 import com.btt.continew.chatting.controller.dto.request.ChatRoomRequest;
 import com.btt.continew.chatting.controller.dto.response.ChatRoomResponse;
 import com.btt.continew.chatting.controller.dto.response.ChatRoomsResponse;
+import com.btt.continew.chatting.domain.ChatMessage;
 import com.btt.continew.chatting.domain.ChatRoom;
 import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
@@ -23,22 +24,27 @@ import org.springframework.transaction.annotation.Transactional;
 public class ChatRoomService {
 
     private static final String CHAT_ROOMS = "CHAT_ROOM";
+    private static final String CHAT_MESSAGE = "CHAT_MESSAGE";
     private final RedisTemplate<String, Object> redisTemplate;
     private HashOperations<String, String, ChatRoom> opsHashChatRoom;
+    private HashOperations<String, String, ChatMessage> opsHashChatMessage;
 
     private final MemberService memberService;
 
     @PostConstruct
     private void init() {
         opsHashChatRoom = redisTemplate.opsForHash();
+        opsHashChatMessage = redisTemplate.opsForHash();
     }
 
     @Transactional
     public ChatRoom createChatRoom(ChatRoomRequest request){
 
         ChatRoom chatRoom = ChatRoom.create(request);
+        ChatMessage chatMessage = ChatMessage.enterMessage(chatRoom.getId());
 
         opsHashChatRoom.put(CHAT_ROOMS,chatRoom.getId(),chatRoom);
+        opsHashChatMessage.put(CHAT_MESSAGE, chatMessage.getId(), chatMessage);
 
         return chatRoom;
     }
