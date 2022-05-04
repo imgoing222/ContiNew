@@ -5,6 +5,9 @@ import com.btt.continew.chatting.controller.dto.request.ChatMessageRequest;
 import com.btt.continew.chatting.controller.dto.response.ChatMessagesResponse;
 import com.btt.continew.chatting.domain.ChatMessage;
 import com.btt.continew.chatting.service.ChatMessageService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Slf4j
 @RequiredArgsConstructor
 @Controller
+@Api(tags = {"메시지"})
 public class ChatMessageRestController {
 
     private final ChannelTopic channelTopic;
@@ -31,19 +35,21 @@ public class ChatMessageRestController {
     public void message(ChatMessageRequest request) {
 
         System.out.println("2-1. 메시징");
-
         chatMessageService.createMessage(channelTopic, request);
 
     }
 
-    @GetMapping("/api/chat/messages/{room_id}")
+
+    @GetMapping("/api/chat/messages/")
+    @ApiOperation(value = "메시지 조회", notes = "<b>(로그인 필요)</b> 메시지 조회 API")
+    @ApiImplicitParam(name = "room_id", value = "방 번호",example = "e1757da8-81c5-40e4-8fe0-f22d4031f6a4",required = true)
     @ResponseBody
     public ChatMessagesResponse getChatMessage(
         @PageableDefault(sort = "created_at", direction = Direction.DESC)Pageable pageable,
-        @RequestParam(value = "room_id") String roomId){
+        @RequestParam("room_id") String roomId){
 
         System.out.println("2-3. 메시지 목록");
 
-        return chatMessageService.showChatMessage(pageable, roomId);
+        return chatMessageService.showChatMessage(roomId, pageable);
     }
 }

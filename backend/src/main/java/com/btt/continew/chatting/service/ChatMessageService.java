@@ -36,13 +36,16 @@ public class ChatMessageService {
         redisTemplate.convertAndSend(channelTopic.getTopic(), chatMessage);
     }
 
-    public ChatMessagesResponse showChatMessage(Pageable pageable, String roomId) {
+    @Transactional
+    public ChatMessagesResponse showChatMessage(String roomId,Pageable pageable) {
         List<ChatMessage> temps = opsHashChatMessage.values(CHAT_MESSAGE);
 
         List<ChatMessage> chatMessageList = new ArrayList<>();
 
         for (ChatMessage temp : temps){
+
             if(temp.getRoomId().equals(roomId)){
+
                 chatMessageList.add(temp);
             }
         }
