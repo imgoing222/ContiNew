@@ -73,14 +73,7 @@ function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 					<Label isImgs={previewImgs.length > 0 && true} htmlFor="images">
 						사진 추가하기
 					</Label>
-					<Input
-						type="file"
-						id="images"
-						multiple
-						accept="image/*"
-						onChange={handleImageChange}
-						required
-					/>
+					<Input type="file" id="images" multiple accept="image/*" onChange={handleImageChange} />
 				</Div>
 			</Container>
 		</SmallContainer>
