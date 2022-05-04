@@ -6,6 +6,8 @@ import com.btt.continew.auth.service.AuthService;
 import com.btt.continew.auth.service.OauthService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +32,10 @@ public class AuthRestController {
 
     @PostMapping("/members/login")
     @ApiOperation(value = "로그인", notes = "로그인 API")
+    @ApiResponses({
+        @ApiResponse(code = 401, message = "UNAUTHORIZED\n일치하지 않는 비밀번호(M04)"),
+        @ApiResponse(code = 404, message = "NOT FOUND\n존재하지 않는 로그인 아이디(M01)")
+    })
     public ResponseEntity<Void> login(@RequestBody LoginRequest request, HttpServletResponse response) {
         authService.login(request, response);
         return ResponseEntity.noContent().build();
