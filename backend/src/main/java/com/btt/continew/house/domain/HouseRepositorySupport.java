@@ -49,7 +49,7 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
                 house.description
             ))
             .from(house)
-            .where(house.latitude.between(request.getYTop(), request.getYBottom()),
+            .where(house.latitude.between(request.getYBottom(), request.getYTop()),
                 house.longitude.between(request.getXLeft(), request.getXRight()),
                 houseTypeEq(request.getHouseType()),
                 house.deposit.between(request.getMinDeposit(), request.getMaxDeposit()),
@@ -61,7 +61,7 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
 
         JPAQuery<House> countQuery = jpaQueryFactory
             .selectFrom(house)
-            .where(house.latitude.between(request.getYTop(), request.getYBottom()),
+            .where(house.latitude.between(request.getYBottom(), request.getYTop()),
                 house.longitude.between(request.getXLeft(), request.getXRight()),
                 houseTypeEq(request.getHouseType()),
                 house.deposit.between(request.getMinDeposit(), request.getMaxDeposit()),
