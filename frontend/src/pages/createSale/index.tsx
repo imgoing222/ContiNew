@@ -11,6 +11,7 @@ import { HouseInfo } from "src/types/houseInfo";
 import styled from "styled-components";
 import Head from "next/head";
 import { saleApi } from "src/api";
+import { toast } from "react-toastify";
 
 interface ButtonProps {
 	isApplyBtn?: boolean;
@@ -26,28 +27,29 @@ const numberKey = ["deposit", "monthlyRent", "maintenanceFee", "period", "floor"
 
 function index() {
 	const [houseInfo, setHouseInfo] = useState<HouseInfo>({
-		sido: "",
-		sigungu: "",
-		bname: "",
-		jibunAddress: "",
-		addressDetail: "",
-		latitude: 0,
-		longitude: 0,
-		floor: "",
 		saleType: "",
 		houseType: "",
+		contractType: "",
+		deposit: "",
 		monthlyRent: "",
 		maintenanceFee: "",
 		maintenanceDetail: "",
 		period: "",
-		description: "",
 		options: [],
-		deposit: "",
+		jibunAddress: "",
+		addressDetail: "",
+		floor: "",
 		images: null,
-		contractType: "",
+		description: "",
+		sido: "",
+		sigungu: "",
+		bname: "",
+		latitude: 0,
+		longitude: 0,
 	});
 
 	const {
+		saleType,
 		sido,
 		sigungu,
 		bname,
@@ -56,7 +58,6 @@ function index() {
 		latitude,
 		longitude,
 		floor,
-		saleType,
 		houseType,
 		monthlyRent,
 		maintenanceFee,
@@ -69,54 +70,89 @@ function index() {
 		contractType,
 	} = houseInfo;
 
-	const handleHouseInfo = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+	const handleHouseInfo = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		console.log(houseInfo);
-		if (event.target.name === "options") {
-			const idx = houseInfo.options.indexOf(event.target.value);
+		if (e.target.name === "options") {
+			const idx = houseInfo.options.indexOf(e.target.value);
 			if (idx !== -1) {
 				return setHouseInfo({ ...houseInfo, ...[houseInfo.options.splice(idx, 1)] });
 			}
-			setHouseInfo({ ...houseInfo, ...[houseInfo.options.push(event.target.value)] });
+			setHouseInfo({ ...houseInfo, ...[houseInfo.options.push(e.target.value)] });
 			return;
 		}
-		if (numberKey.includes(event.target.name)) {
+		if (numberKey.includes(e.target.name)) {
 			return setHouseInfo({
 				...houseInfo,
-				[event.target.name]: event.target.value.replace(/\D/, ""),
+				[e.target.name]: e.target.value.replace(/\D/, ""),
 			});
 		}
-		setHouseInfo({ ...houseInfo, [event.target.name]: event.target.value });
+		setHouseInfo({ ...houseInfo, [e.target.name]: e.target.value });
 	};
 
-	const onSubmit = () => {
-		const formData = new FormData();
-		const optionList = options.map((option) => +option);
-		const article = {
-			sido_name: sido,
-			gungu_name: sigungu,
-			dong_name: bname,
-			jibun_address: jibunAddress,
-			address_detail: addressDetail,
-			latitude,
-			longitude,
-			floor: +floor,
-			sale_type: saleType,
-			house_type: houseType,
-			deposit: +deposit,
-			monthly_rent: +monthlyRent,
-			maintenance_fee: +maintenanceFee,
-			maintenance_detail: maintenanceDetail,
-			period: +period,
-			description,
-			options: optionList,
-			contract_type: contractType,
+	const checkData = () => {
+		const msg = {
+			saleType: "매물정보를 선택해주세요",
+			houseType: "매물 종류를 선택해주세요",
+			contractType: "계약 정보를 선택해주세요",
+			deposit: "금액을 입력해주세요",
+			monthlyRent: "월세를 입력해주세요",
+			maintenanceFee: "관리비를 입력해주세요",
+			maintenanceDetail: "관리비 포함 항목을 입력해주세요",
+			period: "임대기간을 입력해주세요",
+			jibunAddress: "주소를 입력해주세요",
+			addressDetail: "상세주소를 입력해주세요",
+			floor: "층수를 입력해주세요",
+			images: "사진을 업로드해주세요",
+			description: "상세설명을 입력해주세요",
 		};
+		const keys = Object.keys(houseInfo);
 
-		formData.append("house", new Blob([JSON.stringify(article)], { type: "application/json" })),
-			images !== null
-				? [...images].forEach((file) => formData.append("images", file))
-				: formData.append("images", new Blob([]));
-		saleApi.createSale(formData);
+		for (const k of keys) {
+			if (houseInfo.contractType === "전세" && k === "monthlyRent") continue;
+			if (k === "images" && houseInfo.images && houseInfo.images?.length < 3) {
+				toast.warning("사진을 최소 3장 업로드해주세요");
+				return false;
+			}
+			if (!houseInfo[k as keyof HouseInfo]) {
+				toast.warning(msg[k as keyof typeof msg]);
+				return false;
+			}
+		}
+		return true;
+	};
+
+	const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		if (checkData()) {
+			const formData = new FormData();
+			const optionList = options.map((option) => +option);
+			const article = {
+				sido_name: sido,
+				gungu_name: sigungu,
+				dong_name: bname,
+				jibun_address: jibunAddress,
+				address_detail: addressDetail,
+				latitude,
+				longitude,
+				floor: +floor,
+				sale_type: saleType,
+				house_type: houseType,
+				deposit: +deposit,
+				monthly_rent: +monthlyRent,
+				maintenance_fee: +maintenanceFee,
+				maintenance_detail: maintenanceDetail,
+				period: +period,
+				description,
+				options: optionList,
+				contract_type: contractType,
+			};
+
+			formData.append("house", new Blob([JSON.stringify(article)], { type: "application/json" })),
+				images !== null
+					? [...images].forEach((file) => formData.append("images", file))
+					: formData.append("images", new Blob([]));
+			saleApi.createSale(formData);
+		}
 	};
 
 	return (
