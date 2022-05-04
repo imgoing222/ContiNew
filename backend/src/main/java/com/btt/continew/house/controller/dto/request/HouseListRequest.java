@@ -12,19 +12,19 @@ public class HouseListRequest {
 
     @ApiModelProperty(name = "y_bottom", position = 0, example = "33.448093757167825")
     @JsonProperty("y_bottom")
-    private Long yBottom;
+    private Double yBottom;
 
     @ApiModelProperty(name = "y_top", position = 1, example = "33.45451311326508")
     @JsonProperty("y_top")
-    private Long yTop;
+    private Double yTop;
 
     @ApiModelProperty(name = "x_left", position = 2, example = "126.55492857215698")
     @JsonProperty("x_left")
-    private Long xLeft;
+    private Double xLeft;
 
     @ApiModelProperty(name = "x_right", position = 3, example = "126.58615245267431")
     @JsonProperty("x_right")
-    private Long xRight;
+    private Double xRight;
 
     @ApiModelProperty(name = "sale_type", position = 4, example = "이어살기")
     @JsonProperty("sale_type")
@@ -73,7 +73,7 @@ public class HouseListRequest {
     public HouseListRequest() {
     }
 
-    public HouseListRequest(Long yBottom, Long yTop, Long xLeft, Long xRight, String saleType, String houseType,
+    public HouseListRequest(Double yBottom, Double yTop, Double xLeft, Double xRight, String saleType, String houseType,
         String contractType, Long minDeposit, Long maxDeposit, Long minMonthlyRent, Long maxMonthlyRent,
         Long minMaintenanceFee, Long maxMaintenanceFee, Integer period, List<Long> options) {
         this.yBottom = yBottom;
