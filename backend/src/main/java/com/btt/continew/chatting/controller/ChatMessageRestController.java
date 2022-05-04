@@ -31,19 +31,19 @@ public class ChatMessageRestController {
     public void message(ChatMessageRequest request) {
 
         System.out.println("2-1. 메시징");
-
         chatMessageService.createMessage(channelTopic, request);
 
     }
 
-    @GetMapping("/api/chat/messages/{room_id}")
+
+    @GetMapping("/api/chat/messages/")
     @ResponseBody
     public ChatMessagesResponse getChatMessage(
         @PageableDefault(sort = "created_at", direction = Direction.DESC)Pageable pageable,
-        @RequestParam(value = "room_id") String roomId){
+        @RequestParam("room_id") String roomId){
 
         System.out.println("2-3. 메시지 목록");
 
-        return chatMessageService.showChatMessage(pageable, roomId);
+        return chatMessageService.showChatMessage(roomId, pageable);
     }
 }
