@@ -5,6 +5,8 @@ import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
 import com.btt.continew.house.controller.dto.request.HouseSaveRequest;
 import com.btt.continew.member.domain.Member;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.Where;
@@ -61,6 +64,9 @@ public class House extends BaseEntity {
     @Column(name = "house_type")
     private String houseType;
 
+    @Column(name = "is_monthly")
+    private Boolean isMonthly;
+
     @Column(name = "deposit")
     private Long deposit;
 
@@ -84,9 +90,10 @@ public class House extends BaseEntity {
     }
 
     @Builder
-    public House(Member member, String sidoName, String gunguName, String dongName, String jibunAddress, String addressDetail,
-        Long latitude, Long longitude, Integer floor, String saleType, String houseType, Long deposit, Long monthlyRent,
-        Long maintenanceFee, String maintenanceDetail, Integer period, String description) {
+    public House(Member member, String sidoName, String gunguName, String dongName, String jibunAddress,
+        String addressDetail, Long latitude, Long longitude, Integer floor, String saleType, String houseType,
+        Boolean isMonthly, Long deposit, Long monthlyRent, Long maintenanceFee, String maintenanceDetail, Integer period,
+        String description) {
         this.member = member;
         this.sidoName = sidoName;
         this.gunguName = gunguName;
@@ -98,6 +105,7 @@ public class House extends BaseEntity {
         this.floor = floor;
         this.saleType = saleType;
         this.houseType = houseType;
+        this.isMonthly = isMonthly;
         this.deposit = deposit;
         this.monthlyRent = monthlyRent;
         this.maintenanceFee = maintenanceFee;
