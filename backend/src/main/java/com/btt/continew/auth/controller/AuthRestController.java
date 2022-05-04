@@ -63,8 +63,14 @@ public class AuthRestController {
     }
 
     @GetMapping("/members/login/google/callback")
-    @ApiOperation(value = "구글 회원가입 및 로그인 콜백", notes = "구글 로그인 페이지에서 로그인 하면 code를 받을 수 있는데"
-        + "이 api에 쿼리스트링으로 code를 넣어 호출하면 백에서 자동으로 회원가입 혹은 로그인이 되어 access token과 refresh token을 쿠키로 전달받는다.")
+    @ApiOperation(value = "구글 회원가입 및 로그인 콜백", notes = "구글 로그인 페이지에서 로그인 하면 code를 받을 수 있는데\n"
+        + "이 api에 쿼리스트링으로 code를 넣어 호출하면\n"
+        + "백에서 자동으로 회원가입 혹은 로그인이 되어\n"
+        + "access token과 refresh token을 쿠키로 전달받는다.")
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "BAD REQUEST\n구글의 응답을 받지 못함(L01)\n구글 유저 정보 응답을 받지 못함(L02)"),
+        @ApiResponse(code = 403, message = "CONFLICT\n소셜 로그인 회원이 아님(M07)")
+    })
     public ResponseEntity<Void> googleLoginCallback(@RequestParam(name = "code") String code, HttpServletResponse response) {
         oauthService.requestToken(response, code);
         return ResponseEntity.noContent().build();
