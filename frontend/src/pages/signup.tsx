@@ -16,26 +16,31 @@ function Signup() {
 	const router = useRouter();
 	const dispatch = useDispatch();
 
-	const { disabled, handleFormSubmit, handleInputChange, handleGoogleLoginClick, errors } = useForm(
-		{
-			initialValues: {
-				login_id: "",
-				password: "",
-				username: "",
-			},
-			onSubmit: async ({ login_id, password, username }) => {
-				try {
-					await authApi.signup({ login_id, password, username });
-					await authApi.signin({ login_id, password });
-					const userInfo = await profileApi.getUserInfo();
-					dispatch(SET_USER(userInfo.data));
-					router.push("/smsVerification");
-				} catch (err) {
-					console.log(err);
-				}
-			},
+	const {
+		disabled,
+		handleFormSubmit,
+		handleInputChange,
+		handleGoogleLoginClick,
+		errors,
+		onChangePasswordConfirm,
+	} = useForm({
+		initialValues: {
+			login_id: "",
+			password: "",
+			username: "",
 		},
-	);
+		onSubmit: async ({ login_id, password, username }) => {
+			try {
+				await authApi.signup({ login_id, password, username });
+				await authApi.signin({ login_id, password });
+				const userInfo = await profileApi.getUserInfo();
+				dispatch(SET_USER(userInfo.data));
+				router.push("/smsVerification");
+			} catch (err) {
+				console.log(err);
+			}
+		},
+	});
 
 	return (
 		<Container>
@@ -51,7 +56,7 @@ function Signup() {
 				<Input name="password" type="password" onChange={handleInputChange} />
 				<ErrorText>{errors.password}</ErrorText>
 				<Label>비밀번호 확인</Label>
-				<Input name="passwordConfirm" type="password" />
+				<Input name="passwordConfirm" type="password" onChange={onChangePasswordConfirm} />
 				<Button disabled={disabled} backgroundColor="#DC143C" color="white">
 					회원가입
 				</Button>
