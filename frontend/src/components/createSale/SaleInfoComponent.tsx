@@ -10,6 +10,12 @@ interface SaleInfoComponentProps {
 }
 
 function SaleInfoComponent({ value, houseInfo, changeEvent, type }: SaleInfoComponentProps) {
+	const checkType = () => {
+		if (type === "saleType") return houseInfo.saleType === value;
+		if (type === "houseType") return houseInfo.houseType === value;
+		if (type === "contractType") return houseInfo.contractType === value;
+	};
+
 	return (
 		<li>
 			<Label htmlFor={type}>
@@ -17,25 +23,10 @@ function SaleInfoComponent({ value, houseInfo, changeEvent, type }: SaleInfoComp
 					type="radio"
 					name={type}
 					value={value}
-					checked={
-						type === "saleType" ? houseInfo.saleType === value : houseInfo.houseType === value
-					}
+					checked={checkType()}
 					onChange={changeEvent}
-					required
 				/>
-				<Pbox
-					isCheck={
-						type === "saleType"
-							? houseInfo.saleType === value
-								? "checked"
-								: undefined
-							: houseInfo.houseType === value
-							? "checked"
-							: undefined
-					}
-				>
-					{value}
-				</Pbox>
+				<Pbox isCheck={checkType() ? "checked" : undefined}>{value}</Pbox>
 			</Label>
 		</li>
 	);

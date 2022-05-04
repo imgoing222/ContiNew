@@ -4,8 +4,11 @@ import { InputText } from "../index";
 import { Text } from "../Table";
 import { TableRowAndDivBox } from "../TableRow";
 import styled from "styled-components";
+import SaleInfoComponent from "../SaleInfoComponent";
 
 function PriceInfo({ changeEvent, houseInfo }: EventProps) {
+	const contractType = ["전세", "월세"];
+
 	const changeMoneyUnit = (money: string) => {
 		if (money) {
 			const len = money.length;
@@ -26,27 +29,54 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 
 	return (
 		<Container title="거래정보">
-			<TableRowAndDivBox title="가격 정보">
-				<InputText
-					type="text"
-					name="deposit"
-					onChange={changeEvent}
-					value={houseInfo.deposit}
-					placeholder="보증금"
-				/>
-				<Text> / </Text>
-				<InputText
-					type="text"
-					name="monthlyRent"
-					onChange={changeEvent}
-					value={houseInfo.monthlyRent}
-					placeholder="월세"
-				/>
-				<Text> 만원 </Text>
-				<MoneyText>{`${changeMoneyUnit(houseInfo.deposit)} / ${changeMoneyUnit(
-					houseInfo.monthlyRent,
-				)}`}</MoneyText>
+			<TableRowAndDivBox title="계약 정보">
+				{contractType.map((contract, idx) => (
+					<SaleInfoComponent
+						value={contract}
+						houseInfo={houseInfo}
+						changeEvent={changeEvent}
+						type="contractType"
+						key={idx}
+					/>
+				))}
 			</TableRowAndDivBox>
+			{houseInfo.contractType === "월세" && (
+				<TableRowAndDivBox title="가격 정보">
+					<InputText
+						type="text"
+						name="deposit"
+						onChange={changeEvent}
+						value={houseInfo.deposit}
+						placeholder="보증금"
+					/>
+					<Text> / </Text>
+					<InputText
+						type="text"
+						name="monthlyRent"
+						onChange={changeEvent}
+						value={houseInfo.monthlyRent}
+						placeholder="월세 금액"
+					/>
+					<Text> 만원 </Text>
+					<MoneyText>{`${changeMoneyUnit(houseInfo.deposit)} / ${changeMoneyUnit(
+						houseInfo.monthlyRent,
+					)}`}</MoneyText>
+				</TableRowAndDivBox>
+			)}
+			{houseInfo.contractType === "전세" && (
+				<TableRowAndDivBox title="가격 정보">
+					<InputText
+						type="text"
+						name="deposit"
+						onChange={changeEvent}
+						value={houseInfo.deposit}
+						placeholder="전세 금액"
+					/>
+					<Text> / </Text>
+					<Text> 만원 </Text>
+					<MoneyText>{`${changeMoneyUnit(houseInfo.deposit)}`}</MoneyText>
+				</TableRowAndDivBox>
+			)}
 
 			<TableRowAndDivBox title="관리비">
 				<InputText
@@ -55,7 +85,6 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 					onChange={changeEvent}
 					value={houseInfo.maintenanceFee}
 					placeholder="관리비"
-					required
 				/>
 				<Text> 만원 </Text>
 				<InputText
@@ -66,7 +95,6 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 					placeholder="관리비 포함 항목"
 					width={55}
 					margin={5}
-					required
 				/>
 			</TableRowAndDivBox>
 
@@ -77,7 +105,6 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 					onChange={changeEvent}
 					value={houseInfo.period}
 					placeholder="임대기간"
-					required
 				/>
 				<Text> 개월 </Text>
 				<MoneyText>{`${changeMonthToYear(houseInfo.period)}`}</MoneyText>
