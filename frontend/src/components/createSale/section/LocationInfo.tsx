@@ -52,6 +52,7 @@ function LocationInfo({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 						name="jibunAddress"
 						placeholder="예) 서울 동대문구 이문동 294-295"
 						readOnly
+						required
 					/>
 					<Button onClick={loadLayout}>주소 검색</Button>
 				</LocationTableData>
@@ -61,6 +62,7 @@ function LocationInfo({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 						name="addressDetail"
 						placeholder="상세 주소"
 						onChange={changeEvent}
+						required
 					/>
 				</LocationTableData>
 				<LocationTableData>
@@ -70,6 +72,7 @@ function LocationInfo({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 						name="floor"
 						placeholder="층수"
 						onChange={changeEvent}
+						required
 					/>
 					<Text>층</Text>
 				</LocationTableData>

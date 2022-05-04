@@ -145,7 +145,7 @@ function index() {
 
 export default index;
 
-const Container = styled.div`
+const Container = styled.form`
 	display: flex;
 	flex-direction: column;
 	margin: 0 auto;
