@@ -55,7 +55,7 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 						name="monthlyRent"
 						onChange={changeEvent}
 						value={houseInfo.monthlyRent}
-						placeholder="월세"
+						placeholder="월세 금액"
 					/>
 					<Text> 만원 </Text>
 					<MoneyText>{`${changeMoneyUnit(houseInfo.deposit)} / ${changeMoneyUnit(
@@ -70,7 +70,7 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 						name="deposit"
 						onChange={changeEvent}
 						value={houseInfo.deposit}
-						placeholder="전세"
+						placeholder="전세 금액"
 					/>
 					<Text> / </Text>
 					<Text> 만원 </Text>
