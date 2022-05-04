@@ -6,6 +6,7 @@ import com.btt.continew.chatting.domain.ChatMessage;
 import com.btt.continew.chatting.domain.ChatRoom;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -63,6 +64,8 @@ public class ChatMessageService {
                 chatMessageList.add(temp);
             }
         }
+
+        chatMessageList.sort(Comparator.comparing(ChatMessage::getCreatedAt));
 
         System.out.println("5-4. 메시지 페이지 네이션");
         int start = (int)pageable.getOffset();
