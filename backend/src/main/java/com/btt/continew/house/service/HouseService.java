@@ -71,6 +71,7 @@ public class HouseService {
             .floor(request.getFloor())
             .houseType(request.getHouseType())
             .saleType(request.getSaleType())
+            .contractType(request.getContractType())
             .period(request.getPeriod())
             .build();
         houseRepository.save(house);
