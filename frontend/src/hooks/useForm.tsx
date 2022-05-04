@@ -55,7 +55,7 @@ const useForm = ({ initialValues, onSubmit }: Props) => {
 	};
 
 	const handleGoogleLoginClick = () => {
-		authApi.google();
+		window.location.href = "http://localhost:8080/api/members/login/google";
 	};
 
 	return { errors, handleFormSubmit, handleInputChange, handleGoogleLoginClick, disabled };
