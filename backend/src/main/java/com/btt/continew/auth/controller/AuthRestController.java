@@ -43,6 +43,13 @@ public class AuthRestController {
 
     @PostMapping("/members/reissue")
     @ApiOperation(value = "토큰 재발급", notes = "토큰을 재발급하는 API")
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "BAD REQUEST\n일치하지 않는 리프레시 토큰(J10)"),
+        @ApiResponse(code = 401, message = "UNAUTHORIZED\n잘못된 리프레시 토큰 서명(J12)\n지원하지 않는 리프레시 토큰(J13)\n"
+            + "잘못된 리프레시 토큰(J14)\n로그아웃된 유저(J05)"),
+        @ApiResponse(code = 403, message = "FORBIDDEN\n만료된 리프레시 토큰(J11)"),
+        @ApiResponse(code = 404, message = "NOT FOUND\n권한값이 없는 엑세스 토큰(J06)")
+    })
     public ResponseEntity<Void> reissue(@RequestBody ReissueRequest tokenRequest, HttpServletResponse response) {
         authService.reissue(tokenRequest, response);
         return ResponseEntity.noContent().build();
