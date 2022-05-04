@@ -59,15 +59,20 @@ public class GoogleOauth {
     }
 
     public AuthorizationGoogle requestAccessToken(String code) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("code", code);
-        params.put("client_id", GOOGLE_CLIENT_ID);
-        params.put("client_secret", GOOGLE_CLIENT_SECRET);
-        params.put("redirect_uri", GOOGLE_REDIRECT_URL);
-        params.put("grant_type", "authorization_code");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("code", code);
+        params.add("client_id", GOOGLE_CLIENT_ID);
+        params.add("client_secret", GOOGLE_CLIENT_SECRET);
+        params.add("redirect_uri", GOOGLE_REDIRECT_URL);
+        params.add("grant_type", "authorization_code");
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
         try {
-            ResponseEntity<String> response = restTemplate.postForEntity(GOOGLE_TOKEN_URL, params, String.class);
+            ResponseEntity<String> response = restTemplate.postForEntity(GOOGLE_TOKEN_URL, request, String.class);
             return objectMapper.readValue(response.getBody(), AuthorizationGoogle.class);
         } catch (JsonProcessingException e) {
             throw new BusinessException(ErrorCode.LOGIN_GOOGLE_RESPONSE_FAIL);
