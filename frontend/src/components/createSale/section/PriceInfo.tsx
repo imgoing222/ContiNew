@@ -55,6 +55,7 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 					onChange={changeEvent}
 					value={houseInfo.maintenanceFee}
 					placeholder="관리비"
+					required
 				/>
 				<Text> 만원 </Text>
 				<InputText
@@ -65,6 +66,7 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 					placeholder="관리비 포함 항목"
 					width={55}
 					margin={5}
+					required
 				/>
 			</TableRowAndDivBox>
 
@@ -75,6 +77,7 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 					onChange={changeEvent}
 					value={houseInfo.period}
 					placeholder="임대기간"
+					required
 				/>
 				<Text> 개월 </Text>
 				<MoneyText>{`${changeMonthToYear(houseInfo.period)}`}</MoneyText>

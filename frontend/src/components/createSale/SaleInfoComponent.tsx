@@ -21,6 +21,7 @@ function SaleInfoComponent({ value, houseInfo, changeEvent, type }: SaleInfoComp
 						type === "saleType" ? houseInfo.saleType === value : houseInfo.houseType === value
 					}
 					onChange={changeEvent}
+					required
 				/>
 				<Pbox
 					isCheck={
