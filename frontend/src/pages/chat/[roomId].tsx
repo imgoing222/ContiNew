@@ -10,7 +10,7 @@ import { Chat, ChatList, ItemDetail } from "@components/chat";
 function ChatDetail() {
 	const router = useRouter();
 	const { roomId } = router.query;
-	const [isConnected, setIsConnected] = useState(false);
+	const isConnected = useRef(false);
 	const [chattings, setChattings] = useState();
 
 	const token = cookie.load("access_token");
@@ -19,27 +19,25 @@ function ChatDetail() {
 
 	useEffect(() => {
 		stomp.connect({ Authorization: `Bearer ${token}` }, () => {
-			setIsConnected(true);
+			console.log(isConnected);
 			console.log("Connected");
 
 			stomp.subscribe(`/sub/chat/room/${roomId}`, (message) => {
 				const receivedChatting = JSON.parse(message.body);
 				console.log(receivedChatting);
 			});
+
+			disConnect();
 		});
-		return () => {
-			if (isConnected) {
-				stomp.disconnect(
-					() => {
-						stomp.unsubscribe("sub-0");
-					},
-					{ Authorization: `Bearer ${token}` },
-				);
-				setIsConnected(false);
-				console.log("disconnect");
-			}
-		};
 	}, []);
+
+	const disConnect = () => {
+		console.log(isConnected);
+		stomp.disconnect(() => {
+			stomp.unsubscribe("sub-0");
+		});
+		console.log("disconnect");
+	};
 
 	const sendMessage = () => {
 		stomp.send(
