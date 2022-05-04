@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -26,12 +27,16 @@ public class ChatMessageRestController {
 
     private final ChannelTopic channelTopic;
     private final ChatMessageService chatMessageService;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     @MessageMapping("/chat/message")
     public void message(ChatMessageRequest request) {
 
-        System.out.println("4-1. 메시지 매핑");
-        chatMessageService.createMessage(channelTopic, request);
+        System.out.println("4-1. 메시지 전달");
+        redisTemplate.convertAndSend(channelTopic.getTopic(), request);
+
+        System.out.println("4-2. 메시지 저장 서비스");
+        chatMessageService.createMessage(request);
 
     }
 
