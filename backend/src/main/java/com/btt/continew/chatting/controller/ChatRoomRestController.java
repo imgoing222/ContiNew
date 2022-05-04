@@ -2,11 +2,9 @@ package com.btt.continew.chatting.controller;
 
 
 import com.btt.continew.chatting.controller.dto.request.ChatRoomRequest;
-import com.btt.continew.chatting.controller.dto.response.ChatMessagesResponse;
 import com.btt.continew.chatting.controller.dto.response.ChatRoomResponse;
 import com.btt.continew.chatting.controller.dto.response.ChatRoomsResponse;
 import com.btt.continew.chatting.domain.ChatRoom;
-import com.btt.continew.chatting.service.ChatMessageService;
 import com.btt.continew.chatting.service.ChatRoomService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -18,7 +16,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -36,7 +33,7 @@ public class ChatRoomRestController {
         @PageableDefault(sort = "last_message_time", direction = Direction.DESC)Pageable pageable,
         @ApiParam(hidden = true) @AuthenticationPrincipal String loginId
     ) {
-        System.out.println("겟룸");
+        System.out.println("2-1. 겟룸");
         return ResponseEntity.ok().body(chatRoomService.showChatRoom(pageable,loginId));
     }
 
@@ -44,7 +41,7 @@ public class ChatRoomRestController {
     @ApiOperation(value = "채팅방 생성", notes = "<b>(로그인 필요)</b> 채팅방 생성 API")
     @ResponseBody
     public ChatRoom postRoom(@RequestBody ChatRoomRequest request) {
-        System.out.println("포스트 룸");
+        System.out.println("1-1. 포스트 룸");
         return chatRoomService.createChatRoom(request);
     }
 
@@ -55,7 +52,7 @@ public class ChatRoomRestController {
     public ChatRoomResponse getRoomDetail(
         @RequestParam(name = "room_id") String roomId){
 
-        System.out.println("겟룸 디테일");
+        System.out.println("3-1. 겟룸 디테일");
         return chatRoomService.showChatRoomDetail(roomId);
     }
 }

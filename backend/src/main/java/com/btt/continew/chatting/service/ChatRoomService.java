@@ -39,10 +39,11 @@ public class ChatRoomService {
 
     @Transactional
     public ChatRoom createChatRoom(ChatRoomRequest request){
-
+        System.out.println("1-2. 방 생성");
         ChatRoom chatRoom = ChatRoom.create(request);
         ChatMessage chatMessage = ChatMessage.enterMessage(chatRoom.getId());
 
+        System.out.println("1-3. 방 저장");
         opsHashChatRoom.put(CHAT_ROOMS,chatRoom.getId(),chatRoom);
         opsHashChatMessage.put(CHAT_MESSAGE, chatMessage.getId(), chatMessage);
 
@@ -52,12 +53,14 @@ public class ChatRoomService {
 
     @Transactional
     public ChatRoomsResponse showChatRoom(Pageable pageable, String id){
+        System.out.println("2-2. 방 조회");
         List<ChatRoom> temps = opsHashChatRoom.values(CHAT_ROOMS);
 
         Member member = memberService.findByLoginId(id);
 
         List<ChatRoom> chatRoomList = new ArrayList<>();
 
+        System.out.println("2-3. 방 골라내기");
         for (ChatRoom temp : temps){
             // 구매자
             if(temp.getBuyer().equals(member.getLoginId())){
@@ -72,16 +75,18 @@ public class ChatRoomService {
             }
         }
 
+        System.out.println("2-4. 방 페이지 네이션");
         int start = (int)pageable.getOffset();
         int end = Math.min((start+pageable.getPageSize()), chatRoomList.size());
         Page<ChatRoom> chatRooms = new PageImpl<>(chatRoomList.subList(start,end),pageable,chatRoomList.size());
 
-
+        System.out.println("2-5. 방 반환");
         return ChatRoomsResponse.from(chatRooms);
     }
 
     @Transactional
     public ChatRoomResponse showChatRoomDetail(String roomId) {
+        System.out.println("3-2. 방 세부 사항 반환");
         return ChatRoomResponse.from(opsHashChatRoom.get(CHAT_ROOMS,roomId));
     }
 }
