@@ -1,10 +1,15 @@
+import React from "react";
 import { EventProps } from "src/pages/createSale";
 import styled from "styled-components";
 import { SmallContainer } from "../Container";
-function Description({ houseInfo, changeEvent }: EventProps) {
+function Description({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
+	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		if (setHouseInfo) setHouseInfo({ ...houseInfo, description: e.target.value });
+	};
+
 	return (
 		<SmallContainer title="상세 설명">
-			<Textarea name="description" onChange={changeEvent} value={houseInfo.description} />
+			<Textarea name="description" onChange={handleChange} value={houseInfo.description} />
 		</SmallContainer>
 	);
 }

@@ -46,6 +46,7 @@ function index() {
 		bname: "",
 		latitude: 0,
 		longitude: 0,
+		agreement: "",
 	});
 
 	const {
@@ -70,7 +71,7 @@ function index() {
 		contractType,
 	} = houseInfo;
 
-	const handleHouseInfo = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+	const handleHouseInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
 		console.log(houseInfo);
 		if (e.target.name === "options") {
 			const idx = houseInfo.options.indexOf(e.target.value);
@@ -123,7 +124,7 @@ function index() {
 
 	const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		if (checkData()) {
+		if (checkData() && houseInfo.agreement === "agree") {
 			const formData = new FormData();
 			const optionList = options.map((option) => +option);
 			const article = {
@@ -170,7 +171,18 @@ function index() {
 					setHouseInfo={setHouseInfo}
 				/>
 				<Photos houseInfo={houseInfo} changeEvent={handleHouseInfo} setHouseInfo={setHouseInfo} />
-				<Description houseInfo={houseInfo} changeEvent={handleHouseInfo} />
+				<Description
+					houseInfo={houseInfo}
+					changeEvent={handleHouseInfo}
+					setHouseInfo={setHouseInfo}
+				/>
+				<Div>
+					<AgreementText>다음의 약관을 읽고 동의함 </AgreementText>
+					<RadioText>동의</RadioText>
+					<InputRadio type="radio" name="agreement" onChange={handleHouseInfo} value="agree" />
+					<RadioText>비동의</RadioText>
+					<InputRadio type="radio" name="agreement" onChange={handleHouseInfo} value="disagree" />
+				</Div>
 				<Div>
 					<Button>취소</Button>
 					<Button isApplyBtn={true} onClick={onSubmit}>
@@ -204,4 +216,19 @@ const Button = styled.button<ButtonProps>`
 const Div = styled.div`
 	display: flex;
 	justify-content: center;
+	align-items: center;
+	margin-bottom: 4rem;
+`;
+
+const AgreementText = styled.p`
+	font-size: 1.5rem;
+	margin-right: 1rem;
+`;
+
+const RadioText = styled.p`
+	font-size: 1.2rem;
+`;
+
+const InputRadio = styled.input`
+	margin-right: 1.5rem;
 `;
