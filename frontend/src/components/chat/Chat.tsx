@@ -20,9 +20,25 @@ interface ChatDataType {
 	seller: string;
 }
 
+interface ChattingsType {
+	chat_message: {
+		room_id: string;
+		sender: string;
+		content: string;
+		read_at: string;
+		created_at: string;
+	}[];
+	total_page_count: number;
+	current_page_count: number;
+}
+
 function Chat({ sendMessage, roomId }: SendMessageProps) {
 	const router = useRouter();
-	const [chattings, setChattings] = useState();
+	const [chattings, setChattings] = useState<ChattingsType>({
+		chat_message: [],
+		current_page_count: 0,
+		total_page_count: 0,
+	});
 	const DATA_SET = {
 		buyer: "mmmm",
 		seller: "Seller",
@@ -55,7 +71,6 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 		try {
 			const res = await chatApi.getChatList(roomId);
 			setChattings(res.data);
-			console.log(res.data);
 		} catch (error) {
 			console.log(error);
 		}
@@ -69,6 +84,7 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 			<button onClick={createChattingRoom}>채팅방생성[임시]</button>
 			{roomId && (
 				<div>
+					<div>채팅목록 보여주기</div>
 					<form onSubmit={sendMessageHandler}>
 						<textarea />
 						<button>보내기</button>
