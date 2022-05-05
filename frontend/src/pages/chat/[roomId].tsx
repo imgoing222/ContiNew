@@ -10,7 +10,6 @@ import { Chat, ChatList, ItemDetail } from "@components/chat";
 function ChatDetail() {
 	const router = useRouter();
 	const { roomId } = router.query;
-	const [chattings, setChattings] = useState();
 
 	const token = cookie.load("access_token");
 	const sock = new SockJS("http://localhost:8080/ws-stomp");
@@ -18,10 +17,10 @@ function ChatDetail() {
 
 	useEffect(() => {
 		stomp.connect({ Authorization: `Bearer ${token}` }, () => {
-
 			stomp.subscribe(`/sub/chat/room/${roomId}`, (message) => {
 				const receivedChatting = JSON.parse(message.body);
 				console.log(receivedChatting);
+				console.log("메시지 받았어요");
 			});
 		});
 	}, []);
@@ -33,18 +32,20 @@ function ChatDetail() {
 		console.log("disconnect");
 	};
 
-	const sendMessage = () => {
-		stomp.send(
-			"/pub/chat/message",
-			{ Authorization: `Bearer ${token}` },
-			JSON.stringify({ type: "TALK", roomId: roomId, sender: "mmmm", content: "hello" }),
-		);
+	const sendMessage = (inputChat: string) => {
+		if (inputChat) {
+			stomp.send(
+				"/pub/chat/message",
+				{ Authorization: `Bearer ${token}` },
+				JSON.stringify({ type: "TALK", room_id: roomId, sender: "mmmm", content: inputChat }),
+			);
+		}
 	};
 
 	return (
 		<Container>
 			<ChatList />
-			<Chat sendMessage={sendMessage} />
+			<Chat sendMessage={sendMessage} roomId={roomId} />
 			<ItemDetail />
 		</Container>
 	);

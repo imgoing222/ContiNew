@@ -31,7 +31,7 @@ function ChatList() {
 
 	const getChatList = async () => {
 		try {
-			const res = await chatApi.getChat();
+			const res = await chatApi.getChattingRoom();
 			setChatListData(res.data);
 		} catch (error) {
 			console.log(error);
