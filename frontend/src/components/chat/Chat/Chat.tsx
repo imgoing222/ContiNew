@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import { chatApi } from "src/api";
+import { BottomSection } from "@components/chat/chat";
 import React from "react";
 
 interface SendMessageProps {
@@ -83,6 +84,7 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 						{chattings.chat_message &&
 							chattings.chat_message.map((chat) => <p key={chat.created_at}>{chat.content}</p>)}
 					</TopSection>
+					<BottomSection sendMessage={sendMessage} />
 				</Content>
 			)}
 		</Container>
@@ -110,11 +112,6 @@ const TopSection = styled.div`
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-`;
-
-const BottomSection = styled.form`
-	height: 5rem;
-	display: flex;
 `;
 
 export default Chat;
