@@ -20,6 +20,7 @@ function ChatDetail() {
 			stomp.subscribe(`/sub/chat/room/${roomId}`, (message) => {
 				const receivedChatting = JSON.parse(message.body);
 				console.log(receivedChatting);
+				console.log("메시지 받았어요");
 			});
 		});
 	}, []);
