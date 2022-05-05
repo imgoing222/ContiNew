@@ -10,7 +10,6 @@ import { Chat, ChatList, ItemDetail } from "@components/chat";
 function ChatDetail() {
 	const router = useRouter();
 	const { roomId } = router.query;
-	const [chattings, setChattings] = useState();
 
 	const token = cookie.load("access_token");
 	const sock = new SockJS("http://localhost:8080/ws-stomp");
@@ -18,7 +17,6 @@ function ChatDetail() {
 
 	useEffect(() => {
 		stomp.connect({ Authorization: `Bearer ${token}` }, () => {
-
 			stomp.subscribe(`/sub/chat/room/${roomId}`, (message) => {
 				const receivedChatting = JSON.parse(message.body);
 				console.log(receivedChatting);
@@ -44,7 +42,7 @@ function ChatDetail() {
 	return (
 		<Container>
 			<ChatList />
-			<Chat sendMessage={sendMessage} />
+			<Chat sendMessage={sendMessage} roomId={roomId} />
 			<ItemDetail />
 		</Container>
 	);
