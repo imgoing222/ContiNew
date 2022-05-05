@@ -88,15 +88,15 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 		<Container>
 			<Title>
 				<h3>여긴 채팅창</h3>
+				<button onClick={createChattingRoom}>채팅방생성[임시]</button>
 			</Title>
-			<button onClick={createChattingRoom}>채팅방생성[임시]</button>
 			{roomId && (
-				<div>
-					<div>
+				<Content>
+					<TopSection>
 						{chattings.chat_message &&
 							chattings.chat_message.map((chat) => <p key={chat.created_at}>{chat.content}</p>)}
-					</div>
-					<form onSubmit={sendMessageHandler}>
+					</TopSection>
+					<BottomSection onSubmit={sendMessageHandler}>
 						<textarea
 							name="content"
 							value={inputChat}
@@ -104,8 +104,8 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 							placeholder="내용을 입력해주세요."
 						/>
 						<button>보내기</button>
-					</form>
-				</div>
+					</BottomSection>
+				</Content>
 			)}
 		</Container>
 	);
@@ -121,6 +121,22 @@ const Title = styled.div`
 	height: 5rem;
 	text-align: center;
 	border-bottom: solid 2px #d3d3d3;
+`;
+
+const Content = styled.div`
+	display: flex;
+	flex-direction: column;
+`;
+
+const TopSection = styled.div`
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+`;
+
+const BottomSection = styled.form`
+	height: 5rem;
+	display: flex;
 `;
 
 export default Chat;
