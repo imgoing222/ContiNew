@@ -27,6 +27,7 @@ const Nav = styled.nav`
 const Title = styled.a`
 	font-size: 3.5rem;
 	color: #dc143c;
+	font-weight: bold;
 `;
 
 export default Navbar;

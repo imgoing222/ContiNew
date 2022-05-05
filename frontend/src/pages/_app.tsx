@@ -9,6 +9,7 @@ import { createStore } from "redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import { ToastContainer } from "react-toastify";
+import "../styles/global.css";
 import "react-toastify/dist/ReactToastify.css";
 
 const store = createStore(persistedReducer);
