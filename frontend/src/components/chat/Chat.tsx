@@ -93,7 +93,8 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 			{roomId && (
 				<div>
 					<div>
-						{chattings.chat_message && chattings.chat_message.map((chat) => <p>{chat.content}</p>)}
+						{chattings.chat_message &&
+							chattings.chat_message.map((chat) => <p key={chat.created_at}>{chat.content}</p>)}
 					</div>
 					<form onSubmit={sendMessageHandler}>
 						<textarea
