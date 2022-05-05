@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 interface ListProps {
 	name: string;
-	content: string;
+	content: string | number;
 	content2?: string;
 	div?: boolean;
 	price?: boolean;

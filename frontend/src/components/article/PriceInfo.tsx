@@ -4,7 +4,7 @@ import PriceInfoList from "./PriceInfoList";
 function PriceInfo() {
 	const houseInfo = {
 		address_detail: "스카이빌",
-		contract_type: "월세",
+		contract_type: "전세",
 		deposit: 10000000,
 		description: "6개월 짜리 방 내놓습니다",
 		house_id: 1,
@@ -26,7 +26,11 @@ function PriceInfo() {
 			<Title>가격정보</Title>
 			<PriceInfoList
 				name={houseInfo.contract_type}
-				content={houseInfo.monthly_rent / 10000 + "/" + houseInfo.maintenance_fee / 10000}
+				content={
+					houseInfo.contract_type === "월세"
+						? houseInfo.monthly_rent / 10000 + "/" + houseInfo.maintenance_fee / 10000
+						: houseInfo.deposit / 10000 + " 만원"
+				}
 			/>
 			<PriceInfoList
 				name="관리비"
