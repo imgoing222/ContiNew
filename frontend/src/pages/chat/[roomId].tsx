@@ -10,7 +10,6 @@ import { Chat, ChatList, ItemDetail } from "@components/chat";
 function ChatDetail() {
 	const router = useRouter();
 	const { roomId } = router.query;
-	const [inputChat, setInputChat] = useState("");
 
 	const token = cookie.load("access_token");
 	const sock = new SockJS("http://localhost:8080/ws-stomp");
@@ -33,21 +32,20 @@ function ChatDetail() {
 		console.log("disconnect");
 	};
 
-	const sendMessage = () => {
+	const sendMessage = (inputChat: string) => {
 		if (inputChat) {
 			stomp.send(
 				"/pub/chat/message",
 				{ Authorization: `Bearer ${token}` },
 				JSON.stringify({ type: "TALK", room_id: roomId, sender: "mmmm", content: inputChat }),
 			);
-			setInputChat("");
 		}
 	};
 
 	return (
 		<Container>
 			<ChatList />
-			<Chat sendMessage={sendMessage} roomId={roomId} setInputChat={setInputChat} />
+			<Chat sendMessage={sendMessage} roomId={roomId} />
 			<ItemDetail />
 		</Container>
 	);

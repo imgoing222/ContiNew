@@ -6,9 +6,8 @@ import { chatApi } from "src/api";
 import React from "react";
 
 interface SendMessageProps {
-	sendMessage?: () => void;
+	sendMessage?: (inputChat: string) => void;
 	roomId?: string | string[] | undefined;
-	setInputChat?: any;
 }
 
 interface ChatDataType {
@@ -33,8 +32,9 @@ interface ChattingsType {
 	current_page_count: number;
 }
 
-function Chat({ sendMessage, roomId, setInputChat }: SendMessageProps) {
+function Chat({ sendMessage, roomId }: SendMessageProps) {
 	const router = useRouter();
+	const [inputChat, setInputChat] = useState("");
 	const [chattings, setChattings] = useState<ChattingsType>({
 		chat_message: [],
 		current_page_count: 0,
@@ -61,7 +61,10 @@ function Chat({ sendMessage, roomId, setInputChat }: SendMessageProps) {
 
 	const sendMessageHandler = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		if (sendMessage) sendMessage();
+		if (sendMessage) {
+			sendMessage(inputChat);
+			setInputChat("");
+		}
 	};
 
 	useEffect(() => {
@@ -93,7 +96,12 @@ function Chat({ sendMessage, roomId, setInputChat }: SendMessageProps) {
 						{chattings.chat_message && chattings.chat_message.map((chat) => <p>{chat.content}</p>)}
 					</div>
 					<form onSubmit={sendMessageHandler}>
-						<textarea name="content" onChange={HandleChange} placeholder="내용을 입력해주세요." />
+						<textarea
+							name="content"
+							value={inputChat}
+							onChange={HandleChange}
+							placeholder="내용을 입력해주세요."
+						/>
 						<button>보내기</button>
 					</form>
 				</div>
