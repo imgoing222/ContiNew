@@ -34,7 +34,6 @@ interface ChattingsType {
 
 function Chat({ sendMessage, roomId }: SendMessageProps) {
 	const router = useRouter();
-	const [inputChat, setInputChat] = useState("");
 	const [chattings, setChattings] = useState<ChattingsType>({
 		chat_message: [],
 		current_page_count: 0,
@@ -59,14 +58,6 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 		router.push(`/chat/${chatData.id}`);
 	};
 
-	const sendMessageHandler = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		if (sendMessage) {
-			sendMessage(inputChat);
-			setInputChat("");
-		}
-	};
-
 	useEffect(() => {
 		getChatList();
 	}, []);
@@ -78,10 +69,6 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 		} catch (error) {
 			console.log(error);
 		}
-	};
-
-	const HandleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setInputChat(event.target.value);
 	};
 
 	return (
@@ -96,15 +83,6 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 						{chattings.chat_message &&
 							chattings.chat_message.map((chat) => <p key={chat.created_at}>{chat.content}</p>)}
 					</TopSection>
-					<BottomSection onSubmit={sendMessageHandler}>
-						<textarea
-							name="content"
-							value={inputChat}
-							onChange={HandleChange}
-							placeholder="내용을 입력해주세요."
-						/>
-						<button>보내기</button>
-					</BottomSection>
 				</Content>
 			)}
 		</Container>
