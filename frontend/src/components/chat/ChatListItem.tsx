@@ -1,11 +1,22 @@
 import styled from "styled-components";
 
-function ChatListItem() {
+interface ChatProps {
+	chat: {
+		buyer: string;
+		last_message: string;
+		last_message_time: string;
+		room_id: string;
+		sale: number;
+		seller: string;
+	};
+}
+
+function ChatListItem({ chat }: ChatProps) {
 	return (
 		<Container>
 			<LeftSection>
-				<div>닉네임</div>
-				<div>최근 메시지</div>
+				<h3>{chat.seller}</h3>
+				<div>{chat.last_message}</div>
 			</LeftSection>
 			<RightSection>
 				<div>Img</div>
@@ -22,12 +33,12 @@ const Container = styled.div`
 
 const LeftSection = styled.div`
 	display: flex;
-  flex-direction: column;
+	flex-direction: column;
 `;
 
 const RightSection = styled.div`
 	display: flex;
-  flex-direction: column;
+	flex-direction: column;
 	align-items: center;
 `;
 
