@@ -27,17 +27,22 @@ function ChatListItem({ chat }: ChatProps) {
 }
 
 const Container = styled.div`
+	width: 100%;
+	height: 100%;
 	display: flex;
 	align-items: center;
+	border-bottom: solid 1px #d3d3d3;
 `;
 
 const LeftSection = styled.div`
 	display: flex;
+	flex: 7;
 	flex-direction: column;
 `;
 
 const RightSection = styled.div`
 	display: flex;
+	flex: 3;
 	flex-direction: column;
 	align-items: center;
 `;

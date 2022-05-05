@@ -77,7 +77,7 @@ const Title = styled.div`
 `;
 
 const Content = styled.div`
-	width: 100%;
+	width: 80%;
 	height: 8rem;
 	cursor: pointer;
 `;
