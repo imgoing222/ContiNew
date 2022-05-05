@@ -1,24 +1,14 @@
+import UserInfo from "src/types/UserInfo";
+
 const LOGIN = "user/setUserInfo";
 const DELETE = "user/deleteUserInfo";
-interface dataType {
-	id: number;
-	login_id: string;
-	username: string;
-	phone_nunber: string;
-	phone_auth: boolean;
-	provider: string;
-}
-
-interface userName {
-	username: string;
-}
 
 interface actionType {
 	type: string;
-	data: dataType;
+	data: UserInfo;
 }
 
-export const SET_USER = (data: dataType | userName) => ({ type: LOGIN, data });
+export const SET_USER = (data: UserInfo) => ({ type: LOGIN, data });
 export const DELETE_USER = () => ({ type: DELETE });
 
 const initialState = {
