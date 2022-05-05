@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-import { Chat, ChatList, ItemDetail } from "@components/chat";
+import { Chat, RoomList, ItemDetail } from "@components/chat";
 
 function ChatPage() {
 	return (
 		<Container>
-			<ChatList />
+			<RoomList />
 			<Chat />
 			<ItemDetail />
 		</Container>

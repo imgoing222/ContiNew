@@ -18,7 +18,7 @@ interface ChatListDataType {
 	total_page_count: number;
 }
 
-function ChatList() {
+function RoomList() {
 	const router = useRouter();
 	const [chatListData, setChatListData] = useState<ChatListDataType>({
 		chat_rooms: [],
@@ -49,7 +49,7 @@ function ChatList() {
 				<h2>Messages</h2>
 			</Title>
 			{chatListData.chat_rooms &&
-				chatListData.chat_rooms.slice(0).map((chat) => (
+				chatListData.chat_rooms.slice(0).reverse().map((chat) => (
 					<Content key={chat.room_id} onClick={() => toChattingRoom(chat.room_id)}>
 						<ChatListItem chat={chat} />
 					</Content>
@@ -82,4 +82,4 @@ const Content = styled.div`
 	cursor: pointer;
 `;
 
-export default ChatList;
+export default RoomList;
