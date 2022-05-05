@@ -45,7 +45,7 @@ function ChatList() {
 	return (
 		<Container>
 			<Title>
-				<h3>Messages</h3>
+				<h2>Messages</h2>
 			</Title>
 			<div>
 				{chatListData.chat_rooms &&
@@ -72,7 +72,9 @@ const Container = styled.div`
 const Title = styled.div`
 	width: 100%;
 	height: 5rem;
-	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	border-bottom: solid 2px #d3d3d3;
 `;
 
