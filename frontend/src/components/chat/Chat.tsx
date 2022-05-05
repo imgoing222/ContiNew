@@ -84,7 +84,11 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 			<button onClick={createChattingRoom}>채팅방생성[임시]</button>
 			{roomId && (
 				<div>
-					<div>채팅목록 보여주기</div>
+					<div>
+						{chattings.chat_message && chattings.chat_message.map((chat) => (
+							<p>{chat.content}</p>
+						))}
+					</div>
 					<form onSubmit={sendMessageHandler}>
 						<textarea />
 						<button>보내기</button>
