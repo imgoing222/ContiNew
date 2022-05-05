@@ -49,7 +49,7 @@ function RoomList() {
 				<h2>Messages</h2>
 			</Title>
 			{chatListData.chat_rooms &&
-				chatListData.chat_rooms.slice(0).map((chat) => (
+				chatListData.chat_rooms.slice(0).reverse().map((chat) => (
 					<Content key={chat.room_id} onClick={() => toChattingRoom(chat.room_id)}>
 						<ChatListItem chat={chat} />
 					</Content>

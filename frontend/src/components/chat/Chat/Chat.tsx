@@ -82,7 +82,7 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 				<Content>
 					<TopSection>
 						{chattings.chat_message &&
-							chattings.chat_message.map((chat, idx) => <ChatListItem key={idx} chat={chat} />)}
+							chattings.chat_message.slice(0).reverse().map((chat, idx) => <ChatListItem key={idx} chat={chat} />)}
 					</TopSection>
 					<BottomSection sendMessage={sendMessage} />
 				</Content>
