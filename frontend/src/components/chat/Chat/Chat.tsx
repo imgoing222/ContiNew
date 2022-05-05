@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 import { chatApi } from "src/api";
 import { BottomSection, ChatListItem } from "@components/chat/chat";
-import React from "react";
 
 interface SendMessageProps {
 	sendMessage?: (inputChat: string) => void;
@@ -72,6 +71,9 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 		}
 	};
 
+	const topSection = document.querySelector("Chat__TopSection-sc-n294tl-3 cPYuWS");
+	console.log(topSection);
+
 	return (
 		<Container>
 			<Title>
@@ -82,7 +84,10 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 				<Content>
 					<TopSection>
 						{chattings.chat_message &&
-							chattings.chat_message.slice(0).reverse().map((chat, idx) => <ChatListItem key={idx} chat={chat} />)}
+							chattings.chat_message
+								.slice(0)
+								.reverse()
+								.map((chat, idx) => <ChatListItem key={idx} chat={chat} />)}
 					</TopSection>
 					<BottomSection sendMessage={sendMessage} />
 				</Content>
@@ -112,9 +117,11 @@ const Content = styled.div`
 `;
 
 const TopSection = styled.div`
-	height: 100%;
+	height: 500px;
 	display: flex;
+	margin: 1rem 0;
 	flex-direction: column;
+	overflow: auto;
 `;
 
 export default Chat;
