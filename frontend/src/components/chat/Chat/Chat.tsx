@@ -82,7 +82,7 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 				<Content>
 					<TopSection>
 						{chattings.chat_message &&
-							chattings.chat_message.map((chat) => <p key={chat.created_at}>{chat.content}</p>)}
+							chattings.chat_message.map((chat, idx) => <p key={idx}>{chat.content}</p>)}
 					</TopSection>
 					<BottomSection sendMessage={sendMessage} />
 				</Content>
