@@ -1,10 +1,34 @@
+import { useState } from "react";
 import styled from "styled-components";
 
-function BottomSection() {
+interface SendMessageProps {
+	sendMessage?: (inputChat: string) => void;
+}
+
+function BottomSection({ sendMessage }: SendMessageProps) {
+	const [inputChat, setInputChat] = useState("");
+
+  const handleSendMessage = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		if (sendMessage) {
+			sendMessage(inputChat);
+			setInputChat("");
+		}
+	};
+
+	const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setInputChat(event.target.value);
+	};
+
 	return (
 		<Container>
-			<Textarea />
-			<Form>
+			<Textarea
+				name="content"
+				value={inputChat}
+				onChange={handleChange}
+				placeholder="내용을 입력해주세요."
+			/>
+			<Form onSubmit={handleSendMessage}>
 				<Button>보내기</Button>
 			</Form>
 		</Container>
