@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import { chatApi } from "src/api";
-import React from "react";
+import { BottomSection, ChatListItem } from "@components/chat/chat";
 
 interface SendMessageProps {
 	sendMessage?: (inputChat: string) => void;
@@ -34,7 +34,6 @@ interface ChattingsType {
 
 function Chat({ sendMessage, roomId }: SendMessageProps) {
 	const router = useRouter();
-	const [inputChat, setInputChat] = useState("");
 	const [chattings, setChattings] = useState<ChattingsType>({
 		chat_message: [],
 		current_page_count: 0,
@@ -59,14 +58,6 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 		router.push(`/chat/${chatData.id}`);
 	};
 
-	const sendMessageHandler = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		if (sendMessage) {
-			sendMessage(inputChat);
-			setInputChat("");
-		}
-	};
-
 	useEffect(() => {
 		getChatList();
 	}, []);
@@ -80,38 +71,34 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 		}
 	};
 
-	const HandleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setInputChat(event.target.value);
-	};
+	const topSection = document.querySelector("Chat__TopSection-sc-n294tl-3 cPYuWS");
+	console.log(topSection);
 
 	return (
 		<Container>
 			<Title>
 				<h3>여긴 채팅창</h3>
+				<button onClick={createChattingRoom}>채팅방생성[임시]</button>
 			</Title>
-			<button onClick={createChattingRoom}>채팅방생성[임시]</button>
 			{roomId && (
-				<div>
-					<div>
+				<Content>
+					<TopSection>
 						{chattings.chat_message &&
-							chattings.chat_message.map((chat) => <p key={chat.created_at}>{chat.content}</p>)}
-					</div>
-					<form onSubmit={sendMessageHandler}>
-						<textarea
-							name="content"
-							value={inputChat}
-							onChange={HandleChange}
-							placeholder="내용을 입력해주세요."
-						/>
-						<button>보내기</button>
-					</form>
-				</div>
+							chattings.chat_message
+								.slice(0)
+								.reverse()
+								.map((chat, idx) => <ChatListItem key={idx} chat={chat} />)}
+					</TopSection>
+					<BottomSection sendMessage={sendMessage} />
+				</Content>
 			)}
 		</Container>
 	);
 }
 
 const Container = styled.div`
+	display: flex;
+	flex-direction: column;
 	flex: 6;
 	height: 100%;
 `;
@@ -121,6 +108,20 @@ const Title = styled.div`
 	height: 5rem;
 	text-align: center;
 	border-bottom: solid 2px #d3d3d3;
+`;
+
+const Content = styled.div`
+	margin-top: auto;
+	display: flex;
+	flex-direction: column;
+`;
+
+const TopSection = styled.div`
+	height: 500px;
+	display: flex;
+	margin: 1rem 0;
+	flex-direction: column;
+	overflow: auto;
 `;
 
 export default Chat;

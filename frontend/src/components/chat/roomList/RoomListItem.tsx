@@ -11,7 +11,7 @@ interface ChatProps {
 	};
 }
 
-function ChatListItem({ chat }: ChatProps) {
+function RoomListItem({ chat }: ChatProps) {
 	return (
 		<Container>
 			<LeftSection>
@@ -47,4 +47,4 @@ const RightSection = styled.div`
 	align-items: center;
 `;
 
-export default ChatListItem;
+export default RoomListItem;

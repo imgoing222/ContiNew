@@ -5,7 +5,7 @@ import StompJS from "stompjs";
 import cookie from "react-cookies";
 import styled from "styled-components";
 
-import { Chat, ChatList, ItemDetail } from "@components/chat";
+import { Chat, RoomList, ItemDetail } from "@components/chat";
 
 function ChatDetail() {
 	const router = useRouter();
@@ -44,7 +44,7 @@ function ChatDetail() {
 
 	return (
 		<Container>
-			<ChatList />
+			<RoomList />
 			<Chat sendMessage={sendMessage} roomId={roomId} />
 			<ItemDetail />
 		</Container>
