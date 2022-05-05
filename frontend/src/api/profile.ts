@@ -12,8 +12,8 @@ interface ProfileApiType {
 
 const profileApi: ProfileApiType = {
 	getUserInfo: () => request.get(`auth/members`),
-	changeUsername: (username) => request.post(`auth/members/info`, username),
-	changePassword: (passwords) => request.post(`auth/members/password`, passwords),
+	changeUsername: (username) => request.put(`auth/members/info`, username),
+	changePassword: (passwords) => request.put(`auth/members/password`, passwords),
 };
 
 export default profileApi;
