@@ -9,12 +9,12 @@ interface ChatData {
 
 interface ChatApiType {
   getChattingRoom: () => Promise<AxiosResponse>;
-	createChat: (chatData: ChatData) => Promise<AxiosResponse>;
+	createChattingRoom: (chatData: ChatData) => Promise<AxiosResponse>;
 }
 
 const chatApi: ChatApiType = {
 	getChattingRoom: () => request.get("chat/room/list/"),
-	createChat: (chatData) => request.post("chat/room", chatData),
+	createChattingRoom: (chatData) => request.post("chat/room", chatData),
 };
 
 export default chatApi;

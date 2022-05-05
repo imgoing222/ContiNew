@@ -27,7 +27,7 @@ function Chat({ sendMessage }: SendMessageProps) {
 
 	const createChattingRoom = async () => {
 		try {
-			const res = await chatApi.createChat(DATA_SET);
+			const res = await chatApi.createChattingRoom(DATA_SET);
 			toChattingRoom(res.data);
 		} catch (error) {
 			console.log(error);
