@@ -22,7 +22,7 @@ const Container = styled.div`
 `;
 
 const SaleInfo = styled.div`
-	width: 72rem;
+	width: 78rem;
 `;
 
 const Card = styled.div`
