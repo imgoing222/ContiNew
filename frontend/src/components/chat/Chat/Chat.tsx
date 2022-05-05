@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import { chatApi } from "src/api";
-import { BottomSection } from "@components/chat/chat";
+import { BottomSection, ChatListItem } from "@components/chat/chat";
 import React from "react";
 
 interface SendMessageProps {
@@ -82,7 +82,7 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 				<Content>
 					<TopSection>
 						{chattings.chat_message &&
-							chattings.chat_message.map((chat, idx) => <p key={idx}>{chat.content}</p>)}
+							chattings.chat_message.map((chat, idx) => <ChatListItem key={idx} chat={chat} />)}
 					</TopSection>
 					<BottomSection sendMessage={sendMessage} />
 				</Content>

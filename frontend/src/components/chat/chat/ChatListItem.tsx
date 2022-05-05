@@ -1,9 +1,19 @@
 import styled from "styled-components";
 
-function ChatListitem() {
+interface ChatProps {
+	chat: {
+		room_id: string;
+		sender: string;
+		content: string;
+		read_at: string;
+		created_at: string;
+	};
+}
+
+function ChatListitem({ chat }: ChatProps) {
 	return (
 		<Container>
-			<Textarea name="content" cols={20} readOnly></Textarea>
+			<Textarea name="content" cols={20} readOnly>{chat.content}</Textarea>
 		</Container>
 	);
 }
