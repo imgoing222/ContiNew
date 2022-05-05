@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import { chatApi } from "src/api";
+import { ChatListItem } from "@components/chat";
 
 interface ChatListDataType {
 	chat_rooms: {
@@ -47,15 +48,12 @@ function ChatList() {
 			<Title>
 				<h2>Messages</h2>
 			</Title>
-			<div>
-				{chatListData.chat_rooms &&
-					chatListData.chat_rooms.slice(0).map((chat) => (
-						<Content key={chat.room_id} onClick={() => toChattingRoom(chat.room_id)}>
-							<p>{chat.buyer}</p>
-							<p>{chat.last_message}</p>
-						</Content>
-					))}
-			</div>
+			{chatListData.chat_rooms &&
+				chatListData.chat_rooms.slice(0).map((chat) => (
+					<Content key={chat.room_id} onClick={() => toChattingRoom(chat.room_id)}>
+						<ChatListItem chat={chat} />
+					</Content>
+				))}
 		</Container>
 	);
 }
