@@ -92,6 +92,8 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 }
 
 const Container = styled.div`
+	display: flex;
+	flex-direction: column;
 	flex: 6;
 	height: 100%;
 `;
@@ -104,6 +106,7 @@ const Title = styled.div`
 `;
 
 const Content = styled.div`
+	margin-top: auto;
 	display: flex;
 	flex-direction: column;
 `;
