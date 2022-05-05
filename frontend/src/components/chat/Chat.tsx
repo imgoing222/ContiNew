@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
@@ -6,9 +7,11 @@ import React from "react";
 
 interface SendMessageProps {
 	sendMessage?: () => void;
+	roomId?: string | string[] | undefined;
 }
 
-interface chatDataType {
+interface ChatDataType {
+	sendMessage: {};
 	buyer: string;
 	lastMessage: string;
 	lastMessageTime: string;
@@ -17,8 +20,9 @@ interface chatDataType {
 	seller: string;
 }
 
-function Chat({ sendMessage }: SendMessageProps) {
+function Chat({ sendMessage, roomId }: SendMessageProps) {
 	const router = useRouter();
+	const [chattings, setChattings] = useState();
 	const DATA_SET = {
 		buyer: "mmmm",
 		seller: "Seller",
@@ -34,7 +38,7 @@ function Chat({ sendMessage }: SendMessageProps) {
 		}
 	};
 
-	const toChattingRoom = (chatData: chatDataType) => {
+	const toChattingRoom = (chatData: ChatDataType) => {
 		router.push(`/chat/${chatData.id}`);
 	};
 
@@ -43,17 +47,33 @@ function Chat({ sendMessage }: SendMessageProps) {
 		if (sendMessage) sendMessage();
 	};
 
+	useEffect(() => {
+		getChatList();
+	}, []);
+
+	const getChatList = async () => {
+		try {
+			const res = await chatApi.getChatList(roomId);
+			setChattings(res.data);
+			console.log(res.data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<Container>
 			<Title>
 				<h3>여긴 채팅창</h3>
 			</Title>
 			<button onClick={createChattingRoom}>채팅방생성[임시]</button>
-			{sendMessage && (
-				<form onSubmit={sendMessageHandler}>
-					<textarea />
-					<button>보내기</button>
-				</form>
+			{roomId && (
+				<div>
+					<form onSubmit={sendMessageHandler}>
+						<textarea />
+						<button>보내기</button>
+					</form>
+				</div>
 			)}
 		</Container>
 	);
