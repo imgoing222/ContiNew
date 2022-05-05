@@ -1,8 +1,6 @@
 import styled from "styled-components";
+import PriceInfoList from "./PriceInfoList";
 
-interface Price {
-	color?: string;
-}
 function PriceInfo() {
 	const houseInfo = {
 		address_detail: "스카이빌",
@@ -26,35 +24,24 @@ function PriceInfo() {
 	return (
 		<Container>
 			<Title>가격정보</Title>
-			<Li>
-				<Name>{houseInfo.contract_type}</Name>
-				<Content>
-					{houseInfo.monthly_rent / 10000 + "/" + houseInfo.maintenance_fee / 10000}
-				</Content>
-			</Li>
-			<Li>
-				<Name>관리비</Name>
-				<div>
-					<Content>매월 {houseInfo.maintenance_fee / 10000}만원</Content>
-					<Content>{houseInfo.maintenance_detail}</Content>
-				</div>
-			</Li>
-			<Li>
-				<Name>주차</Name>
-				<Content>{houseInfo.options.includes(9) ? "가능" : "불가능"}</Content>
-			</Li>
-			<Li>
-				<Name>
-					한달
-					<br /> 예상주거비용
-				</Name>
-				<div>
-					<Content color="price">
-						{houseInfo.monthly_rent / 10000 + houseInfo.maintenance_fee / 10000}+a 만원
-					</Content>
-					<Content>월세+관리비+a</Content>
-				</div>
-			</Li>
+			<PriceInfoList
+				name={houseInfo.contract_type}
+				content={houseInfo.monthly_rent / 10000 + "/" + houseInfo.maintenance_fee / 10000}
+			/>
+			<PriceInfoList
+				name="관리비"
+				content={`매월 ${houseInfo.maintenance_fee / 10000}만원`}
+				content2={houseInfo.maintenance_detail}
+				div={true}
+			/>
+			<PriceInfoList name="주차" content={houseInfo.options.includes(9) ? "가능" : "불가능"} />
+			<PriceInfoList
+				name="한달 예상 주거비용"
+				content={`${houseInfo.monthly_rent / 10000 + houseInfo.maintenance_fee / 10000}+a 만원`}
+				content2="월세+관리비+a"
+				div={true}
+				price={true}
+			/>
 		</Container>
 	);
 }
@@ -69,22 +56,4 @@ const Container = styled.section`
 const Title = styled.h1`
 	font-size: 2.5rem;
 	margin-bottom: 3rem;
-`;
-
-const Name = styled.p`
-	width: 20rem;
-	font-size: 1.8rem;
-	font-weight: bold;
-`;
-
-const Li = styled.li`
-	display: flex;
-	padding: 1.5rem 0;
-	border-bottom: 1px solid ${(props) => props.theme.borderColor};
-`;
-
-const Content = styled.p<Price>`
-	font-size: 1.6rem;
-	color: ${(props) => props.color && props.theme.mainColor};
-	font-weight: ${(props) => props.color && "700"}; ;
 `;
