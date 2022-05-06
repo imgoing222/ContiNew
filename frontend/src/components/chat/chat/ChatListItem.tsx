@@ -13,13 +13,13 @@ interface ChatProps {
 function ChatListitem({ chat }: ChatProps) {
 	return (
 		<Container>
-			<Textarea name="content" cols={20} readOnly>{chat.content}</Textarea>
+			<Textarea name="content" cols={20} readOnly defaultValue={chat.content} />
 		</Container>
 	);
 }
 
 const Container = styled.div`
-  margin: 1rem;
+	margin: 1rem;
 `;
 
 const Textarea = styled.textarea`
