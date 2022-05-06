@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import Container from "./Container";
 import PriceInfoList from "./PriceInfoList";
 
 function PriceInfo() {
@@ -22,8 +22,7 @@ function PriceInfo() {
 	};
 
 	return (
-		<Container>
-			<Title>가격정보</Title>
+		<Container title="가격 정보">
 			<PriceInfoList
 				name={houseInfo.contract_type}
 				content={
@@ -51,13 +50,3 @@ function PriceInfo() {
 }
 
 export default PriceInfo;
-
-const Container = styled.section`
-	display: flex;
-	flex-direction: column;
-`;
-
-const Title = styled.h1`
-	font-size: 2.5rem;
-	margin-bottom: 3rem;
-`;
