@@ -26,14 +26,12 @@ function LocationInfo() {
 				};
 				kakaoMap.current = new kakao.maps.Map(container, options);
 				geocoder.addressSearch(`${houseInfo.jibun_address}`, function (result, status) {
-					console.log(result);
 					if (status === kakao.maps.services.Status.OK) {
 						const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 						const marker = new kakao.maps.Marker({
 							map: kakaoMap.current,
 							position: coords,
 						});
-						console.log(result);
 						kakaoMap.current.setCenter(coords);
 					}
 				});
