@@ -46,7 +46,7 @@ public class ProfileService {
 
     @Transactional(readOnly = true)
     public MemberInfoResponse showMemberInfo(String loginId) {
-        Member member = memberService.findByLoginId(loginId);
+        Member member = memberService.findByLoginIdAndDeletedAtNull(loginId);
         return MemberInfoResponse.from(member);
     }
 
@@ -58,7 +58,7 @@ public class ProfileService {
 
     @Transactional
     public void changeMemberInfo(String loginId, MemberChangeRequest request) {
-        Member member = memberService.findByLoginId(loginId);
+        Member member = memberService.findByLoginIdAndDeletedAtNull(loginId);
 
         checkSameMyName(member.getUsername(), request.getUsername());
         memberService.checkDuplicateUsername(request.getUsername());
@@ -67,13 +67,13 @@ public class ProfileService {
 
     @Transactional
     public void changePassword(String loginId, PasswordChangeRequest request) {
-        Member member = memberService.findByLoginId(loginId);
+        Member member = memberService.findByLoginIdAndDeletedAtNull(loginId);
         member.changePassword(passwordEncoder, request);
     }
 
     @Transactional
     public void certifiedByPhoneNumber(String loginId, PhoneNumberRequest request) {
-        Member member = memberService.findByLoginId(loginId);
+        Member member = memberService.findByLoginIdAndDeletedAtNull(loginId);
         memberService.checkDuplicatePhoneNumber(request.getPhoneNumber()); // 휴대폰 중복 검사
 
         CertifyPhone certifyPhone = certifyPhoneRepository.findByMember(member)
@@ -108,7 +108,7 @@ public class ProfileService {
 
     @Transactional
     public void checkPhoneCertifiedCode(String loginId, CheckPhoneRequest request) {
-        Member member = memberService.findByLoginId(loginId);
+        Member member = memberService.findByLoginIdAndDeletedAtNull(loginId);
 
         CertifyPhone certifyPhone = certifyPhoneRepository.findByMember(member)
             .orElseThrow(() -> new BusinessException(ErrorCode.CERTIFY_NOT_FOUND_MEMBER));
@@ -134,7 +134,7 @@ public class ProfileService {
 
     @Transactional
     public void sendFindPwCode(FindPwSendRequest request) {
-        Member member = memberService.findByLoginId(request.getLoginId());
+        Member member = memberService.findByLoginIdAndDeletedAtNull(request.getLoginId());
         checkYourPhoneNumber(member.getPhoneNumber(), request.getPhoneNumber());
 
         CertifyPassword certifyPassword = certifyPasswordRepository.findByMember(member)

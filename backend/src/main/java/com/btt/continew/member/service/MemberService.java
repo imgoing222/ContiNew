@@ -29,6 +29,12 @@ public class MemberService {
             .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND_BY_LOGIN_ID));
     }
 
+    @Transactional(readOnly = true)
+    public Member findByLoginIdAndDeletedAtNull(String id) {
+        return memberRepository.findByLoginIdAndDeletedAtNull(id)
+            .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND_BY_LOGIN_ID));
+    }
+
     @Transactional
     public Long saveMember(MemberSaveRequest request) {
         checkDuplicateLoginId(request.getLoginId());
