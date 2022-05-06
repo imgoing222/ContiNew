@@ -18,7 +18,6 @@ function Profile() {
 
 	useEffect(() => {
 		profileApi.getUserInfo().then((res) => {
-			console.log(res);
 			setUserInfo(res.data);
 			dispatch(SET_USER(res.data));
 		});
@@ -27,17 +26,19 @@ function Profile() {
 	return (
 		userInfo && (
 			<Container>
-				<p>인증 된 회원입니다</p>
+				{userInfo.phone_auth && <p>인증 된 회원입니다</p>}
 				<Label>아이디</Label>
 				<Input disabled value={userInfo.login_id} />
 				<UserInfoEdit username={userInfo.username} />
-				<Button
-					onClick={() => {
-						router.push("/smsVerification");
-					}}
-				>
-					휴대폰 인증
-				</Button>
+				{!userInfo.phone_auth && (
+					<Button
+						onClick={() => {
+							router.push("/smsVerification");
+						}}
+					>
+						휴대폰 인증
+					</Button>
+				)}
 			</Container>
 		)
 	);
