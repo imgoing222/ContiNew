@@ -1,7 +1,5 @@
 import { formValidator } from "@utils/index";
-import { debounce } from "lodash";
 import { useCallback, useState } from "react";
-import authApi from "src/api/auth";
 
 interface Props {
 	initialValues: Values;
@@ -35,7 +33,6 @@ const useForm = ({ initialValues, onSubmit }: Props) => {
 	const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (Object.keys(validate(values)).length === 0) {
-			console.log(values);
 			return await onSubmit(values);
 		}
 	};
