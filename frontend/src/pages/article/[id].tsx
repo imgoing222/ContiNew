@@ -1,3 +1,4 @@
+import LocationInfo from "@components/article/LocationInfo";
 import OptionInfo from "@components/article/OptionalInfo";
 import PriceInfo from "@components/article/PriceInfo";
 import React from "react";
@@ -9,6 +10,7 @@ function index() {
 			<SaleInfo>
 				<PriceInfo />
 				<OptionInfo />
+				<LocationInfo />
 			</SaleInfo>
 			<Card></Card>
 		</Container>
