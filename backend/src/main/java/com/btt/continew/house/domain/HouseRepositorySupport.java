@@ -69,6 +69,7 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
                 house.longitude.between(request.getXLeft(), request.getXRight()),
                 saleTypeEq(request.getSaleType()),
                 houseTypeEq(request.getHouseType()),
+                contractTypeEq(request.getContractType()),
                 house.deposit.between(request.getMinDeposit(), request.getMaxDeposit()),
                 house.monthlyRent.between(request.getMinMonthlyRent(), request.getMaxMonthlyRent()),
                 house.maintenanceFee.between(request.getMinMaintenanceFee(), request.getMaxMaintenanceFee()),
