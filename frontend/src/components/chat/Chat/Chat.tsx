@@ -70,6 +70,9 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 		try {
 			const res = await chatApi.getChatList(roomId);
 			setChattings(res.data);
+			if (chattings.chat_message) {
+				scrollToBottom();
+			}
 		} catch (error) {
 			console.log(error);
 		}
@@ -77,7 +80,7 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 
 	const scrollToBottom = () => {
 		if (chatBoxRef.current) {
-			chatBoxRef.current.scrollIntoView({ behavior: "smooth"});
+			chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
 		}
 	};
 
@@ -89,12 +92,15 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 			</Title>
 			{roomId && (
 				<Content>
-					<TopSection ref={chatBoxRef}>
-						{chattings.chat_message &&
-							chattings.chat_message
-								.slice(0)
-								.reverse()
-								.map((chat, idx) => <ChatListItem key={idx} chat={chat} />)}
+					<TopSection>
+						<ul>
+							{chattings.chat_message &&
+								chattings.chat_message
+									.slice(0)
+									.reverse()
+									.map((chat, idx) => <ChatListItem key={idx} chat={chat} />)}
+						</ul>
+						<div ref={chatBoxRef} />
 					</TopSection>
 					<BottomSection sendMessage={sendMessage} />
 				</Content>

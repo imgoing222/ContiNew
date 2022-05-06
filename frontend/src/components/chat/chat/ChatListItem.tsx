@@ -18,7 +18,7 @@ function ChatListitem({ chat }: ChatProps) {
 	);
 }
 
-const Container = styled.div`
+const Container = styled.li`
 	margin: 1rem;
 `;
 
