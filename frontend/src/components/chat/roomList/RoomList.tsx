@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import { chatApi } from "src/api";
-import { ChatListItem } from "@components/chat";
+import { RoomListItem } from "@components/chat";
 
 interface ChatListDataType {
 	chat_rooms: {
@@ -51,7 +51,7 @@ function RoomList() {
 			{chatListData.chat_rooms &&
 				chatListData.chat_rooms.slice(0).reverse().map((chat) => (
 					<Content key={chat.room_id} onClick={() => toChattingRoom(chat.room_id)}>
-						<ChatListItem chat={chat} />
+						<RoomListItem chat={chat} />
 					</Content>
 				))}
 		</Container>
