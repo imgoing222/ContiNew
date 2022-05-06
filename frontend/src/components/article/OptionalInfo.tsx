@@ -4,7 +4,7 @@ import styled from "styled-components";
 import OptionIcon from "./OptionIcon";
 
 function OptionInfo() {
-	const houseInfo = { options: [1, 2, 3] };
+	const houseInfo = { options: [1, 2, 3, 4, 5, 6, 7, 8, 9] };
 	const optionName = [
 		"에어컨",
 		"세탁기",
@@ -17,7 +17,17 @@ function OptionInfo() {
 		"주차장",
 	];
 
-	const optionFilename = ["aircon"];
+	const optionFilename = [
+		"aircon",
+		"washing",
+		"tv",
+		"refrigerator",
+		"stove",
+		"induction",
+		"microwave",
+		"desk",
+		"parking",
+	];
 	return (
 		<Container title="옵션 정보">
 			<Div>
