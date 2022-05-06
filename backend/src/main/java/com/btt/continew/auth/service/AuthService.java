@@ -39,7 +39,7 @@ public class AuthService {
 
     @Transactional
     public void login(LoginRequest request, HttpServletResponse response) {
-        Member member = memberService.findByLoginId(request.getLoginId());
+        Member member = memberService.findByLoginIdAndDeletedAtNull(request.getLoginId());
         member.checkPassword(passwordEncoder, request.getPassword());
 
         TokenResponse tokenResponse = jwtTokenProvider.createToken(member.getLoginId(), member.getAuthority());
