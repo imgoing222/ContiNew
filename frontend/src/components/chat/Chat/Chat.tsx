@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { RootState } from "src/store";
 
 import { chatApi } from "src/api";
 import { BottomSection, ChatListItem } from "@components/chat";
@@ -35,13 +37,14 @@ interface ChattingsType {
 function Chat({ sendMessage, roomId }: SendMessageProps) {
 	const router = useRouter();
 	const chatBoxRef = useRef<HTMLDivElement>(null);
+	const { username } = useSelector((state: RootState) => state.userInfo);
 	const [chattings, setChattings] = useState<ChattingsType>({
 		chat_message: [],
 		current_page_count: 0,
 		total_page_count: 0,
 	});
 	const DATA_SET = {
-		buyer: "mmmm",
+		buyer: username,
 		seller: "Seller",
 		sale: 1,
 	};
