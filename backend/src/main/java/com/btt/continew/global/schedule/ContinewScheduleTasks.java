@@ -15,7 +15,7 @@ public class ContinewScheduleTasks {
 
     @Scheduled(cron = "0 3 0 * * *")
     // 초 분 시 일 월 요일
-    public void deleteCertifyPhoneTable() {
-        profileService.deleteCertifyPhoneTable();
+    public void deleteCertifyCodeTable() {
+        profileService.deleteCertifyCodeTable();
     }
 }
