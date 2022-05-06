@@ -14,7 +14,6 @@ import com.btt.continew.house.domain.HouseRepository;
 import com.btt.continew.house.domain.HouseRepositorySupport;
 import com.btt.continew.house.domain.Image;
 import com.btt.continew.house.domain.ImageRepository;
-import com.btt.continew.house.domain.Option;
 import com.btt.continew.house.domain.OptionRepository;
 import com.btt.continew.image.ImageUploader;
 import com.btt.continew.member.domain.Member;
@@ -77,18 +76,22 @@ public class HouseService {
             .contractType(request.getContractType())
             .period(request.getPeriod())
             .expiredAt(LocalDateTime.now().plusMonths(LISTING_PERIOD))
+            .options(request.getOptions())
             .build();
         houseRepository.save(house);
 
-        saveHouseOptions(request, house);
+//        saveHouseOptions(request, house);
         saveImages(images, house);
     }
 
     private void saveImages(List<MultipartFile> images, House house) {
+        int idx = 0;
         for (MultipartFile file: images) {
            try{
                String url = imageUploader.upload(file, "house");
-
+               if(idx == 0) {
+                   house.changeMainImage(url);
+               }
                Image image = Image.builder()
                    .house(house)
                    .url(url)
@@ -98,22 +101,23 @@ public class HouseService {
            } catch (IOException e) {
                throw new BusinessException(ErrorCode.GLOBAL_ILLEGAL_ERROR);
            }
+           idx++;
        }
     }
 
-    private void saveHouseOptions(HouseSaveRequest request, House house) {
-        if (!request.getOptions().isEmpty()){
-            for(Long optionId: request.getOptions()) {
-                Option option = optionRepository.findById(optionId)
-                    .orElseThrow(() -> new BusinessException(ErrorCode.OPTION_NOT_FOUND_BY_ID));
-                HouseOption houseOption = HouseOption.builder()
-                    .house(house)
-                    .option(option)
-                    .build();
-                houseOptionRepository.save(houseOption);
-            }
-        }
-    }
+//    private void saveHouseOptions(HouseSaveRequest request, House house) {
+//        if (!request.getOptions().isEmpty()){
+//            for(Long optionId: request.getOptions()) {
+//                Option option = optionRepository.findById(optionId)
+//                    .orElseThrow(() -> new BusinessException(ErrorCode.OPTION_NOT_FOUND_BY_ID));
+//                HouseOption houseOption = HouseOption.builder()
+//                    .house(house)
+//                    .option(option)
+//                    .build();
+//                houseOptionRepository.save(houseOption);
+//            }
+//        }
+//    }
 
     @Transactional(readOnly = true)
     public HouseListResponse showHouses(HouseListRequest request, Pageable pageable) {
@@ -145,7 +149,7 @@ public class HouseService {
         house.update(request);
 
         houseOptionRepository.deleteHouseOptionsByHouse(houseId);
-        saveHouseOptions(request, house);
+//        saveHouseOptions(request, house);
 
         imageRepository.deleteImagesByHouses(houseId);
         saveImages(images, house);
