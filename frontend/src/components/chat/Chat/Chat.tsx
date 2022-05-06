@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { RootState } from "src/store";
 
 import { chatApi } from "src/api";
-import { BottomSection, ChatListItem } from "@components/chat/chat";
+import { BottomSection, ChatListItem } from "@components/chat";
 
 interface SendMessageProps {
 	sendMessage?: (inputChat: string) => void;
@@ -34,13 +36,15 @@ interface ChattingsType {
 
 function Chat({ sendMessage, roomId }: SendMessageProps) {
 	const router = useRouter();
+	const chatBoxRef = useRef<HTMLDivElement>(null);
+	const { username } = useSelector((state: RootState) => state.userInfo);
 	const [chattings, setChattings] = useState<ChattingsType>({
 		chat_message: [],
 		current_page_count: 0,
 		total_page_count: 0,
 	});
 	const DATA_SET = {
-		buyer: "mmmm",
+		buyer: username,
 		seller: "Seller",
 		sale: 1,
 	};
@@ -66,13 +70,19 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 		try {
 			const res = await chatApi.getChatList(roomId);
 			setChattings(res.data);
+			if (chattings.chat_message) {
+				scrollToBottom();
+			}
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
-	const topSection = document.querySelector("Chat__TopSection-sc-n294tl-3 cPYuWS");
-	console.log(topSection);
+	const scrollToBottom = () => {
+		if (chatBoxRef.current) {
+			chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+		}
+	};
 
 	return (
 		<Container>
@@ -83,11 +93,14 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 			{roomId && (
 				<Content>
 					<TopSection>
-						{chattings.chat_message &&
-							chattings.chat_message
-								.slice(0)
-								.reverse()
-								.map((chat, idx) => <ChatListItem key={idx} chat={chat} />)}
+						<ul>
+							{chattings.chat_message &&
+								chattings.chat_message
+									.slice(0)
+									.reverse()
+									.map((chat, idx) => <ChatListItem key={idx} chat={chat} />)}
+						</ul>
+						<div ref={chatBoxRef} />
 					</TopSection>
 					<BottomSection sendMessage={sendMessage} />
 				</Content>
@@ -117,7 +130,7 @@ const Content = styled.div`
 `;
 
 const TopSection = styled.div`
-	height: 500px;
+	height: 50rem;
 	display: flex;
 	margin: 1rem 0;
 	flex-direction: column;
