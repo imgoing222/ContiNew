@@ -22,7 +22,7 @@ public class ChatMessage implements Serializable {
     @Column(name = "id")
     String id;
 
-    @Column(name = "message_type")
+    @Column(name = "type")
     MessageType type;
 
     @Column(name = "room_id")
