@@ -10,7 +10,7 @@ function UserIcon() {
 
 	return token ? (
 		<>
-			<FontAwesome icon={faUser} />
+			<FontAwesome icon={faUser} onClick={() => router.push("/profile")} />
 		</>
 	) : (
 		<>
