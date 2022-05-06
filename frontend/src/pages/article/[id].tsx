@@ -1,3 +1,4 @@
+import OptionInfo from "@components/article/OptionalInfo";
 import PriceInfo from "@components/article/PriceInfo";
 import React from "react";
 import styled from "styled-components";
@@ -7,6 +8,7 @@ function index() {
 		<Container>
 			<SaleInfo>
 				<PriceInfo />
+				<OptionInfo />
 			</SaleInfo>
 			<Card></Card>
 		</Container>
