@@ -5,27 +5,11 @@ import { Text } from "../Table";
 import { TableRow, TableRowAndDivBox } from "../TableRow";
 import styled from "styled-components";
 import SaleInfoComponent from "../SaleInfoComponent";
+import changeMoneyUnit from "@utils/moneyUnitChange";
+import changeMonthToYear from "@utils/changeMonthToYear";
 
 function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 	const contractType = ["전세", "월세"];
-
-	const changeMoneyUnit = (money: string) => {
-		if (money) {
-			const len = money.length;
-			if (money.length > 4) return ` ${money.slice(0, len - 4)}억 ${money.slice(len - 4)}만원`;
-			return `${money} 만원`;
-		}
-		return "";
-	};
-
-	const changeMonthToYear = (month: string) => {
-		if (month) {
-			if (+month > 12)
-				return `${Math.floor(+month / 12)}년  ${+month % 12 > 0 ? (+month % 12) + "개월" : ""}`;
-			return `${month}개월`;
-		}
-		return "";
-	};
 
 	return (
 		<Container title="거래정보">
