@@ -103,6 +103,7 @@ public class ProfileService {
     public void deleteCertifyCodeTable() {
         certifyPhoneRepository.deleteByExpireTimeBefore(LocalDateTime.now());
         certifyPasswordRepository.deleteByExpireTimeBefore(LocalDateTime.now().minusDays(1));
+        certifyPasswordRepository.updateTodayCountZero();
     }
 
     @Transactional
