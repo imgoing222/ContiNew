@@ -35,7 +35,7 @@ public class ChatMessageRestController {
         System.out.println("4-1. 메시지 전달");
         redisTemplate.convertAndSend(channelTopic.getTopic(), request);
 
-        System.out.println("4-2. 메시지 저장 서비스");
+        System.out.println("4-2. 메시지 저장 서비스 실행");
         chatMessageService.createMessage(request);
 
     }
