@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 public class ChatMessageRequest {
 
-    @JsonProperty("message_type")
+    @JsonProperty("type")
     @ApiModelProperty(position = 0, notes = "메시지 타입", example = "ENTER")
     MessageType type;
 

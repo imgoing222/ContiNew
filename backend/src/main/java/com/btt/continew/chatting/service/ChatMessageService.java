@@ -46,7 +46,7 @@ public class ChatMessageService {
         chatRoom.setLastMessageTime(LocalDateTime.now());
         opsHasChatRoom.put(CHAT_ROOMS, chatRoom.getId(), chatRoom);
 
-        System.out.println("4-5. 메시지 저장 및 전달 ");
+        System.out.println("4-7. 메시지 Redis 저장");
         opsHashChatMessage.put(CHAT_MESSAGE, chatMessage.getId(), chatMessage);
     }
 

@@ -22,7 +22,7 @@ public class StompHandler implements ChannelInterceptor {
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         System.out.println("0-1. stomp 연결\n"+message);
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
-        System.out.println("0-2. message -> accessor wrap");
+        System.out.println("0-2. accessor 목적지 : "+ accessor.getDestination());
         if (StompCommand.CONNECT == accessor.getCommand()) {
             jwtTokenProvider.resolveAccessToken(accessor.getFirstNativeHeader("Authorization").substring(7));
         }
