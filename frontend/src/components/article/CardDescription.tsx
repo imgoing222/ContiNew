@@ -1,3 +1,5 @@
+import changeMonthToYear from "@utils/changeMonthToYear";
+import changeMoneyUnit from "@utils/moneyUnitChange";
 import styled from "styled-components";
 import IconPart from "./IconPart";
 
@@ -26,6 +28,8 @@ function CardDescription() {
 		floor: 3,
 	};
 
+	const startChat = () => {};
+	const setBookmark = () => {};
 	return (
 		<Container>
 			<Div>
@@ -33,7 +37,7 @@ function CardDescription() {
 				<Text>{houseInfo.username}</Text>
 			</Div>
 			<Price>
-				{houseInfo.contract_type} {houseInfo.monthly_rent / 10000}만원
+				{houseInfo.contract_type} {changeMoneyUnit((houseInfo.monthly_rent / 10000).toString())}
 			</Price>
 			<Text margin="true">{houseInfo.jibun_address}</Text>
 			<div>
@@ -41,19 +45,19 @@ function CardDescription() {
 					content1="house_type"
 					content2="period"
 					info1={houseInfo.house_type}
-					info2={houseInfo.period}
+					info2={changeMonthToYear(houseInfo.period.toString())}
 				/>
 				<IconPart
 					content1="floor"
 					content2="price"
-					info1={houseInfo.floor}
+					info1={`${houseInfo.floor}층`}
 					info2={`월 ${houseInfo.maintenance_fee / 10000}만원`}
 				/>
 				<Hr />
 			</div>
 			<ButtonDiv>
-				<Button>채팅 하기</Button>
-				<Button>북마크</Button>
+				<Button onClick={startChat}>채팅 하기</Button>
+				<Button onClick={setBookmark}>북마크</Button>
 			</ButtonDiv>
 		</Container>
 	);
