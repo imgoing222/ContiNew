@@ -5,8 +5,10 @@ import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
 import com.btt.continew.house.controller.dto.request.HouseSaveRequest;
 import com.btt.continew.member.domain.Member;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Where;
 
 @Entity
@@ -85,10 +88,10 @@ public class House extends BaseEntity {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "house")
-    private List<HouseOption> options = new ArrayList<>();
+    @Column(name = "expired_at")
+    private LocalDateTime expiredAt;
 
-   public House() {
+    public House() {
 
     }
 
@@ -96,7 +99,7 @@ public class House extends BaseEntity {
     public House(Member member, String sidoName, String gunguName, String dongName, String jibunAddress,
         String addressDetail, Double latitude, Double longitude, Integer floor, String saleType, String houseType,
         String contractType, Long deposit, Long monthlyRent, Long maintenanceFee, String maintenanceDetail, Integer period,
-        String description) {
+        String description, LocalDateTime expiredAt) {
         this.member = member;
         this.sidoName = sidoName;
         this.gunguName = gunguName;
@@ -115,6 +118,7 @@ public class House extends BaseEntity {
         this.maintenanceDetail = maintenanceDetail;
         this.period = period;
         this.description = description;
+        this.expiredAt = expiredAt;
     }
 
     public void checkHouseByLoginId(String loginId) {
