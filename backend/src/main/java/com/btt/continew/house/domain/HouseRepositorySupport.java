@@ -73,7 +73,10 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
                 house.deposit.between(request.getMinDeposit(), request.getMaxDeposit()),
                 house.monthlyRent.between(request.getMinMonthlyRent(), request.getMaxMonthlyRent()),
                 house.maintenanceFee.between(request.getMinMaintenanceFee(), request.getMaxMaintenanceFee()),
-                optionsEq(request.getOptions())
+                periodEq(request.getPeriod()),
+                optionsEq(request.getOptions()),
+                house.expiredAt.after(LocalDateTime.now()),
+                house.deletedAt.isNull()
             );
 
         return PageableExecutionUtils.getPage(responses, pageable, () -> countQuery.fetch().size());
