@@ -16,12 +16,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
-import org.hibernate.annotations.Where;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 @Getter
-@Where(clause = "deleted_at is null")
 public class Member extends BaseEntity {
 
     @Id
