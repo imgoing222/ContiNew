@@ -31,8 +31,12 @@ function OptionInfo() {
 	return (
 		<Container title="옵션 정보">
 			<Div>
-				{houseInfo.options.map((option) => (
-					<OptionIcon name={optionName[option - 1]} fileName={optionFilename[option - 1]} />
+				{houseInfo.options.map((option, idx) => (
+					<OptionIcon
+						key={idx}
+						name={optionName[option - 1]}
+						fileName={optionFilename[option - 1]}
+					/>
 				))}
 			</Div>
 		</Container>
