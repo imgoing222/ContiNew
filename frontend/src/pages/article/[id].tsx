@@ -1,3 +1,4 @@
+import Description from "@components/article/Description";
 import LocationInfo from "@components/article/LocationInfo";
 import OptionInfo from "@components/article/OptionalInfo";
 import PriceInfo from "@components/article/PriceInfo";
@@ -11,6 +12,7 @@ function index() {
 				<PriceInfo />
 				<OptionInfo />
 				<LocationInfo />
+				<Description />
 			</SaleInfo>
 			<Card></Card>
 		</Container>
