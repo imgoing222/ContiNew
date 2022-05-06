@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
@@ -34,6 +34,7 @@ interface ChattingsType {
 
 function Chat({ sendMessage, roomId }: SendMessageProps) {
 	const router = useRouter();
+	const chatBoxRef = useRef<HTMLDivElement>(null);
 	const [chattings, setChattings] = useState<ChattingsType>({
 		chat_message: [],
 		current_page_count: 0,
@@ -71,8 +72,11 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 		}
 	};
 
-	const topSection = document.querySelector("Chat__TopSection-sc-n294tl-3 cPYuWS");
-	console.log(topSection);
+	const scrollToBottom = () => {
+		if (chatBoxRef.current) {
+			chatBoxRef.current.scrollIntoView({ behavior: "smooth"});
+		}
+	};
 
 	return (
 		<Container>
@@ -82,7 +86,7 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 			</Title>
 			{roomId && (
 				<Content>
-					<TopSection>
+					<TopSection ref={chatBoxRef}>
 						{chattings.chat_message &&
 							chattings.chat_message
 								.slice(0)
@@ -117,7 +121,7 @@ const Content = styled.div`
 `;
 
 const TopSection = styled.div`
-	height: 500px;
+	height: 50rem;
 	display: flex;
 	margin: 1rem 0;
 	flex-direction: column;
