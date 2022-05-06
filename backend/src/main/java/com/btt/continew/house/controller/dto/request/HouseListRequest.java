@@ -2,7 +2,6 @@ package com.btt.continew.house.controller.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -66,16 +65,16 @@ public class HouseListRequest {
     @JsonProperty("period")
     private Integer period;
 
-    @ApiModelProperty(name = "options", position = 13, example = "[1,2,3]")
+    @ApiModelProperty(name = "options", position = 13, example = "1,2,3")
     @JsonProperty("options")
-    private List<Long> options;
+    private String options;
 
     public HouseListRequest() {
     }
 
     public HouseListRequest(Double yBottom, Double yTop, Double xLeft, Double xRight, String saleType, String houseType,
         String contractType, Long minDeposit, Long maxDeposit, Long minMonthlyRent, Long maxMonthlyRent,
-        Long minMaintenanceFee, Long maxMaintenanceFee, Integer period, List<Long> options) {
+        Long minMaintenanceFee, Long maxMaintenanceFee, Integer period, String options) {
         this.yBottom = yBottom;
         this.yTop = yTop;
         this.xLeft = xLeft;
