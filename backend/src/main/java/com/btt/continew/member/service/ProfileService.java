@@ -100,8 +100,9 @@ public class ProfileService {
     }
 
     @Transactional
-    public void deleteCertifyPhoneTable() {
+    public void deleteCertifyCodeTable() {
         certifyPhoneRepository.deleteByExpireTimeBefore(LocalDateTime.now());
+        certifyPasswordRepository.deleteByExpireTimeBefore(LocalDateTime.now().minusDays(1));
     }
 
     @Transactional
