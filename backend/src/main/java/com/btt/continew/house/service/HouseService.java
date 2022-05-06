@@ -20,6 +20,7 @@ import com.btt.continew.image.ImageUploader;
 import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,6 +38,8 @@ public class HouseService {
     private final MemberService memberService;
     private final ImageUploader imageUploader;
     private final HouseRepositorySupport houseRepositorySupport;
+
+    private static final int LISTING_PERIOD = 1;
 
     public HouseService(HouseRepository houseRepository, OptionRepository optionRepository,
         HouseOptionRepository houseOptionRepository, ImageRepository imageRepository,
@@ -73,6 +76,7 @@ public class HouseService {
             .saleType(request.getSaleType())
             .contractType(request.getContractType())
             .period(request.getPeriod())
+            .expiredAt(LocalDateTime.now().plusMonths(LISTING_PERIOD))
             .build();
         houseRepository.save(house);
 
