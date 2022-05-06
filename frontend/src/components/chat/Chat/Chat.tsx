@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import { chatApi } from "src/api";
-import { BottomSection, ChatListItem } from "@components/chat/chat";
+import { BottomSection, ChatListItem } from "@components/chat";
 
 interface SendMessageProps {
 	sendMessage?: (inputChat: string) => void;
