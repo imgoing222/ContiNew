@@ -23,14 +23,12 @@ import org.springframework.stereotype.Repository;
 public class HouseRepositorySupport extends QuerydslRepositorySupport {
 
     private final JPAQueryFactory jpaQueryFactory;
-    private final HouseOptionRepository houseOptionRepository;
 
     private static final int MAX_PERIOD = 12;
 
-    public HouseRepositorySupport(JPAQueryFactory jpaQueryFactory, HouseOptionRepository houseOptionRepository) {
+    public HouseRepositorySupport(JPAQueryFactory jpaQueryFactory) {
         super(House.class);
         this.jpaQueryFactory = jpaQueryFactory;
-        this.houseOptionRepository = houseOptionRepository;
     }
 
     public Page<HouseSimpleResponse> findHouses(HouseListRequest request, Pageable pageable) {
@@ -50,7 +48,8 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
                 house.addressDetail,
                 house.latitude,
                 house.longitude,
-                house.description
+                house.description,
+                house.mainImage
             ))
             .from(house)
             .where(house.latitude.between(request.getYBottom(), request.getYTop()),
@@ -104,12 +103,12 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
         return null;
     }
 
-    private BooleanBuilder optionsEq(List<Long> optionIds){
+    private BooleanBuilder optionsEq(String optionsStr){
         BooleanBuilder builder = new BooleanBuilder();
-        List<HouseOption> houseOptions;
-        if(!optionIds.isEmpty()) {
-            houseOptions = houseOptionRepository.findAllById(optionIds);
-            for(HouseOption houseOption: houseOptions) {
+        if(hasText(optionsStr)) {
+            String[] optionsRequest = optionsStr.split(",");
+            for(String option: optionsRequest) {
+                builder.and(house.options.contains(option));
             }
         }
         return builder;

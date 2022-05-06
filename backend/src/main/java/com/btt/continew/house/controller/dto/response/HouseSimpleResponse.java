@@ -65,13 +65,17 @@ public class HouseSimpleResponse {
     @ApiModelProperty(position = 13, notes = "상세설명", example = "입대하게 되어서 방 내놓습니다...")
     private String description;
 
+    @JsonProperty("main_image")
+    @ApiModelProperty(position = 14, notes = "이미지", example = "")
+    private String mainImage;
+
     public HouseSimpleResponse() {
     }
 
     @QueryProjection
     public HouseSimpleResponse(Long id, Long deposit, Long monthlyRent, String saleType, String houseType,
         String contractType, String sidoName, String gunguName, String dongName, String jibunAddress, String addressDetail,
-        Double latitude, Double longitude, String description) {
+        Double latitude, Double longitude, String description, String mainImage) {
         this.id = id;
         this.deposit = deposit;
         this.monthlyRent = monthlyRent;
@@ -86,6 +90,7 @@ public class HouseSimpleResponse {
         this.latitude = latitude;
         this.longitude = longitude;
         this.description = description;
+        this.mainImage = mainImage;
     }
 
     public static HouseSimpleResponse from(House house) {
@@ -103,7 +108,8 @@ public class HouseSimpleResponse {
             house.getAddressDetail(),
             house.getLatitude(),
             house.getLongitude(),
-            house.getDescription()
+            house.getDescription(),
+            house.getMainImage()
         );
     }
 }

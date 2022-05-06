@@ -6,9 +6,6 @@ import com.btt.continew.global.exception.ErrorCode;
 import com.btt.continew.house.controller.dto.request.HouseSaveRequest;
 import com.btt.continew.member.domain.Member;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,10 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
-import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Where;
 
 @Entity
@@ -91,6 +86,12 @@ public class House extends BaseEntity {
     @Column(name = "expired_at")
     private LocalDateTime expiredAt;
 
+    @Column(name = "options")
+    private String options;
+
+    @Column(name = "main_image")
+    private String mainImage;
+
     public House() {
 
     }
@@ -99,7 +100,7 @@ public class House extends BaseEntity {
     public House(Member member, String sidoName, String gunguName, String dongName, String jibunAddress,
         String addressDetail, Double latitude, Double longitude, Integer floor, String saleType, String houseType,
         String contractType, Long deposit, Long monthlyRent, Long maintenanceFee, String maintenanceDetail, Integer period,
-        String description, LocalDateTime expiredAt) {
+        String description, LocalDateTime expiredAt, String options, String mainImage) {
         this.member = member;
         this.sidoName = sidoName;
         this.gunguName = gunguName;
@@ -119,6 +120,8 @@ public class House extends BaseEntity {
         this.period = period;
         this.description = description;
         this.expiredAt = expiredAt;
+        this.options = options;
+        this.mainImage = mainImage;
     }
 
     public void checkHouseByLoginId(String loginId) {
@@ -146,5 +149,10 @@ public class House extends BaseEntity {
        this.maintenanceDetail = request.getMaintenanceDetail();
        this.period = request.getPeriod();
        this.description = request.getDescription();
+       this.options = request.getOptions();
+    }
+
+    public void changeMainImage(String url) {
+        this.mainImage = url;
     }
 }
