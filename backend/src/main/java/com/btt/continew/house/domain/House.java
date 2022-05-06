@@ -151,4 +151,8 @@ public class House extends BaseEntity {
        this.description = request.getDescription();
        this.options = request.getOptions();
     }
+
+    public void changeMainImage(String url) {
+        this.mainImage = url;
+    }
 }
