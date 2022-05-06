@@ -30,8 +30,8 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public Member findByLoginIdAndDeletedAtIsNotNull(String id) {
-        return memberRepository.findByLoginIdAndDeletedAtIsNotNull(id)
+    public Member findByLoginIdAndDeletedAtNull(String id) {
+        return memberRepository.findByLoginIdAndDeletedAtNull(id)
             .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND_BY_LOGIN_ID));
     }
 
