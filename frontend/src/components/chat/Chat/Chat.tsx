@@ -97,6 +97,10 @@ function Chat({ sendMessage, roomId, receivedData }: Props) {
 		}
 	}, [receivedData]);
 
+	useEffect(() => {
+		scrollToBottom();
+	}, [showChatList]);
+
 	const getChatList = async () => {
 		try {
 			const res = await chatApi.getChatList(roomId);
