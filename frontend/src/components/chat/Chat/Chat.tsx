@@ -7,9 +7,15 @@ import { RootState } from "src/store";
 import { chatApi } from "src/api";
 import { BottomSection, ChatListItem } from "@components/chat";
 
-interface SendMessageProps {
+interface Props {
 	sendMessage?: (inputChat: string) => void;
 	roomId?: string | string[] | undefined;
+	receivedChatData?: {
+		room_id: string;
+		sender: string;
+		content: string;
+		type: string;
+	};
 }
 
 interface ChatDataType {
@@ -22,29 +28,42 @@ interface ChatDataType {
 	seller: string;
 }
 
-interface ChattingsType {
-	chat_message: {
-		room_id: string;
-		sender: string;
-		content: string;
-		read_at: string;
-		created_at: string;
-	}[];
+interface SavedChattingsType {
+	chat_message: ChatMessageType[];
 	total_page_count: number;
 	current_page_count: number;
 }
 
-function Chat({ sendMessage, roomId }: SendMessageProps) {
+interface ChatMessageType {
+	room_id: string;
+	sender: string;
+	content: string;
+	read_at: string;
+	created_at: string;
+}
+
+interface ShowChatListType {
+	room_id: string;
+	sender: string;
+	content: string;
+	read_at?: string;
+	created_at?: string;
+	type?: string;
+}
+
+function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	const router = useRouter();
 	const chatBoxRef = useRef<HTMLDivElement>(null);
-	const { username } = useSelector((state: RootState) => state.userInfo);
-	const [chattings, setChattings] = useState<ChattingsType>({
+	const { login_id } = useSelector((state: RootState) => state.userInfo);
+	const [savedChattings, setSavedChattings] = useState<SavedChattingsType>({
 		chat_message: [],
 		current_page_count: 0,
 		total_page_count: 0,
 	});
+	const [showChatList, setShowChatList] = useState<ShowChatListType[]>([]);
+
 	const DATA_SET = {
-		buyer: username,
+		buyer: login_id,
 		seller: "Seller",
 		sale: 1,
 	};
@@ -66,16 +85,37 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 		getChatList();
 	}, []);
 
+	useEffect(() => {
+		addChat(savedChattings.chat_message);
+	}, [savedChattings]);
+
+	useEffect(() => {
+		if (receivedChatData) {
+			setShowChatList((prevShowChatList) => {
+				return [receivedChatData, ...prevShowChatList];
+			});
+		}
+	}, [receivedChatData]);
+
+	useEffect(() => {
+		scrollToBottom();
+	}, [showChatList]);
+
 	const getChatList = async () => {
 		try {
 			const res = await chatApi.getChatList(roomId);
-			setChattings(res.data);
-			if (chattings.chat_message) {
-				scrollToBottom();
-			}
+			setSavedChattings(res.data);
 		} catch (error) {
 			console.log(error);
 		}
+	};
+
+	const addChat = (chatMessage: ChatMessageType[]) => {
+		chatMessage.map((chat) =>
+			setShowChatList((prevShowChatList) => {
+				return [...prevShowChatList, chat];
+			}),
+		);
 	};
 
 	const scrollToBottom = () => {
@@ -94,8 +134,8 @@ function Chat({ sendMessage, roomId }: SendMessageProps) {
 				<Content>
 					<TopSection>
 						<ul>
-							{chattings.chat_message &&
-								chattings.chat_message
+							{showChatList &&
+								showChatList
 									.slice(0)
 									.reverse()
 									.map((chat, idx) => <ChatListItem key={idx} chat={chat} />)}

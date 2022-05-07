@@ -4,26 +4,37 @@ import SockJS from "sockjs-client";
 import StompJS from "stompjs";
 import cookie from "react-cookies";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { RootState } from "src/store";
 
 import { Chat, RoomList, ItemDetail } from "@components/chat";
+
+interface ReceivedChatDataType {
+	room_id: string;
+	sender: string;
+	content: string;
+	type: string;
+}
 
 function ChatDetail() {
 	const router = useRouter();
 	const { roomId } = router.query;
+	const { login_id } = useSelector((state: RootState) => state.userInfo);
+	const [receivedChatData, setReceivedChatData] = useState<ReceivedChatDataType>();
 
 	const token = cookie.load("access_token");
 	const sock = new SockJS("http://localhost:8080/ws-stomp");
 	const stomp = StompJS.over(sock);
+	// stomp.debug = null;
 
 	useEffect(() => {
 		stomp.connect({ Authorization: `Bearer ${token}` }, () => {
 			stomp.subscribe(`/sub/chat/room/${roomId}`, (message) => {
 				const receivedChatting = JSON.parse(message.body);
-				console.log(receivedChatting);
-				console.log("메시지 받았어요");
+				setReceivedChatData(receivedChatting);
 			});
 		});
-	}, []);
+	}, [roomId]);
 
 	const disConnect = () => {
 		stomp.disconnect(() => {
@@ -37,7 +48,7 @@ function ChatDetail() {
 			stomp.send(
 				"/pub/chat/message",
 				{ Authorization: `Bearer ${token}` },
-				JSON.stringify({ type: "TALK", room_id: roomId, sender: "mmmm", content: inputChat }),
+				JSON.stringify({ type: "TALK", room_id: roomId, sender: login_id, content: inputChat }),
 			);
 		}
 	};
@@ -45,7 +56,7 @@ function ChatDetail() {
 	return (
 		<Container>
 			<RoomList />
-			<Chat sendMessage={sendMessage} roomId={roomId} />
+			<Chat sendMessage={sendMessage} roomId={roomId} receivedChatData={receivedChatData} />
 			<ItemDetail />
 		</Container>
 	);
