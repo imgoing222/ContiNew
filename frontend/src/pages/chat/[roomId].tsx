@@ -25,6 +25,7 @@ function ChatDetail() {
 	const token = cookie.load("access_token");
 	const sock = new SockJS("http://localhost:8080/ws-stomp");
 	const stomp = StompJS.over(sock);
+	// stomp.debug = null;
 
 	useEffect(() => {
 		stomp.connect({ Authorization: `Bearer ${token}` }, () => {
