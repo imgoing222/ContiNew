@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+import { RootState } from "src/store";
 import styled from "styled-components";
 
 interface ChatProps {
@@ -12,10 +14,20 @@ interface ChatProps {
 }
 
 function RoomListItem({ chat }: ChatProps) {
+	const { login_id } = useSelector((state: RootState) => state.userInfo);
+	let name = "";
+	if (login_id === chat.buyer) {
+		name = chat.seller;
+	} else {
+		name = chat.buyer;
+	};
+
+	console.log(name);
+
 	return (
 		<Container>
 			<LeftSection>
-				<h3>{chat.seller}</h3>
+				<h3>{name}</h3>
 				<div>{chat.last_message}</div>
 			</LeftSection>
 			<RightSection>
