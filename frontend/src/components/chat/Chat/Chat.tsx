@@ -54,7 +54,7 @@ interface ShowChatListType {
 function Chat({ sendMessage, roomId, receivedData }: Props) {
 	const router = useRouter();
 	const chatBoxRef = useRef<HTMLDivElement>(null);
-	const { username } = useSelector((state: RootState) => state.userInfo);
+	const { login_id } = useSelector((state: RootState) => state.userInfo);
 	const [chattings, setChattings] = useState<ChattingsType>({
 		chat_message: [],
 		current_page_count: 0,
@@ -63,7 +63,7 @@ function Chat({ sendMessage, roomId, receivedData }: Props) {
 	const [showChatList, setShowChatList] = useState<ShowChatListType[]>([]);
 
 	const DATA_SET = {
-		buyer: username,
+		buyer: login_id,
 		seller: "Seller",
 		sale: 1,
 	};
