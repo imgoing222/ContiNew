@@ -10,7 +10,7 @@ import { BottomSection, ChatListItem } from "@components/chat";
 interface Props {
 	sendMessage?: (inputChat: string) => void;
 	roomId?: string | string[] | undefined;
-	receivedData?: {
+	receivedChatData?: {
 		room_id: string;
 		sender: string;
 		content: string;
@@ -28,7 +28,7 @@ interface ChatDataType {
 	seller: string;
 }
 
-interface ChattingsType {
+interface SavedChattingsType {
 	chat_message: ChatMessageType[];
 	total_page_count: number;
 	current_page_count: number;
@@ -51,11 +51,11 @@ interface ShowChatListType {
 	type?: string;
 }
 
-function Chat({ sendMessage, roomId, receivedData }: Props) {
+function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	const router = useRouter();
 	const chatBoxRef = useRef<HTMLDivElement>(null);
 	const { login_id } = useSelector((state: RootState) => state.userInfo);
-	const [chattings, setChattings] = useState<ChattingsType>({
+	const [savedChattings, setSavedChattings] = useState<SavedChattingsType>({
 		chat_message: [],
 		current_page_count: 0,
 		total_page_count: 0,
@@ -86,16 +86,16 @@ function Chat({ sendMessage, roomId, receivedData }: Props) {
 	}, []);
 
 	useEffect(() => {
-		addChat(chattings.chat_message);
-	}, [chattings]);
+		addChat(savedChattings.chat_message);
+	}, [savedChattings]);
 
 	useEffect(() => {
-		if (receivedData) {
+		if (receivedChatData) {
 			setShowChatList((prevShowChatList) => {
-				return [receivedData, ...prevShowChatList];
+				return [receivedChatData, ...prevShowChatList];
 			});
 		}
-	}, [receivedData]);
+	}, [receivedChatData]);
 
 	useEffect(() => {
 		scrollToBottom();
@@ -104,7 +104,7 @@ function Chat({ sendMessage, roomId, receivedData }: Props) {
 	const getChatList = async () => {
 		try {
 			const res = await chatApi.getChatList(roomId);
-			setChattings(res.data);
+			setSavedChattings(res.data);
 		} catch (error) {
 			console.log(error);
 		}

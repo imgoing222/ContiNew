@@ -9,7 +9,7 @@ import { RootState } from "src/store";
 
 import { Chat, RoomList, ItemDetail } from "@components/chat";
 
-interface ReceivedDataType {
+interface ReceivedChatDataType {
 	room_id: string;
 	sender: string;
 	content: string;
@@ -20,7 +20,7 @@ function ChatDetail() {
 	const router = useRouter();
 	const { roomId } = router.query;
 	const { login_id } = useSelector((state: RootState) => state.userInfo);
-	const [receivedData, setReceivedData] = useState<ReceivedDataType>();
+	const [receivedChatData, setReceivedChatData] = useState<ReceivedChatDataType>();
 
 	const token = cookie.load("access_token");
 	const sock = new SockJS("http://localhost:8080/ws-stomp");
@@ -30,7 +30,7 @@ function ChatDetail() {
 		stomp.connect({ Authorization: `Bearer ${token}` }, () => {
 			stomp.subscribe(`/sub/chat/room/${roomId}`, (message) => {
 				const receivedChatting = JSON.parse(message.body);
-				setReceivedData(receivedChatting);
+				setReceivedChatData(receivedChatting);
 			});
 		});
 	}, [roomId]);
@@ -55,7 +55,7 @@ function ChatDetail() {
 	return (
 		<Container>
 			<RoomList />
-			<Chat sendMessage={sendMessage} roomId={roomId} receivedData={receivedData} />
+			<Chat sendMessage={sendMessage} roomId={roomId} receivedChatData={receivedChatData} />
 			<ItemDetail />
 		</Container>
 	);
