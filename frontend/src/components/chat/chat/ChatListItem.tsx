@@ -5,8 +5,9 @@ interface ChatProps {
 		room_id: string;
 		sender: string;
 		content: string;
-		read_at: string;
-		created_at: string;
+		read_at?: string;
+		created_at?: string;
+		type?: string;
 	};
 }
 
