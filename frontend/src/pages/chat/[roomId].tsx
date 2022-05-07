@@ -4,6 +4,8 @@ import SockJS from "sockjs-client";
 import StompJS from "stompjs";
 import cookie from "react-cookies";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { RootState } from "src/store";
 
 import { Chat, RoomList, ItemDetail } from "@components/chat";
 
@@ -17,6 +19,7 @@ interface ReceivedDataType {
 function ChatDetail() {
 	const router = useRouter();
 	const { roomId } = router.query;
+	const { login_id } = useSelector((state: RootState) => state.userInfo);
 	const [receivedData, setReceivedData] = useState<ReceivedDataType>();
 
 	const token = cookie.load("access_token");
@@ -44,7 +47,7 @@ function ChatDetail() {
 			stomp.send(
 				"/pub/chat/message",
 				{ Authorization: `Bearer ${token}` },
-				JSON.stringify({ type: "TALK", room_id: roomId, sender: "mmmm", content: inputChat }),
+				JSON.stringify({ type: "TALK", room_id: roomId, sender: login_id, content: inputChat }),
 			);
 		}
 	};
