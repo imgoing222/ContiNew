@@ -23,6 +23,7 @@ function Signup() {
 		handleGoogleLoginClick,
 		errors,
 		onChangePasswordConfirm,
+		checkDuplicate,
 	} = useForm({
 		initialValues: {
 			login_id: "",
@@ -47,10 +48,10 @@ function Signup() {
 			<Header>회원가입</Header>
 			<FormContainer onSubmit={handleFormSubmit}>
 				<Label>아이디</Label>
-				<Input name="login_id" onChange={handleInputChange} />
+				<Input name="login_id" onChange={handleInputChange} onBlur={checkDuplicate} />
 				<ErrorText>{errors.id}</ErrorText>
 				<Label>닉네임</Label>
-				<Input name="username" onChange={handleInputChange} />
+				<Input name="username" onChange={handleInputChange} onBlur={checkDuplicate} />
 				<ErrorText>{errors.username}</ErrorText>
 				<Label>비밀번호</Label>
 				<Input name="password" type="password" onChange={handleInputChange} />
