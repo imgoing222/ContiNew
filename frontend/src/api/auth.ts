@@ -1,5 +1,7 @@
 import { Axios, AxiosResponse } from "axios";
+import { persistor } from "src/pages/_app";
 import { authRequest, request } from "./request";
+import cookie from "react-cookies";
 
 interface AuthApiType {
 	signup: (userInfo: {
@@ -13,6 +15,8 @@ interface AuthApiType {
 	confirmCode: (code: { code: string }) => Promise<AxiosResponse>;
 	duplicateIdCheck: (id: { value: string }) => Promise<AxiosResponse>;
 	duplicateUsernameCheck: (username: { value: string }) => Promise<AxiosResponse>;
+	deleteAccount: () => Promise<AxiosResponse>;
+	logout: () => void;
 }
 
 const authApi: AuthApiType = {
@@ -23,6 +27,13 @@ const authApi: AuthApiType = {
 	confirmCode: (code) => request.post("auth/members/phone-check", code),
 	duplicateIdCheck: (id) => request.post("members/exist-login-id", id),
 	duplicateUsernameCheck: (username) => request.post("members/exist-username", username),
+	deleteAccount: () => request.delete("members"),
+	logout: () => {
+		cookie.remove("access_token");
+		cookie.remove("refresh_token");
+		persistor.purge();
+		window.location.replace("/");
+	},
 };
 
 export default authApi;
