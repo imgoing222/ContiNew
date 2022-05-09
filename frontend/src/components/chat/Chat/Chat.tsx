@@ -9,7 +9,7 @@ import { BottomSection, ChatListItem } from "@components/chat";
 
 interface Props {
 	sendMessage?: (inputChat: string) => void;
-	roomId?: string | string[] | undefined;
+	roomId?: string | null;
 	receivedChatData?: {
 		room_id: string;
 		sender: string;
@@ -82,8 +82,15 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	};
 
 	useEffect(() => {
+		setSavedChattings({
+			chat_message: [],
+			current_page_count: 0,
+			total_page_count: 0,
+		});
+		setShowChatList([]);
+
 		getChatList();
-	}, []);
+	}, [roomId]);
 
 	useEffect(() => {
 		addChat(savedChattings.chat_message);
@@ -103,8 +110,10 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 
 	const getChatList = async () => {
 		try {
-			const res = await chatApi.getChatList(roomId);
-			setSavedChattings(res.data);
+			if (roomId) {
+				const res = await chatApi.getChatList(roomId);
+				setSavedChattings(res.data);
+			}
 		} catch (error) {
 			console.log(error);
 		}
