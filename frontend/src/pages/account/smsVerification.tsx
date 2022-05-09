@@ -34,7 +34,7 @@ function smsVerification() {
 		try {
 			await authApi.confirmCode(code);
 			alert("휴대폰 인증이 완료되었습니다");
-			router.push("/signupComplete");
+			router.push("/account/signupComplete");
 		} catch (err) {
 			console.log(err);
 		}
