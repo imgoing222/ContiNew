@@ -11,6 +11,8 @@ interface AuthApiType {
 	reissue: (tokens: { access_token: string; refresh_token: string }) => Promise<AxiosResponse>;
 	sendCode: (phoneNumber: { phone_number: string }) => Promise<AxiosResponse>;
 	confirmCode: (code: { code: string }) => Promise<AxiosResponse>;
+	duplicateIdCheck: (id: { value: string }) => Promise<AxiosResponse>;
+	duplicateUsernameCheck: (username: { value: string }) => Promise<AxiosResponse>;
 }
 
 const authApi: AuthApiType = {
@@ -19,6 +21,8 @@ const authApi: AuthApiType = {
 	reissue: (tokens) => authRequest.post("members/reissue", tokens),
 	sendCode: (phoneNumber) => request.post("auth/members/phone-send", phoneNumber),
 	confirmCode: (code) => request.post("auth/members/phone-check", code),
+	duplicateIdCheck: (id) => request.post("members/exist-login-id", id),
+	duplicateUsernameCheck: (username) => request.post("members/exist-username", username),
 };
 
 export default authApi;
