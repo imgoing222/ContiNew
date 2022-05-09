@@ -5,6 +5,7 @@ import { Label } from "@components/account/Label";
 import { Container, FormContainer } from "@components/account/Container";
 import { useState } from "react";
 import authApi from "src/api/auth";
+import { toast } from "react-toastify";
 
 function findPassword() {
 	const [userInfo, setUserInfo] = useState({ login_id: "", phone_number: "" });
@@ -19,9 +20,18 @@ function findPassword() {
 	const handleUserInfoSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			await authApi.findPassword(userInfo);
-			// 에러 토스트로 띄우기
-			setShowCodeInput(true);
+			await authApi.findPassword(userInfo).then(async (res) => {
+				const status = Number(res);
+				if (status === 409) {
+					toast.error("전화번호가 일치하지 않습니다.");
+					return;
+				}
+				if (status === 404) {
+					toast.error("존재하지 않는 아이디 입니다.");
+					return;
+				}
+				setShowCodeInput(true);
+			});
 		} catch (err) {
 			console.log(err);
 		}
