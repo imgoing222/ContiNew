@@ -18,7 +18,8 @@ interface ReceivedChatDataType {
 
 function ChatDetail() {
 	const router = useRouter();
-	const { roomId } = router.query;
+	// const { roomId } = router.query;
+	const roomId = localStorage.getItem("RoomId");
 	const { login_id } = useSelector((state: RootState) => state.userInfo);
 	const [receivedChatData, setReceivedChatData] = useState<ReceivedChatDataType>();
 
