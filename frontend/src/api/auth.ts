@@ -17,6 +17,7 @@ interface AuthApiType {
 	duplicateUsernameCheck: (username: { value: string }) => Promise<AxiosResponse>;
 	deleteAccount: () => Promise<AxiosResponse>;
 	logout: () => void;
+	findPassword: (userInfo: { login_id: string; phone_number: string }) => Promise<AxiosResponse>;
 }
 
 const authApi: AuthApiType = {
@@ -34,6 +35,7 @@ const authApi: AuthApiType = {
 		persistor.purge();
 		window.location.replace("/");
 	},
+	findPassword: (userInfo) => request.post("members/find-pw/phone-send", userInfo),
 };
 
 export default authApi;
