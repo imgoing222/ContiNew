@@ -1,5 +1,6 @@
 import { formValidator } from "@utils/index";
 import { useCallback, useState } from "react";
+import authApi from "src/api/auth";
 
 interface Props {
 	initialValues: Values;
@@ -48,6 +49,27 @@ const useForm = ({ initialValues, onSubmit }: Props) => {
 		return errors;
 	};
 
+	const checkDuplicate = async (event: React.FocusEvent<HTMLInputElement>) => {
+		const tempErrors: { [key: string]: string } = {};
+		const { name, value } = event.target;
+
+		if (name === "login_id") {
+			const res = await authApi.duplicateIdCheck({ value });
+			console.log(res.data.result);
+			if (res.data.result) {
+				tempErrors.id = "이미 존재하는 이메일입니다.";
+			}
+		}
+		if (name === "username") {
+			const res = await authApi.duplicateUsernameCheck({ value });
+			if (res.data.result) {
+				tempErrors.username = "이미 존재하는 닉네임입니다.";
+			}
+		}
+		Object.keys(tempErrors).length > 0 ? setDisabled(true) : setDisabled(false);
+		setErrors(tempErrors);
+	};
+
 	const onChangePasswordConfirm = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			const passwordConfirmCurrent = e.target.value;
@@ -76,6 +98,7 @@ const useForm = ({ initialValues, onSubmit }: Props) => {
 		disabled,
 		passwordMatched,
 		onChangePasswordConfirm,
+		checkDuplicate,
 	};
 };
 
