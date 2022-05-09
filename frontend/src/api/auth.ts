@@ -13,6 +13,7 @@ interface AuthApiType {
 	confirmCode: (code: { code: string }) => Promise<AxiosResponse>;
 	duplicateIdCheck: (id: { value: string }) => Promise<AxiosResponse>;
 	duplicateUsernameCheck: (username: { value: string }) => Promise<AxiosResponse>;
+	deleteAccount: () => Promise<AxiosResponse>;
 }
 
 const authApi: AuthApiType = {
@@ -23,6 +24,7 @@ const authApi: AuthApiType = {
 	confirmCode: (code) => request.post("auth/members/phone-check", code),
 	duplicateIdCheck: (id) => request.post("members/exist-login-id", id),
 	duplicateUsernameCheck: (username) => request.post("members/exist-username", username),
+	deleteAccount: () => request.delete("members"),
 };
 
 export default authApi;

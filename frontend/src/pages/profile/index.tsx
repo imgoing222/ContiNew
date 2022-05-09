@@ -23,11 +23,13 @@ function Profile() {
 		});
 	}, []);
 
-	const handleDeleteAccountClick = () => {
+	const handleDeleteAccountClick = async () => {
 		if (window.confirm("정말로 탈퇴하시겠습니까?")) {
 			await authApi.deleteAccount();
-		};
-		
+			router.push("/");
+		}
+	};
+
 	return (
 		userInfo && (
 			<Container>
