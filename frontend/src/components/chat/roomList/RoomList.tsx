@@ -41,6 +41,7 @@ function RoomList() {
 
 	const toChattingRoom = (roomId: string) => {
 		router.push(`/chat/${roomId}`);
+		localStorage.setItem("RoomId", roomId);
 	};
 
 	return (
@@ -49,11 +50,14 @@ function RoomList() {
 				<h2>Messages</h2>
 			</Title>
 			{chatListData.chat_rooms &&
-				chatListData.chat_rooms.slice(0).reverse().map((chat) => (
-					<Content key={chat.room_id} onClick={() => toChattingRoom(chat.room_id)}>
-						<RoomListItem chat={chat} />
-					</Content>
-				))}
+				chatListData.chat_rooms
+					.slice(0)
+					.reverse()
+					.map((chat) => (
+						<Content key={chat.room_id} onClick={() => toChattingRoom(chat.room_id)}>
+							<RoomListItem chat={chat} />
+						</Content>
+					))}
 		</Container>
 	);
 }
