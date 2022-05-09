@@ -1,7 +1,7 @@
 import Map from "@components/saleList/Map";
 import SaleList from "@components/saleList/SaleList";
 import SaleListNav from "@components/saleList/SaleListNav";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 export interface MapRefType {
@@ -10,12 +10,13 @@ export interface MapRefType {
 
 function index() {
 	const kakaoMap = useRef<kakao.maps.Map>();
+
 	return (
 		<>
-			<SaleListNav kakaoMap={kakaoMap} />
+			<SaleListNav kakaoMap={kakaoMap as React.MutableRefObject<kakao.maps.Map>} />
 			<Container>
 				<SaleList />
-				<Map kakaoMap={kakaoMap} />
+				<Map kakaoMap={kakaoMap as React.MutableRefObject<kakao.maps.Map>} />
 			</Container>
 		</>
 	);
