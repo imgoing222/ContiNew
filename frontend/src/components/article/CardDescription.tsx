@@ -67,8 +67,8 @@ function CardDescription() {
 			<ButtonDiv>
 				{userName === houseInfo.username ? (
 					<>
-						<Button onClick={editArticle}>수정</Button>
-						<Button onClick={deleteArticle}>삭제</Button>
+						<Button onClick={() => editArticle(houseInfo.house_id)}>수정</Button>
+						<Button onClick={() => deleteArticle(houseInfo.house_id)}>삭제</Button>
 					</>
 				) : (
 					<>
