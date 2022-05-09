@@ -22,8 +22,6 @@ function RoomListItem({ chat }: ChatProps) {
 		name = chat.buyer;
 	};
 
-	console.log(name);
-
 	return (
 		<Container>
 			<LeftSection>
