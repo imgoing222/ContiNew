@@ -5,9 +5,8 @@ import { Container } from "@components/profile/Container";
 import UserInfoEdit from "@components/profile/UserInfoEdit";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import profileApi from "src/api/profile";
-import { RootState } from "src/store";
 import { SET_USER } from "src/store/user";
 import UserInfo from "src/types/UserInfo";
 

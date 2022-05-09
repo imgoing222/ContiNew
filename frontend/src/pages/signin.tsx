@@ -7,6 +7,7 @@ import { LinkButton } from "@components/account/LinkButton";
 import useForm from "@hooks/useForm";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import authApi from "src/api/auth";
 import profileApi from "src/api/profile";
 import { SET_USER } from "src/store/user";
@@ -21,14 +22,20 @@ function Signin() {
 			password: "",
 		},
 		onSubmit: async (values) => {
-			try {
-				await authApi.signin(values);
+			await authApi.signin(values).then(async (res) => {
+				const status = Number(res);
+				if (status === 401) {
+					toast.error("비밀번호가 일치하지 않습니다.");
+					return;
+				}
+				if (status === 404) {
+					toast.error("존재하지 않는 아이디 입니다.");
+					return;
+				}
 				const userInfo = await profileApi.getUserInfo();
 				dispatch(SET_USER(userInfo.data));
 				router.push("/");
-			} catch (err) {
-				console.log(err);
-			}
+			});
 		},
 	});
 
