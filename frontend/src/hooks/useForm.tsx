@@ -57,17 +57,17 @@ const useForm = ({ initialValues, onSubmit }: Props) => {
 			const res = await authApi.duplicateIdCheck({ value });
 			console.log(res.data.result);
 			if (res.data.result) {
-				tempErrors.id = "이미 존재하는 이메일입니다.";
+				tempErrors.id = "이미 사용중인 아이디입니다.";
 			}
 		}
 		if (name === "username") {
 			const res = await authApi.duplicateUsernameCheck({ value });
 			if (res.data.result) {
-				tempErrors.username = "이미 존재하는 닉네임입니다.";
+				tempErrors.username = "이미 사용중인 닉네임입니다.";
 			}
 		}
 		Object.keys(tempErrors).length > 0 ? setDisabled(true) : setDisabled(false);
-		setErrors(tempErrors);
+		setErrors({ ...errors, ...tempErrors });
 	};
 
 	const onChangePasswordConfirm = useCallback(
