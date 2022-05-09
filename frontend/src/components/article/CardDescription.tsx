@@ -1,6 +1,7 @@
 import changeMonthToYear from "@utils/changeMonthToYear";
 import changeMoneyUnit from "@utils/moneyUnitChange";
 import { RootStateOrAny, useSelector } from "react-redux";
+import articleApi from "src/api/article";
 import styled from "styled-components";
 import IconPart from "./IconPart";
 
@@ -32,8 +33,12 @@ function CardDescription() {
 
 	const startChat = () => {};
 	const setBookmark = () => {};
-	const deleteArticle = () => {};
-	const editArticle = () => {};
+	const deleteArticle = (id: number) => {
+		articleApi.deleteArticle(id);
+	};
+	const editArticle = (id: number) => {
+		// 수정 페이지로 이동
+	};
 	return (
 		<Container>
 			<Div>
