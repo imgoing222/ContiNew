@@ -10,7 +10,7 @@ interface ChatData {
 interface ChatApiType {
   getChattingRoom: () => Promise<AxiosResponse>;
 	createChattingRoom: (chatData: ChatData) => Promise<AxiosResponse>;
-	getChatList: (roomId: string | string[] | undefined) => Promise<AxiosResponse>;
+	getChatList: (roomId: string | null) => Promise<AxiosResponse>;
 }
 
 const chatApi: ChatApiType = {
