@@ -28,7 +28,7 @@ const setInterceptors = (instance: AxiosInstance, isReissue?: boolean) => {
 			// if (error.response.data.error_code === "A08") {
 			// 	return authApi.logout();
 			// }
-			// return errorMessage(error.response.data.error_code);
+			return error.response.status;
 		},
 	);
 	return instance;
