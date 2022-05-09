@@ -96,9 +96,9 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
     private BooleanExpression periodEq(Integer period) {
         if (Objects.nonNull(period)) {
             if (period > MAX_PERIOD) {
-                return house.period.gt(MAX_PERIOD);
+                return house.period.goe(MAX_PERIOD);
             }
-            return house.period.loe(period);
+            return house.period.lt(period);
         }
         return null;
     }
@@ -106,7 +106,7 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
     private BooleanBuilder optionsEq(String optionsStr){
         BooleanBuilder builder = new BooleanBuilder();
         if(hasText(optionsStr)) {
-            String[] optionsRequest = optionsStr.split(",");
+            String[] optionsRequest = optionsStr.substring(1, optionsStr.length()-1).split(", ");
             for(String option: optionsRequest) {
                 builder.and(house.options.contains(option));
             }

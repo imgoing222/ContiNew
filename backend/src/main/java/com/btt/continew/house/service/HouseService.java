@@ -56,6 +56,11 @@ public class HouseService {
     @Transactional
     public void create(HouseSaveRequest request, List<MultipartFile> images, String email) {
         Member member = memberService.findByLoginId(email);
+
+        if(houseRepository.existsByMember(member)){
+            throw new BusinessException(ErrorCode.HOUSE_ALREADY_EXISTS_BY_LOGINID);
+        }
+
         House house = House.builder()
             .member(member)
             .deposit(request.getDeposit())
@@ -76,7 +81,7 @@ public class HouseService {
             .contractType(request.getContractType())
             .period(request.getPeriod())
             .expiredAt(LocalDateTime.now().plusMonths(LISTING_PERIOD))
-            .options(request.getOptions())
+            .options(request.getOptions().substring(1, request.getOptions().length()-1))
             .build();
         houseRepository.save(house);
 

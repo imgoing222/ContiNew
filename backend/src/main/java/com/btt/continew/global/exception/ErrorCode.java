@@ -56,6 +56,7 @@ public enum ErrorCode {
     // house
     HOUSE_NOT_FOUND_BY_ID(HttpStatus.NOT_FOUND, "존재하지 않는 매물입니다", "H01"),
     HOUSE_NOT_MATCH_BY_LOGINID(HttpStatus.BAD_REQUEST, "작성자와 유저가 일치하지 않습니다", "H02"),
+    HOUSE_ALREADY_EXISTS_BY_LOGINID(HttpStatus.BAD_REQUEST, "이미 매물을 등록한 유저입니다", "H03"),
 
     // option
     OPTION_NOT_FOUND_BY_ID(HttpStatus.NOT_FOUND, "존재하지 않는 옵션입니다.", "O01"),
