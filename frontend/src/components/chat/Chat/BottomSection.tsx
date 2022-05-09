@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 interface SendMessageProps {
@@ -20,15 +20,27 @@ function BottomSection({ sendMessage }: SendMessageProps) {
 		setInputChat(event.target.value);
 	};
 
+	const onKeyDownEnter = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+		if (event.key == "Enter") {
+			event.preventDefault();
+
+			if (sendMessage) {
+				sendMessage(inputChat);
+				setInputChat("");
+			}
+		}
+	};
+
 	return (
 		<Container>
 			<Textarea
 				name="content"
 				value={inputChat}
 				onChange={handleChange}
-        rows={1}
+				onKeyDown={onKeyDownEnter}
+				rows={1}
 				placeholder="메시지 입력..."
-        autoFocus
+				autoFocus
 			/>
 			<Form onSubmit={handleSendMessage}>
 				<Button>보내기</Button>
@@ -48,11 +60,11 @@ const Container = styled.div`
 const Textarea = styled.textarea`
 	flex: 1;
 	margin: 1rem;
-  padding: 1rem;
-  font-size: 2rem;
+	padding: 1rem;
+	font-size: 2rem;
 	border: none;
 	resize: none;
-  border-radius: 10px;
+	border-radius: 10px;
 
 	&:focus {
 		outline: 1px solid #d3d3d3;
@@ -66,10 +78,10 @@ const Button = styled.button`
 	border: 0.2px solid #dedede;
 	color: white;
 	background-color: #dc143c;
-  font-size: 1.5rem;
-  padding: 0.5rem;
+	font-size: 1.5rem;
+	padding: 0.5rem;
 
-  &:hover {
+	&:hover {
 		cursor: pointer;
 	}
 `;
