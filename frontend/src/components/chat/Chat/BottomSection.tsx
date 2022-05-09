@@ -21,7 +21,7 @@ function BottomSection({ sendMessage }: SendMessageProps) {
 	};
 
 	const onKeyDownEnter = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-		if (event.key == "Enter") {
+		if (event.key == "Enter" && !event.shiftKey) {
 			event.preventDefault();
 
 			if (sendMessage) {
