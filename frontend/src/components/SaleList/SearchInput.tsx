@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { MapRefType } from "src/pages/saleList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { GeoCodeType, Result } from "src/types/addressresult";
 
 function SearchInput({ kakaoMap }: MapRefType) {
 	const [keyword, setKeyword] = useState("");
@@ -12,10 +13,15 @@ function SearchInput({ kakaoMap }: MapRefType) {
 
 		const geocoder = new window.kakao.maps.services.Geocoder();
 		const places = new window.kakao.maps.services.Places();
-		const searchAddress = (result, status) => {
+
+		const searchAddress = (
+			result: Result[] | GeoCodeType[],
+			status: kakao.maps.services.Status,
+		) => {
+			console.log(result);
 			if (result.length === 0) return;
 			if (status === window.kakao.maps.services.Status.OK) {
-				const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+				const coords = new window.kakao.maps.LatLng(+result[0].y, +result[0].x);
 
 				kakaoMap.current.setCenter(coords);
 			}
