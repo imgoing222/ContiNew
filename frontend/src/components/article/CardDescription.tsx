@@ -1,5 +1,6 @@
 import changeMonthToYear from "@utils/changeMonthToYear";
 import changeMoneyUnit from "@utils/moneyUnitChange";
+import { RootStateOrAny, useSelector } from "react-redux";
 import styled from "styled-components";
 import IconPart from "./IconPart";
 
@@ -8,6 +9,7 @@ interface TextProp {
 }
 
 function CardDescription() {
+	const userName = useSelector((state: RootStateOrAny) => state.userInfo.username);
 	const houseInfo = {
 		address_detail: "스카이빌",
 		contract_type: "월세",
@@ -30,6 +32,8 @@ function CardDescription() {
 
 	const startChat = () => {};
 	const setBookmark = () => {};
+	const deleteArticle = () => {};
+	const editArticle = () => {};
 	return (
 		<Container>
 			<Div>
@@ -56,8 +60,17 @@ function CardDescription() {
 				<Hr />
 			</div>
 			<ButtonDiv>
-				<Button onClick={startChat}>채팅 하기</Button>
-				<Button onClick={setBookmark}>북마크</Button>
+				{userName === houseInfo.username ? (
+					<>
+						<Button onClick={editArticle}>수정</Button>
+						<Button onClick={deleteArticle}>삭제</Button>
+					</>
+				) : (
+					<>
+						<Button onClick={startChat}>채팅 하기</Button>
+						<Button onClick={setBookmark}>북마크</Button>
+					</>
+				)}
 			</ButtonDiv>
 		</Container>
 	);
