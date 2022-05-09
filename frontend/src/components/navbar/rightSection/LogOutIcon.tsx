@@ -1,15 +1,14 @@
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cookie from "react-cookies";
+import authApi from "src/api/auth";
 import styled from "styled-components";
 
 function LogOutIcon() {
 	const token = cookie.load("access_token");
 
 	const handleLogoutClick = () => {
-		cookie.remove("access_token");
-		cookie.remove("refresh_token");
-		window.location.replace("/");
+		authApi.logout();
 	};
 
 	return (
