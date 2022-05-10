@@ -15,6 +15,7 @@ interface Props {
 		sender: string;
 		content: string;
 		type: string;
+		created_at: string;
 	};
 }
 
@@ -47,7 +48,7 @@ interface ShowChatListType {
 	sender: string;
 	content: string;
 	read_at?: string;
-	created_at?: string;
+	created_at: string;
 	type?: string;
 }
 

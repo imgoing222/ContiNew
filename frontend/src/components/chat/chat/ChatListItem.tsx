@@ -8,7 +8,7 @@ interface ChatProps {
 		sender: string;
 		content: string;
 		read_at?: string;
-		created_at?: string;
+		created_at: string;
 		type?: string;
 	};
 }
@@ -25,7 +25,7 @@ function ChatListitem({ chat }: ChatProps) {
 		<Container user={login_id} sender={chat.sender}>
 			<SubContainer>
 				<Textarea name="content" cols={20} readOnly defaultValue={chat.content} />
-				{/* <p>{chat.created_at?.slice(-8, -3)}</p> */}
+				<p>{chat.created_at?.slice(-8, -3)}</p>
 			</SubContainer>
 		</Container>
 	);

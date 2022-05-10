@@ -14,6 +14,7 @@ interface ReceivedChatDataType {
 	sender: string;
 	content: string;
 	type: string;
+	created_at: string;
 }
 
 function ChatDetail() {
