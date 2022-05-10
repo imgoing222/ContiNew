@@ -1,10 +1,38 @@
 package com.btt.continew.house.controller;
 
+import com.btt.continew.house.service.HouseLikeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
+@Api(tags = {"관심매물"})
 public class HouseLikeRestController {
+
+    private final HouseLikeService houseLikeService;
+
+    public HouseLikeRestController(HouseLikeService houseLikeService) {
+        this.houseLikeService = houseLikeService;
+    }
+
+    @PostMapping("/houses/likes/{house_id}")
+    @ApiOperation(value = "관심 매물 등록", notes = "관심 매물 등록 api")
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "BAD_REQUEST\n 이미 관심 등록한 매물일 때(L01)")
+    })
+    public ResponseEntity<Void> create(@PathVariable(value = "house_id") Long houseId,
+        @ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
+        houseLikeService.create(houseId, loginId);
+        return ResponseEntity.noContent().build();
+    }
 
 }
