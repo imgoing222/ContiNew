@@ -5,6 +5,7 @@ import OptionInfo from "@components/article/OptionalInfo";
 import Photos from "@components/article/Photos";
 import PriceInfo from "@components/article/PriceInfo";
 import getArticleData from "@utils/getArticle";
+import snakeToCamel from "@utils/snakeToCamel";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ArticleType from "src/types/getArticleType";
@@ -20,7 +21,9 @@ function index() {
 
 	useEffect(() => {
 		const setData = async () => {
-			setHouseInfo(await getArticleData(11));
+			const data = await getArticleData(13);
+
+			setHouseInfo(snakeToCamel(data) as ArticleType);
 		};
 
 		setData();

@@ -7,12 +7,14 @@ import {
 	Photos,
 } from "@components/createSale";
 import React, { useEffect, useState } from "react";
-import { HouseInfo } from "src/types/houseInfo";
+import HouseInfo from "src/types/houseInfo";
 import styled from "styled-components";
 import Head from "next/head";
 import { saleApi } from "src/api";
 import { checkData, createFormData, getArticleData } from "@utils/index";
 import { useRouter } from "next/router";
+import snakeToCamel from "@utils/snakeToCamel";
+import articleApi from "src/api/article";
 
 interface ButtonProps {
 	isApplyBtn?: boolean;
@@ -28,11 +30,6 @@ const numberKey = ["deposit", "monthlyRent", "maintenanceFee", "period", "floor"
 
 function index() {
 	const router = useRouter();
-
-	useEffect(() => {
-		if (router.query.id) getArticleData(+router.query.id);
-	}, []);
-
 	const [houseInfo, setHouseInfo] = useState<HouseInfo>({
 		saleType: "",
 		houseType: "",
@@ -48,23 +45,34 @@ function index() {
 		floor: "",
 		images: null,
 		description: "",
-		sido: "",
-		sigungu: "",
-		bname: "",
+		sidoName: "",
+		gunguName: "",
+		dongName: "",
 		latitude: 0,
 		longitude: 0,
 		agreement: "",
 	});
 
-	const handleOptions = (e: React.ChangeEvent<HTMLInputElement>) => {
-		if (e.target.name === "options") {
-			const idx = houseInfo.options.indexOf(e.target.value);
-			if (idx !== -1) {
-				return setHouseInfo({ ...houseInfo, ...[houseInfo.options.splice(idx, 1)] });
-			}
-			setHouseInfo({ ...houseInfo, ...[houseInfo.options.push(e.target.value)] });
-			return;
+	useEffect(() => {
+		if (router.query.id) {
+			const setData = async () => {
+				const data = await getArticleData(12);
+				setHouseInfo(snakeToCamel(data, "modified") as HouseInfo);
+			};
+
+			setData();
 		}
+	}, []);
+
+	const handleOptions = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const idx = houseInfo.options.indexOf(+e.target.value);
+		if (idx !== -1) {
+			const deleteOption = houseInfo.options.slice().filter((i) => i !== +e.target.value);
+			return setHouseInfo({ ...houseInfo, options: deleteOption });
+		}
+		const addOptions = houseInfo.options.slice();
+		addOptions.push(+e.target.value);
+		setHouseInfo({ ...houseInfo, options: addOptions });
 	};
 
 	const onlyNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,6 +93,15 @@ function index() {
 		if (checkData(houseInfo) && houseInfo.agreement === "agree") {
 			saleApi.createSale(createFormData(houseInfo));
 		}
+	};
+
+	const editSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		if (checkData(houseInfo) && houseInfo.agreement === "agree") {
+			if (router.query.id) articleApi.editArticle(createFormData(houseInfo), +router.query.id);
+		}
+		console.log(houseInfo);
+		// window.location.replace(`/article/${router.query.id}`);
 	};
 
 	return (
@@ -116,9 +133,15 @@ function index() {
 				</Div>
 				<Div>
 					<Button>취소</Button>
-					<Button isApplyBtn={true} onClick={onSubmit}>
-						매물 등록
-					</Button>
+					{router.query.id ? (
+						<Button isApplyBtn={true} onClick={editSubmit}>
+							수정 하기
+						</Button>
+					) : (
+						<Button isApplyBtn={true} onClick={onSubmit}>
+							매물 등록
+						</Button>
+					)}
 				</Div>
 			</Container>
 		</>
