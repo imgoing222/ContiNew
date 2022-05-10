@@ -58,7 +58,7 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
                 house.deposit.between(request.getMinDeposit(), request.getMaxDeposit()),
                 house.monthlyRent.between(request.getMinMonthlyRent(), request.getMaxMonthlyRent()),
                 house.maintenanceFee.between(request.getMinMaintenanceFee(), request.getMaxMaintenanceFee()),
-                optionsEq(request.getOptions().toString())
+                optionsEq(request.getOptions())
                 )
             .fetch();
 
@@ -73,7 +73,7 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
                 house.monthlyRent.between(request.getMinMonthlyRent(), request.getMaxMonthlyRent()),
                 house.maintenanceFee.between(request.getMinMaintenanceFee(), request.getMaxMaintenanceFee()),
                 periodEq(request.getPeriod()),
-                optionsEq(request.getOptions().toString()),
+                optionsEq(request.getOptions()),
                 house.expiredAt.after(LocalDateTime.now()),
                 house.deletedAt.isNull()
             );
@@ -103,10 +103,10 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
         return null;
     }
 
-    private BooleanBuilder optionsEq(String optionsStr){
+    private BooleanBuilder optionsEq(List<Long> options){
         BooleanBuilder builder = new BooleanBuilder();
-        if(hasText(optionsStr)) {
-            String[] optionsRequest = optionsStr.substring(1, optionsStr.length()-1).split(", ");
+        if(Objects.nonNull(options)) {
+            String[] optionsRequest = options.toString().substring(1, options.toString().length()-1).split(", ");
             for(String option: optionsRequest) {
                 builder.and(house.options.contains(option));
             }
