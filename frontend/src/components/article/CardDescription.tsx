@@ -16,7 +16,10 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 	const startChat = () => {};
 	const setBookmark = () => {};
 	const deleteArticle = (id: number) => {
-		articleApi.deleteArticle(id);
+		if (window.confirm("정말로 해당 글을 삭제하시겠습니까?")) {
+			articleApi.deleteArticle(id);
+			window.location.replace("/saleList");
+		}
 	};
 	const editArticle = (id: number) => {
 		// 수정 페이지로 이동

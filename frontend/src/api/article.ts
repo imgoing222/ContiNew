@@ -8,7 +8,7 @@ interface ArticleApiType {
 }
 
 const articleApi: ArticleApiType = {
-	deleteArticle: (id) => request.post(`houses/${id}`),
+	deleteArticle: (id) => request.delete(`houses/${id}`),
 	editArticle: (id) => request.post("houses", id),
 	getArticle: (id) => request.get(`houses/${id}`),
 };
