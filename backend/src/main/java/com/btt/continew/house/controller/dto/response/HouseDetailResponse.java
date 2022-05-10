@@ -1,10 +1,10 @@
 package com.btt.continew.house.controller.dto.response;
 
 import com.btt.continew.house.domain.House;
-import com.btt.continew.house.domain.HouseOption;
 import com.btt.continew.house.domain.Image;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Getter;
@@ -74,7 +74,7 @@ public class HouseDetailResponse {
 
     @JsonProperty("options")
     @ApiModelProperty(notes = "옵션", example = "[1,2,3]")
-    private String options;
+    private List<Long> options;
 
     @JsonProperty("images")
     @ApiModelProperty(notes = "이미지", example = "")
@@ -85,7 +85,7 @@ public class HouseDetailResponse {
 
     public HouseDetailResponse(Long id, String username, Boolean phoneAuth, String jibunAddress, String addressDetail,
         Integer floor, String saleType, String houseType, String contractType, Long deposit, Long monthlyRent,
-        Long maintenanceFee, String maintenanceDetail, Integer period, String description, String options,
+        Long maintenanceFee, String maintenanceDetail, Integer period, String description, List<Long> options,
         List<String> images) {
         this.id = id;
         this.username = username;
@@ -123,9 +123,10 @@ public class HouseDetailResponse {
             house.getMaintenanceDetail(),
             house.getPeriod(),
             house.getDescription(),
-            house.getOptions(),
+            Arrays.stream(house.getOptions().split(", "))
+                .map(Long::parseLong).collect(Collectors.toList()),
             images.stream()
-                .map(i -> i.getUrl())
+                .map(Image::getUrl)
                 .collect(Collectors.toList())
         );
     }
