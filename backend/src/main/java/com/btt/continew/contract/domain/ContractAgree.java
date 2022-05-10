@@ -47,11 +47,19 @@ public class ContractAgree extends BaseEntity {
     }
 
     @Builder
-    public ContractAgree(House house, Member seller, Member buyer, Boolean sellerAgree, Boolean buyerAgree) {
+    public ContractAgree(House house, Member seller, Member buyer) {
         this.house = house;
         this.seller = seller;
         this.buyer = buyer;
-        this.sellerAgree = sellerAgree;
-        this.buyerAgree = buyerAgree;
+        this.sellerAgree = false;
+        this.buyerAgree = false;
+    }
+
+    public void sellerAgree() {
+        this.sellerAgree = true;
+    }
+
+    public void buyerAgree() {
+        this.buyerAgree = true;
     }
 }
