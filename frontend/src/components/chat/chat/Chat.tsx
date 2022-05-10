@@ -114,7 +114,8 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	};
 
 	const addChat = (chatMessage: ChatMessageType[]) => {
-		chatMessage.map((chat) => setShowChatList((prevShowChatList) => [...prevShowChatList, chat]));
+		setShowChatList(chatMessage)
+		// chatMessage.map((chat) => setShowChatList((prevShowChatList) => [...prevShowChatList, chat]));
 	};
 
 	const scrollToBottom = () => {
