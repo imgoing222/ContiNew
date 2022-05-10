@@ -167,7 +167,7 @@ public class HouseService {
 
         house.checkHouseByLoginId(loginId);
 
-        houseOptionRepository.deleteHouseOptionsByHouse(houseId);
+//        houseOptionRepository.deleteHouseOptionsByHouse(houseId);
         imageRepository.deleteImagesByHouses(houseId);
         house.saveDeletedTime();
     }
