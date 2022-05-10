@@ -1,14 +1,18 @@
 package com.btt.continew.house.controller;
 
+import com.btt.continew.house.controller.dto.response.HouseListResponse;
 import com.btt.continew.house.service.HouseLikeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +38,13 @@ public class HouseLikeRestController {
         @ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
         houseLikeService.create(houseId, loginId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/houses/likes")
+    @ApiOperation(value = "관심 매물 목록", notes = "관심 매물 목록 api")
+    public ResponseEntity<HouseListResponse> show(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId, @PageableDefault
+        Pageable pageable) {
+        return ResponseEntity.ok().body(houseLikeService.show(loginId, pageable));
     }
 
     @DeleteMapping("/houses/likes/{house_id}")
