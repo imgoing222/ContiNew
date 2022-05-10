@@ -49,7 +49,7 @@ public class ChatMessage implements Serializable {
         chatMessage.roomId = request.getRoomId();
         chatMessage.sender = request.getSender();
         chatMessage.content = request.getContent();
-        chatMessage.createdAt = LocalDateTime.now();
+        chatMessage.createdAt = request.getCreated_at();
 
         return chatMessage;
     }
