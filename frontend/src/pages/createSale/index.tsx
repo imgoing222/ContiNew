@@ -11,8 +11,7 @@ import { HouseInfo } from "src/types/houseInfo";
 import styled from "styled-components";
 import Head from "next/head";
 import { saleApi } from "src/api";
-import checkData from "@utils/checkDataBeforeSumit";
-import createFormData from "@utils/createFormData";
+import { checkData, createFormData } from "@utils/index";
 
 interface ButtonProps {
 	isApplyBtn?: boolean;
@@ -49,28 +48,6 @@ function index() {
 		longitude: 0,
 		agreement: "",
 	});
-
-	const {
-		saleType,
-		sido,
-		sigungu,
-		bname,
-		jibunAddress,
-		addressDetail,
-		latitude,
-		longitude,
-		floor,
-		houseType,
-		monthlyRent,
-		maintenanceFee,
-		maintenanceDetail,
-		period,
-		description,
-		options,
-		deposit,
-		images,
-		contractType,
-	} = houseInfo;
 
 	const handleOptions = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.name === "options") {
