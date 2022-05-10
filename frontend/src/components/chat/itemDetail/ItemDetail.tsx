@@ -1,6 +1,10 @@
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { RootState } from "src/store";
 
 function ItemDetail() {
+  const { article_id } = useSelector((state: RootState) => state.articleId);
+
 	return (
 		<Container>
 			<Title>
