@@ -1,12 +1,11 @@
-import { HouseInfo } from "src/types/houseInfo";
+import HouseInfo from "src/types/houseInfo";
 
 function createFormData(houseInfo: HouseInfo) {
 	const formData = new FormData();
-	const optionList = houseInfo.options.map((option) => +option);
 	const article = {
-		sido_name: houseInfo.sido,
-		gungu_name: houseInfo.sigungu,
-		dong_name: houseInfo.bname,
+		sido_name: houseInfo.sidoName,
+		gungu_name: houseInfo.gunguName,
+		dong_name: houseInfo.dongName,
 		jibun_address: houseInfo.jibunAddress,
 		address_detail: houseInfo.addressDetail,
 		latitude: houseInfo.latitude,
@@ -20,7 +19,7 @@ function createFormData(houseInfo: HouseInfo) {
 		maintenance_detail: houseInfo.maintenanceDetail,
 		period: +houseInfo.period,
 		description: houseInfo.description,
-		options: optionList,
+		options: houseInfo.options,
 		contract_type: houseInfo.contractType,
 	};
 

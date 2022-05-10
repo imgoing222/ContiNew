@@ -1,4 +1,4 @@
-import { HouseInfo } from "src/types/houseInfo";
+import HouseInfo from "src/types/houseInfo";
 import { toast } from "react-toastify";
 
 function checkData(houseInfo: HouseInfo) {
@@ -27,6 +27,7 @@ function checkData(houseInfo: HouseInfo) {
 		}
 		if (!houseInfo[k as keyof HouseInfo]) {
 			toast.warning(msg[k as keyof typeof msg]);
+			console.log(k);
 			return false;
 		}
 	}
