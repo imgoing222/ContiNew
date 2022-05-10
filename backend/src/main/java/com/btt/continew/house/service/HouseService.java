@@ -8,7 +8,6 @@ import com.btt.continew.house.controller.dto.response.HouseDetailResponse;
 import com.btt.continew.house.controller.dto.response.HouseListResponse;
 import com.btt.continew.house.controller.dto.response.HouseSimpleResponse;
 import com.btt.continew.house.domain.House;
-import com.btt.continew.house.domain.HouseOption;
 import com.btt.continew.house.domain.HouseOptionRepository;
 import com.btt.continew.house.domain.HouseRepository;
 import com.btt.continew.house.domain.HouseRepositorySupport;
@@ -140,9 +139,9 @@ public class HouseService {
     public HouseDetailResponse show(Long houseId) {
         House house = houseRepository.findById(houseId)
             .orElseThrow(() -> new BusinessException(ErrorCode.HOUSE_NOT_FOUND_BY_ID));
-        List<HouseOption> houseOptions = houseOptionRepository.findAllByHouse(house);
+//        List<HouseOption> houseOptions = houseOptionRepository.findAllByHouse(house);
         List<Image> images = imageRepository.findAllByHouse(house);
-        return HouseDetailResponse.of(house, houseOptions, images);
+        return HouseDetailResponse.of(house, images);
     }
 
     @Transactional
@@ -153,7 +152,7 @@ public class HouseService {
         house.checkHouseByLoginId(loginId);
         house.update(request);
 
-        houseOptionRepository.deleteHouseOptionsByHouse(houseId);
+//        houseOptionRepository.deleteHouseOptionsByHouse(houseId);
 //        saveHouseOptions(request, house);
 
         imageRepository.deleteImagesByHouses(houseId);
