@@ -83,11 +83,6 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	};
 
 	useEffect(() => {
-		setSavedChattings({
-			chat_message: [],
-			current_page_count: 0,
-			total_page_count: 0,
-		});
 		setShowChatList([]);
 
 		getChatList();
