@@ -14,6 +14,7 @@ interface ReceivedChatDataType {
 	sender: string;
 	content: string;
 	type: string;
+	created_at: string;
 }
 
 function ChatDetail() {
@@ -46,10 +47,11 @@ function ChatDetail() {
 
 	const sendMessage = (inputChat: string) => {
 		if (inputChat) {
+			const sendTime = new Date(+new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '');
 			stomp.send(
 				"/pub/chat/message",
 				{ Authorization: `Bearer ${token}` },
-				JSON.stringify({ type: "TALK", room_id: roomId, sender: login_id, content: inputChat }),
+				JSON.stringify({ type: "TALK", room_id: roomId, sender: login_id, content: inputChat, created_at: sendTime }),
 			);
 		}
 	};
