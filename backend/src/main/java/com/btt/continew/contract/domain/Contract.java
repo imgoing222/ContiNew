@@ -1,6 +1,7 @@
 package com.btt.continew.contract.domain;
 
 import com.btt.continew.global.domain.BaseEntity;
+import com.btt.continew.house.domain.House;
 import com.btt.continew.member.domain.Member;
 import java.time.LocalDate;
 import javax.persistence.Column;
@@ -24,6 +25,10 @@ public class Contract extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "contract_id")
     private Long id;
+
+    @ManyToOne(targetEntity = House.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "house_id", nullable = false)
+    private House house;
 
     @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id", nullable = false)
@@ -87,7 +92,7 @@ public class Contract extends BaseEntity {
     @Column(name = "seller_birth")
     private LocalDate sellerBirth;
 
-    @Column(name = "seller_phone")
+    @Column(name = "seller_phone", length = 16)
     private String sellerPhone;
 
     @Column(name = "seller_signature")
@@ -102,7 +107,7 @@ public class Contract extends BaseEntity {
     @Column(name = "buyer_birth")
     private LocalDate buyerBirth;
 
-    @Column(name = "buyer_phone")
+    @Column(name = "buyer_phone", length = 16)
     private String buyerPhone;
 
     @Column(name = "buyer_signature")
@@ -112,10 +117,11 @@ public class Contract extends BaseEntity {
     }
 
     @Builder
-    public Contract(Member seller, Member buyer, Integer level) {
+    public Contract(House house, Member seller, Member buyer) {
+        this.house = house;
         this.seller = seller;
         this.buyer = buyer;
-        this.level = level;
+        this.level = 1;
     }
 
     public void levelOneWrite() {
