@@ -11,9 +11,8 @@ import { HouseInfo } from "src/types/houseInfo";
 import styled from "styled-components";
 import Head from "next/head";
 import { saleApi } from "src/api";
-import { checkData, createFormData } from "@utils/index";
+import { checkData, createFormData, getArticleData } from "@utils/index";
 import { useRouter } from "next/router";
-import articleApi from "src/api/article";
 
 interface ButtonProps {
 	isApplyBtn?: boolean;
@@ -29,11 +28,6 @@ const numberKey = ["deposit", "monthlyRent", "maintenanceFee", "period", "floor"
 
 function index() {
 	const router = useRouter();
-
-	const getArticleData = async (id: number) => {
-		const article = await articleApi.getArticle(id);
-		return article;
-	};
 
 	useEffect(() => {
 		if (router.query.id) getArticleData(+router.query.id);
