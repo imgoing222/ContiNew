@@ -69,6 +69,7 @@ public enum ErrorCode {
 
     // house_like
     HOUSE_LIKE_ALREADY_EXISTS_BY_LOGINID(HttpStatus.BAD_REQUEST, "이미 관심 등록한 매물입니다.", "L01"),
+    HOUSE_LIKE_NOT_FOUND_BY_LOGINID(HttpStatus.NOT_FOUND, "관심 등록하지 않은 매물입니다.", "L02"),
 
     // chatting
 
