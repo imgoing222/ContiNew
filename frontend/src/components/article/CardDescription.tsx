@@ -1,6 +1,6 @@
 import changeMonthToYear from "@utils/changeMonthToYear";
 import changeMoneyUnit from "@utils/moneyUnitChange";
-import { useRouter } from "next/router";
+import Link from "next/link";
 import { RootStateOrAny, useSelector } from "react-redux";
 import articleApi from "src/api/article";
 import styled from "styled-components";
@@ -11,7 +11,6 @@ interface TextProp {
 }
 
 function CardDescription() {
-	const router = useRouter();
 	const userName = useSelector((state: RootStateOrAny) => state.userInfo.username);
 	const houseInfo = {
 		address_detail: "스카이빌",
@@ -74,11 +73,12 @@ function CardDescription() {
 					</>
 				) : (
 					<>
-						<Button
-							onClick={() => router.push("/createSale", `/updateArticle/${houseInfo.house_id}`)}
+						<Link
+							href={{ pathname: "/createSale", query: { id: houseInfo.house_id } }}
+							as={`/updateArticle/${houseInfo.house_id}`}
 						>
-							채팅 하기
-						</Button>
+							<Button onClick={startChat}>채팅 하기</Button>
+						</Link>
 						<Button onClick={setBookmark}>북마크</Button>
 					</>
 				)}
