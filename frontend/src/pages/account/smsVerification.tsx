@@ -5,8 +5,10 @@ import { Input } from "@components/account/Input";
 import { Label } from "@components/account/Label";
 import { LinkButton } from "@components/account/LinkButton";
 import Timer from "@components/account/Timer";
+import getErrorMessage from "@utils/getErrorMessage";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import authApi from "src/api/auth";
 
 function smsVerification() {
@@ -22,22 +24,24 @@ function smsVerification() {
 	};
 
 	const handleSendClick = async () => {
-		try {
-			await authApi.sendCode(phoneNumber);
-			setDisabled(false);
-		} catch (err) {
-			console.log(err);
-		}
+		await authApi.sendCode(phoneNumber).then(async (res) => {
+			if (res.status) {
+				setDisabled(false);
+				return;
+			}
+			toast.error(getErrorMessage(res));
+		});
 	};
 
 	const handleConfirmClick = async () => {
-		try {
-			await authApi.confirmCode(code);
-			alert("휴대폰 인증이 완료되었습니다");
-			router.push("/account/signupComplete");
-		} catch (err) {
-			console.log(err);
-		}
+		await authApi.confirmCode(code).then(async (res) => {
+			if (res.status) {
+				alert("휴대폰 인증이 완료되었습니다");
+				router.push("/account/signupComplete");
+				return;
+			}
+			toast.error(getErrorMessage(res));
+		});
 	};
 
 	return (
