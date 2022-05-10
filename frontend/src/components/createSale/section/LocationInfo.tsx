@@ -28,7 +28,15 @@ function LocationInfo({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 		const longitude = +result.data.documents[0].x;
 		const latitude = +result.data.documents[0].y;
 		if (setHouseInfo)
-			setHouseInfo({ ...houseInfo, longitude, latitude, jibunAddress, sido, sigungu, bname });
+			setHouseInfo({
+				...houseInfo,
+				longitude,
+				latitude,
+				jibunAddress,
+				sidoName: sido,
+				gunguName: sigungu,
+				dongName: bname,
+			});
 	};
 	const loadLayout = (e: React.FormEvent<HTMLButtonElement>) => {
 		e.preventDefault();

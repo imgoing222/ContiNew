@@ -1,7 +1,7 @@
-export interface HouseInfo {
-	sido: string;
-	sigungu: string;
-	bname: string;
+interface HouseInfo {
+	sidoName: string;
+	gunguName: string;
+	dongName: string;
 	jibunAddress: string;
 	addressDetail: string;
 	latitude: number;
@@ -15,8 +15,10 @@ export interface HouseInfo {
 	maintenanceDetail: string;
 	period: string;
 	description: string;
-	options: string[];
+	options: number[];
 	images: FileList | File[] | null;
 	contractType: string;
 	agreement: string;
 }
+
+export default HouseInfo;

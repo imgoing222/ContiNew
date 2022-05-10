@@ -1,4 +1,4 @@
-import { HouseInfo } from "src/types/houseInfo";
+import HouseInfo from "src/types/houseInfo";
 import InputCheck from "./InputCheck";
 import { Label, Pbox } from "./Table";
 
@@ -14,7 +14,7 @@ function OptionInfoList({ value, changeEvent, title, houseInfo }: OptionInfoList
 		<li>
 			<Label htmlFor="options">
 				<InputCheck name="options" type="checkbox" value={value} onChange={changeEvent} />
-				<Pbox isCheck={houseInfo.options.includes(value) ? "checked" : undefined}>{title}</Pbox>
+				<Pbox isCheck={houseInfo.options.includes(+value) ? "checked" : undefined}>{title}</Pbox>
 			</Label>
 		</li>
 	);

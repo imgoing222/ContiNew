@@ -3,13 +3,13 @@ import { request } from "./request";
 
 interface ArticleApiType {
 	deleteArticle: (id: number) => Promise<AxiosResponse>;
-	editArticle: (id: number) => Promise<AxiosResponse>;
+	editArticle: (data: FormData, id: number) => Promise<AxiosResponse>;
 	getArticle: (id: number) => Promise<AxiosResponse>;
 }
 
 const articleApi: ArticleApiType = {
 	deleteArticle: (id) => request.delete(`houses/${id}`),
-	editArticle: (id) => request.post("houses", id),
+	editArticle: (data, id) => request.post(`houses${id}`, data),
 	getArticle: (id) => request.get(`houses/${id}`),
 };
 
