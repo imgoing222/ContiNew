@@ -39,4 +39,15 @@ public class HouseLikeService {
             .build();
         houseLikeRepository.save(houseLike);
     }
+
+    @Transactional
+    public void delete(Long houseId, String loginId) {
+        House house = houseService.findById(houseId);
+        Member member = memberService.findByLoginId(loginId);
+
+        HouseLike houseLike = houseLikeRepository.findByHouseAndMember(house, member)
+            .orElseThrow(() -> new BusinessException(ErrorCode.HOUSE_LIKE_NOT_FOUND_BY_LOGINID));
+
+        houseLike.saveDeletedTime();
+    }
 }
