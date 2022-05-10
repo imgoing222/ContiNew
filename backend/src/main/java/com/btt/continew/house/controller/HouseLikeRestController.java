@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,14 @@ public class HouseLikeRestController {
     public ResponseEntity<Void> create(@PathVariable(value = "house_id") Long houseId,
         @ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
         houseLikeService.create(houseId, loginId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/houses/likes/{house_id}")
+    @ApiOperation(value = "관심 매물 삭제", notes = "관심 매물 삭제 api")
+    public ResponseEntity<Void> delete(@PathVariable(value = "house_id") Long houseId,
+        @ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
+        houseLikeService.delete(houseId, loginId);
         return ResponseEntity.noContent().build();
     }
 
