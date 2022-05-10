@@ -1,2 +1,2 @@
-Jenkins Build test
+Deploy test by Jenkins
 
