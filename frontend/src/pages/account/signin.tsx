@@ -5,6 +5,7 @@ import { Input } from "@components/account/Input";
 import { Label } from "@components/account/Label";
 import { LinkButton } from "@components/account/LinkButton";
 import useForm from "@hooks/useForm";
+import getErrorMessage from "@utils/getErrorMessage";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -23,18 +24,13 @@ function Signin() {
 		},
 		onSubmit: async (values) => {
 			await authApi.signin(values).then(async (res) => {
-				const status = Number(res);
-				if (status === 401) {
-					toast.error("비밀번호가 일치하지 않습니다.");
+				if (res.status) {
+					const userInfo = await profileApi.getUserInfo();
+					dispatch(SET_USER(userInfo.data));
+					router.push("/");
 					return;
 				}
-				if (status === 404) {
-					toast.error("존재하지 않는 아이디 입니다.");
-					return;
-				}
-				const userInfo = await profileApi.getUserInfo();
-				dispatch(SET_USER(userInfo.data));
-				router.push("/");
+				toast.error(getErrorMessage(res));
 			});
 		},
 	});

@@ -25,10 +25,7 @@ const setInterceptors = (instance: AxiosInstance, isReissue?: boolean) => {
 				authApi.reissue({ access_token, refresh_token });
 				return instance.request(error.config);
 			}
-			// if (error.response.data.error_code === "A08") {
-			// 	return authApi.logout();
-			// }
-			return error.response.status;
+			return error.response.data.error_code;
 		},
 	);
 	return instance;
