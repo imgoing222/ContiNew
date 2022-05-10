@@ -30,13 +30,13 @@ public class ChatMessageResponse {
     @JsonProperty("created_at")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     @ApiModelProperty(position = 4, notes = "생성 시간", example = "2022-3-13 14:59:51")
-    private LocalDateTime createdAt;
+    private String createdAt;
 
     public ChatMessageResponse(){
 
     }
 
-    public ChatMessageResponse(String room_id, String sender, String content, LocalDateTime readAt, LocalDateTime createdAt){
+    public ChatMessageResponse(String room_id, String sender, String content, LocalDateTime readAt, String createdAt){
         this.room_id = room_id;
         this.sender = sender;
         this.content = content;
