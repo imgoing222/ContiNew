@@ -12,12 +12,15 @@ const initialState = {
 };
 
 function articleId(state = initialState, action: ActionType) {
-  if (action.type === STORE) {
-    return {
-      ...state,
-      article_id: action.id
-    }
-  }
+	switch (action.type) {
+		case STORE:
+			return {
+				...state,
+				article_id: action.id,
+			};
+    default:
+      return state;
+	}
 }
 
 export default articleId;
