@@ -21,7 +21,6 @@ function ItemDetail() {
 
 			setData();
 		}
-		return setHouseInfo(null);
 	}, []);
 
 	return (
