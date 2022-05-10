@@ -23,18 +23,13 @@ public class ContractAgreeRequest {
     @ApiModelProperty(required = true, position = 4, notes = "API 요청자의 회원 구분 (seller, buyer)", example = "seller")
     private String memberType;
 
-    @JsonProperty("agree")
-    @ApiModelProperty(required = true, position = 5, notes = "계약 수락 여부", example = "true")
-    private Boolean agree;
-
     public ContractAgreeRequest() {
     }
 
-    public ContractAgreeRequest(Long houseId, String sellerLoginId, String buyerLoginId, String memberType, Boolean agree) {
+    public ContractAgreeRequest(Long houseId, String sellerLoginId, String buyerLoginId, String memberType) {
         this.houseId = houseId;
         this.sellerLoginId = sellerLoginId;
         this.buyerLoginId = buyerLoginId;
         this.memberType = memberType;
-        this.agree = agree;
     }
 }
