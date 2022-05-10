@@ -23,11 +23,19 @@ public class ContractRestController {
         this.contractService = contractService;
     }
 
-    @PostMapping("/contract/agree")
+    @PostMapping("/auth/contracts/agree")
     @ApiOperation(value = "계약 시작 수락", notes = "계약 시작을 수락하는 API")
     public ResponseEntity<Void> agreeContract(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
         @RequestBody ContractAgreeRequest request) {
         contractService.agreeContract(request, loginId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/auth/contracts/disagree")
+    @ApiOperation(value = "계약 시작 거절", notes = "계약 시작을 거절하는 API")
+    public ResponseEntity<Void> disagreeContract(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
+        @RequestBody ContractAgreeRequest request) {
+        contractService.disagreeContract(request, loginId);
         return ResponseEntity.noContent().build();
     }
 }
