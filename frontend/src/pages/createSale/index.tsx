@@ -6,12 +6,14 @@ import {
 	Description,
 	Photos,
 } from "@components/createSale";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HouseInfo } from "src/types/houseInfo";
 import styled from "styled-components";
 import Head from "next/head";
 import { saleApi } from "src/api";
 import { checkData, createFormData } from "@utils/index";
+import { useRouter } from "next/router";
+import articleApi from "src/api/article";
 
 interface ButtonProps {
 	isApplyBtn?: boolean;
@@ -26,6 +28,17 @@ export interface EventProps {
 const numberKey = ["deposit", "monthlyRent", "maintenanceFee", "period", "floor"];
 
 function index() {
+	const router = useRouter();
+
+	const getArticleData = async (id: number) => {
+		const article = await articleApi.getArticle(id);
+		return article;
+	};
+
+	useEffect(() => {
+		if (router.query.id) getArticleData(+router.query.id);
+	}, []);
+
 	const [houseInfo, setHouseInfo] = useState<HouseInfo>({
 		saleType: "",
 		houseType: "",

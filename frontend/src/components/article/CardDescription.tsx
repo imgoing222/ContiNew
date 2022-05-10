@@ -1,5 +1,6 @@
 import changeMonthToYear from "@utils/changeMonthToYear";
 import changeMoneyUnit from "@utils/moneyUnitChange";
+import Link from "next/link";
 import { RootStateOrAny, useSelector } from "react-redux";
 import articleApi from "src/api/article";
 import styled from "styled-components";
@@ -72,7 +73,12 @@ function CardDescription() {
 					</>
 				) : (
 					<>
-						<Button onClick={startChat}>채팅 하기</Button>
+						<Link
+							href={{ pathname: "/createSale", query: { id: houseInfo.house_id } }}
+							as={`/updateArticle/${houseInfo.house_id}`}
+						>
+							<Button onClick={startChat}>채팅 하기</Button>
+						</Link>
 						<Button onClick={setBookmark}>북마크</Button>
 					</>
 				)}
