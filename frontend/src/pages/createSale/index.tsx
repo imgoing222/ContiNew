@@ -11,7 +11,7 @@ import { HouseInfo } from "src/types/houseInfo";
 import styled from "styled-components";
 import Head from "next/head";
 import { saleApi } from "src/api";
-import checkData from "@utils/CheckDataBeforeSumit";
+import checkData from "@utils/checkDataBeforeSumit";
 
 interface ButtonProps {
 	isApplyBtn?: boolean;
@@ -72,7 +72,6 @@ function index() {
 	} = houseInfo;
 
 	const handleHouseInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
-		console.log(houseInfo);
 		if (e.target.name === "options") {
 			const idx = houseInfo.options.indexOf(e.target.value);
 			if (idx !== -1) {

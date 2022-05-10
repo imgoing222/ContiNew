@@ -1,7 +1,7 @@
 import { HouseInfo } from "src/types/houseInfo";
 import { toast } from "react-toastify";
 
-const checkData = (houseInfo: HouseInfo) => {
+function checkData(houseInfo: HouseInfo) {
 	const msg = {
 		saleType: "매물정보를 선택해주세요",
 		houseType: "매물 종류를 선택해주세요",
@@ -31,6 +31,6 @@ const checkData = (houseInfo: HouseInfo) => {
 		}
 	}
 	return true;
-};
+}
 
 export default checkData;
