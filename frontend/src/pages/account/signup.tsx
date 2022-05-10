@@ -36,7 +36,7 @@ function Signup() {
 				await authApi.signin({ login_id, password });
 				const userInfo = await profileApi.getUserInfo();
 				dispatch(SET_USER(userInfo.data));
-				router.push("/smsVerification");
+				router.push("/account/smsVerification");
 			} catch (err) {
 				console.log(err);
 			}
@@ -63,7 +63,7 @@ function Signup() {
 				</Button>
 			</FormContainer>
 			<Button onClick={handleGoogleLoginClick}>구글로 시작하기</Button>
-			<LinkButton href="/signin">로그인하러가기</LinkButton>
+			<LinkButton href="/account/signin">로그인하러가기</LinkButton>
 		</Container>
 	);
 }

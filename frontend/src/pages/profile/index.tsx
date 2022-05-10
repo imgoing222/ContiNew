@@ -40,7 +40,7 @@ function Profile() {
 				{!userInfo.phone_auth && (
 					<Button
 						onClick={() => {
-							router.push("/smsVerification");
+							router.push("/account/smsVerification");
 						}}
 					>
 						휴대폰 인증
