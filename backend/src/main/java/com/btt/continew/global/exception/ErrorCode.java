@@ -53,6 +53,15 @@ public enum ErrorCode {
     // SMS
     SMS_TOO_MANY_REQUEST(HttpStatus.CONFLICT, "휴대폰 인증은 하루에 3회만 가능합니다", "P01"),
 
+    // contract
+    CONTRACT_NOT_FOUND_MEMBER_TYPE(HttpStatus.NOT_FOUND, "요청 타입이 \"seller\" 혹은 \"buyer\"가 아닙니다.", "K01"),
+    CONTRACT_NOT_SELLER(HttpStatus.CONFLICT, "현재 로그인한 회원이 Seller가 아닙니다.", "K02"),
+    CONTRACT_NOT_BUYER(HttpStatus.CONFLICT, "현재 로그인한 회원이 Buyer가 아닙니다.", "K03"),
+    CONTRACT_ALREADY_AGREE(HttpStatus.BAD_REQUEST, "이미 계약 요청을 수락한 회원입니다.", "K04"),
+    CONTRACT_NOT_FOUND_CONTRACT_AGREE(HttpStatus.NOT_FOUND, "계약 요청을 찾을 수 없습니다.", "K05"),
+    CONTRACT_NOT_YOUR_CONTRACT_AGREE(HttpStatus.BAD_REQUEST, "당신의 계약 요청이 아닙니다.", "K06"),
+    CONTRACT_AGREE_ALREADY_COMPLETED(HttpStatus.BAD_REQUEST, "이미 끝난 요청입니다.", "K07"),
+
     // house
     HOUSE_NOT_FOUND_BY_ID(HttpStatus.NOT_FOUND, "존재하지 않는 매물입니다", "H01"),
     HOUSE_NOT_MATCH_BY_LOGINID(HttpStatus.BAD_REQUEST, "작성자와 유저가 일치하지 않습니다", "H02"),
