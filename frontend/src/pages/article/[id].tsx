@@ -4,10 +4,18 @@ import LocationInfo from "@components/article/LocationInfo";
 import OptionInfo from "@components/article/OptionalInfo";
 import Photos from "@components/article/Photos";
 import PriceInfo from "@components/article/PriceInfo";
-import React from "react";
+import getArticleData from "@utils/getArticle";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 function index() {
+	const router = useRouter();
+
+	useEffect(() => {
+		if (router.query.id) getArticleData(+router.query.id);
+	}, []);
+
 	return (
 		<Div>
 			<Photos />
