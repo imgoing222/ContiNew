@@ -38,7 +38,7 @@ public class ChatMessage implements Serializable {
     LocalDateTime readAt;
 
     @Column(name = "created_at")
-    LocalDateTime createdAt;
+    String createdAt;
 
 
     public static ChatMessage create (ChatMessageRequest request){
@@ -54,6 +54,7 @@ public class ChatMessage implements Serializable {
         return chatMessage;
     }
 
+    // 임시 테스트용
     public static ChatMessage enterMessage( String roomId){
         ChatMessage chatMessage = new ChatMessage();
 
@@ -61,7 +62,7 @@ public class ChatMessage implements Serializable {
         chatMessage.type = MessageType.ENTER;
         chatMessage.roomId = roomId;
         chatMessage.content = "어서오세요";
-        chatMessage.createdAt = LocalDateTime.now();
+        chatMessage.createdAt = LocalDateTime.now().toString();
 
         return chatMessage;
     }

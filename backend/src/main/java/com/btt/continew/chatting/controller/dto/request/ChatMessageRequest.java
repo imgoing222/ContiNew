@@ -4,7 +4,6 @@ import com.btt.continew.chatting.domain.ChatMessage.MessageType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
-import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,16 +30,17 @@ public class ChatMessageRequest {
     @JsonProperty("created_at")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     @ApiModelProperty(position = 4, notes = "생성 시간", example = "2022-3-13 14:59:51")
-    private LocalDateTime createdAt;
+    private String createdAt;
 
     public ChatMessageRequest(){
 
     }
 
-    public ChatMessageRequest(MessageType type, String roomId, String sender, String content){
+    public ChatMessageRequest(MessageType type, String roomId, String sender, String content, String createdAt){
         this.type = type;
         this.roomId = roomId;
         this.sender = sender;
         this.content = content;
+        this.createdAt = createdAt;
     }
 }
