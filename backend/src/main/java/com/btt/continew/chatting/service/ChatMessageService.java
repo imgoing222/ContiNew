@@ -37,10 +37,10 @@ public class ChatMessageService {
 
     @Transactional
     public void createMessage(ChatMessageRequest request) {
-        System.out.println("4-3. 메시지 생성 ");
+        System.out.println("4-5. 메시지 생성 ");
         ChatMessage chatMessage = ChatMessage.create(request);
 
-        System.out.println("4-4. 라스트 메시지 세팅 ");
+        System.out.println("4-6. 라스트 메시지 세팅 ");
         ChatRoom chatRoom = opsHasChatRoom.get(CHAT_ROOMS, request.getRoomId());
         chatRoom.setLastMessage(request.getContent());
         chatRoom.setLastMessageTime(LocalDateTime.now());
@@ -65,14 +65,15 @@ public class ChatMessageService {
             }
         }
 
-        chatMessageList.sort(Comparator.comparing(ChatMessage::getCreatedAt).reversed());
+        System.out.println("5-4. 메시지 정렬");
+        chatMessageList.sort(Comparator.comparing(ChatMessage::getCreatedAt));
 
-        System.out.println("5-4. 메시지 페이지 네이션");
+        System.out.println("5-5. 메시지 페이지 네이션");
         int start = (int)pageable.getOffset();
         int end = Math.min((start+pageable.getPageSize()), chatMessageList.size());
         Page<ChatMessage> chatMessages = new PageImpl<>(chatMessageList.subList(start,end),pageable,chatMessageList.size());
 
-        System.out.println("5-4. 메시지 리스트 반환");
+        System.out.println("5-6. 메시지 리스트 반환");
         return ChatMessagesResponse.from(chatMessages);
     }
 }
