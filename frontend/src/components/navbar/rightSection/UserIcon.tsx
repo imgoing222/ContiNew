@@ -8,13 +8,12 @@ function UserIcon() {
 	const router = useRouter();
 	const token = cookie.load("access_token");
 
-	return token ? (
+	return (
 		<>
-			<FontAwesome icon={faUser} onClick={() => router.push("/profile")} />
-		</>
-	) : (
-		<>
-			<FontAwesome icon={faUser} onClick={() => router.push("/account/signin")} />
+			<FontAwesome
+				icon={faUser}
+				onClick={token ? () => router.push("/profile") : () => router.push("/account/signin")}
+			/>
 		</>
 	);
 }
