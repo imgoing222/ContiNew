@@ -3,6 +3,7 @@ import changeMoneyUnit from "@utils/moneyUnitChange";
 import Link from "next/link";
 import { RootStateOrAny, useSelector } from "react-redux";
 import articleApi from "src/api/article";
+import { HouseInfoProps } from "src/pages/article/[id]";
 import styled from "styled-components";
 import IconPart from "./IconPart";
 
@@ -10,28 +11,8 @@ interface TextProp {
 	margin?: string;
 }
 
-function CardDescription() {
+function CardDescription({ houseInfo }: HouseInfoProps) {
 	const userName = useSelector((state: RootStateOrAny) => state.userInfo.username);
-	const houseInfo = {
-		address_detail: "스카이빌",
-		contract_type: "월세",
-		deposit: 10000000,
-		description: "6개월 짜리 방 내놓습니다",
-		house_id: 1,
-		house_type: "원룸",
-		images: ["string"],
-		jibun_address: "서울 동대문구 이문동 294-295",
-		maintenance_detail: "전기요금",
-		maintenance_fee: 50000,
-		monthly_rent: 500000,
-		options: [1, 2, 3],
-		period: 6,
-		phone_auth: true,
-		sale_type: "이어살기",
-		username: "채채퐁",
-		floor: 3,
-	};
-
 	const startChat = () => {};
 	const setBookmark = () => {};
 	const deleteArticle = (id: number) => {

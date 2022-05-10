@@ -4,25 +4,45 @@ import LocationInfo from "@components/article/LocationInfo";
 import OptionInfo from "@components/article/OptionalInfo";
 import Photos from "@components/article/Photos";
 import PriceInfo from "@components/article/PriceInfo";
-import React from "react";
+import getArticleData from "@utils/getArticle";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import ArticleType from "src/types/getArticleType";
 import styled from "styled-components";
 
+export interface HouseInfoProps {
+	houseInfo: ArticleType;
+}
+
 function index() {
+	const router = useRouter();
+	const [houseInfo, setHouseInfo] = useState<ArticleType | null>(null);
+
+	useEffect(() => {
+		const setData = async () => {
+			setHouseInfo(await getArticleData(11));
+		};
+
+		setData();
+	}, []);
+
 	return (
-		<Div>
-			<Photos />
-			<Container>
-				<SaleInfo>
-					<PriceInfo />
-					<OptionInfo />
-					<LocationInfo />
-					<Description />
-				</SaleInfo>
-				<Card>
-					<CardDescription />
-				</Card>
-			</Container>
-		</Div>
+		houseInfo !== null && (
+			<Div>
+				<Photos />
+				<Container>
+					<SaleInfo>
+						<PriceInfo houseInfo={houseInfo} />
+						<OptionInfo />
+						<LocationInfo houseInfo={houseInfo} />
+						<Description houseInfo={houseInfo} />
+					</SaleInfo>
+					<Card>
+						<CardDescription houseInfo={houseInfo} />
+					</Card>
+				</Container>
+			</Div>
+		)
 	);
 }
 

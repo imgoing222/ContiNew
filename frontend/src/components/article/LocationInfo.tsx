@@ -1,12 +1,9 @@
 import { useEffect, useRef } from "react";
+import { HouseInfoProps } from "src/pages/article/[id]";
 import styled from "styled-components";
 import Container from "./Container";
 
-function LocationInfo() {
-	const houseInfo = {
-		address_detail: "스카이빌",
-		jibun_address: "서울특별시 용산구 한강대로 지하 392",
-	};
+function LocationInfo({ houseInfo }: HouseInfoProps) {
 	const kakaoMap = useRef<kakao.maps.Map>();
 	useEffect(() => {
 		const $script = document.createElement("script");
