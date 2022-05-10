@@ -81,7 +81,7 @@ public class HouseService {
             .contractType(request.getContractType())
             .period(request.getPeriod())
             .expiredAt(LocalDateTime.now().plusMonths(LISTING_PERIOD))
-            .options(request.getOptions().substring(1, request.getOptions().length()-1))
+            .options(request.getOptions().toString().substring(1, request.getOptions().toString().length()-1))
             .build();
         houseRepository.save(house);
 
