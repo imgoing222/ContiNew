@@ -11,7 +11,7 @@ import { HouseInfo } from "src/types/houseInfo";
 import styled from "styled-components";
 import Head from "next/head";
 import { saleApi } from "src/api";
-import { toast } from "react-toastify";
+import { checkData, createFormData } from "@utils/index";
 
 interface ButtonProps {
 	isApplyBtn?: boolean;
@@ -49,30 +49,7 @@ function index() {
 		agreement: "",
 	});
 
-	const {
-		saleType,
-		sido,
-		sigungu,
-		bname,
-		jibunAddress,
-		addressDetail,
-		latitude,
-		longitude,
-		floor,
-		houseType,
-		monthlyRent,
-		maintenanceFee,
-		maintenanceDetail,
-		period,
-		description,
-		options,
-		deposit,
-		images,
-		contractType,
-	} = houseInfo;
-
-	const handleHouseInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
-		console.log(houseInfo);
+	const handleOptions = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.name === "options") {
 			const idx = houseInfo.options.indexOf(e.target.value);
 			if (idx !== -1) {
@@ -81,78 +58,25 @@ function index() {
 			setHouseInfo({ ...houseInfo, ...[houseInfo.options.push(e.target.value)] });
 			return;
 		}
-		if (numberKey.includes(e.target.name)) {
-			return setHouseInfo({
-				...houseInfo,
-				[e.target.name]: e.target.value.replace(/\D/, ""),
-			});
-		}
-		setHouseInfo({ ...houseInfo, [e.target.name]: e.target.value });
 	};
 
-	const checkData = () => {
-		const msg = {
-			saleType: "매물정보를 선택해주세요",
-			houseType: "매물 종류를 선택해주세요",
-			contractType: "계약 정보를 선택해주세요",
-			deposit: "금액을 입력해주세요",
-			monthlyRent: "월세를 입력해주세요",
-			maintenanceFee: "관리비를 입력해주세요",
-			maintenanceDetail: "관리비 포함 항목을 입력해주세요",
-			period: "임대기간을 입력해주세요",
-			jibunAddress: "주소를 입력해주세요",
-			addressDetail: "상세주소를 입력해주세요",
-			floor: "층수를 입력해주세요",
-			images: "사진을 업로드해주세요",
-			description: "상세설명을 입력해주세요",
-		};
-		const keys = Object.keys(houseInfo);
+	const onlyNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+		return setHouseInfo({
+			...houseInfo,
+			[e.target.name]: e.target.value.replace(/\D/, ""),
+		});
+	};
 
-		for (const k of keys) {
-			if (houseInfo.contractType === "전세" && k === "monthlyRent") continue;
-			if (k === "images" && houseInfo.images && houseInfo.images?.length < 3) {
-				toast.warning("사진을 최소 3장 업로드해주세요");
-				return false;
-			}
-			if (!houseInfo[k as keyof HouseInfo]) {
-				toast.warning(msg[k as keyof typeof msg]);
-				return false;
-			}
-		}
-		return true;
+	const handleHouseInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.target.name === "options") return handleOptions(e);
+		if (numberKey.includes(e.target.name)) return onlyNumber(e);
+		setHouseInfo({ ...houseInfo, [e.target.name]: e.target.value });
 	};
 
 	const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		if (checkData() && houseInfo.agreement === "agree") {
-			const formData = new FormData();
-			const optionList = options.map((option) => +option);
-			const article = {
-				sido_name: sido,
-				gungu_name: sigungu,
-				dong_name: bname,
-				jibun_address: jibunAddress,
-				address_detail: addressDetail,
-				latitude,
-				longitude,
-				floor: +floor,
-				sale_type: saleType,
-				house_type: houseType,
-				deposit: +deposit,
-				monthly_rent: +monthlyRent,
-				maintenance_fee: +maintenanceFee,
-				maintenance_detail: maintenanceDetail,
-				period: +period,
-				description,
-				options: optionList,
-				contract_type: contractType,
-			};
-
-			formData.append("house", new Blob([JSON.stringify(article)], { type: "application/json" })),
-				images !== null
-					? [...images].forEach((file) => formData.append("images", file))
-					: formData.append("images", new Blob([]));
-			saleApi.createSale(formData);
+		if (checkData(houseInfo) && houseInfo.agreement === "agree") {
+			saleApi.createSale(createFormData(houseInfo));
 		}
 	};
 
