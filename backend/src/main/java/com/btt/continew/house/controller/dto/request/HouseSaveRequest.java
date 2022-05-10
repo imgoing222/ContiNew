@@ -2,6 +2,7 @@ package com.btt.continew.house.controller.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.List;
 import lombok.Getter;
 
 @Getter
@@ -77,7 +78,7 @@ public class HouseSaveRequest {
 
     @ApiModelProperty(name = "option", position = 17, example = "[1,2,3]")
     @JsonProperty("options")
-    private String options;
+    private List<Long> options;
 
     public HouseSaveRequest() {
     }
@@ -85,7 +86,7 @@ public class HouseSaveRequest {
     public HouseSaveRequest(String sidoName, String gunguName, String dongName, String jibunAddress, String addressDetail,
         Double latitude, Double longitude, Integer floor, String saleType, String houseType, String contractType,
         Long deposit, Long monthlyRent, Long maintenanceFee, String maintenanceDetail, Integer period, String description,
-        String options) {
+        List<Long> options) {
         this.sidoName = sidoName;
         this.gunguName = gunguName;
         this.dongName = dongName;

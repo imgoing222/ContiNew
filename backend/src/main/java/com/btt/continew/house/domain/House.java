@@ -149,7 +149,7 @@ public class House extends BaseEntity {
        this.maintenanceDetail = request.getMaintenanceDetail();
        this.period = request.getPeriod();
        this.description = request.getDescription();
-       this.options = request.getOptions();
+       this.options = request.getOptions().toString().substring(1, request.getOptions().toString().length()-1);
     }
 
     public void changeMainImage(String url) {
