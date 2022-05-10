@@ -1,11 +1,13 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { HYDRATE, createWrapper } from "next-redux-wrapper";
 import userInfo from "./user";
+import articleId from "./articleId";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 
 export const rootReducer = combineReducers({
 	userInfo,
+	articleId,
 });
 
 const reducer = (state: any, action: any) => {
@@ -22,7 +24,7 @@ const reducer = (state: any, action: any) => {
 const persistConfig = {
 	key: "root",
 	storage,
-	whitelist: ["userInfo"],
+	whitelist: ["userInfo", "articleId"],
 };
 
 export const persistedReducer = persistReducer(persistConfig, rootReducer);
