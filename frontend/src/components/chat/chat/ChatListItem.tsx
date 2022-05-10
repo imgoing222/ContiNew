@@ -23,7 +23,10 @@ function ChatListitem({ chat }: ChatProps) {
 
 	return (
 		<Container user={login_id} sender={chat.sender}>
-			<Textarea name="content" cols={20} readOnly defaultValue={chat.content} />
+			<SubContainer>
+				<Textarea name="content" cols={20} readOnly defaultValue={chat.content} />
+				{/* <p>{chat.created_at?.slice(-8, -3)}</p> */}
+			</SubContainer>
 		</Container>
 	);
 }
@@ -32,6 +35,10 @@ const Container = styled.li<ContainerProps>`
 	margin: 1rem;
 	display: flex;
 	justify-content: ${({ user, sender }) => (user === sender ? "end" : "start")};
+`;
+
+const SubContainer = styled.div`
+	display: flex;
 `;
 
 const Textarea = styled.textarea`
