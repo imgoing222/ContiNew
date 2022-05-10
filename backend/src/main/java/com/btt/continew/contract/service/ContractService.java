@@ -37,7 +37,7 @@ public class ContractService {
         House house = houseService.findById(request.getHouseId());
 
         ContractAgree contractAgree = contractAgreeRepository.findByHouseAndSellerAndBuyer(house, sellerMember, buyerMember)
-            .orElse(contractAgreeRepository.save(
+            .orElseGet(() -> contractAgreeRepository.save(
                 ContractAgree.builder().house(house).seller(sellerMember).buyer(buyerMember).build()));
 
         switch (request.getMemberType()) {
@@ -66,5 +66,25 @@ public class ContractService {
         if (contractAgree.getBuyerAgree() && contractAgree.getSellerAgree()) {
             contractRepository.save(Contract.builder().seller(sellerMember).buyer(buyerMember).house(house).build());
         }
+    }
+
+    @Transactional
+    public void disagreeContract(ContractAgreeRequest request, String loginId) {
+        Member sellerMember = memberService.findByLoginId(request.getSellerLoginId());
+        Member buyerMember = memberService.findByLoginId(request.getBuyerLoginId());
+        House house = houseService.findById(request.getHouseId());
+
+        ContractAgree contractAgree = contractAgreeRepository.findByHouseAndSellerAndBuyer(house, sellerMember, buyerMember)
+            .orElseThrow(() -> new BusinessException(ErrorCode.CONTRACT_NOT_FOUND_CONTRACT_AGREE));
+
+        if (contractAgree.getBuyerAgree() && contractAgree.getSellerAgree()){
+            throw new BusinessException(ErrorCode.CONTRACT_ALREADY_COMPLETED_AGREE);
+        }
+
+        if (!contractAgree.getSeller().getLoginId().equals(loginId) && !contractAgree.getBuyer().getLoginId().equals(loginId)) {
+            throw new BusinessException(ErrorCode.CONTRACT_NOT_YOUR_CONTRACT_AGREE);
+        }
+
+        contractAgree.saveDeletedTime();
     }
 }
