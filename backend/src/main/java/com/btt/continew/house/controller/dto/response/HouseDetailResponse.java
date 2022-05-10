@@ -74,7 +74,7 @@ public class HouseDetailResponse {
 
     @JsonProperty("options")
     @ApiModelProperty(notes = "옵션", example = "[1,2,3]")
-    private List<Long> options;
+    private String options;
 
     @JsonProperty("images")
     @ApiModelProperty(notes = "이미지", example = "")
@@ -85,7 +85,7 @@ public class HouseDetailResponse {
 
     public HouseDetailResponse(Long id, String username, Boolean phoneAuth, String jibunAddress, String addressDetail,
         Integer floor, String saleType, String houseType, String contractType, Long deposit, Long monthlyRent,
-        Long maintenanceFee, String maintenanceDetail, Integer period, String description, List<Long> options,
+        Long maintenanceFee, String maintenanceDetail, Integer period, String description, String options,
         List<String> images) {
         this.id = id;
         this.username = username;
@@ -106,7 +106,7 @@ public class HouseDetailResponse {
         this.images = images;
     }
 
-    public static HouseDetailResponse of(House house, List<HouseOption> houseOptions, List<Image> images) {
+    public static HouseDetailResponse of(House house, List<Image> images) {
         return new HouseDetailResponse(
             house.getId(),
             house.getMember().getUsername(),
@@ -123,9 +123,7 @@ public class HouseDetailResponse {
             house.getMaintenanceDetail(),
             house.getPeriod(),
             house.getDescription(),
-            houseOptions.stream()
-                .map(h -> h.getId())
-                .collect(Collectors.toList()),
+            house.getOptions(),
             images.stream()
                 .map(i -> i.getUrl())
                 .collect(Collectors.toList())
