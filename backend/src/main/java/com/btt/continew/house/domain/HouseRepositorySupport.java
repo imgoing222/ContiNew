@@ -55,9 +55,9 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
             .where(house.latitude.between(request.getYBottom(), request.getYTop()),
                 house.longitude.between(request.getXLeft(), request.getXRight()),
                 houseTypeEq(request.getHouseType()),
-                house.deposit.between(request.getMinDeposit(), request.getMaxDeposit()),
-                house.monthlyRent.between(request.getMinMonthlyRent(), request.getMaxMonthlyRent()),
-                house.maintenanceFee.between(request.getMinMaintenanceFee(), request.getMaxMaintenanceFee()),
+                depositBetween(request.getMinDeposit(), request.getMaxDeposit()),
+                monthlyRentBetween(request.getMinMonthlyRent(), request.getMaxMonthlyRent()),
+                maintenanceFeeBetween(request.getMinMaintenanceFee(), request.getMaxMaintenanceFee()),
                 optionsEq(request.getOptions())
                 )
             .fetch();
@@ -69,9 +69,9 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
                 saleTypeEq(request.getSaleType()),
                 houseTypeEq(request.getHouseType()),
                 contractTypeEq(request.getContractType()),
-                house.deposit.between(request.getMinDeposit(), request.getMaxDeposit()),
-                house.monthlyRent.between(request.getMinMonthlyRent(), request.getMaxMonthlyRent()),
-                house.maintenanceFee.between(request.getMinMaintenanceFee(), request.getMaxMaintenanceFee()),
+                depositBetween(request.getMinDeposit(), request.getMaxDeposit()),
+                monthlyRentBetween(request.getMinMonthlyRent(), request.getMaxMonthlyRent()),
+                maintenanceFeeBetween(request.getMinMaintenanceFee(), request.getMaxMaintenanceFee()),
                 periodEq(request.getPeriod()),
                 optionsEq(request.getOptions()),
                 house.expiredAt.after(LocalDateTime.now()),
