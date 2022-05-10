@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import { chatApi } from "src/api";
 import { RoomListItem } from "@components/chat";
+import { SET_ARTICLEID } from "src/store/articleId";
 
 interface ChatListDataType {
 	chat_rooms: {
@@ -20,6 +22,7 @@ interface ChatListDataType {
 
 function RoomList() {
 	const router = useRouter();
+	const dispatch = useDispatch();
 	const [chatListData, setChatListData] = useState<ChatListDataType>({
 		chat_rooms: [],
 		current_page_count: 0,
@@ -39,7 +42,8 @@ function RoomList() {
 		}
 	};
 
-	const toChattingRoom = (roomId: string) => {
+	const toChattingRoom = (roomId: string, articleId: number) => {
+		dispatch(SET_ARTICLEID(articleId));
 		router.push(`/chat/${roomId}`);
 		localStorage.setItem("RoomId", roomId);
 	};
@@ -54,7 +58,7 @@ function RoomList() {
 					.slice(0)
 					.reverse()
 					.map((chat) => (
-						<Content key={chat.room_id} onClick={() => toChattingRoom(chat.room_id)}>
+						<Content key={chat.room_id} onClick={() => toChattingRoom(chat.room_id, chat.sale)}>
 							<RoomListItem chat={chat} />
 						</Content>
 					))}
