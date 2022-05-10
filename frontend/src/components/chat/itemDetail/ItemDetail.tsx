@@ -7,12 +7,16 @@ import ArticleType from "src/types/getArticleType";
 import getArticleData from "@utils/getArticle";
 import snakeToCamel from "@utils/snakeToCamel";
 
-function ItemDetail() {
+interface Props {
+	isIndex?: boolean;
+}
+
+function ItemDetail({ isIndex }: Props) {
 	const { article_id } = useSelector((state: RootState) => state.articleId);
 	const [houseInfo, setHouseInfo] = useState<ArticleType | null>(null);
 
 	useEffect(() => {
-		if (article_id !== 0) {
+		if (!isIndex) {
 			const setData = async () => {
 				const data = await getArticleData(article_id);
 

@@ -8,7 +8,7 @@ function ChatPage() {
 		<Container>
 			<RoomList />
 			<Chat />
-			<ItemDetail />
+			<ItemDetail isIndex={true} />
 		</Container>
 	);
 }
