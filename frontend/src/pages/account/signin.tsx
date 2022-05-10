@@ -52,7 +52,7 @@ function Signin() {
 				</Button>
 			</FormContainer>
 			<Button onClick={handleGoogleLoginClick}>구글로 시작하기</Button>
-			<LinkButton href="/signup">회원가입 하러가기</LinkButton>
+			<LinkButton href="/account/signup">회원가입 하러가기</LinkButton>
 		</Container>
 	);
 }

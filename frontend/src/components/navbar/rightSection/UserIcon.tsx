@@ -14,7 +14,7 @@ function UserIcon() {
 		</>
 	) : (
 		<>
-			<FontAwesome icon={faUser} onClick={() => router.push("/signin")} />
+			<FontAwesome icon={faUser} onClick={() => router.push("/account/signin")} />
 		</>
 	);
 }
