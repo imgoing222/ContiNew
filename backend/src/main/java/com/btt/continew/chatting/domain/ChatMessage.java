@@ -35,7 +35,7 @@ public class ChatMessage implements Serializable {
     String content;
 
     @Column(name = "read_at")
-    LocalDateTime read_at;
+    LocalDateTime readAt;
 
     @Column(name = "created_at")
     LocalDateTime createdAt;
@@ -49,7 +49,7 @@ public class ChatMessage implements Serializable {
         chatMessage.roomId = request.getRoomId();
         chatMessage.sender = request.getSender();
         chatMessage.content = request.getContent();
-        chatMessage.createdAt = LocalDateTime.now();
+        chatMessage.createdAt = request.getCreatedAt();
 
         return chatMessage;
     }
