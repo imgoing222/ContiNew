@@ -27,42 +27,43 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 	return (
 		<Container>
 			<Div>
-				<SaleType>{houseInfo.sale_type}</SaleType>
+				<SaleType>{houseInfo.saleType}</SaleType>
 				<Text>{houseInfo.username}</Text>
 			</Div>
 			<Price>
-				{houseInfo.contract_type} {changeMoneyUnit((houseInfo.monthly_rent / 10000).toString())}
+				{houseInfo.contractType} {changeMoneyUnit((houseInfo.monthlyRent / 10000).toString())}
 			</Price>
-			<Text margin="true">{houseInfo.jibun_address}</Text>
+			<Text margin="true">{houseInfo.jibunAddress}</Text>
 			<div>
 				<IconPart
 					content1="house_type"
 					content2="period"
-					info1={houseInfo.house_type}
+					info1={houseInfo.houseType}
 					info2={changeMonthToYear(houseInfo.period.toString())}
 				/>
 				<IconPart
 					content1="floor"
 					content2="price"
 					info1={`${houseInfo.floor}층`}
-					info2={`월 ${houseInfo.maintenance_fee / 10000}만원`}
+					info2={`월 ${houseInfo.maintenanceFee / 10000}만원`}
 				/>
 				<Hr />
 			</div>
 			<ButtonDiv>
 				{userName === houseInfo.username ? (
 					<>
-						<Button onClick={() => editArticle(houseInfo.house_id)}>수정</Button>
-						<Button onClick={() => deleteArticle(houseInfo.house_id)}>삭제</Button>
+						<Link
+							href={{ pathname: "/createSale", query: { id: houseInfo.houseId } }}
+							as={`/updateArticle/${houseInfo.houseId}`}
+						>
+							<Button onClick={() => editArticle(houseInfo.houseId)}>수정</Button>
+						</Link>
+						<Button onClick={() => deleteArticle(houseInfo.houseId)}>삭제</Button>
 					</>
 				) : (
 					<>
-						<Link
-							href={{ pathname: "/createSale", query: { id: houseInfo.house_id } }}
-							as={`/updateArticle/${houseInfo.house_id}`}
-						>
-							<Button onClick={startChat}>채팅 하기</Button>
-						</Link>
+						<Button onClick={startChat}>채팅 하기</Button>
+
 						<Button onClick={setBookmark}>북마크</Button>
 					</>
 				)}
