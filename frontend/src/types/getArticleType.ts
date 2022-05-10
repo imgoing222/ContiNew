@@ -1,20 +1,20 @@
 interface ArticleType {
-	address_detail: string;
-	contract_type: string;
+	addressDetail: string;
+	contractType: "전세" | "월세";
 	deposit: number;
 	description: string;
 	floor: number;
-	house_id: number;
-	house_type: string;
+	houseId: number;
+	houseType: string;
 	images: string[];
-	jibun_address: string;
-	maintenance_detail: string;
-	maintenance_fee: number;
-	monthly_rent: number;
+	jibunAddress: string;
+	maintenanceDetail: string;
+	maintenanceFee: number;
+	monthlyRent: number;
 	options: number[];
 	period: number;
-	phone_auth: boolean;
-	sale_type: string;
+	phoneAuth: boolean;
+	saleType: "이어살기" | "쉐어하우스";
 	username: string;
 }
 
