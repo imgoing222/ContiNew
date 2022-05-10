@@ -20,7 +20,7 @@ function index() {
 
 	useEffect(() => {
 		const setData = async () => {
-			setHouseInfo(await getArticleData(2));
+			setHouseInfo(await getArticleData(11));
 		};
 
 		setData();
@@ -33,7 +33,7 @@ function index() {
 				<Container>
 					<SaleInfo>
 						<PriceInfo houseInfo={houseInfo} />
-						<OptionInfo houseInfo={houseInfo} />
+						<OptionInfo />
 						<LocationInfo houseInfo={houseInfo} />
 						<Description houseInfo={houseInfo} />
 					</SaleInfo>

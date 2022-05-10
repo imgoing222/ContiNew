@@ -1,8 +1,8 @@
+import { HouseInfoProps } from "src/pages/article/[id]";
 import styled from "styled-components";
 import Container from "./Container";
 
-function Description() {
-	const houseInfo = { description: "6개월짜리 방 내놓습니다." };
+function Description({ houseInfo }: HouseInfoProps) {
 	return (
 		<Container title="상세 설명">
 			<TextArea>{houseInfo.description}</TextArea>
