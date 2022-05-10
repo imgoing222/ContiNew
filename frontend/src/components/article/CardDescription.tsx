@@ -17,6 +17,7 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 	const setBookmark = () => {};
 	const deleteArticle = (id: number) => {
 		articleApi.deleteArticle(id);
+		window.location.replace("/saleList");
 	};
 	const editArticle = (id: number) => {
 		// 수정 페이지로 이동
