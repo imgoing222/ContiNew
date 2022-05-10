@@ -12,6 +12,7 @@ import styled from "styled-components";
 import Head from "next/head";
 import { saleApi } from "src/api";
 import checkData from "@utils/checkDataBeforeSumit";
+import createFormData from "@utils/createFormData";
 
 interface ButtonProps {
 	isApplyBtn?: boolean;
@@ -71,7 +72,7 @@ function index() {
 		contractType,
 	} = houseInfo;
 
-	const handleHouseInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleOptions = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.name === "options") {
 			const idx = houseInfo.options.indexOf(e.target.value);
 			if (idx !== -1) {
@@ -80,46 +81,25 @@ function index() {
 			setHouseInfo({ ...houseInfo, ...[houseInfo.options.push(e.target.value)] });
 			return;
 		}
-		if (numberKey.includes(e.target.name)) {
-			return setHouseInfo({
-				...houseInfo,
-				[e.target.name]: e.target.value.replace(/\D/, ""),
-			});
-		}
+	};
+
+	const onlyNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+		return setHouseInfo({
+			...houseInfo,
+			[e.target.name]: e.target.value.replace(/\D/, ""),
+		});
+	};
+
+	const handleHouseInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.target.name === "options") return handleOptions(e);
+		if (numberKey.includes(e.target.name)) return onlyNumber(e);
 		setHouseInfo({ ...houseInfo, [e.target.name]: e.target.value });
 	};
 
 	const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		if (checkData(houseInfo) && houseInfo.agreement === "agree") {
-			const formData = new FormData();
-			const optionList = options.map((option) => +option);
-			const article = {
-				sido_name: sido,
-				gungu_name: sigungu,
-				dong_name: bname,
-				jibun_address: jibunAddress,
-				address_detail: addressDetail,
-				latitude,
-				longitude,
-				floor: +floor,
-				sale_type: saleType,
-				house_type: houseType,
-				deposit: +deposit,
-				monthly_rent: +monthlyRent,
-				maintenance_fee: +maintenanceFee,
-				maintenance_detail: maintenanceDetail,
-				period: +period,
-				description,
-				options: optionList,
-				contract_type: contractType,
-			};
-
-			formData.append("house", new Blob([JSON.stringify(article)], { type: "application/json" })),
-				images !== null
-					? [...images].forEach((file) => formData.append("images", file))
-					: formData.append("images", new Blob([]));
-			saleApi.createSale(formData);
+			saleApi.createSale(createFormData(houseInfo));
 		}
 	};
 
