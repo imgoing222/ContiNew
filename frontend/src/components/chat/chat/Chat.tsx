@@ -83,11 +83,6 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	};
 
 	useEffect(() => {
-		setSavedChattings({
-			chat_message: [],
-			current_page_count: 0,
-			total_page_count: 0,
-		});
 		setShowChatList([]);
 
 		getChatList();
@@ -99,9 +94,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 
 	useEffect(() => {
 		if (receivedChatData) {
-			setShowChatList((prevShowChatList) => {
-				return [receivedChatData, ...prevShowChatList];
-			});
+			setShowChatList((prevShowChatList) => [receivedChatData, ...prevShowChatList]);
 		}
 	}, [receivedChatData]);
 
@@ -121,11 +114,8 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	};
 
 	const addChat = (chatMessage: ChatMessageType[]) => {
-		chatMessage.map((chat) =>
-			setShowChatList((prevShowChatList) => {
-				return [...prevShowChatList, chat];
-			}),
-		);
+		setShowChatList(chatMessage)
+		// chatMessage.map((chat) => setShowChatList((prevShowChatList) => [...prevShowChatList, chat]));
 	};
 
 	const scrollToBottom = () => {
