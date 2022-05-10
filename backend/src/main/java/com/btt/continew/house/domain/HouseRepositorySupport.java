@@ -81,6 +81,46 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
         return PageableExecutionUtils.getPage(responses, pageable, () -> countQuery.fetch().size());
     }
 
+    private BooleanExpression depositBetween(Long minDeposit, Long maxDeposit) {
+        if (Objects.nonNull(minDeposit) && Objects.nonNull(maxDeposit)) {
+            return house.deposit.between(minDeposit, maxDeposit);
+        }
+        if (Objects.nonNull(minDeposit)) {
+            return house.deposit.goe(minDeposit);
+        }
+        if (Objects.nonNull(maxDeposit)) {
+            return house.deposit.lt(maxDeposit);
+        }
+        return house.deposit.goe(0);
+    }
+
+    private BooleanExpression monthlyRentBetween(Long minRent, Long maxRent) {
+        if (Objects.nonNull(minRent) && Objects.nonNull(maxRent)) {
+            return house.monthlyRent.between(minRent, maxRent);
+        }
+        if (Objects.nonNull(minRent)) {
+            return house.monthlyRent.goe(minRent);
+        }
+        if (Objects.nonNull(maxRent)) {
+            return house.monthlyRent.lt(maxRent);
+        }
+        return house.monthlyRent.goe(0);
+
+    }
+
+    private BooleanExpression maintenanceFeeBetween(Long minFee, Long maxFee) {
+        if (Objects.nonNull(minFee) && Objects.nonNull(maxFee)) {
+            return house.maintenanceFee.between(minFee, maxFee);
+        }
+        if (Objects.nonNull(minFee)) {
+            return house.maintenanceFee.goe(minFee);
+        }
+        if (Objects.nonNull(maxFee)) {
+            return house.maintenanceFee.lt(maxFee);
+        }
+        return house.maintenanceFee.goe(0);
+    }
+
     private BooleanExpression saleTypeEq(String saleType) {
         return hasText(saleType) ? house.saleType.eq(saleType) : null;
     }
