@@ -2,11 +2,14 @@ package com.btt.continew.house.service;
 
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
+import com.btt.continew.house.controller.dto.response.HouseListResponse;
 import com.btt.continew.house.domain.House;
 import com.btt.continew.house.domain.HouseLike;
 import com.btt.continew.house.domain.HouseLikeRepository;
 import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +41,13 @@ public class HouseLikeService {
             .member(member)
             .build();
         houseLikeRepository.save(houseLike);
+    }
+
+    @Transactional(readOnly = true)
+    public HouseListResponse show(String loginId, Pageable pageable) {
+        Member member = memberService.findByLoginId(loginId);
+        Page<HouseLike> houseLikes = houseLikeRepository.findAllByMember(member, pageable);
+        return HouseListResponse.fromHouseLikes(houseLikes);
     }
 
     @Transactional
