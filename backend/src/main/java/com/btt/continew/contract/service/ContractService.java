@@ -100,13 +100,17 @@ public class ContractService {
     }
 
     @Transactional(readOnly = true)
-    public ContractAgreeResponse viewContractAgree(Long houseId, String seller, String buyer) {
+    public ContractAgreeResponse viewContractAgree(Long houseId, String seller, String buyer, String loginId) {
         Member sellerMember = memberService.findByLoginId(seller);
         Member buyerMember = memberService.findByLoginId(buyer);
         House house = houseService.findById(houseId);
 
         ContractAgree contractAgree = contractAgreeRepository.findByHouseAndSellerAndBuyer(house, sellerMember, buyerMember)
             .orElseThrow(() -> new BusinessException(ErrorCode.CONTRACT_NOT_FOUND_CONTRACT_AGREE));
+
+        if (!contractAgree.getSeller().getLoginId().equals(loginId) && !contractAgree.getBuyer().getLoginId().equals(loginId)) {
+            throw new BusinessException(ErrorCode.CONTRACT_NOT_YOUR_CONTRACT_AGREE);
+        }
 
         return ContractAgreeResponse.of(contractAgree.getHouse().getId(), contractAgree.getSellerAgree(),
             contractAgree.getBuyerAgree());
