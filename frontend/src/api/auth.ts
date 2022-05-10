@@ -18,6 +18,7 @@ interface AuthApiType {
 	deleteAccount: () => Promise<AxiosResponse>;
 	logout: () => void;
 	findPassword: (userInfo: { login_id: string; phone_number: string }) => Promise<AxiosResponse>;
+	confirmChangeCode: (code: string) => Promise<AxiosResponse>;
 }
 
 const authApi: AuthApiType = {
@@ -36,6 +37,7 @@ const authApi: AuthApiType = {
 		window.location.replace("/");
 	},
 	findPassword: (userInfo) => request.post("members/find-pw/phone-send", userInfo),
+	confirmChangeCode: (code) => request.post("members/find-pw/phone-check", { code }),
 };
 
 export default authApi;
