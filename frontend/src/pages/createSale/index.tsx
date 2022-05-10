@@ -120,7 +120,7 @@ function index() {
 
 export default index;
 
-const Container = styled.form`
+const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin: 0 auto;
