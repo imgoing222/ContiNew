@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useEffect } from "react";
+import axios from "axios";
 import styled from "styled-components";
 
 import { SearchSection, RecommendSection } from "@components/main";
@@ -39,6 +40,9 @@ function MainPage({ recommendData }: recommendDataType) {
 			navigator.geolocation.getCurrentPosition(
 				(position) => {
 					console.log(position.coords.latitude + " " + position.coords.longitude);
+					const lon = String(position.coords.longitude);
+					const lat = String(position.coords.latitude);
+					// testRequest(lon, lat);
 				},
 				(error) => {
 					console.error(error);
@@ -53,6 +57,19 @@ function MainPage({ recommendData }: recommendDataType) {
 			alert("GPS를 지원하지 않습니다");
 		}
 	};
+
+	// const testRequest = (lon: string, lat: string) => {
+	// 	axios
+	// 		.get("https://dapi.kakao.com/v2/local/geo/coord2address.json?x=" + lon + "&y" + lat, {
+	// 			headers: {
+	// 				Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}`,
+	// 				"Content-Type": "application/json",
+	// 			},
+	// 		})
+	// 		.then((response) => {
+	// 			console.log(response);
+	// 		});
+	// };
 
 	return (
 		<>
