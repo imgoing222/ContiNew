@@ -5,7 +5,6 @@ import { mainApi } from "src/api";
 import House from "src/types/getListType";
 
 interface DataProps {
-	recommendData: { id: number; imageUrl: string }[];
 	addressName: {
 		sido_name: string;
 		gungu_name: string;
