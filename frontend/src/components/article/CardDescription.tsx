@@ -56,7 +56,7 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 							href={{ pathname: "/createSale", query: { id: houseInfo.houseId } }}
 							as={`/updateArticle/${houseInfo.houseId}`}
 						>
-							<Button onClick={() => editArticle(houseInfo.houseId)}>수정</Button>
+							<Button>수정</Button>
 						</Link>
 						<Button onClick={() => deleteArticle(houseInfo.houseId)}>삭제</Button>
 					</>
