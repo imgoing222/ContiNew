@@ -1,5 +1,5 @@
 import React from "react";
-import { HouseInfo } from "src/types/houseInfo";
+import HouseInfo from "src/types/houseInfo";
 import { InputRadio, Label, Pbox } from "./Table";
 
 interface SaleInfoComponentProps {
