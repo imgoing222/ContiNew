@@ -3,13 +3,13 @@ package com.btt.continew.contract.controller;
 import com.btt.continew.contract.controller.dto.request.ContractAgreeRequest;
 import com.btt.continew.contract.controller.dto.request.ContractRequest;
 import com.btt.continew.contract.controller.dto.response.ContractAgreeResponse;
+import com.btt.continew.contract.controller.dto.response.ContractResponse;
 import com.btt.continew.contract.service.ContractService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -63,6 +63,12 @@ public class ContractRestController {
         return ResponseEntity.noContent().build();
     }
 
-    //@GetMapping("/auth/contracts")
+    @GetMapping("/auth/contracts")
+    public ResponseEntity<ContractResponse> viewContract(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
+        @RequestParam(name = "house_id") Long houseId, @RequestParam(name = "seller") String seller,
+        @RequestParam(name = "buyer") String buyer) {
+        return ResponseEntity.ok().body(contractService.viewContract(loginId, houseId, seller, buyer));
+    }
+
     //@DeleteMapping("/auth/contracts")
 }
