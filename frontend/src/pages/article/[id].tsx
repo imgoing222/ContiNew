@@ -21,9 +21,10 @@ function index() {
 
 	useEffect(() => {
 		const setData = async () => {
-			const data = await getArticleData(16);
-
-			setHouseInfo(snakeToCamel(data) as ArticleType);
+			if (router.query.id) {
+				const data = await getArticleData(+router.query.id);
+				setHouseInfo(snakeToCamel(data) as ArticleType);
+			}
 		};
 
 		setData();
