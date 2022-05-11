@@ -3,6 +3,7 @@ package com.btt.continew.contract.service;
 import com.btt.continew.contract.controller.dto.request.ContractAgreeRequest;
 import com.btt.continew.contract.controller.dto.request.ContractRequest;
 import com.btt.continew.contract.controller.dto.response.ContractAgreeResponse;
+import com.btt.continew.contract.controller.dto.response.ContractResponse;
 import com.btt.continew.contract.domain.Contract;
 import com.btt.continew.contract.domain.ContractAgree;
 import com.btt.continew.contract.domain.ContractAgreeRepository;
@@ -122,6 +123,8 @@ public class ContractService {
         Contract contract = contractRepository.findByHouseAndSellerAndBuyer(house, sellerMember, buyerMember)
             .orElseThrow(() -> new BusinessException(ErrorCode.CONTRACT_NOT_FOUND_CONTRACT));
 
+        checkHisContract(loginId, contract);
+
         switch (contract.getLevel()) {
             case 1:
                 checkSeller(loginId, sellerMember);
@@ -160,6 +163,26 @@ public class ContractService {
     private void checkBuyer(String loginId, Member buyerMember) {
         if (!buyerMember.getLoginId().equals(loginId)) {
             throw new BusinessException(ErrorCode.CONTRACT_NOT_BUYER);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public ContractResponse viewContract(String loginId, Long houseId, String seller, String buyer) {
+        Member sellerMember = memberService.findByLoginId(seller);
+        Member buyerMember = memberService.findByLoginId(buyer);
+        House house = houseService.findById(houseId);
+
+        Contract contract = contractRepository.findByHouseAndSellerAndBuyer(house, sellerMember, buyerMember)
+            .orElseThrow(() -> new BusinessException(ErrorCode.CONTRACT_NOT_FOUND_CONTRACT));
+
+        checkHisContract(loginId, contract);
+
+        return ContractResponse.of(contract);
+    }
+
+    private void checkHisContract(String loginId, Contract contract) {
+        if (!contract.getBuyer().getLoginId().equals(loginId) && !contract.getSeller().getLoginId().equals(loginId)) {
+            throw new BusinessException(ErrorCode.CONTRACT_NOT_YOUR_CONTRACT);
         }
     }
 }
