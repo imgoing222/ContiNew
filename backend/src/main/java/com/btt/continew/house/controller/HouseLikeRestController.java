@@ -29,7 +29,7 @@ public class HouseLikeRestController {
         this.houseLikeService = houseLikeService;
     }
 
-    @PostMapping("/houses/likes/{house_id}")
+    @PostMapping("/auth/houses/likes/{house_id}")
     @ApiOperation(value = "관심 매물 등록", notes = "관심 매물 등록 api")
     @ApiResponses({
         @ApiResponse(code = 400, message = "BAD_REQUEST\n 이미 관심 등록한 매물일 때(L01)")
@@ -40,14 +40,14 @@ public class HouseLikeRestController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/houses/likes")
+    @GetMapping("/auth/houses/likes")
     @ApiOperation(value = "관심 매물 목록", notes = "관심 매물 목록 api")
     public ResponseEntity<HouseListResponse> show(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId, @PageableDefault
         Pageable pageable) {
         return ResponseEntity.ok().body(houseLikeService.show(loginId, pageable));
     }
 
-    @DeleteMapping("/houses/likes/{house_id}")
+    @DeleteMapping("/auth/houses/likes/{house_id}")
     @ApiOperation(value = "관심 매물 삭제", notes = "관심 매물 삭제 api")
     public ResponseEntity<Void> delete(@PathVariable(value = "house_id") Long houseId,
         @ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
