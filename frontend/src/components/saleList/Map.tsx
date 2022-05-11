@@ -1,8 +1,14 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { MapRefType } from "src/pages/saleList";
-import { saleApi } from "../../api/index";
-function Map({ kakaoMap }: MapRefType) {
+import { Coordinate, MapRefType } from "src/pages/saleList";
+import House from "src/types/getListType";
+
+interface Map extends MapRefType {
+	setCoordinates: React.Dispatch<React.SetStateAction<Coordinate>>;
+	saleList: House[];
+}
+
+function Map({ kakaoMap, setCoordinates, saleList }: Map) {
 	useEffect(() => {
 		const $script = document.createElement("script");
 		$script.async = true;
@@ -23,14 +29,6 @@ function Map({ kakaoMap }: MapRefType) {
 				const zoomControl = new kakao.maps.ZoomControl();
 				kakaoMap.current.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-				// 임시 데터
-				const data = [
-					{ y: 37.3595316, x: 127.1052133, content: "네이버" },
-					{ y: 37.359531, x: 127.1052133, content: "다음" },
-					{ y: 37.5559, x: 126.9723, content: "네이버" },
-					{ y: 37.5663, x: 126.9779, content: "네이버" },
-					{ y: 37.5465, x: 126.9647, content: "네이버" },
-				];
 				const clusterer = new kakao.maps.MarkerClusterer({
 					map: kakaoMap.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
 					averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
@@ -48,10 +46,10 @@ function Map({ kakaoMap }: MapRefType) {
 					],
 				});
 				clusterer.setMinClusterSize(0);
-				const markers = data.map(
+				const markers = saleList.map(
 					(item) =>
 						new kakao.maps.Marker({
-							position: new kakao.maps.LatLng(item.y, item.x),
+							position: new kakao.maps.LatLng(item.latitude, item.longitude),
 						}),
 				);
 
@@ -64,7 +62,7 @@ function Map({ kakaoMap }: MapRefType) {
 						x_left: coordinate.ha,
 						y_bottom: coordinate.qa,
 					};
-					const sales = await saleApi.getSales(coordinates);
+					setCoordinates(coordinates);
 				};
 				kakao.maps.event.addListener(kakaoMap.current, "bounds_changed", getSales);
 			});
