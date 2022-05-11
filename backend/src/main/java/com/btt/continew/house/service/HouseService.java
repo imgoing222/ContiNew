@@ -2,6 +2,7 @@ package com.btt.continew.house.service;
 
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
+import com.btt.continew.house.controller.dto.request.HouseAroundRequest;
 import com.btt.continew.house.controller.dto.request.HouseListRequest;
 import com.btt.continew.house.controller.dto.request.HouseSaveRequest;
 import com.btt.continew.house.controller.dto.response.HouseDetailResponse;
@@ -142,6 +143,13 @@ public class HouseService {
 //        List<HouseOption> houseOptions = houseOptionRepository.findAllByHouse(house);
         List<Image> images = imageRepository.findAllByHouse(house);
         return HouseDetailResponse.of(house, images);
+    }
+
+    @Transactional(readOnly = true)
+    public HouseListResponse showAroundHouses(HouseAroundRequest request, Pageable pageable) {
+        Page<House> houses = houseRepository.findAllBySidoNameAndGunguNameAndDongName(request.getSidoName(),
+            request.getGunguName(), request.getDongName(), pageable);
+        return HouseListResponse.fromHouses(houses);
     }
 
     @Transactional

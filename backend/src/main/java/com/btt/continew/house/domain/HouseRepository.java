@@ -11,4 +11,6 @@ public interface HouseRepository extends JpaRepository<House, Long> {
         Pageable pageable);
 
     boolean existsByMember(Member member);
+
+    Page<House> findAllBySidoNameAndGunguNameAndDongName(String sidoName, String gunguName, String dongName, Pageable pageable);
 }

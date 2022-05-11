@@ -1,10 +1,10 @@
 package com.btt.continew.house.controller;
 
+import com.btt.continew.house.controller.dto.request.HouseAroundRequest;
 import com.btt.continew.house.controller.dto.request.HouseListRequest;
 import com.btt.continew.house.controller.dto.request.HouseSaveRequest;
 import com.btt.continew.house.controller.dto.response.HouseDetailResponse;
 import com.btt.continew.house.controller.dto.response.HouseListResponse;
-import com.btt.continew.house.controller.dto.response.HouseSimpleResponse;
 import com.btt.continew.house.service.HouseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,7 +39,7 @@ public class HouseRestController {
         this.houseService = houseService;
     }
 
-    @PostMapping("/houses")
+    @PostMapping("/auth/houses")
     @ApiOperation(value = "매물 등록", notes = "매물 등록 api")
     @ApiResponses({
         @ApiResponse(code = 404, message = "NOT_FOUND\n옵션이 존재하지 않을 때(O01)"),
@@ -84,7 +85,14 @@ public class HouseRestController {
         return ResponseEntity.ok().body(houseService.show(houseId));
     }
 
-    @PutMapping("/houses/{house_id}")
+    @PostMapping("/houses/around")
+    @ApiOperation(value = "주변 매물 조회", notes = "주변 매물 조회 api")
+    public ResponseEntity<HouseListResponse> showAroundHouses(@RequestBody HouseAroundRequest request, @PageableDefault Pageable pageable) {
+        return ResponseEntity.ok().body(houseService.showAroundHouses(request, pageable));
+    }
+
+
+    @PutMapping("/auth/houses/{house_id}")
     @ApiOperation(value = "매물 수정", notes = "매물 수정 api")
     @ApiImplicitParam(name = "house_id", value = "매물 id", required = true)
     public ResponseEntity<Void> update(@PathVariable(value = "house_id") Long houseId,
@@ -94,7 +102,7 @@ public class HouseRestController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/houses/{house_id}")
+    @DeleteMapping("/auth/houses/{house_id}")
     @ApiOperation(value = "매물 삭제", notes = "매물 삭제 api")
     @ApiImplicitParam(name = "house_id", value = "매물 id", readOnly = true)
     public ResponseEntity<Void> delete(@PathVariable(value = "house_id") Long houseId, @ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
