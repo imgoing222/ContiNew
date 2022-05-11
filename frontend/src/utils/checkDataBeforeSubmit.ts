@@ -20,6 +20,7 @@ function checkData(houseInfo: HouseInfo) {
 	const keys = Object.keys(houseInfo);
 
 	for (const k of keys) {
+		if (k === "phoneAuth" || k === "houseId") continue;
 		if (houseInfo.contractType === "전세" && k === "monthlyRent") continue;
 		if (k === "images" && houseInfo.images && houseInfo.images?.length < 3) {
 			toast.warning("사진을 최소 3장 업로드해주세요");
@@ -27,7 +28,6 @@ function checkData(houseInfo: HouseInfo) {
 		}
 		if (!houseInfo[k as keyof HouseInfo]) {
 			toast.warning(msg[k as keyof typeof msg]);
-			console.log(k);
 			return false;
 		}
 	}
