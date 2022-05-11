@@ -19,7 +19,7 @@ function PriceInfo({ houseInfo }: HouseInfoProps) {
 			<PriceInfoList
 				name="관리비"
 				content={`매월 ${houseInfo.maintenanceFee / 10000}만원`}
-				content2={houseInfo.maintenanceDetail}
+				content2={`포함 항목 : ${houseInfo.maintenanceDetail}`}
 				div={true}
 			/>
 			<PriceInfoList name="주차" content={houseInfo.options.includes(9) ? "가능" : "불가능"} />
