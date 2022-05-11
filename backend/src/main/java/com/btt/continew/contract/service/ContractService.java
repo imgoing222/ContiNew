@@ -1,6 +1,7 @@
 package com.btt.continew.contract.service;
 
 import com.btt.continew.contract.controller.dto.request.ContractAgreeRequest;
+import com.btt.continew.contract.controller.dto.request.ContractRequest;
 import com.btt.continew.contract.controller.dto.response.ContractAgreeResponse;
 import com.btt.continew.contract.domain.Contract;
 import com.btt.continew.contract.domain.ContractAgree;
@@ -108,6 +109,44 @@ public class ContractService {
 
         return ContractAgreeResponse.of(contractAgree.getHouse().getId(), contractAgree.getSellerAgree(),
             contractAgree.getBuyerAgree());
+    }
+
+    @Transactional
+    public void saveContract(ContractRequest request, String loginId) {
+        Member sellerMember = memberService.findByLoginId(request.getSellerLoginId());
+        Member buyerMember = memberService.findByLoginId(request.getBuyerLoginId());
+        House house = houseService.findById(request.getHouseId());
+
+        Contract contract = contractRepository.findByHouseAndSellerAndBuyer(house, sellerMember, buyerMember)
+            .orElseThrow(() -> new BusinessException(ErrorCode.CONTRACT_NOT_FOUND_CONTRACT));
+
+        switch (contract.getLevel()) {
+            case 1:
+                checkSeller(loginId, sellerMember);
+                contract.levelOneWrite(request);
+                if (request.getNextLevel()) {
+                    // TODO: 판매자 -> 구매자 1단계 완료 채팅 메시지 보내기
+                }
+                break;
+            case 2:
+                checkBuyer(loginId, buyerMember);
+                contract.levelTwoWrite(request);
+                if (request.getNextLevel()) {
+                    // TODO: 구매자 -> 판매자 2단계 완료 채팅 메시지 보내기
+                }
+                break;
+            case 3:
+                checkSeller(loginId, sellerMember);
+                contract.levelThreeWrite(request);
+                if (request.getNextLevel()) {
+                    // TODO: 판매자 -> 구매자 3단계 완료 채팅 메시지 보내기
+                }
+                break;
+            case 4:
+                throw new BusinessException(ErrorCode.CONTRACT_ALREADY_FINISHED);
+            default:
+                throw new BusinessException(ErrorCode.CONTRACT_WEIRD_LEVEL);
+        }
     }
 
     private void checkSeller(String loginId, Member sellerMember) {
