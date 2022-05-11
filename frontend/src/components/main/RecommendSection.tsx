@@ -37,11 +37,11 @@ function RecommendSection({ addressName }: DataProps) {
 		<Section>
 			<Title>{addressName.dong_name} 추천매물</Title>
 			<Ul>
-				{/* {recommendData.map((recommend) => (
-					<Li key={recommend.id}>
-						<Image src={recommend.imageUrl} alt="recommend-img" />
+				{aroundHousesData.map((house) => (
+					<Li key={house.house_id}>
+						<Image src={house.main_image} alt="house-img" />
 					</Li>
-				))} */}
+				))}
 			</Ul>
 		</Section>
 	);
