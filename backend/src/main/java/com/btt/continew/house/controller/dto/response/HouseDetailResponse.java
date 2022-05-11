@@ -24,6 +24,18 @@ public class HouseDetailResponse {
     @ApiModelProperty(notes = "작성자 휴대폰 인증 여부", example = "true")
     private Boolean phoneAuth;
 
+    @JsonProperty("sido_name")
+    @ApiModelProperty(notes = "시/도명", example = "서울")
+    private String sidoName;
+
+    @JsonProperty("gungu_name")
+    @ApiModelProperty(notes = "군/구명", example = "동대문구")
+    private String gunguName;
+
+    @JsonProperty("dong_name")
+    @ApiModelProperty(notes = "동명", example = "이문동")
+    private String dongName;
+
     @JsonProperty("jibun_address")
     @ApiModelProperty(notes = "지번 주소", example = "서울 동대문구 이문동 294-295")
     private String jibunAddress;
@@ -31,6 +43,14 @@ public class HouseDetailResponse {
     @JsonProperty("address_detail")
     @ApiModelProperty(notes = "상세 주소", example = "스카이빌")
     private String addressDetail;
+
+    @JsonProperty("latitude")
+    @ApiModelProperty(notes = "위도", example = "33.448093757167825")
+    private Double latitude;
+
+    @JsonProperty("longitude")
+    @ApiModelProperty(notes = "경도", example = "126.55492857215698")
+    private Double longitude;
 
     @JsonProperty("floor")
     @ApiModelProperty(notes = "층", example = "3")
@@ -83,15 +103,20 @@ public class HouseDetailResponse {
     public HouseDetailResponse() {
     }
 
-    public HouseDetailResponse(Long id, String username, Boolean phoneAuth, String jibunAddress, String addressDetail,
-        Integer floor, String saleType, String houseType, String contractType, Long deposit, Long monthlyRent,
-        Long maintenanceFee, String maintenanceDetail, Integer period, String description, List<Long> options,
-        List<String> images) {
+    public HouseDetailResponse(Long id, String username, Boolean phoneAuth, String sidoName, String gunguName,
+        String dongName, String jibunAddress, String addressDetail, Double latitude, Double longitude, Integer floor,
+        String saleType, String houseType, String contractType, Long deposit, Long monthlyRent, Long maintenanceFee,
+        String maintenanceDetail, Integer period, String description, List<Long> options, List<String> images) {
         this.id = id;
         this.username = username;
         this.phoneAuth = phoneAuth;
+        this.sidoName = sidoName;
+        this.gunguName = gunguName;
+        this.dongName = dongName;
         this.jibunAddress = jibunAddress;
         this.addressDetail = addressDetail;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.floor = floor;
         this.saleType = saleType;
         this.houseType = houseType;
@@ -111,8 +136,13 @@ public class HouseDetailResponse {
             house.getId(),
             house.getMember().getUsername(),
             house.getMember().getPhoneAuth(),
+            house.getSidoName(),
+            house.getGunguName(),
+            house.getDongName(),
             house.getJibunAddress(),
             house.getAddressDetail(),
+            house.getLatitude(),
+            house.getLongitude(),
             house.getFloor(),
             house.getSaleType(),
             house.getHouseType(),
