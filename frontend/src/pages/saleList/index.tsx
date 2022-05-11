@@ -30,10 +30,10 @@ function index() {
 
 	useEffect(() => {
 		const getSales = async () => {
-			console.log(coordinates);
 			const sales = await saleApi.getSales(coordinates);
 			setSaleList(sales.data.houses);
 		};
+
 		getSales();
 	}, [coordinates]);
 
@@ -41,11 +41,10 @@ function index() {
 		<>
 			<SaleListNav kakaoMap={kakaoMap as React.MutableRefObject<kakao.maps.Map>} />
 			<Container>
-				<SaleList />
+				<SaleList saleList={saleList} />
 				<Map
 					kakaoMap={kakaoMap as React.MutableRefObject<kakao.maps.Map>}
 					setCoordinates={setCoordinates}
-					saleList={saleList}
 				/>
 			</Container>
 		</>

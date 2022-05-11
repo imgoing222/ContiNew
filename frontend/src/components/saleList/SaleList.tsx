@@ -1,7 +1,18 @@
+import House from "src/types/getListType";
 import styled from "styled-components";
 
-function SaleList() {
-	return <Container></Container>;
+interface SaleListProps {
+	saleList: House[];
+}
+
+function SaleList({ saleList }: SaleListProps) {
+	return (
+		<Container>
+			{saleList.map((item, idx) => (
+				<p key={idx}>{item.address_detail}</p>
+			))}
+		</Container>
+	);
 }
 
 export default SaleList;

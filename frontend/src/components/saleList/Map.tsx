@@ -2,13 +2,49 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Coordinate, MapRefType } from "src/pages/saleList";
 import House from "src/types/getListType";
+import { saleApi } from "src/api";
 
 interface Map extends MapRefType {
 	setCoordinates: React.Dispatch<React.SetStateAction<Coordinate>>;
-	saleList: House[];
 }
 
-function Map({ kakaoMap, setCoordinates, saleList }: Map) {
+function Map({ kakaoMap, setCoordinates }: Map) {
+	const getSales = async () => {
+		const coordinate = kakaoMap.current.getBounds();
+		const coordinates = {
+			x_right: coordinate.oa,
+			y_top: coordinate.pa,
+			x_left: coordinate.ha,
+			y_bottom: coordinate.qa,
+		};
+		setCoordinates(coordinates);
+		const sale = (await saleApi.getSales(coordinates)).data.houses;
+		console.log(sale);
+		const clusterer = new kakao.maps.MarkerClusterer({
+			map: kakaoMap.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+			averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+			styles: [
+				{
+					background: "rgba(255, 80, 80, .8)",
+					width: "4rem",
+					height: "4rem",
+					color: "#fff",
+					borderRadius: "3rem",
+					textAlign: "center",
+					lineHeight: "4.1rem",
+					fontSize: "2rem",
+				},
+			],
+		});
+		const markers = sale.map(
+			(item) =>
+				new kakao.maps.Marker({
+					position: new kakao.maps.LatLng(item.latitude, item.longitude),
+				}),
+		);
+		clusterer.setMinClusterSize(0);
+		clusterer.addMarkers(markers);
+	};
 	useEffect(() => {
 		const $script = document.createElement("script");
 		$script.async = true;
@@ -29,41 +65,6 @@ function Map({ kakaoMap, setCoordinates, saleList }: Map) {
 				const zoomControl = new kakao.maps.ZoomControl();
 				kakaoMap.current.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-				const clusterer = new kakao.maps.MarkerClusterer({
-					map: kakaoMap.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
-					averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-					styles: [
-						{
-							background: "rgba(255, 80, 80, .8)",
-							width: "4rem",
-							height: "4rem",
-							color: "#fff",
-							borderRadius: "3rem",
-							textAlign: "center",
-							lineHeight: "4.1rem",
-							fontSize: "2rem",
-						},
-					],
-				});
-				clusterer.setMinClusterSize(0);
-				const markers = saleList.map(
-					(item) =>
-						new kakao.maps.Marker({
-							position: new kakao.maps.LatLng(item.latitude, item.longitude),
-						}),
-				);
-
-				clusterer.addMarkers(markers);
-				const getSales = async () => {
-					const coordinate = kakaoMap.current.getBounds();
-					const coordinates = {
-						x_right: coordinate.oa,
-						y_top: coordinate.pa,
-						x_left: coordinate.ha,
-						y_bottom: coordinate.qa,
-					};
-					setCoordinates(coordinates);
-				};
 				kakao.maps.event.addListener(kakaoMap.current, "bounds_changed", getSales);
 			});
 		};
