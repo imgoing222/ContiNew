@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,7 +54,7 @@ public class ContractRestController {
         return ResponseEntity.ok().body(contractService.viewContractAgree(houseId, seller, buyer, loginId));
     }
 
-    @PostMapping("/auth/contracts/save")
+    @PostMapping("/auth/contracts")
     @ApiOperation(value = "계약서 임시 저장 + 저장 후 다음 단계", notes = "계약서 임시 저장 기능과 저장 후 다음 단계 기능이 있는 API\n"
         + "RequestBody 속에 있는 next_level 이 true 면 다음 단계로, false 면 임시저장 입니다.")
     public ResponseEntity<Void> saveContract(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
@@ -61,4 +62,7 @@ public class ContractRestController {
         contractService.saveContract(request, loginId);
         return ResponseEntity.noContent().build();
     }
+
+    //@GetMapping("/auth/contracts")
+    //@DeleteMapping("/auth/contracts")
 }
