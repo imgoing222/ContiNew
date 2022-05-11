@@ -1,18 +1,44 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
+import { mainApi } from "src/api";
+import House from "src/types/getListType";
+
 interface DataProps {
-	recommendData: { id: number; imageUrl: string }[];
-	addressName: string;
+	addressName: {
+		sido_name: string;
+		gungu_name: string;
+		dong_name: string;
+	};
 }
 
-function RecommendSection({ recommendData, addressName }: DataProps) {
+function RecommendSection({ addressName }: DataProps) {
+	const [aroundHousesData, setAroundHousesData] = useState<House[]>([]);
+	const testData = {
+		sido_name: "서울",
+		gungu_name: "동대문구",
+		dong_name: "이문동",
+	};
+
+	useEffect(() => {
+		getAroundHouse();
+	}, []);
+
+	const getAroundHouse = async () => {
+		try {
+			const res = await mainApi.getAroundHouse(testData);
+			setAroundHousesData(res.data.houses);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 	return (
 		<Section>
-			<Title>oo동 추천매물</Title>
+			<Title>{addressName.dong_name} 추천매물</Title>
 			<Ul>
-				{recommendData.map((recommend) => (
-					<Li key={recommend.id}>
-						<Image src={recommend.imageUrl} alt="recommend-img" />
+				{aroundHousesData.map((house) => (
+					<Li key={house.house_id}>
+						<Image src={house.main_image} alt="house-img" />
 					</Li>
 				))}
 			</Ul>
