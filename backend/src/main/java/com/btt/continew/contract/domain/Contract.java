@@ -189,7 +189,9 @@ public class Contract extends BaseEntity {
     }
 
     public void levelThreeWrite(ContractRequest request) {
-        this.sellerSignature = request.getBuyerSignature();
+        isNull(request.getSellerSignature());
+        this.sellerSignature = request.getSellerSignature();
+        isNull(request.getNextLevel());
         if (request.getNextLevel()) {
             this.level = 4;
         }
