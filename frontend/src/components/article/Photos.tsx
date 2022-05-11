@@ -1,12 +1,12 @@
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import styled from "styled-components";
 import "@splidejs/splide/dist/css/splide.min.css";
+import { HouseInfoProps } from "src/pages/article/[id]";
 
-function Photos() {
-	const list = ["/aircon.svg", "/bookmark.svg"];
+function Photos({ houseInfo }: HouseInfoProps) {
 	return (
 		<Container
-			aria-label="My Favorite Images"
+			aria-label="House Images"
 			options={{
 				width: 1200,
 				height: 300,
@@ -14,7 +14,7 @@ function Photos() {
 				rewind: true,
 			}}
 		>
-			{list.map((item, idx) => (
+			{houseInfo.images.map((item, idx) => (
 				<SplideSlide key={idx}>
 					<Img src={item} />
 				</SplideSlide>
@@ -32,5 +32,6 @@ const Container = styled(Splide)`
 `;
 
 const Img = styled.img`
-	width: auto;
+	width: 100%;
+	height: 100%;
 `;
