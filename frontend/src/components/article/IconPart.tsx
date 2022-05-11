@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
-import { HouseInfo } from "src/types/houseInfo";
+import HouseInfo from "src/types/houseInfo";
 
 interface IconProps {
 	content1: string;

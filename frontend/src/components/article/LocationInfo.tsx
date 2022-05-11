@@ -22,7 +22,7 @@ function LocationInfo({ houseInfo }: HouseInfoProps) {
 					level: 3,
 				};
 				kakaoMap.current = new kakao.maps.Map(container, options);
-				geocoder.addressSearch(`${houseInfo.jibun_address}`, function (result, status) {
+				geocoder.addressSearch(`${houseInfo.jibunAddress}`, function (result, status) {
 					if (status === kakao.maps.services.Status.OK) {
 						const coords = new kakao.maps.LatLng(+result[0].y, +result[0].x);
 						const marker = new kakao.maps.Marker({
@@ -41,7 +41,7 @@ function LocationInfo({ houseInfo }: HouseInfoProps) {
 
 	return (
 		<Container title="위치 정보">
-			<Text>{houseInfo.jibun_address}</Text>
+			<Text>{houseInfo.jibunAddress}</Text>
 			<Map id="map"></Map>
 		</Container>
 	);
