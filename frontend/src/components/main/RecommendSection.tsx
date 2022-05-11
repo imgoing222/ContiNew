@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+
+import { mainApi } from "src/api";
 
 interface DataProps {
 	recommendData: { id: number; imageUrl: string }[];
@@ -10,6 +13,24 @@ interface DataProps {
 }
 
 function RecommendSection({ recommendData, addressName }: DataProps) {
+	const testData = {
+		sido_name: "서울",
+		gungu_name: "동대문구",
+		dong_name: "이문동",
+	};
+	useEffect(() => {
+		getAroundHouse();
+	}, []);
+
+	const getAroundHouse = async () => {
+		try {
+			const res = await mainApi.getAroundHouse(testData);
+			console.log(res.data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<Section>
 			<Title>{addressName.dong_name} 추천매물</Title>
