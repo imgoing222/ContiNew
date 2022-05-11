@@ -37,7 +37,12 @@ interface AddressType {
 }
 
 function MainPage({ recommendData }: recommendDataType) {
-	const [addressName, setAddressName] = useState<AddressType>();
+	const [addressName, setAddressName] = useState<AddressType>({
+		sido_name: "서울",
+		gungu_name: "동대문구",
+		dong_name: "이문동",
+	});
+
 	useEffect(() => {
 		getLocation();
 	}, []);
@@ -46,7 +51,6 @@ function MainPage({ recommendData }: recommendDataType) {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(
 				(position) => {
-					console.log(position.coords.latitude + " " + position.coords.longitude);
 					const lon = String(position.coords.longitude);
 					const lat = String(position.coords.latitude);
 					addressRequest(lon, lat);
@@ -74,7 +78,6 @@ function MainPage({ recommendData }: recommendDataType) {
 				withCredentials: false,
 			})
 			.then((response) => {
-				console.log(response.data.documents[0].address);
 				const addressData = {
 					sido_name: response.data.documents[0].address.region_1depth_name,
 					gungu_name: response.data.documents[0].address.region_2depth_name,

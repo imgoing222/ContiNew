@@ -2,19 +2,17 @@ import styled from "styled-components";
 
 interface DataProps {
 	recommendData: { id: number; imageUrl: string }[];
-	addressName:
-		| {
-				sido_name: string;
-				gungu_name: string;
-				dong_name: string;
-		  }
-		| undefined;
+	addressName: {
+		sido_name: string;
+		gungu_name: string;
+		dong_name: string;
+	};
 }
 
 function RecommendSection({ recommendData, addressName }: DataProps) {
 	return (
 		<Section>
-			<Title>oo동 추천매물</Title>
+			<Title>{addressName.dong_name} 추천매물</Title>
 			<Ul>
 				{recommendData.map((recommend) => (
 					<Li key={recommend.id}>
