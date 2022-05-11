@@ -21,7 +21,7 @@ function index() {
 
 	useEffect(() => {
 		const setData = async () => {
-			const data = await getArticleData(13);
+			const data = await getArticleData(15);
 
 			setHouseInfo(snakeToCamel(data) as ArticleType);
 		};
@@ -36,7 +36,7 @@ function index() {
 				<Container>
 					<SaleInfo>
 						<PriceInfo houseInfo={houseInfo} />
-						<OptionInfo />
+						<OptionInfo houseInfo={houseInfo} />
 						<LocationInfo houseInfo={houseInfo} />
 						<Description houseInfo={houseInfo} />
 					</SaleInfo>
