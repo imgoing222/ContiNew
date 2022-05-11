@@ -87,9 +87,7 @@ public class ContractService {
             throw new BusinessException(ErrorCode.CONTRACT_AGREE_ALREADY_COMPLETED);
         }
 
-        if (!contractAgree.getSeller().getLoginId().equals(loginId) && !contractAgree.getBuyer().getLoginId().equals(loginId)) {
-            throw new BusinessException(ErrorCode.CONTRACT_NOT_YOUR_CONTRACT_AGREE);
-        }
+        checkHisContractAgree(loginId, contractAgree);
 
         contractAgree.saveDeletedTime();
     }
@@ -103,12 +101,16 @@ public class ContractService {
         ContractAgree contractAgree = contractAgreeRepository.findByHouseAndSellerAndBuyer(house, sellerMember, buyerMember)
             .orElseThrow(() -> new BusinessException(ErrorCode.CONTRACT_NOT_FOUND_CONTRACT_AGREE));
 
-        if (!contractAgree.getSeller().getLoginId().equals(loginId) && !contractAgree.getBuyer().getLoginId().equals(loginId)) {
-            throw new BusinessException(ErrorCode.CONTRACT_NOT_YOUR_CONTRACT_AGREE);
-        }
+        checkHisContractAgree(loginId, contractAgree);
 
         return ContractAgreeResponse.of(contractAgree.getHouse().getId(), contractAgree.getSellerAgree(),
             contractAgree.getBuyerAgree());
+    }
+
+    private void checkHisContractAgree(String loginId, ContractAgree contractAgree) {
+        if (!contractAgree.getSeller().getLoginId().equals(loginId) && !contractAgree.getBuyer().getLoginId().equals(loginId)) {
+            throw new BusinessException(ErrorCode.CONTRACT_NOT_YOUR_CONTRACT_AGREE);
+        }
     }
 
     @Transactional
