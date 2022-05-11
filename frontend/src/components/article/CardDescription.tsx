@@ -1,3 +1,5 @@
+import { faIdCard } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import changeMonthToYear from "@utils/changeMonthToYear";
 import changeMoneyUnit from "@utils/moneyUnitChange";
 import Link from "next/link";
@@ -21,13 +23,12 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 			window.location.replace("/saleList");
 		}
 	};
-	const editArticle = (id: number) => {
-		// 수정 페이지로 이동
-	};
+
 	return (
 		<Container>
 			<Div>
 				<SaleType>{houseInfo.saleType}</SaleType>
+				{houseInfo.phoneAuth && <AuthorizedIcon icon={faIdCard} />}
 				<Text>{houseInfo.username}</Text>
 			</Div>
 			<Price>
@@ -128,4 +129,10 @@ const Price = styled.p`
 	font-size: 1.8rem;
 	font-weight: bold;
 	margin-bottom: 1rem;
+`;
+
+const AuthorizedIcon = styled(FontAwesomeIcon)`
+	width: 2rem;
+	height: 2rem;
+	margin-right: 1rem;
 `;
