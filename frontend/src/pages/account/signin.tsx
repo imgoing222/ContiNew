@@ -6,6 +6,7 @@ import { Label } from "@components/account/Label";
 import { LinkButton } from "@components/account/LinkButton";
 import useForm from "@hooks/useForm";
 import getErrorMessage from "@utils/getErrorMessage";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -48,7 +49,12 @@ function Signin() {
 				</Button>
 			</FormContainer>
 			<Button onClick={handleGoogleLoginClick}>구글로 시작하기</Button>
-			<LinkButton href="/account/signup">회원가입 하러가기</LinkButton>
+			<Link href="/account/findPassword">
+				<LinkButton>비밀번호를 잊으셨나요?</LinkButton>
+			</Link>
+			<Link href="/account/signup">
+				<LinkButton>회원가입 하러가기</LinkButton>
+			</Link>
 		</Container>
 	);
 }
