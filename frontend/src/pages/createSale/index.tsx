@@ -56,7 +56,7 @@ function index() {
 	useEffect(() => {
 		if (router.query.id) {
 			const setData = async () => {
-				const data = await getArticleData(12);
+				const data = await getArticleData(16);
 				setHouseInfo(snakeToCamel(data, "modified") as HouseInfo);
 			};
 
@@ -100,7 +100,6 @@ function index() {
 		if (checkData(houseInfo) && houseInfo.agreement === "agree") {
 			if (router.query.id) articleApi.editArticle(createFormData(houseInfo), +router.query.id);
 		}
-		console.log(houseInfo);
 		// window.location.replace(`/article/${router.query.id}`);
 	};
 

@@ -10,22 +10,22 @@ function PriceInfo({ houseInfo }: HouseInfoProps) {
 				name={houseInfo.contractType}
 				content={
 					houseInfo.contractType === "월세"
-						? moneyUnitChange((houseInfo.monthlyRent / 10000).toString()) +
+						? moneyUnitChange(houseInfo.monthlyRent.toString()) +
 						  "/" +
-						  moneyUnitChange((houseInfo.maintenanceFee / 10000).toString())
-						: moneyUnitChange((houseInfo.deposit / 10000).toString())
+						  moneyUnitChange(houseInfo.maintenanceFee.toString())
+						: moneyUnitChange(houseInfo.deposit.toString())
 				}
 			/>
 			<PriceInfoList
 				name="관리비"
-				content={`매월 ${houseInfo.maintenanceFee / 10000}만원`}
+				content={`매월 ${houseInfo.maintenanceFee}만원`}
 				content2={`포함 항목 : ${houseInfo.maintenanceDetail}`}
 				div={true}
 			/>
 			<PriceInfoList name="주차" content={houseInfo.options.includes(9) ? "가능" : "불가능"} />
 			<PriceInfoList
 				name="한달 예상 주거비용"
-				content={`${houseInfo.monthlyRent / 10000 + houseInfo.maintenanceFee / 10000}+a 만원`}
+				content={`${houseInfo.monthlyRent + houseInfo.maintenanceFee}+a 만원`}
 				content2={houseInfo.houseType === "월세" ? "월세+관리비+a" : "관리비+a"}
 				div={true}
 				price={true}

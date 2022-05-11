@@ -13,9 +13,9 @@ function createFormData(houseInfo: HouseInfo) {
 		floor: +houseInfo.floor,
 		sale_type: houseInfo.saleType,
 		house_type: houseInfo.houseType,
-		deposit: +houseInfo.deposit * 10000,
-		monthly_rent: +houseInfo.monthlyRent * 10000,
-		maintenance_fee: +houseInfo.maintenanceFee * 10000,
+		deposit: +houseInfo.deposit,
+		monthly_rent: +houseInfo.monthlyRent,
+		maintenance_fee: +houseInfo.maintenanceFee,
 		maintenance_detail: houseInfo.maintenanceDetail,
 		period: +houseInfo.period,
 		description: houseInfo.description,
@@ -23,7 +23,6 @@ function createFormData(houseInfo: HouseInfo) {
 		contract_type: houseInfo.contractType,
 	};
 
-	console.log(article);
 	formData.append("house", new Blob([JSON.stringify(article)], { type: "application/json" })),
 		houseInfo.images !== null
 			? [...houseInfo.images].forEach((file) => formData.append("images", file))

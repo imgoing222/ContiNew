@@ -16,6 +16,11 @@ interface ArticleType {
 	phoneAuth: boolean;
 	saleType: "이어살기" | "쉐어하우스";
 	username: string;
+	sidoName: string;
+	gunguName: string;
+	dongName: string;
+	latitude: number;
+	longitude: number;
 }
 
 export default ArticleType;
