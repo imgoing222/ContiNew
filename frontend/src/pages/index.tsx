@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
@@ -31,6 +31,7 @@ interface recommendDataType {
 }
 
 function MainPage({ recommendData }: recommendDataType) {
+	const [addressName, setAddressName] = useState("");
 	useEffect(() => {
 		getLocation();
 	}, []);
@@ -67,7 +68,7 @@ function MainPage({ recommendData }: recommendDataType) {
 				withCredentials: false,
 			})
 			.then((response) => {
-				console.log(response);
+				setAddressName(response.data.documents[0].address.address_name);
 			});
 	};
 
