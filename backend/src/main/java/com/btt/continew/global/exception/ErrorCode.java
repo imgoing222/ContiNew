@@ -65,6 +65,7 @@ public enum ErrorCode {
     CONTRACT_ALREADY_FINISHED(HttpStatus.BAD_REQUEST, "이미 작성이 완료된 계약서 입니다.", "K09"),
     CONTRACT_WEIRD_LEVEL(HttpStatus.CONFLICT, "존재하지 않는 단계입니다.", "K10"),
     CONTRACT_NULL_DATA(HttpStatus.BAD_REQUEST, "빈공간이 존재합니다.", "K11"),
+    CONTRACT_NOT_YOUR_CONTRACT(HttpStatus.BAD_REQUEST, "당신의 계약서가 아닙니다.", "K12"),
 
     // house
     HOUSE_NOT_FOUND_BY_ID(HttpStatus.NOT_FOUND, "존재하지 않는 매물입니다", "H01"),
