@@ -12,7 +12,7 @@ interface AddressDataType {
 }
 
 const mainApi: MainApiType = {
-  getAroundHouse: (addressData) => request.post("houses/around", addressData),
+	getAroundHouse: (addressData) => request.post("houses/around", addressData),
 };
 
 export default mainApi;
