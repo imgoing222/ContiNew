@@ -1,12 +1,11 @@
+import Link from "next/link";
+import styled from "styled-components";
 import { faIdCard } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import changeMonthToYear from "@utils/changeMonthToYear";
-import changeMoneyUnit from "@utils/moneyUnitChange";
-import Link from "next/link";
+import { changeMonthToYear, moneyUnitChange } from "@utils/index";
 import { RootStateOrAny, useSelector } from "react-redux";
 import articleApi from "src/api/article";
 import { HouseInfoProps } from "src/pages/article/[id]";
-import styled from "styled-components";
 import IconPart from "./IconPart";
 
 interface TextProp {
@@ -32,7 +31,7 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 				<Text>{houseInfo.username}</Text>
 			</Div>
 			<Price>
-				{houseInfo.contractType} {changeMoneyUnit((houseInfo.monthlyRent / 10000).toString())}
+				{houseInfo.contractType} {moneyUnitChange((houseInfo.monthlyRent / 10000).toString())}
 			</Price>
 			<Text margin="true">{houseInfo.jibunAddress}</Text>
 			<div>
