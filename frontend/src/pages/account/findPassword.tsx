@@ -8,8 +8,10 @@ import authApi from "src/api/auth";
 import { toast } from "react-toastify";
 import Timer from "@components/account/Timer";
 import getErrorMessage from "@utils/getErrorMessage";
+import { useRouter } from "next/router";
 
 function findPassword() {
+	const router = useRouter();
 	const [userInfo, setUserInfo] = useState({ login_id: "", phone_number: "" });
 	const [code, setCode] = useState("");
 
@@ -37,9 +39,15 @@ function findPassword() {
 	};
 
 	const handleConfirmClick = async () => {
-		console.log("click");
 		const res = await authApi.confirmChangeCode(code);
-		console.log(res);
+		const changeToken = res.data.change_token;
+		router.push(
+			{
+				pathname: "/account/changePassword",
+				query: { changeToken },
+			},
+			"/account/changePassword",
+		);
 	};
 
 	return (
@@ -59,7 +67,7 @@ function findPassword() {
 			{showCodeInput && (
 				<div>
 					<Input placeholder="코드를 입력해주세요" onChange={handleCodeChange} />
-					<Button disabled backgroundColor="dedede" onClick={handleConfirmClick}>
+					<Button backgroundColor="dedede" onClick={handleConfirmClick}>
 						코드 확인
 					</Button>
 					<Timer />
