@@ -42,7 +42,7 @@ function MainPage({ recommendData }: recommendDataType) {
 					console.log(position.coords.latitude + " " + position.coords.longitude);
 					const lon = String(position.coords.longitude);
 					const lat = String(position.coords.latitude);
-					// testRequest(lon, lat);
+					addressRequest(lon, lat);
 				},
 				(error) => {
 					console.error(error);
@@ -58,18 +58,18 @@ function MainPage({ recommendData }: recommendDataType) {
 		}
 	};
 
-	// const testRequest = (lon: string, lat: string) => {
-	// 	axios
-	// 		.get("https://dapi.kakao.com/v2/local/geo/coord2address.json?x=" + lon + "&y" + lat, {
-	// 			headers: {
-	// 				Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}`,
-	// 				"Content-Type": "application/json",
-	// 			},
-	// 		})
-	// 		.then((response) => {
-	// 			console.log(response);
-	// 		});
-	// };
+	const addressRequest = (lon: string, lat: string) => {
+		axios
+			.get("https://dapi.kakao.com/v2/local/geo/coord2address.json?x=" + lon + "&y=" + lat, {
+				headers: {
+					Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API}`,
+				},
+				withCredentials: false,
+			})
+			.then((response) => {
+				console.log(response);
+			});
+	};
 
 	return (
 		<>
