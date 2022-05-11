@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
@@ -31,6 +31,7 @@ interface recommendDataType {
 }
 
 function MainPage({ recommendData }: recommendDataType) {
+	const [addressName, setAddressName] = useState("");
 	useEffect(() => {
 		getLocation();
 	}, []);
@@ -42,7 +43,7 @@ function MainPage({ recommendData }: recommendDataType) {
 					console.log(position.coords.latitude + " " + position.coords.longitude);
 					const lon = String(position.coords.longitude);
 					const lat = String(position.coords.latitude);
-					// testRequest(lon, lat);
+					addressRequest(lon, lat);
 				},
 				(error) => {
 					console.error(error);
@@ -58,24 +59,24 @@ function MainPage({ recommendData }: recommendDataType) {
 		}
 	};
 
-	// const testRequest = (lon: string, lat: string) => {
-	// 	axios
-	// 		.get("https://dapi.kakao.com/v2/local/geo/coord2address.json?x=" + lon + "&y" + lat, {
-	// 			headers: {
-	// 				Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}`,
-	// 				"Content-Type": "application/json",
-	// 			},
-	// 		})
-	// 		.then((response) => {
-	// 			console.log(response);
-	// 		});
-	// };
+	const addressRequest = (lon: string, lat: string) => {
+		axios
+			.get("https://dapi.kakao.com/v2/local/geo/coord2address.json?x=" + lon + "&y=" + lat, {
+				headers: {
+					Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API}`,
+				},
+				withCredentials: false,
+			})
+			.then((response) => {
+				setAddressName(response.data.documents[0].address.address_name);
+			});
+	};
 
 	return (
 		<>
 			<Main>
 				<SearchSection />
-				<RecommendSection recommendData={recommendData} />
+				<RecommendSection recommendData={recommendData} addressName={addressName} />
 			</Main>
 			<Footer />
 		</>
