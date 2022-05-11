@@ -166,6 +166,24 @@ public class ContractService {
         }
     }
 
+    @Transactional
+    public void deleteContract(String loginId, Long houseId, String seller, String buyer) {
+        Member sellerMember = memberService.findByLoginId(seller);
+        Member buyerMember = memberService.findByLoginId(buyer);
+        House house = houseService.findById(houseId);
+
+        ContractAgree contractAgree = contractAgreeRepository.findByHouseAndSellerAndBuyer(house, sellerMember, buyerMember)
+            .orElseThrow(() -> new BusinessException(ErrorCode.CONTRACT_NOT_FOUND_CONTRACT_AGREE));
+        Contract contract = contractRepository.findByHouseAndSellerAndBuyer(house, sellerMember, buyerMember)
+            .orElseThrow(() -> new BusinessException(ErrorCode.CONTRACT_NOT_FOUND_CONTRACT));
+
+        checkHisContractAgree(loginId, contractAgree);
+        checkHisContract(loginId, contract);
+
+        contractAgree.saveDeletedTime();
+        contract.saveDeletedTime();
+    }
+
     @Transactional(readOnly = true)
     public ContractResponse viewContract(String loginId, Long houseId, String seller, String buyer) {
         Member sellerMember = memberService.findByLoginId(seller);
