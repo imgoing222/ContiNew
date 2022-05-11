@@ -5,6 +5,7 @@ interface House {
 	sale_type: string;
 	house_type: string;
 	contractType: string;
+	sido_name: string;
 	gungu_name: string;
 	dong_name: string;
 	jibun_address: string;
