@@ -35,6 +35,5 @@ const Div = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	transform: translateY(-15%);
 `;
 const NoSale = styled.h2``;
