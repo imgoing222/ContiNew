@@ -142,4 +142,5 @@ const AuthorizedIcon = styled(FontAwesomeIcon)`
 const AuthorText = styled.p`
 	margin-left: 1rem;
 	font-size: 0.9rem;
+	color: gray;
 `;
