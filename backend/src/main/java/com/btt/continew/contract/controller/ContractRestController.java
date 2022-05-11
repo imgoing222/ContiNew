@@ -46,7 +46,7 @@ public class ContractRestController {
 
     @GetMapping("/auth/contracts/agree")
     @ApiOperation(value = "계약 요청 조회", notes = "계약 요청을 조회하는 API\n"
-        + "**해당 API 는 GET 이므로 쿼리스트링으로 전달해야합니다.**\n"
+        + "**해당 API 는 GET 이므로 쿼리스트링으로 전달해야 합니다.**\n"
         + "TMI: Spring 버전이 낮아 GET 에는 requestBody 가 안된다고 합니다.")
     public ResponseEntity<ContractAgreeResponse> viewContractAgree(
         @ApiParam(hidden = true) @AuthenticationPrincipal String loginId, @RequestParam(name = "house_id") Long houseId,
@@ -64,6 +64,9 @@ public class ContractRestController {
     }
 
     @GetMapping("/auth/contracts")
+    @ApiOperation(value = "계약서 조회", notes = "계약서를 조회하는 API\n"
+        + "**해당 API 는 GET 이므로 쿼리스트링으로 전달해야 합니다.**\n"
+        + "TMI: Spring 버전이 낮아 GET 에는 requestBody 가 안된다고 합니다.")
     public ResponseEntity<ContractResponse> viewContract(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
         @RequestParam(name = "house_id") Long houseId, @RequestParam(name = "seller") String seller,
         @RequestParam(name = "buyer") String buyer) {
