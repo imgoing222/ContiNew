@@ -1,6 +1,7 @@
 package com.btt.continew.contract.controller;
 
 import com.btt.continew.contract.controller.dto.request.ContractAgreeRequest;
+import com.btt.continew.contract.controller.dto.request.ContractRequest;
 import com.btt.continew.contract.controller.dto.response.ContractAgreeResponse;
 import com.btt.continew.contract.service.ContractService;
 import io.swagger.annotations.Api;
@@ -43,11 +44,21 @@ public class ContractRestController {
     }
 
     @GetMapping("/auth/contracts/agree")
-    @ApiOperation(value = "계약 요청 조회", notes = "계약 요청을 조회하는 API")
+    @ApiOperation(value = "계약 요청 조회", notes = "계약 요청을 조회하는 API\n"
+        + "**해당 API 는 GET 이므로 쿼리스트링으로 전달해야합니다.**\n"
+        + "TMI: Spring 버전이 낮아 GET 에는 requestBody 가 안된다고 합니다.")
     public ResponseEntity<ContractAgreeResponse> viewContractAgree(
         @ApiParam(hidden = true) @AuthenticationPrincipal String loginId, @RequestParam(name = "house_id") Long houseId,
         @RequestParam(name = "seller") String seller, @RequestParam(name = "buyer") String buyer) {
         return ResponseEntity.ok().body(contractService.viewContractAgree(houseId, seller, buyer, loginId));
     }
 
+    @PostMapping("/auth/contracts/save")
+    @ApiOperation(value = "계약서 임시 저장 + 저장 후 다음 단계", notes = "계약서 임시 저장 기능과 저장 후 다음 단계 기능이 있는 API\n"
+        + "RequestBody 속에 있는 next_level 이 true 면 다음 단계로, false 면 임시저장 입니다.")
+    public ResponseEntity<Void> saveContract(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
+        @RequestBody ContractRequest request) {
+        contractService.saveContract(request, loginId);
+        return ResponseEntity.noContent().build();
+    }
 }
