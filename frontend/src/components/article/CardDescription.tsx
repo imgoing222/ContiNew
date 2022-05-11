@@ -31,7 +31,10 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 				<Text>{houseInfo.username}</Text>
 			</Div>
 			<Price>
-				{houseInfo.contractType} {moneyUnitChange((houseInfo.monthlyRent / 10000).toString())}
+				{houseInfo.contractType}{" "}
+				{houseInfo.contractType === "월세"
+					? moneyUnitChange((houseInfo.monthlyRent / 10000).toString())
+					: moneyUnitChange((houseInfo.deposit / 10000).toString())}
 			</Price>
 			<Text margin="true">{houseInfo.jibunAddress}</Text>
 			<div>

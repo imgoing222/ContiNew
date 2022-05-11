@@ -1,6 +1,7 @@
 import { HouseInfoProps } from "src/pages/article/[id]";
 import Container from "./Container";
 import PriceInfoList from "./PriceInfoList";
+import { moneyUnitChange } from "@utils/index";
 
 function PriceInfo({ houseInfo }: HouseInfoProps) {
 	return (
@@ -9,8 +10,10 @@ function PriceInfo({ houseInfo }: HouseInfoProps) {
 				name={houseInfo.contractType}
 				content={
 					houseInfo.contractType === "월세"
-						? houseInfo.monthlyRent / 10000 + "/" + houseInfo.maintenanceFee / 10000 + " 만원"
-						: houseInfo.deposit / 10000 + " 만원"
+						? moneyUnitChange((houseInfo.monthlyRent / 10000).toString()) +
+						  "/" +
+						  moneyUnitChange((houseInfo.maintenanceFee / 10000).toString())
+						: moneyUnitChange((houseInfo.deposit / 10000).toString())
 				}
 			/>
 			<PriceInfoList
@@ -23,7 +26,7 @@ function PriceInfo({ houseInfo }: HouseInfoProps) {
 			<PriceInfoList
 				name="한달 예상 주거비용"
 				content={`${houseInfo.monthlyRent / 10000 + houseInfo.maintenanceFee / 10000}+a 만원`}
-				content2="월세+관리비+a"
+				content2={houseInfo.houseType === "월세" ? "월세+관리비+a" : "관리비+a"}
 				div={true}
 				price={true}
 			/>
