@@ -33,8 +33,8 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 			<Price>
 				{houseInfo.contractType}{" "}
 				{houseInfo.contractType === "월세"
-					? moneyUnitChange((houseInfo.monthlyRent / 10000).toString())
-					: moneyUnitChange((houseInfo.deposit / 10000).toString())}
+					? moneyUnitChange(houseInfo.monthlyRent.toString())
+					: moneyUnitChange(houseInfo.deposit.toString())}
 			</Price>
 			<Text margin="true">{houseInfo.jibunAddress}</Text>
 			<div>
@@ -48,7 +48,7 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 					content1="floor"
 					content2="price"
 					info1={`${houseInfo.floor}층`}
-					info2={`월 ${houseInfo.maintenanceFee / 10000}만원`}
+					info2={`월 ${houseInfo.maintenanceFee}만원`}
 				/>
 				<Hr />
 			</div>
