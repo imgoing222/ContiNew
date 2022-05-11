@@ -1,5 +1,6 @@
 package com.btt.continew.contract.domain;
 
+import com.btt.continew.contract.controller.dto.request.ContractRequest;
 import com.btt.continew.global.domain.BaseEntity;
 import com.btt.continew.house.domain.House;
 import com.btt.continew.member.domain.Member;
@@ -124,8 +125,28 @@ public class Contract extends BaseEntity {
         this.level = 1;
     }
 
-    public void levelOneWrite() {
-
+    public void levelOneWrite(ContractRequest request) {
+        this.location = request.getLocation();
+        this.area = request.getArea();
+        this.netLeasableArea = request.getNetLeasableArea();
+        this.contractType = request.getContractType();
+        this.tenancyDeposit = request.getTenancyDeposit();
+        this.maintenanceFee = request.getMaintenanceFee();
+        this.contractStart = request.getContractStart();
+        this.contractEnd = request.getContractEnd();
+        this.totalPremium = request.getTotalPremium();
+        this.downPayment = request.getDownPayment();
+        this.middlePayment = request.getMiddlePayment();
+        this.middleDate = request.getMiddleDate();
+        this.balancePayment = request.getBalancePayment();
+        this.balanceDate = request.getBalanceDate();
+        this.sellerAddress = request.getSellerAddress();
+        this.sellerName = request.getSellerName();
+        this.sellerBirth = request.getSellerBirth();
+        this.sellerPhone = request.getSellerPhone();
+        if (request.getNextLevel()) {
+            this.level = 2;
+        }
     }
 
     public void levelTwoWrite() {
