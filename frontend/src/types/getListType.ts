@@ -14,6 +14,8 @@ interface House {
 	longitude: number;
 	description: string;
 	main_image: string;
+	floor: string;
+	maintenance_fee: number;
 }
 
 export default House;
