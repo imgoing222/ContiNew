@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useEffect } from "react";
 import styled from "styled-components";
 
 import { SearchSection, RecommendSection } from "@components/main";
@@ -29,6 +30,30 @@ interface recommendDataType {
 }
 
 function MainPage({ recommendData }: recommendDataType) {
+	useEffect(() => {
+		getLocation();
+	}, []);
+
+	const getLocation = () => {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					console.log(position.coords.latitude + " " + position.coords.longitude);
+				},
+				(error) => {
+					console.error(error);
+				},
+				{
+					enableHighAccuracy: false,
+					maximumAge: 0,
+					timeout: Infinity,
+				},
+			);
+		} else {
+			alert("GPS를 지원하지 않습니다");
+		}
+	};
+
 	return (
 		<>
 			<Main>
