@@ -22,15 +22,17 @@ function DetailOfSale({ saleList }: SaleListProps) {
 						<MainImg src={item.main_image}></MainImg>
 						<TextBox>
 							<Text fontSize={1.6} bold={true}>
-								{item.contractType} {moneyUnitChange(item.deposit.toString())}
-								{item.contractType === "월세" &&
+								{item.contract_type} {moneyUnitChange(item.deposit.toString())}
+								{item.contract_type === "월세" &&
 									"/ " + moneyUnitChange(item.monthly_rent.toString())}
 							</Text>
 							<Text fontSize={1.2}>{item.house_type}</Text>
 							<Text fontSize={1.2}>
 								{item.sido_name} {item.gungu_name} {item.dong_name}
 							</Text>
-							<Text fontSize={1.2}>관리비 10만 3층</Text>
+							<Text fontSize={1.2}>
+								{item.floor}층 {moneyUnitChange(item.monthly_rent.toString())}
+							</Text>
 							<Text fontSize={1.2}>
 								{item.description.length > 24
 									? item.description.slice(0, 24) + "..."
