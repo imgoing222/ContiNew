@@ -27,8 +27,8 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 		<Container>
 			<Div>
 				<SaleType>{houseInfo.saleType}</SaleType>
-				{houseInfo.phoneAuth && <AuthorizedIcon icon={faIdCard} />}
 				<Text>{houseInfo.username}</Text>
+				{houseInfo.phoneAuth ? <AuthorizedIcon icon={faIdCard} /> : <AuthorText>미인증</AuthorText>}
 			</Div>
 			<Price>
 				{houseInfo.contractType}{" "}
@@ -136,5 +136,10 @@ const Price = styled.p`
 const AuthorizedIcon = styled(FontAwesomeIcon)`
 	width: 2rem;
 	height: 2rem;
-	margin-right: 1rem;
+	margin-left: 1rem;
+`;
+
+const AuthorText = styled.p`
+	margin-left: 1rem;
+	font-size: 0.9rem;
 `;

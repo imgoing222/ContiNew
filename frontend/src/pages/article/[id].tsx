@@ -21,7 +21,7 @@ function index() {
 
 	useEffect(() => {
 		const setData = async () => {
-			const data = await getArticleData(13);
+			const data = await getArticleData(15);
 
 			setHouseInfo(snakeToCamel(data) as ArticleType);
 		};
