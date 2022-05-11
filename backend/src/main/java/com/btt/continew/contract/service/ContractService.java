@@ -43,18 +43,14 @@ public class ContractService {
 
         switch (request.getMemberType()) {
             case "seller":
-                if (!sellerMember.getLoginId().equals(loginId)) {
-                    throw new BusinessException(ErrorCode.CONTRACT_NOT_SELLER);
-                }
+                checkSeller(loginId, sellerMember);
                 if (contractAgree.getSellerAgree()) {
                     throw new BusinessException(ErrorCode.CONTRACT_ALREADY_AGREE);
                 }
                 contractAgree.sellerAgree();
                 break;
             case "buyer":
-                if (!buyerMember.getLoginId().equals(loginId)) {
-                    throw new BusinessException(ErrorCode.CONTRACT_NOT_BUYER);
-                }
+                checkBuyer(loginId, buyerMember);
                 if (contractAgree.getBuyerAgree()) {
                     throw new BusinessException(ErrorCode.CONTRACT_ALREADY_AGREE);
                 }
@@ -70,12 +66,10 @@ public class ContractService {
         }
 
         if (contractAgree.getSellerAgree()) {
-            //TODO: 채팅 보내기
-            // ex) 판매자가 계약을 요청하셨습니다. 수락하시겠습니까?
+            //TODO: 채팅 보내기 ex) 판매자가 계약을 요청하셨습니다. 수락하시겠습니까?
         }
         if (contractAgree.getBuyerAgree()) {
-            //TODO: 채팅 보내기
-            // ex) 구매자가 계약을 요청하셨습니다. 수락하시겠습니까?
+            //TODO: 채팅 보내기 ex) 구매자가 계약을 요청하셨습니다. 수락하시겠습니까?
         }
     }
 
@@ -114,5 +108,17 @@ public class ContractService {
 
         return ContractAgreeResponse.of(contractAgree.getHouse().getId(), contractAgree.getSellerAgree(),
             contractAgree.getBuyerAgree());
+    }
+
+    private void checkSeller(String loginId, Member sellerMember) {
+        if (!sellerMember.getLoginId().equals(loginId)) {
+            throw new BusinessException(ErrorCode.CONTRACT_NOT_SELLER);
+        }
+    }
+
+    private void checkBuyer(String loginId, Member buyerMember) {
+        if (!buyerMember.getLoginId().equals(loginId)) {
+            throw new BusinessException(ErrorCode.CONTRACT_NOT_BUYER);
+        }
     }
 }
