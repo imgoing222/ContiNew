@@ -1,5 +1,6 @@
 package com.btt.continew.house.controller.dto.response;
 
+import com.btt.continew.house.domain.House;
 import com.btt.continew.house.domain.HouseLike;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
@@ -48,5 +49,14 @@ public class HouseListResponse {
             houseLikes.getTotalPages(),
             houseLikes.getNumber()
         );
+    }
+
+    public static HouseListResponse fromHouses(Page<House> houses) {
+        return new HouseListResponse(
+            houses.stream()
+                .map(h -> HouseSimpleResponse.from(h))
+                .collect(Collectors.toList()),
+            houses.getTotalPages(),
+            houses.getNumber());
     }
 }
