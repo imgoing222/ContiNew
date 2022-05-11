@@ -1,4 +1,5 @@
 import { AxiosResponse } from "axios";
+import House from "src/types/getListType";
 import { request } from "./request";
 
 interface Coordinate {
@@ -9,7 +10,7 @@ interface Coordinate {
 }
 
 interface SaleApiType {
-	getSales: (coordinateInfo: Coordinate) => Promise<AxiosResponse>;
+	getSales: (coordinateInfo: Coordinate) => Promise<AxiosResponse<{ houses: Array<House> }>>;
 	createSale: (data: FormData) => Promise<AxiosResponse>;
 }
 

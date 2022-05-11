@@ -1,8 +1,49 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { MapRefType } from "src/pages/saleList";
-import { saleApi } from "../../api/index";
-function Map({ kakaoMap }: MapRefType) {
+import { Coordinate, MapRefType } from "src/pages/saleList";
+import House from "src/types/getListType";
+import { saleApi } from "src/api";
+
+interface Map extends MapRefType {
+	setCoordinates: React.Dispatch<React.SetStateAction<Coordinate>>;
+}
+
+function Map({ kakaoMap, setCoordinates }: Map) {
+	const getSales = async () => {
+		const coordinate = kakaoMap.current.getBounds();
+		const coordinates = {
+			x_right: coordinate.oa,
+			y_top: coordinate.pa,
+			x_left: coordinate.ha,
+			y_bottom: coordinate.qa,
+		};
+		setCoordinates(coordinates);
+		const sale = (await saleApi.getSales(coordinates)).data.houses;
+		const clusterer = new kakao.maps.MarkerClusterer({
+			map: kakaoMap.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+			averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+			styles: [
+				{
+					background: "rgba(255, 80, 80, .8)",
+					width: "4rem",
+					height: "4rem",
+					color: "#fff",
+					borderRadius: "3rem",
+					textAlign: "center",
+					lineHeight: "4.1rem",
+					fontSize: "2rem",
+				},
+			],
+		});
+		const markers = sale.map(
+			(item) =>
+				new kakao.maps.Marker({
+					position: new kakao.maps.LatLng(item.latitude, item.longitude),
+				}),
+		);
+		clusterer.setMinClusterSize(0);
+		clusterer.addMarkers(markers);
+	};
 	useEffect(() => {
 		const $script = document.createElement("script");
 		$script.async = true;
@@ -23,49 +64,6 @@ function Map({ kakaoMap }: MapRefType) {
 				const zoomControl = new kakao.maps.ZoomControl();
 				kakaoMap.current.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-				// 임시 데터
-				const data = [
-					{ y: 37.3595316, x: 127.1052133, content: "네이버" },
-					{ y: 37.359531, x: 127.1052133, content: "다음" },
-					{ y: 37.5559, x: 126.9723, content: "네이버" },
-					{ y: 37.5663, x: 126.9779, content: "네이버" },
-					{ y: 37.5465, x: 126.9647, content: "네이버" },
-				];
-				const clusterer = new kakao.maps.MarkerClusterer({
-					map: kakaoMap.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
-					averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-					styles: [
-						{
-							background: "rgba(255, 80, 80, .8)",
-							width: "4rem",
-							height: "4rem",
-							color: "#fff",
-							borderRadius: "3rem",
-							textAlign: "center",
-							lineHeight: "4.1rem",
-							fontSize: "2rem",
-						},
-					],
-				});
-				clusterer.setMinClusterSize(0);
-				const markers = data.map(
-					(item) =>
-						new kakao.maps.Marker({
-							position: new kakao.maps.LatLng(item.y, item.x),
-						}),
-				);
-
-				clusterer.addMarkers(markers);
-				const getSales = async () => {
-					const coordinate = kakaoMap.current.getBounds();
-					const coordinates = {
-						x_right: coordinate.oa,
-						y_top: coordinate.pa,
-						x_left: coordinate.ha,
-						y_bottom: coordinate.qa,
-					};
-					const sales = await saleApi.getSales(coordinates);
-				};
 				kakao.maps.event.addListener(kakaoMap.current, "bounds_changed", getSales);
 			});
 		};
