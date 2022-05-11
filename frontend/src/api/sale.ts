@@ -16,7 +16,7 @@ interface SaleApiType {
 
 const saleApi: SaleApiType = {
 	getSales: (coordinateInfo) => request.post("houses/list", coordinateInfo),
-	createSale: (data) => request.post("houses", data),
+	createSale: (data) => request.post("auth/auth/houses", data),
 };
 
 export default saleApi;

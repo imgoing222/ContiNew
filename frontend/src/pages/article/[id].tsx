@@ -33,7 +33,7 @@ function index() {
 	return (
 		houseInfo !== null && (
 			<Div>
-				<Photos />
+				<Photos houseInfo={houseInfo} />
 				<Container>
 					<SaleInfo>
 						<PriceInfo houseInfo={houseInfo} />
