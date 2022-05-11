@@ -22,8 +22,8 @@ function DetailOfSale({ saleList }: SaleListProps) {
 						<MainImg src={item.main_image}></MainImg>
 						<TextBox>
 							<Text fontSize={1.6} bold={true}>
-								{item.contractType} {moneyUnitChange(item.deposit.toString())}
-								{item.contractType === "월세" &&
+								{item.contract_type} {moneyUnitChange(item.deposit.toString())}
+								{item.contract_type === "월세" &&
 									"/ " + moneyUnitChange(item.monthly_rent.toString())}
 							</Text>
 							<Text fontSize={1.2}>{item.house_type}</Text>

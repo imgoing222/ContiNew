@@ -4,7 +4,7 @@ interface House {
 	monthly_rent: number;
 	sale_type: string;
 	house_type: string;
-	contractType: string;
+	contract_type: string;
 	sido_name: string;
 	gungu_name: string;
 	dong_name: string;
