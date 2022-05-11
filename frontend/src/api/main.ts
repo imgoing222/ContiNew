@@ -2,17 +2,17 @@ import { AxiosResponse } from "axios";
 import { request } from "./request";
 
 interface MainApiType {
-	getAroundHouse: (addressData: AddressDataType) => Promise<AxiosResponse>;
+	getAroundHouse: (addressName: AddressNameType) => Promise<AxiosResponse>;
 }
 
-interface AddressDataType {
+interface AddressNameType {
 	sido_name: string;
 	gungu_name: string;
 	dong_name: string;
 }
 
 const mainApi: MainApiType = {
-	getAroundHouse: (addressData) => request.post("houses/around", addressData),
+	getAroundHouse: (addressName) => request.post("houses/around", addressName),
 };
 
 export default mainApi;
