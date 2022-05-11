@@ -1,6 +1,7 @@
 package com.btt.continew.contract.service;
 
 import com.btt.continew.contract.controller.dto.request.ContractAgreeRequest;
+import com.btt.continew.contract.controller.dto.request.ContractRequest;
 import com.btt.continew.contract.controller.dto.response.ContractAgreeResponse;
 import com.btt.continew.contract.domain.Contract;
 import com.btt.continew.contract.domain.ContractAgree;
@@ -43,18 +44,14 @@ public class ContractService {
 
         switch (request.getMemberType()) {
             case "seller":
-                if (!sellerMember.getLoginId().equals(loginId)) {
-                    throw new BusinessException(ErrorCode.CONTRACT_NOT_SELLER);
-                }
+                checkSeller(loginId, sellerMember);
                 if (contractAgree.getSellerAgree()) {
                     throw new BusinessException(ErrorCode.CONTRACT_ALREADY_AGREE);
                 }
                 contractAgree.sellerAgree();
                 break;
             case "buyer":
-                if (!buyerMember.getLoginId().equals(loginId)) {
-                    throw new BusinessException(ErrorCode.CONTRACT_NOT_BUYER);
-                }
+                checkBuyer(loginId, buyerMember);
                 if (contractAgree.getBuyerAgree()) {
                     throw new BusinessException(ErrorCode.CONTRACT_ALREADY_AGREE);
                 }
@@ -70,12 +67,10 @@ public class ContractService {
         }
 
         if (contractAgree.getSellerAgree()) {
-            //TODO: 채팅 보내기
-            // ex) 판매자가 계약을 요청하셨습니다. 수락하시겠습니까?
+            //TODO: 채팅 보내기 ex) 판매자가 계약을 요청하셨습니다. 수락하시겠습니까?
         }
         if (contractAgree.getBuyerAgree()) {
-            //TODO: 채팅 보내기
-            // ex) 구매자가 계약을 요청하셨습니다. 수락하시겠습니까?
+            //TODO: 채팅 보내기 ex) 구매자가 계약을 요청하셨습니다. 수락하시겠습니까?
         }
     }
 
@@ -114,5 +109,55 @@ public class ContractService {
 
         return ContractAgreeResponse.of(contractAgree.getHouse().getId(), contractAgree.getSellerAgree(),
             contractAgree.getBuyerAgree());
+    }
+
+    @Transactional
+    public void saveContract(ContractRequest request, String loginId) {
+        Member sellerMember = memberService.findByLoginId(request.getSellerLoginId());
+        Member buyerMember = memberService.findByLoginId(request.getBuyerLoginId());
+        House house = houseService.findById(request.getHouseId());
+
+        Contract contract = contractRepository.findByHouseAndSellerAndBuyer(house, sellerMember, buyerMember)
+            .orElseThrow(() -> new BusinessException(ErrorCode.CONTRACT_NOT_FOUND_CONTRACT));
+
+        switch (contract.getLevel()) {
+            case 1:
+                checkSeller(loginId, sellerMember);
+                contract.levelOneWrite(request);
+                if (request.getNextLevel()) {
+                    // TODO: 판매자 -> 구매자 1단계 완료 채팅 메시지 보내기
+                }
+                break;
+            case 2:
+                checkBuyer(loginId, buyerMember);
+                contract.levelTwoWrite(request);
+                if (request.getNextLevel()) {
+                    // TODO: 구매자 -> 판매자 2단계 완료 채팅 메시지 보내기
+                }
+                break;
+            case 3:
+                checkSeller(loginId, sellerMember);
+                contract.levelThreeWrite(request);
+                if (request.getNextLevel()) {
+                    // TODO: 판매자 -> 구매자 3단계 완료 채팅 메시지 보내기
+                }
+                break;
+            case 4:
+                throw new BusinessException(ErrorCode.CONTRACT_ALREADY_FINISHED);
+            default:
+                throw new BusinessException(ErrorCode.CONTRACT_WEIRD_LEVEL);
+        }
+    }
+
+    private void checkSeller(String loginId, Member sellerMember) {
+        if (!sellerMember.getLoginId().equals(loginId)) {
+            throw new BusinessException(ErrorCode.CONTRACT_NOT_SELLER);
+        }
+    }
+
+    private void checkBuyer(String loginId, Member buyerMember) {
+        if (!buyerMember.getLoginId().equals(loginId)) {
+            throw new BusinessException(ErrorCode.CONTRACT_NOT_BUYER);
+        }
     }
 }
