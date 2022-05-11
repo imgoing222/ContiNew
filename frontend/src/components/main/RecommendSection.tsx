@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
-interface RecommendDataProps {
+interface DataProps {
 	recommendData: { id: number; imageUrl: string }[];
+	addressName: string;
 }
 
-function RecommendSection({ recommendData }: RecommendDataProps) {
+function RecommendSection({ recommendData, addressName }: DataProps) {
 	return (
 		<Section>
 			<Title>oo동 추천매물</Title>

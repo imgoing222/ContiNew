@@ -76,7 +76,7 @@ function MainPage({ recommendData }: recommendDataType) {
 		<>
 			<Main>
 				<SearchSection />
-				<RecommendSection recommendData={recommendData} />
+				<RecommendSection recommendData={recommendData} addressName={addressName} />
 			</Main>
 			<Footer />
 		</>
