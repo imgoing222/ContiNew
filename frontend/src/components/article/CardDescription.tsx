@@ -1,10 +1,11 @@
-import changeMonthToYear from "@utils/changeMonthToYear";
-import changeMoneyUnit from "@utils/moneyUnitChange";
 import Link from "next/link";
+import styled from "styled-components";
+import { faIdCard } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { changeMonthToYear, moneyUnitChange } from "@utils/index";
 import { RootStateOrAny, useSelector } from "react-redux";
 import articleApi from "src/api/article";
 import { HouseInfoProps } from "src/pages/article/[id]";
-import styled from "styled-components";
 import IconPart from "./IconPart";
 
 interface TextProp {
@@ -21,17 +22,16 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 			window.location.replace("/saleList");
 		}
 	};
-	const editArticle = (id: number) => {
-		// 수정 페이지로 이동
-	};
+
 	return (
 		<Container>
 			<Div>
 				<SaleType>{houseInfo.saleType}</SaleType>
+				{houseInfo.phoneAuth && <AuthorizedIcon icon={faIdCard} />}
 				<Text>{houseInfo.username}</Text>
 			</Div>
 			<Price>
-				{houseInfo.contractType} {changeMoneyUnit((houseInfo.monthlyRent / 10000).toString())}
+				{houseInfo.contractType} {moneyUnitChange((houseInfo.monthlyRent / 10000).toString())}
 			</Price>
 			<Text margin="true">{houseInfo.jibunAddress}</Text>
 			<div>
@@ -56,7 +56,7 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 							href={{ pathname: "/createSale", query: { id: houseInfo.houseId } }}
 							as={`/updateArticle/${houseInfo.houseId}`}
 						>
-							<Button onClick={() => editArticle(houseInfo.houseId)}>수정</Button>
+							<Button>수정</Button>
 						</Link>
 						<Button onClick={() => deleteArticle(houseInfo.houseId)}>삭제</Button>
 					</>
@@ -128,4 +128,10 @@ const Price = styled.p`
 	font-size: 1.8rem;
 	font-weight: bold;
 	margin-bottom: 1rem;
+`;
+
+const AuthorizedIcon = styled(FontAwesomeIcon)`
+	width: 2rem;
+	height: 2rem;
+	margin-right: 1rem;
 `;
