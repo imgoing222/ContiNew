@@ -53,4 +53,17 @@ public class ChatMessage implements Serializable {
 
         return chatMessage;
     }
+
+    // 임시 테스트용
+    public static ChatMessage enterMessage( String roomId){
+        ChatMessage chatMessage = new ChatMessage();
+
+        chatMessage.id = UUID.randomUUID().toString();
+        chatMessage.type = MessageType.ENTER;
+        chatMessage.roomId = roomId;
+        chatMessage.content = "어서오세요";
+        chatMessage.createdAt = LocalDateTime.now().toString();
+
+        return chatMessage;
+    }
 }
