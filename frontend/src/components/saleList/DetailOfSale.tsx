@@ -30,7 +30,9 @@ function DetailOfSale({ saleList }: SaleListProps) {
 							<Text fontSize={1.2}>
 								{item.sido_name} {item.gungu_name} {item.dong_name}
 							</Text>
-							<Text fontSize={1.2}>관리비 10만 3층</Text>
+							<Text fontSize={1.2}>
+								{item.floor}층 {moneyUnitChange(item.monthly_rent.toString())}
+							</Text>
 							<Text fontSize={1.2}>
 								{item.description.length > 24
 									? item.description.slice(0, 24) + "..."
