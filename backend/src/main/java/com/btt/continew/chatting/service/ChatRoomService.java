@@ -41,9 +41,11 @@ public class ChatRoomService {
     public ChatRoom createChatRoom(ChatRoomRequest request){
         System.out.println("1-2. 방 생성");
         ChatRoom chatRoom = ChatRoom.create(request);
+        ChatMessage chatMessage = ChatMessage.enterMessage(chatRoom.getId());
 
         System.out.println("1-3. 방 저장");
         opsHashChatRoom.put(CHAT_ROOMS,chatRoom.getId(),chatRoom);
+        opsHashChatMessage.put(CHAT_MESSAGE, chatMessage.getId(), chatMessage);
 
         return chatRoom;
     }
