@@ -36,7 +36,7 @@ function index() {
 				<Container>
 					<SaleInfo>
 						<PriceInfo houseInfo={houseInfo} />
-						<OptionInfo />
+						<OptionInfo houseInfo={houseInfo} />
 						<LocationInfo houseInfo={houseInfo} />
 						<Description houseInfo={houseInfo} />
 					</SaleInfo>

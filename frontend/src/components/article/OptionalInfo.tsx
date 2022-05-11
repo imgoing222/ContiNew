@@ -2,9 +2,9 @@ import React from "react";
 import Container from "./Container";
 import styled from "styled-components";
 import OptionIcon from "./OptionIcon";
+import { HouseInfoProps } from "src/pages/article/[id]";
 
-function OptionInfo() {
-	const houseInfo = { options: [1, 2, 3, 4, 5, 6, 7, 8, 9] };
+function OptionInfo({ houseInfo }: HouseInfoProps) {
 	const optionName = [
 		"에어컨",
 		"세탁기",
