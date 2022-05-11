@@ -149,8 +149,15 @@ public class Contract extends BaseEntity {
         }
     }
 
-    public void levelTwoWrite() {
-
+    public void levelTwoWrite(ContractRequest request) {
+        this.buyerAddress = request.getBuyerAddress();
+        this.buyerName = request.getBuyerName();
+        this.buyerBirth = request.getBuyerBirth();
+        this.buyerPhone = request.getBuyerPhone();
+        this.buyerSignature = request.getBuyerSignature();
+        if (request.getNextLevel()) {
+            this.level = 3;
+        }
     }
 
     public void levelThreeWrite() {
