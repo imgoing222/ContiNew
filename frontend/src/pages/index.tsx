@@ -30,8 +30,14 @@ interface recommendDataType {
 	recommendData: { id: number; imageUrl: string }[];
 }
 
+interface AddressType {
+	sido_name: string;
+	gungu_name: string;
+	dong_name: string;
+}
+
 function MainPage({ recommendData }: recommendDataType) {
-	const [addressName, setAddressName] = useState("");
+	const [addressName, setAddressName] = useState<AddressType>();
 	useEffect(() => {
 		getLocation();
 	}, []);
@@ -68,7 +74,13 @@ function MainPage({ recommendData }: recommendDataType) {
 				withCredentials: false,
 			})
 			.then((response) => {
-				setAddressName(response.data.documents[0].address.address_name);
+				console.log(response.data.documents[0].address);
+				const addressData = {
+					sido_name: response.data.documents[0].address.region_1depth_name,
+					gungu_name: response.data.documents[0].address.region_2depth_name,
+					dong_name: response.data.documents[0].address.region_3depth_name,
+				};
+				setAddressName(addressData);
 			});
 	};
 

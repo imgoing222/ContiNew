@@ -2,7 +2,13 @@ import styled from "styled-components";
 
 interface DataProps {
 	recommendData: { id: number; imageUrl: string }[];
-	addressName: string;
+	addressName:
+		| {
+				sido_name: string;
+				gungu_name: string;
+				dong_name: string;
+		  }
+		| undefined;
 }
 
 function RecommendSection({ recommendData, addressName }: DataProps) {
