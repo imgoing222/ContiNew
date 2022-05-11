@@ -2,9 +2,12 @@ package com.btt.continew.contract.domain;
 
 import com.btt.continew.contract.controller.dto.request.ContractRequest;
 import com.btt.continew.global.domain.BaseEntity;
+import com.btt.continew.global.exception.BusinessException;
+import com.btt.continew.global.exception.ErrorCode;
 import com.btt.continew.house.domain.House;
 import com.btt.continew.member.domain.Member;
 import java.time.LocalDate;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -126,35 +129,60 @@ public class Contract extends BaseEntity {
     }
 
     public void levelOneWrite(ContractRequest request) {
+        isNull(request.getLocation());
         this.location = request.getLocation();
+        isNull(request.getArea());
         this.area = request.getArea();
+        isNull(request.getNetLeasableArea());
         this.netLeasableArea = request.getNetLeasableArea();
+        isNull(request.getContractType());
         this.contractType = request.getContractType();
+        isNull(request.getTenancyDeposit());
         this.tenancyDeposit = request.getTenancyDeposit();
+        isNull(request.getMaintenanceFee());
         this.maintenanceFee = request.getMaintenanceFee();
+        isNull(request.getContractStart());
         this.contractStart = request.getContractStart();
+        isNull(request.getContractEnd());
         this.contractEnd = request.getContractEnd();
+        isNull(request.getTotalPremium());
         this.totalPremium = request.getTotalPremium();
+        isNull(request.getDownPayment());
         this.downPayment = request.getDownPayment();
+        isNull(request.getMiddlePayment());
         this.middlePayment = request.getMiddlePayment();
+        isNull(request.getMiddleDate());
         this.middleDate = request.getMiddleDate();
+        isNull(request.getBalancePayment());
         this.balancePayment = request.getBalancePayment();
+        isNull(request.getBalanceDate());
         this.balanceDate = request.getBalanceDate();
+        isNull(request.getSellerAddress());
         this.sellerAddress = request.getSellerAddress();
+        isNull(request.getSellerName());
         this.sellerName = request.getSellerName();
+        isNull(request.getSellerBirth());
         this.sellerBirth = request.getSellerBirth();
+        isNull(request.getSellerPhone());
         this.sellerPhone = request.getSellerPhone();
+        isNull(request.getNextLevel());
         if (request.getNextLevel()) {
             this.level = 2;
         }
     }
 
     public void levelTwoWrite(ContractRequest request) {
+        isNull(request.getBuyerAddress());
         this.buyerAddress = request.getBuyerAddress();
+        isNull(request.getBuyerName());
         this.buyerName = request.getBuyerName();
+        isNull(request.getBuyerBirth());
         this.buyerBirth = request.getBuyerBirth();
+        isNull(request.getBuyerPhone());
         this.buyerPhone = request.getBuyerPhone();
+        isNull(request.getBuyerSignature());
         this.buyerSignature = request.getBuyerSignature();
+        isNull(request.getNextLevel());
         if (request.getNextLevel()) {
             this.level = 3;
         }
@@ -164,6 +192,12 @@ public class Contract extends BaseEntity {
         this.sellerSignature = request.getBuyerSignature();
         if (request.getNextLevel()) {
             this.level = 4;
+        }
+    }
+
+    private void isNull(Object object){
+        if(Objects.isNull(object)){
+            throw new BusinessException(ErrorCode.CONTRACT_NULL_DATA);
         }
     }
 }
