@@ -1,45 +1,21 @@
 import House from "src/types/getListType";
 import styled from "styled-components";
-import { moneyUnitChange } from "@utils/index";
-import Link from "next/link";
+import DetailOfSale from "./DetailOfSale";
 
-interface SaleListProps {
+export interface SaleListProps {
 	saleList: House[];
-}
-
-interface TextProp {
-	fontSize?: number;
-	bold?: boolean;
-	color?: string;
 }
 
 function SaleList({ saleList }: SaleListProps) {
 	return (
 		<Container>
-			{saleList.map((item, idx) => (
-				<Link href={{ pathname: `/article/${item.house_id}`, query: { id: item.house_id } }}>
-					<Box key={idx}>
-						<MainImg src={item.main_image}></MainImg>
-						<TextBox>
-							<Text fontSize={1.6} bold={true}>
-								{item.contractType} {moneyUnitChange(item.deposit.toString())}
-								{item.contractType === "월세" &&
-									"/ " + moneyUnitChange(item.monthly_rent.toString())}
-							</Text>
-							<Text fontSize={1.2}>{item.house_type}</Text>
-							<Text fontSize={1.2}>
-								{item.sido_name} {item.gungu_name} {item.dong_name}
-							</Text>
-							<Text fontSize={1.2}>관리비 10만 3층</Text>
-							<Text fontSize={1.2}>
-								{item.description.length > 24
-									? item.description.slice(0, 24) + "..."
-									: item.description}
-							</Text>
-						</TextBox>
-					</Box>
-				</Link>
-			))}
+			{saleList.length > 0 ? (
+				<DetailOfSale saleList={saleList} />
+			) : (
+				<Div>
+					<NoSale>매물 목록이 없습니다</NoSale>
+				</Div>
+			)}
 		</Container>
 	);
 }
@@ -53,25 +29,12 @@ const Container = styled.section`
 	margin-top: 1rem;
 `;
 
-const Box = styled.div`
+const Div = styled.div`
+	width: 100%;
+	height: 100%;
 	display: flex;
-	margin-bottom: 1.5rem;
-	cursor: pointer;
+	justify-content: center;
+	align-items: center;
+	transform: translateY(-15%);
 `;
-
-const MainImg = styled.img`
-	width: 12rem;
-	height: 13rem;
-	margin-right: 1rem;
-`;
-
-const TextBox = styled.div`
-	display: flex;
-	flex-direction: column;
-`;
-
-const Text = styled.p<TextProp>`
-	font-size: ${({ fontSize }) => (fontSize ? +fontSize + "rem" : "1.3rem")};
-	font-weight: ${({ bold }) => bold && "bold"};
-	margin-bottom: 0.5rem;
-`;
+const NoSale = styled.h2``;
