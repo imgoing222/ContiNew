@@ -85,7 +85,14 @@ public class HouseRestController {
         return ResponseEntity.ok().body(houseService.show(houseId));
     }
 
-    @PutMapping("/houses/{house_id}")
+    @PostMapping("/houses/around")
+    @ApiOperation(value = "주변 매물 조회", notes = "주변 매물 조회 api")
+    public ResponseEntity<HouseListResponse> showAroundHouses(@RequestBody HouseAroundRequest request, @PageableDefault Pageable pageable) {
+        return ResponseEntity.ok().body(houseService.showAroundHouses(request, pageable));
+    }
+
+
+    @PutMapping("/auth/houses/{house_id}")
     @ApiOperation(value = "매물 수정", notes = "매물 수정 api")
     @ApiImplicitParam(name = "house_id", value = "매물 id", required = true)
     public ResponseEntity<Void> update(@PathVariable(value = "house_id") Long houseId,
