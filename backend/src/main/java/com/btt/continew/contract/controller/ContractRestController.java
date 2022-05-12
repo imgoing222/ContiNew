@@ -113,6 +113,12 @@ public class ContractRestController {
         + "3단계에서 작성 가능한 사람: 판매자\n"
         + "3단계에서 작성 가능한 항목:\n"
         + "seller_signature / 임차인 사인 (ex) 이미지 url")
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "BAD REQUEST\n로그인한 회원과 관련있는 계약서가 아님(K12)\n이미 작성이 완료된 계약서(K09)"),
+        @ApiResponse(code = 404, message = "NOT FOUND\n존재하지 않는 아이디(M01)\n존재하지 않는 매물(H01)\n존재하지 않는 계약서(K08)"),
+        @ApiResponse(code = 409, message = "CONFLICT\n로그인 중인 회원이 Seller가 아님(K02)\n"
+            + "로그인 중인 회원이 Buyer가 아님(K03)\n존재하지 않는 단계(K10)")
+    })
     public ResponseEntity<Void> saveContract(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
         @RequestBody ContractRequest request) {
         contractService.saveContract(request, loginId);
