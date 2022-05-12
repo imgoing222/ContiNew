@@ -4,7 +4,9 @@ import { Header } from "@components/account/Header";
 import { Input } from "@components/account/Input";
 import { Label } from "@components/account/Label";
 import { LinkButton } from "@components/account/LinkButton";
+import { LinkSection } from "@components/account/LinkSection";
 import useForm from "@hooks/useForm";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import authApi from "src/api/auth";
@@ -63,7 +65,11 @@ function Signup() {
 				</Button>
 			</FormContainer>
 			<Button onClick={handleGoogleLoginClick}>구글로 시작하기</Button>
-			<LinkButton href="/account/signin">로그인하러가기</LinkButton>
+			<LinkSection>
+				<Link href="/account/signin">
+					<LinkButton>로그인 하러가기</LinkButton>
+				</Link>
+			</LinkSection>
 		</Container>
 	);
 }
