@@ -13,7 +13,6 @@ function Favorites() {
 
 	const getFavorites = async () => {
 		const res = await profileApi.getFavorites();
-		console.log(res);
 		setFavorites(res.data.houses);
 		setCurrentPage(res.data.current_page);
 		setTotalPage(res.data.total_page);
@@ -22,6 +21,7 @@ function Favorites() {
 	return (
 		<Container>
 			<p>관심 매물</p>
+			<button>Show More</button>
 		</Container>
 	);
 }
