@@ -11,7 +11,7 @@ interface SaleApiType {
 
 const saleApi: SaleApiType = {
 	getSales: (coordinateInfo) => request.post("houses/list", camelToSnake(coordinateInfo)),
-	createSale: (data) => request.post("auth/auth/houses", data),
+	createSale: (data) => request.post("auth/houses", data),
 };
 
 export default saleApi;
