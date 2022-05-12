@@ -9,7 +9,13 @@ function SaleTypeFilter({ changeSaleType, id }: SaleTypeFilter) {
 	return (
 		<Label htmlFor={id}>
 			{id}
-			<Input type="radio" name="saleType" onChange={changeSaleType} id={id === "전체" ? "" : id} />
+			<Input
+				type="radio"
+				name="saleType"
+				onChange={changeSaleType}
+				id={id}
+				value={id === "전체" ? " " : id}
+			/>
 		</Label>
 	);
 }
