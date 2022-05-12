@@ -66,7 +66,7 @@ public class ChatMessageService {
         }
 
         System.out.println("5-4. 메시지 정렬");
-        chatMessageList.sort(Comparator.comparing(ChatMessage::getCreatedAt));
+        chatMessageList.sort(Comparator.comparing(ChatMessage::getCreatedAt).reversed());
 
         System.out.println("5-5. 메시지 페이지 네이션");
         int start = (int)pageable.getOffset();
