@@ -8,6 +8,8 @@ import com.btt.continew.contract.service.ContractService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +33,13 @@ public class ContractRestController {
 
     @PostMapping("/auth/contracts/agree")
     @ApiOperation(value = "계약 요청 수락", notes = "계약 요청을 수락하는 API")
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "BAD REQUEST\n이미 계약 요청을 수락한 회원(K04)"),
+        @ApiResponse(code = 404, message = "NOT FOUND\n존재하지 않는 아이디(M01)\n존재하지 않는 매물(H01)\n"
+            + "요청타입이 Seller나 Buyer가 아님(K01)"),
+        @ApiResponse(code = 409, message = "CONFLICT\n로그인 중인 회원이 Seller가 아님(K02)\n"
+            + "로그인 중인 회원이 Buyer가 아님(K03)")
+    })
     public ResponseEntity<Void> agreeContract(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
         @RequestBody ContractAgreeRequest request) {
         contractService.agreeContract(request, loginId);
@@ -39,6 +48,10 @@ public class ContractRestController {
 
     @PostMapping("/auth/contracts/disagree")
     @ApiOperation(value = "계약 요청 거절", notes = "계약 요청을 거절하는 API")
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "BAD REQUEST\n이미 끝난 계약 요청(K07)\n로그인한 회원과 관련있는 계약 요청이 아님(K06)"),
+        @ApiResponse(code = 404, message = "NOT FOUND\n존재하지 않는 아이디(M01)\n존재하지 않는 매물(H01)\n존재하지 않는 계약 요청(K05)")
+    })
     public ResponseEntity<Void> disagreeContract(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
         @RequestBody ContractAgreeRequest request) {
         contractService.disagreeContract(request, loginId);
@@ -49,6 +62,10 @@ public class ContractRestController {
     @ApiOperation(value = "계약 요청 조회", notes = "계약 요청을 조회하는 API\n"
         + "**해당 API 는 GET 이므로 쿼리스트링으로 전달해야 합니다.**\n"
         + "TMI: Spring 버전이 낮아 GET 에는 requestBody 가 안된다고 합니다.")
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "BAD REQUEST\n로그인한 회원과 관련있는 계약 요청이 아님(K06)"),
+        @ApiResponse(code = 404, message = "NOT FOUND\n존재하지 않는 아이디(M01)\n존재하지 않는 매물(H01)\n존재하지 않는 계약 요청(K05)")
+    })
     public ResponseEntity<ContractAgreeResponse> viewContractAgree(
         @ApiParam(hidden = true) @AuthenticationPrincipal String loginId, @RequestParam(name = "house_id") Long houseId,
         @RequestParam(name = "seller") String seller, @RequestParam(name = "buyer") String buyer) {
@@ -96,6 +113,12 @@ public class ContractRestController {
         + "3단계에서 작성 가능한 사람: 판매자\n"
         + "3단계에서 작성 가능한 항목:\n"
         + "seller_signature / 임차인 사인 (ex) 이미지 url")
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "BAD REQUEST\n로그인한 회원과 관련있는 계약서가 아님(K12)\n이미 작성이 완료된 계약서(K09)"),
+        @ApiResponse(code = 404, message = "NOT FOUND\n존재하지 않는 아이디(M01)\n존재하지 않는 매물(H01)\n존재하지 않는 계약서(K08)"),
+        @ApiResponse(code = 409, message = "CONFLICT\n로그인 중인 회원이 Seller가 아님(K02)\n"
+            + "로그인 중인 회원이 Buyer가 아님(K03)\n존재하지 않는 단계(K10)")
+    })
     public ResponseEntity<Void> saveContract(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
         @RequestBody ContractRequest request) {
         contractService.saveContract(request, loginId);
@@ -105,6 +128,12 @@ public class ContractRestController {
     @DeleteMapping("/auth/contracts")
     @ApiOperation(value = "계약서 파기", notes = "계약서를 파기하는 API\n"
         + "**해당 API 는 버그 예방 차원에서 데이터를 쿼리스트링으로 전달해야 합니다.**")
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "BAD REQUEST\n로그인 한 회원과 관련있는 계약 요청이 아님(K06)\n"
+            + "로그인한 회원과 관련있는 계약서가 아님(K12)"),
+        @ApiResponse(code = 404, message = "NOT FOUND\n존재하지 않는 아이디(M01)\n존재하지 않는 매물(H01)\n"
+            + "존재하지 않는 계약 요청(K05)\n존재하지 않는 계약서(K08)")
+    })
     public ResponseEntity<Void> deleteContract(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
         @RequestParam(name = "house_id") Long houseId, @RequestParam(name = "seller") String seller,
         @RequestParam(name = "buyer") String buyer) {
@@ -116,6 +145,11 @@ public class ContractRestController {
     @ApiOperation(value = "계약서 조회", notes = "계약서를 조회하는 API\n"
         + "**해당 API 는 GET 이므로 쿼리스트링으로 전달해야 합니다.**\n"
         + "TMI: Spring 버전이 낮아 GET 에는 requestBody 가 안된다고 합니다.")
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "BAD REQUEST\n로그인한 회원과 관련있는 계약서가 아님(K12)"),
+        @ApiResponse(code = 404, message = "NOT FOUND\n존재하지 않는 아이디(M01)\n존재하지 않는 매물(H01)\n"
+            + "\n존재하지 않는 계약서(K08)")
+    })
     public ResponseEntity<ContractResponse> viewContract(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
         @RequestParam(name = "house_id") Long houseId, @RequestParam(name = "seller") String seller,
         @RequestParam(name = "buyer") String buyer) {
