@@ -6,16 +6,17 @@ import { saleApi } from "src/api";
 
 interface Map extends MapRefType {
 	setSearchCondition: React.Dispatch<React.SetStateAction<SearchCondition>>;
+	searchCondition: SearchCondition;
 }
 
-function Map({ kakaoMap, setSearchCondition }: Map) {
+function Map({ kakaoMap, setSearchCondition, searchCondition }: Map) {
 	const getSales = async () => {
 		const coordinate = kakaoMap.current.getBounds();
 		const coordinates = {
-			x_right: coordinate.oa,
-			y_top: coordinate.pa,
-			x_left: coordinate.ha,
-			y_bottom: coordinate.qa,
+			xRight: coordinate.oa,
+			yTop: coordinate.pa,
+			xLeft: coordinate.ha,
+			yBottom: coordinate.qa,
 		};
 		setSearchCondition(coordinates);
 		const sale = (await saleApi.getSales(coordinates)).data.houses;

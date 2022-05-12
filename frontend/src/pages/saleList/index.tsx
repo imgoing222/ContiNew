@@ -11,19 +11,28 @@ export interface MapRefType {
 }
 
 export interface SearchCondition {
-	y_bottom: number;
-	y_top: number;
-	x_left: number;
-	x_right: number;
+	yBottom: number;
+	yTop: number;
+	xLeft: number;
+	xRight: number;
+	saleType?: string;
+	houseType?: string;
+	contractType?: string;
+	minDeposit?: number;
+	maxDeposit?: number;
+	minMonthlyRent?: number;
+	minMaintenanceFee?: number;
+	maxMaintenanceFee?: number;
+	period?: number;
 }
 
 function index() {
 	const kakaoMap = useRef<kakao.maps.Map>();
 	const [searchCondition, setSearchCondition] = useState<SearchCondition>({
-		x_right: 0,
-		y_top: 0,
-		x_left: 0,
-		y_bottom: 0,
+		xRight: 0,
+		yTop: 0,
+		xLeft: 0,
+		yBottom: 0,
 	});
 
 	const [saleList, setSaleList] = useState<House[]>([]);
@@ -31,6 +40,7 @@ function index() {
 	useEffect(() => {
 		const getSales = async () => {
 			const sales = await saleApi.getSales(searchCondition);
+			console.log(sales);
 			setSaleList(sales.data.houses);
 		};
 
@@ -45,6 +55,7 @@ function index() {
 				<Map
 					kakaoMap={kakaoMap as React.MutableRefObject<kakao.maps.Map>}
 					setSearchCondition={setSearchCondition}
+					searchCondition={searchCondition}
 				/>
 			</Container>
 		</>
