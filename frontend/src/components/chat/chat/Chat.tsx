@@ -117,7 +117,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	};
 
 	const addChat = (chatMessage: ChatMessageType[]) => {
-		setShowChatList(chatMessage)
+		setShowChatList(chatMessage);
 		// chatMessage.map((chat) => setShowChatList((prevShowChatList) => [...prevShowChatList, chat]));
 	};
 
@@ -153,27 +153,29 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 }
 
 const Container = styled.div`
+	width: 60rem;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
-	flex: 6;
-	height: 100%;
 `;
 
 const Title = styled.div`
 	width: 100%;
-	height: 5rem;
+	height: 8rem;
 	text-align: center;
 	border-bottom: solid 2px #d3d3d3;
 `;
 
 const Content = styled.div`
+	height: 100%;
+	min-height: 5rem;
 	margin-top: auto;
 	display: flex;
 	flex-direction: column;
 `;
 
 const TopSection = styled.div`
-	height: 50rem;
+	height: 100%;
 	display: flex;
 	margin: 1rem 0;
 	flex-direction: column;

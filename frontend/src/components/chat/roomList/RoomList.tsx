@@ -53,31 +53,36 @@ function RoomList() {
 			<Title>
 				<h2>Messages</h2>
 			</Title>
-			{chatListData.chat_rooms &&
-				chatListData.chat_rooms
-					.slice(0)
-					.reverse()
-					.map((chat) => (
-						<Content key={chat.room_id} onClick={() => toChattingRoom(chat.room_id, chat.sale)}>
-							<RoomListItem chat={chat} />
-						</Content>
-					))}
+			<Content>
+				{chatListData.chat_rooms &&
+					chatListData.chat_rooms
+						.slice(0)
+						.reverse()
+						.map((chat) => (
+							<ContentContainer
+								key={chat.room_id}
+								onClick={() => toChattingRoom(chat.room_id, chat.sale)}
+							>
+								<RoomListItem chat={chat} />
+							</ContentContainer>
+						))}
+			</Content>
 		</Container>
 	);
 }
 
 const Container = styled.div`
+	width: 30rem;
+	height: 100%;
 	display: flex;
-	flex: 2;
 	flex-direction: column;
 	align-items: center;
-	height: 100%;
 	border-right: solid 2px #d3d3d3;
 `;
 
 const Title = styled.div`
 	width: 100%;
-	height: 5rem;
+	height: 8rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -85,8 +90,15 @@ const Title = styled.div`
 `;
 
 const Content = styled.div`
+	width: 100%;
+	height: 100%;
+	min-height: 5rem;
+`;
+
+const ContentContainer = styled.div`
 	width: 80%;
 	height: 8rem;
+	margin: 0 auto;
 	cursor: pointer;
 `;
 
