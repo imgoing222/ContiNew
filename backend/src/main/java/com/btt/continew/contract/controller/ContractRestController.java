@@ -3,6 +3,7 @@ package com.btt.continew.contract.controller;
 import com.btt.continew.contract.controller.dto.request.ContractAgreeRequest;
 import com.btt.continew.contract.controller.dto.request.ContractRequest;
 import com.btt.continew.contract.controller.dto.response.ContractAgreeResponse;
+import com.btt.continew.contract.controller.dto.response.ContractMineResponse;
 import com.btt.continew.contract.controller.dto.response.ContractResponse;
 import com.btt.continew.contract.service.ContractService;
 import io.swagger.annotations.Api;
@@ -156,5 +157,11 @@ public class ContractRestController {
         @RequestParam(name = "house_id") Long houseId, @RequestParam(name = "seller") String seller,
         @RequestParam(name = "buyer") String buyer) {
         return ResponseEntity.ok().body(contractService.viewContract(loginId, houseId, seller, buyer));
+    }
+
+    @GetMapping("/auth/contracts/mine")
+    @ApiOperation(value = "내 계약 목록 조회", notes = "내 계약 목록을 조회하는 API")
+    public ResponseEntity<ContractMineResponse> showMyContracts(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
+        return ResponseEntity.ok().body(contractService.showMyContracts(loginId));
     }
 }
