@@ -4,6 +4,7 @@ import { Header } from "@components/account/Header";
 import { Input } from "@components/account/Input";
 import { Label } from "@components/account/Label";
 import { LinkButton } from "@components/account/LinkButton";
+import { LinkSection } from "@components/account/LinkSection";
 import useForm from "@hooks/useForm";
 import getErrorMessage from "@utils/getErrorMessage";
 import Link from "next/link";
@@ -49,12 +50,14 @@ function Signin() {
 				</Button>
 			</FormContainer>
 			<Button onClick={handleGoogleLoginClick}>구글로 시작하기</Button>
-			<Link href="/account/findPassword">
-				<LinkButton>비밀번호를 잊으셨나요?</LinkButton>
-			</Link>
-			<Link href="/account/signup">
-				<LinkButton>회원가입 하러가기</LinkButton>
-			</Link>
+			<LinkSection>
+				<Link href="/account/findPassword">
+					<LinkButton>비밀번호를 잊으셨나요?</LinkButton>
+				</Link>
+				<Link href="/account/signup">
+					<LinkButton>회원가입 하러가기</LinkButton>
+				</Link>
+			</LinkSection>
 		</Container>
 	);
 }
