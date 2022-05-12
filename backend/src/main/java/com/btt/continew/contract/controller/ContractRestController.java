@@ -128,6 +128,12 @@ public class ContractRestController {
     @DeleteMapping("/auth/contracts")
     @ApiOperation(value = "계약서 파기", notes = "계약서를 파기하는 API\n"
         + "**해당 API 는 버그 예방 차원에서 데이터를 쿼리스트링으로 전달해야 합니다.**")
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "BAD REQUEST\n로그인 한 회원과 관련있는 계약 요청이 아님(K06)\n"
+            + "로그인한 회원과 관련있는 계약서가 아님(K12)"),
+        @ApiResponse(code = 404, message = "NOT FOUND\n존재하지 않는 아이디(M01)\n존재하지 않는 매물(H01)\n"
+            + "존재하지 않는 계약 요청(K05)\n존재하지 않는 계약서(K08)")
+    })
     public ResponseEntity<Void> deleteContract(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
         @RequestParam(name = "house_id") Long houseId, @RequestParam(name = "seller") String seller,
         @RequestParam(name = "buyer") String buyer) {
