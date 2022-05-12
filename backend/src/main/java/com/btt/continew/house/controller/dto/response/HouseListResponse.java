@@ -54,7 +54,7 @@ public class HouseListResponse {
     public static HouseListResponse fromHouses(Page<House> houses) {
         return new HouseListResponse(
             houses.stream()
-                .map(h -> HouseSimpleResponse.from(h))
+                .map(HouseSimpleResponse::from)
                 .collect(Collectors.toList()),
             houses.getTotalPages(),
             houses.getNumber());
