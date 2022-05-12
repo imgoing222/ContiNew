@@ -145,6 +145,11 @@ public class ContractRestController {
     @ApiOperation(value = "계약서 조회", notes = "계약서를 조회하는 API\n"
         + "**해당 API 는 GET 이므로 쿼리스트링으로 전달해야 합니다.**\n"
         + "TMI: Spring 버전이 낮아 GET 에는 requestBody 가 안된다고 합니다.")
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "BAD REQUEST\n로그인한 회원과 관련있는 계약서가 아님(K12)"),
+        @ApiResponse(code = 404, message = "NOT FOUND\n존재하지 않는 아이디(M01)\n존재하지 않는 매물(H01)\n"
+            + "\n존재하지 않는 계약서(K08)")
+    })
     public ResponseEntity<ContractResponse> viewContract(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
         @RequestParam(name = "house_id") Long houseId, @RequestParam(name = "seller") String seller,
         @RequestParam(name = "buyer") String buyer) {
