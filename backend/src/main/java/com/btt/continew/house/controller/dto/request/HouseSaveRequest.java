@@ -76,7 +76,7 @@ public class HouseSaveRequest {
     @JsonProperty("description")
     private String description;
 
-    @ApiModelProperty(name = "option", position = 17, example = "[1,2,3]")
+    @ApiModelProperty(name = "option", position = 17, example = "[1, 2, 3]")
     @JsonProperty("options")
     private List<Long> options;
 
