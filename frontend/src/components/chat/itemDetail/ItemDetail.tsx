@@ -32,40 +32,48 @@ function ItemDetail({ isIndex }: Props) {
 			<Title>
 				<h3>Detail</h3>
 			</Title>
-			{houseInfo && (
-				<div>
+			<Content>
+				{houseInfo && (
 					<div>
-						<img src={houseInfo.images[0]} alt="Img" width={400} height={200} />
+						<div>
+							<img src={houseInfo.images[0]} alt="Img" width="100%" height={200} />
+						</div>
+						<div>
+							<h3>가격정보.</h3>
+							<p>
+								{houseInfo.contractType}: {houseInfo.deposit}/{houseInfo.monthlyRent}
+							</p>
+							<p>관리비: 매월 {houseInfo.maintenanceFee} 원</p>
+							<h3>위치</h3>
+							<p>{houseInfo.jibunAddress}</p>
+						</div>
 					</div>
-					<div>
-						<h3>가격정보.</h3>
-						<p>
-							{houseInfo.contractType}: {houseInfo.deposit}/{houseInfo.monthlyRent}
-						</p>
-						<p>관리비: 매월 {houseInfo.maintenanceFee} 원</p>
-						<h3>위치</h3>
-						<p>{houseInfo.jibunAddress}</p>
-					</div>
-				</div>
-			)}
+				)}
+			</Content>
 		</Container>
 	);
 }
 
 const Container = styled.div`
+	width: 40rem;
+	height: 100%;
 	display: flex;
-	flex: 3;
 	flex-direction: column;
 	align-items: center;
-	height: 100%;
 	border-left: solid 2px #d3d3d3;
 `;
 
 const Title = styled.div`
 	width: 100%;
-	height: 5rem;
+	height: 8rem;
 	text-align: center;
 	border-bottom: solid 2px #d3d3d3;
+`;
+
+const Content = styled.div`
+	width: 100%;
+	height: 100%;
+	min-height: 5rem;
 `;
 
 export default ItemDetail;

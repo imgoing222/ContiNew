@@ -47,11 +47,20 @@ function ChatDetail() {
 
 	const sendMessage = (inputChat: string) => {
 		if (inputChat) {
-			const sendTime = new Date(+new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '');
+			const sendTime = new Date(+new Date() + 3240 * 10000)
+				.toISOString()
+				.replace("T", " ")
+				.replace(/\..*/, "");
 			stomp.send(
 				"/pub/chat/message",
 				{ Authorization: `Bearer ${token}` },
-				JSON.stringify({ type: "TALK", room_id: roomId, sender: login_id, content: inputChat, created_at: sendTime }),
+				JSON.stringify({
+					type: "TALK",
+					room_id: roomId,
+					sender: login_id,
+					content: inputChat,
+					created_at: sendTime,
+				}),
 			);
 		}
 	};
@@ -66,10 +75,11 @@ function ChatDetail() {
 }
 
 const Container = styled.div`
-	height: 70vh;
+	width: 130rem;
+	height: 75vh;
 	display: flex;
 	align-items: center;
-	margin: 10rem;
+	margin: 10rem auto;
 	border: solid 2px #d3d3d3;
 `;
 
