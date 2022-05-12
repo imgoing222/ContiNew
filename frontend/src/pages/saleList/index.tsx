@@ -40,7 +40,6 @@ function index() {
 	useEffect(() => {
 		const getSales = async () => {
 			const sales = await saleApi.getSales(searchCondition);
-			console.log(sales);
 			setSaleList(sales.data.houses);
 		};
 
@@ -51,7 +50,11 @@ function index() {
 		<>
 			<SaleListNav kakaoMap={kakaoMap as React.MutableRefObject<kakao.maps.Map>} />
 			<Container>
-				<SaleList saleList={saleList} />
+				<SaleList
+					saleList={saleList}
+					setSearchCondition={setSearchCondition}
+					searchCondition={searchCondition}
+				/>
 				<Map
 					kakaoMap={kakaoMap as React.MutableRefObject<kakao.maps.Map>}
 					setSearchCondition={setSearchCondition}

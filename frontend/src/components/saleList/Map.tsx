@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { SearchCondition, MapRefType } from "src/pages/saleList";
-import House from "src/types/getListType";
 import { saleApi } from "src/api";
 
 interface Map extends MapRefType {
@@ -18,7 +17,7 @@ function Map({ kakaoMap, setSearchCondition, searchCondition }: Map) {
 			xLeft: coordinate.ha,
 			yBottom: coordinate.qa,
 		};
-		setSearchCondition(coordinates);
+		setSearchCondition({ ...searchCondition, ...coordinates });
 		const sale = (await saleApi.getSales(coordinates)).data.houses;
 		const clusterer = new kakao.maps.MarkerClusterer({
 			map: kakaoMap.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
