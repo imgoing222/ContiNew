@@ -1,4 +1,4 @@
-import UserInfo from "src/types/UserInfo";
+import UserInfo from "src/types/UserInfoType";
 
 const LOGIN = "user/setUserInfo";
 const DELETE = "user/deleteUserInfo";

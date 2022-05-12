@@ -1,4 +1,4 @@
-interface UserInfo {
+interface UserInfoType {
 	id: number;
 	login_id: string;
 	username: string;
@@ -7,4 +7,4 @@ interface UserInfo {
 	provider: string;
 }
 
-export default UserInfo;
+export default UserInfoType;
