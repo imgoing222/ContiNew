@@ -12,7 +12,7 @@ function ChatIcon() {
 		<>
 			<FontAwesome
 				icon={faRocketchat}
-				onClick={token ? () => router.push("/profile") : () => router.push("/account/signin")}
+				onClick={token ? () => router.push("/chat") : () => router.push("/account/signin")}
 			/>
 		</>
 	);

@@ -26,7 +26,7 @@ function ChatDetail() {
 	const isConnected = useRef(false);
 
 	const token = cookie.load("access_token");
-	const sock = new SockJS("http://localhost:8080/ws-stomp");
+	const sock = new SockJS(String(process.env.NEXT_PUBLIC_SOCKET_URL));
 	const stomp = StompJS.over(sock);
 	// stomp.debug = null;
 
