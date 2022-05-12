@@ -133,21 +133,23 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 				<h3>여긴 채팅창</h3>
 				<button onClick={createChattingRoom}>채팅방생성[임시]</button>
 			</Title>
-			{roomId && (
-				<Content>
-					<TopSection>
-						<ul>
-							{showChatList &&
-								showChatList
-									.slice(0)
-									.reverse()
-									.map((chat, idx) => <ChatListItem key={idx} chat={chat} />)}
-						</ul>
-						<div ref={chatBoxRef} />
-					</TopSection>
-					<BottomSection sendMessage={sendMessage} />
-				</Content>
-			)}
+			<Content>
+				{roomId && (
+					<>
+						<TopSection>
+							<ul>
+								{showChatList &&
+									showChatList
+										.slice(0)
+										.reverse()
+										.map((chat, idx) => <ChatListItem key={idx} chat={chat} />)}
+							</ul>
+							<div ref={chatBoxRef} />
+						</TopSection>
+						<BottomSection sendMessage={sendMessage} />
+					</>
+				)}
+			</Content>
 		</Container>
 	);
 }
