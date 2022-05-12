@@ -1,11 +1,12 @@
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { RootState } from "src/store";
 
 import { chatApi } from "src/api";
 import { BottomSection, ChatListItem } from "@components/chat";
+import { SET_ARTICLEID } from "src/store/articleId";
 
 interface Props {
 	sendMessage?: (inputChat: string) => void;
@@ -54,6 +55,7 @@ interface ShowChatListType {
 
 function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	const router = useRouter();
+	const dispatch = useDispatch();
 	const chatBoxRef = useRef<HTMLDivElement>(null);
 	const { login_id } = useSelector((state: RootState) => state.userInfo);
 	const [savedChattings, setSavedChattings] = useState<SavedChattingsType>({
@@ -72,6 +74,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	const createChattingRoom = async () => {
 		try {
 			const res = await chatApi.createChattingRoom(DATA_SET);
+			dispatch(SET_ARTICLEID(DATA_SET.sale));
 			toChattingRoom(res.data);
 		} catch (error) {
 			console.log(error);
