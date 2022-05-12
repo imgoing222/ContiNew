@@ -8,6 +8,8 @@ import com.btt.continew.contract.service.ContractService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +33,13 @@ public class ContractRestController {
 
     @PostMapping("/auth/contracts/agree")
     @ApiOperation(value = "계약 요청 수락", notes = "계약 요청을 수락하는 API")
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "BAD REQUEST\n이미 계약 요청을 수락한 회원(K04)"),
+        @ApiResponse(code = 404, message = "NOT FOUND\n존재하지 않는 아이디(M01)\n존재하지 않는 매물(H01)\n"
+            + "요청타입이 Seller나 Buyer가 아님(K01)"),
+        @ApiResponse(code = 409, message = "CONFLICT\n로그인 중인 회원이 Seller가 아님(K02)\n"
+            + "로그인 중인 회원이 Buyer가 아님(K03)")
+    })
     public ResponseEntity<Void> agreeContract(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
         @RequestBody ContractAgreeRequest request) {
         contractService.agreeContract(request, loginId);
