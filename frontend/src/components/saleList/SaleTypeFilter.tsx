@@ -1,13 +1,25 @@
+import { SearchCondition } from "src/pages/saleList";
 import styled from "styled-components";
 
 interface SaleTypeFilter {
 	changeSaleType: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	id: string;
+	searchCondition: SearchCondition;
 }
 
-function SaleTypeFilter({ changeSaleType, id }: SaleTypeFilter) {
+interface LabelProps {
+	isChecked: boolean;
+}
+
+function SaleTypeFilter({ changeSaleType, id, searchCondition }: SaleTypeFilter) {
+	const isChecked = (id: string) => {
+		if (id === "전체" && searchCondition.saleType === " ") return true;
+		if (searchCondition.saleType === id) return true;
+		return false;
+	};
+
 	return (
-		<Label htmlFor={id}>
+		<Label htmlFor={id} isChecked={isChecked(id)}>
 			{id}
 			<Input
 				type="radio"
@@ -26,7 +38,10 @@ const Input = styled.input`
 	display: none;
 `;
 
-const Label = styled.label`
+const Label = styled.label<LabelProps>`
 	margin-right: 1rem;
 	cursor: pointer;
+	font-size: 1.6rem;
+	font-weight: ${({ isChecked }) => (isChecked ? "bold" : "200")};
+	color: ${({ isChecked }) => (isChecked ? "black" : "gray")};
 `;
