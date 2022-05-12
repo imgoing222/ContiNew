@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { Coordinate, MapRefType } from "src/pages/saleList";
+import { SearchCondition, MapRefType } from "src/pages/saleList";
 import House from "src/types/getListType";
 import { saleApi } from "src/api";
 
 interface Map extends MapRefType {
-	setCoordinates: React.Dispatch<React.SetStateAction<Coordinate>>;
+	setSearchCondition: React.Dispatch<React.SetStateAction<SearchCondition>>;
 }
 
-function Map({ kakaoMap, setCoordinates }: Map) {
+function Map({ kakaoMap, setSearchCondition }: Map) {
 	const getSales = async () => {
 		const coordinate = kakaoMap.current.getBounds();
 		const coordinates = {
@@ -17,7 +17,7 @@ function Map({ kakaoMap, setCoordinates }: Map) {
 			x_left: coordinate.ha,
 			y_bottom: coordinate.qa,
 		};
-		setCoordinates(coordinates);
+		setSearchCondition(coordinates);
 		const sale = (await saleApi.getSales(coordinates)).data.houses;
 		const clusterer = new kakao.maps.MarkerClusterer({
 			map: kakaoMap.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체

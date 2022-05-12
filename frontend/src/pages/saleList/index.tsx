@@ -10,7 +10,7 @@ export interface MapRefType {
 	kakaoMap: React.MutableRefObject<kakao.maps.Map>;
 }
 
-export interface Coordinate {
+export interface SearchCondition {
 	y_bottom: number;
 	y_top: number;
 	x_left: number;
@@ -19,7 +19,7 @@ export interface Coordinate {
 
 function index() {
 	const kakaoMap = useRef<kakao.maps.Map>();
-	const [coordinates, setCoordinates] = useState<Coordinate>({
+	const [searchCondition, setSearchCondition] = useState<SearchCondition>({
 		x_right: 0,
 		y_top: 0,
 		x_left: 0,
@@ -30,12 +30,12 @@ function index() {
 
 	useEffect(() => {
 		const getSales = async () => {
-			const sales = await saleApi.getSales(coordinates);
+			const sales = await saleApi.getSales(searchCondition);
 			setSaleList(sales.data.houses);
 		};
 
 		getSales();
-	}, [coordinates]);
+	}, [searchCondition]);
 
 	return (
 		<>
@@ -44,7 +44,7 @@ function index() {
 				<SaleList saleList={saleList} />
 				<Map
 					kakaoMap={kakaoMap as React.MutableRefObject<kakao.maps.Map>}
-					setCoordinates={setCoordinates}
+					setSearchCondition={setSearchCondition}
 				/>
 			</Container>
 		</>
