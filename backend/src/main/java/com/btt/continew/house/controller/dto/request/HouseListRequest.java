@@ -66,7 +66,7 @@ public class HouseListRequest {
     @JsonProperty("period")
     private Integer period;
 
-    @ApiModelProperty(name = "options", position = 13, example = "1,2,3")
+    @ApiModelProperty(name = "options", position = 13, example = "[1, 2, 3]")
     @JsonProperty("options")
     private List<Long> options;
 
