@@ -26,7 +26,7 @@ function Timer() {
 
 	return (
 		<div>
-			{min > 0 && `${min}분`} {sec}초
+			남은 시간 {min > 0 && `${min}분`} {sec}초
 		</div>
 	);
 }

@@ -13,7 +13,7 @@ export const Button = styled.button<ButtonProps>`
 	margin-top: 2rem;
 	font-size: 1.5rem;
 	padding: 0.5rem 0;
-
+	margin-bottom: 0.5rem;
 	&:hover {
 		cursor: pointer;
 	}
