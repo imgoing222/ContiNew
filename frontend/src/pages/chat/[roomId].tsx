@@ -23,6 +23,7 @@ function ChatDetail() {
 	const roomId = localStorage.getItem("RoomId");
 	const { login_id } = useSelector((state: RootState) => state.userInfo);
 	const [receivedChatData, setReceivedChatData] = useState<ReceivedChatDataType>();
+	const isConnected = useRef(false);
 
 	const token = cookie.load("access_token");
 	const sock = new SockJS("http://localhost:8080/ws-stomp");
@@ -31,18 +32,24 @@ function ChatDetail() {
 
 	useEffect(() => {
 		stomp.connect({ Authorization: `Bearer ${token}` }, () => {
+			isConnected.current = true;
 			stomp.subscribe(`/sub/chat/room/${roomId}`, (message) => {
 				const receivedChatting = JSON.parse(message.body);
 				setReceivedChatData(receivedChatting);
 			});
 		});
+		return () => {
+			if (isConnected.current) {
+				disConnect();
+			}
+		};
 	}, [roomId]);
 
 	const disConnect = () => {
 		stomp.disconnect(() => {
 			stomp.unsubscribe("sub-0");
 		});
-		console.log("disconnect");
+		isConnected.current = false;
 	};
 
 	const sendMessage = (inputChat: string) => {
