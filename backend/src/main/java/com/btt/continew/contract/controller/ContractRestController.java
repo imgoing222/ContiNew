@@ -48,6 +48,10 @@ public class ContractRestController {
 
     @PostMapping("/auth/contracts/disagree")
     @ApiOperation(value = "계약 요청 거절", notes = "계약 요청을 거절하는 API")
+    @ApiResponses({
+        @ApiResponse(code = 400, message = "BAD REQUEST\n이미 끝난 계약 요청(K07)\n로그인한 회원과 관련있는 계약 요청이 아님(K06)"),
+        @ApiResponse(code = 404, message = "NOT FOUND\n존재하지 않는 아이디(M01)\n존재하지 않는 매물(H01)\n존재하지 않는 계약 요청(K05)")
+    })
     public ResponseEntity<Void> disagreeContract(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
         @RequestBody ContractAgreeRequest request) {
         contractService.disagreeContract(request, loginId);
