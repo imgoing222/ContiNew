@@ -1,21 +1,16 @@
+import camelToSnake from "@utils/camelToSnake";
 import { AxiosResponse } from "axios";
+import { SearchCondition } from "src/pages/saleList";
 import House from "src/types/getListType";
 import { request } from "./request";
 
-interface Coordinate {
-	y_bottom: number;
-	y_top: number;
-	x_left: number;
-	x_right: number;
-}
-
 interface SaleApiType {
-	getSales: (coordinateInfo: Coordinate) => Promise<AxiosResponse<{ houses: Array<House> }>>;
+	getSales: (coordinateInfo: SearchCondition) => Promise<AxiosResponse<{ houses: Array<House> }>>;
 	createSale: (data: FormData) => Promise<AxiosResponse>;
 }
 
 const saleApi: SaleApiType = {
-	getSales: (coordinateInfo) => request.post("houses/list", coordinateInfo),
+	getSales: (coordinateInfo) => request.post("houses/list", camelToSnake(coordinateInfo)),
 	createSale: (data) => request.post("auth/auth/houses", data),
 };
 
