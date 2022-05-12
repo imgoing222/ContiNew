@@ -55,17 +55,14 @@ function RoomList() {
 			</Title>
 			<Content>
 				{chatListData.chat_rooms &&
-					chatListData.chat_rooms
-						.slice(0)
-						.reverse()
-						.map((chat) => (
-							<ContentContainer
-								key={chat.room_id}
-								onClick={() => toChattingRoom(chat.room_id, chat.sale)}
-							>
-								<RoomListItem chat={chat} />
-							</ContentContainer>
-						))}
+					chatListData.chat_rooms.map((chat) => (
+						<ContentContainer
+							key={chat.room_id}
+							onClick={() => toChattingRoom(chat.room_id, chat.sale)}
+						>
+							<RoomListItem chat={chat} />
+						</ContentContainer>
+					))}
 			</Content>
 		</Container>
 	);
