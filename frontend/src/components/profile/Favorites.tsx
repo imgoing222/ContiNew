@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import profileApi from "src/api/profile";
+import House from "src/types/getListType";
 import { Container } from "./Container";
 
 function Favorites() {
-	const [favorites, setFavorites] = useState([]);
+	const [favorites, setFavorites] = useState<House[] | []>();
 	const [totalPage, setTotalPage] = useState(0);
 	const [currentPage, setCurrentPage] = useState(0);
 
@@ -20,7 +21,7 @@ function Favorites() {
 
 	return (
 		<Container>
-			<p>관심 매물</p>
+			<div>관심 매물 목록</div>
 			<button>Show More</button>
 		</Container>
 	);
