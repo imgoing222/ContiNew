@@ -10,41 +10,55 @@ export interface MapRefType {
 	kakaoMap: React.MutableRefObject<kakao.maps.Map>;
 }
 
-export interface Coordinate {
-	y_bottom: number;
-	y_top: number;
-	x_left: number;
-	x_right: number;
+export interface SearchCondition {
+	yBottom: number;
+	yTop: number;
+	xLeft: number;
+	xRight: number;
+	saleType?: string;
+	houseType?: string;
+	contractType?: string;
+	minDeposit?: number;
+	maxDeposit?: number;
+	minMonthlyRent?: number;
+	minMaintenanceFee?: number;
+	maxMaintenanceFee?: number;
+	period?: number;
 }
 
 function index() {
 	const kakaoMap = useRef<kakao.maps.Map>();
-	const [coordinates, setCoordinates] = useState<Coordinate>({
-		x_right: 0,
-		y_top: 0,
-		x_left: 0,
-		y_bottom: 0,
+	const [searchCondition, setSearchCondition] = useState<SearchCondition>({
+		xRight: 0,
+		yTop: 0,
+		xLeft: 0,
+		yBottom: 0,
 	});
 
 	const [saleList, setSaleList] = useState<House[]>([]);
 
 	useEffect(() => {
 		const getSales = async () => {
-			const sales = await saleApi.getSales(coordinates);
+			const sales = await saleApi.getSales(searchCondition);
 			setSaleList(sales.data.houses);
 		};
 
 		getSales();
-	}, [coordinates]);
+	}, [searchCondition]);
 
 	return (
 		<>
 			<SaleListNav kakaoMap={kakaoMap as React.MutableRefObject<kakao.maps.Map>} />
 			<Container>
-				<SaleList saleList={saleList} />
+				<SaleList
+					saleList={saleList}
+					setSearchCondition={setSearchCondition}
+					searchCondition={searchCondition}
+				/>
 				<Map
 					kakaoMap={kakaoMap as React.MutableRefObject<kakao.maps.Map>}
-					setCoordinates={setCoordinates}
+					setSearchCondition={setSearchCondition}
+					searchCondition={searchCondition}
 				/>
 			</Container>
 		</>
