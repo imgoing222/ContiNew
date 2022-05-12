@@ -139,7 +139,10 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 						<TopSection>
 							<ul>
 								{showChatList &&
-									showChatList.map((chat, idx) => <ChatListItem key={idx} chat={chat} />)}
+									showChatList
+										.slice(0)
+										.reverse()
+										.map((chat, idx) => <ChatListItem key={idx} chat={chat} />)}
 							</ul>
 							<div ref={chatBoxRef} />
 						</TopSection>
