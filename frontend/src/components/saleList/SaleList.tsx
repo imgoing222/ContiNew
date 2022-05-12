@@ -16,7 +16,9 @@ interface SaleList extends SaleListProps {
 
 function SaleList({ saleList, searchCondition, setSearchCondition }: SaleList) {
 	const changeSaleType = (e: React.ChangeEvent<HTMLInputElement>) => {
-		if (searchCondition) setSearchCondition({ ...searchCondition, [e.target.name]: e.target.id });
+		console.log(e.target);
+		if (searchCondition)
+			setSearchCondition({ ...searchCondition, [e.target.name]: e.target.value });
 	};
 	const saleType = ["전체", "이어살기", "쉐어하우스"];
 	return (
