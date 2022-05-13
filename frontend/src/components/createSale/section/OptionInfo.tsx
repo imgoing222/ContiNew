@@ -22,7 +22,7 @@ function OptionInfo({ changeEvent, houseInfo }: EventProps) {
 				{options.map((option, idx) => (
 					<OptionInfoList
 						title={option}
-						value={(idx + 1).toString()}
+						value={idx + 1}
 						changeEvent={changeEvent}
 						houseInfo={houseInfo}
 						key={idx}
