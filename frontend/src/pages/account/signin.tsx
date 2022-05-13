@@ -19,7 +19,7 @@ function Signin() {
 	const router = useRouter();
 	const dispatch = useDispatch();
 
-	const { handleFormSubmit, handleInputChange, handleGoogleLoginClick } = useForm({
+	const { handleFormSubmit, handleInputChange, handleKakaoLoginClick } = useForm({
 		initialValues: {
 			login_id: "",
 			password: "",
@@ -49,7 +49,9 @@ function Signin() {
 					로그인
 				</Button>
 			</FormContainer>
-			<Button onClick={handleGoogleLoginClick}>구글로 시작하기</Button>
+			<Button backgroundColor="#FEE500" onClick={handleKakaoLoginClick}>
+				카카오로 시작하기
+			</Button>
 			<LinkSection>
 				<Link href="/account/findPassword">
 					<LinkButton>비밀번호를 잊으셨나요?</LinkButton>

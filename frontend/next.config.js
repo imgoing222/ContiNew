@@ -4,8 +4,8 @@ const nextConfig = {
 	async rewrites() {
 		return [
 			{
-				source: "/login/oauth2/code/:google*",
-				destination: "/socialLogin/googleLogin",
+				source: "/login/oauth2/code/:kakao*",
+				destination: "/socialLogin/kakaoLogin",
 			},
 		];
 	},
