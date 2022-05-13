@@ -75,4 +75,11 @@ public class AuthRestController {
         oauthService.requestToken(response, code);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/members/login/kakao/callback")
+    @ApiOperation(value = "카카오 회원 가입 및 로그인 콜백", notes = "카카오 로그인 api")
+    public ResponseEntity<Void> kakaoLoginCallback(@RequestParam String code, HttpServletResponse response) {
+        oauthService.requestKakaoToken(code, response);
+        return ResponseEntity.noContent().build();
+    }
 }

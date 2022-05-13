@@ -2,7 +2,9 @@ package com.btt.continew.auth.service;
 
 import com.btt.continew.auth.Oauth.GoogleOauth;
 import com.btt.continew.auth.controller.dto.AuthorizationGoogle;
+import com.btt.continew.auth.controller.dto.AuthorizationKakao;
 import com.btt.continew.auth.controller.dto.response.GoogleUserInfoResponse;
+import com.btt.continew.auth.controller.dto.response.KakaoUserInfoResponse;
 import com.btt.continew.auth.controller.dto.response.TokenResponse;
 import com.btt.continew.auth.infrastructure.JwtTokenProvider;
 import com.btt.continew.global.exception.BusinessException;
@@ -44,6 +46,14 @@ public class OauthService {
     private static final String GOOGLE_USERINFO_URL = "https://oauth2.googleapis.com/tokeninfo?id_token=";
     private static final String GRANT_TYPE = "authorization_code";
 
+    @Value("${jwt.kakao.client-id}")
+    private String KAKAO_CLIENT_ID;
+    @Value("${jwt.kakao.redirect-url}")
+    private String KAKAO_REDIRECT_URL;
+    private static final String KAKAO_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
+    private static final String KAKAO_USERINFO_URL = "https://kapi.kakao.com/v2/user/me";
+
+
     public OauthService(RestTemplate restTemplate, ObjectMapper objectMapper,
         MemberService memberService, AuthService authService, JwtTokenProvider jwtTokenProvider) {
         this.restTemplate = restTemplate;
@@ -63,8 +73,38 @@ public class OauthService {
 //    }
 
     @Transactional
+    public void requestKakaoToken(String code, HttpServletResponse response) {
+        AuthorizationKakao authorization = requestKakaoAccessToken(code);
+        KakaoUserInfoResponse userInfoResponse = requestUserInfoByKakaoAuth(authorization.getAccess_token());
+        Member member = memberService.loadKaKaoUser(userInfoResponse);
+        TokenResponse tokenResponse = jwtTokenProvider.createToken(member.getLoginId(), member.getAuthority());
+        String refreshTokenId = authService.saveRefreshToken(member, tokenResponse);
+        authService.setTokenToCookie(tokenResponse.getAccessToken(), refreshTokenId, response);
+    }
+
+    private AuthorizationKakao requestKakaoAccessToken(String code) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", GRANT_TYPE);
+        params.add("client_id", KAKAO_CLIENT_ID);
+        params.add("redirect_uri", KAKAO_REDIRECT_URL);
+        params.add("code", code);
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity(KAKAO_TOKEN_URL, request, String.class);
+            return objectMapper.readValue(response.getBody(), AuthorizationKakao.class);
+        } catch (RestClientException | JsonProcessingException e) {
+            e.printStackTrace();
+            throw new BusinessException(ErrorCode.GLOBAL_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Transactional
     public void requestToken(HttpServletResponse response, String code) {
-        System.out.println(code);
         AuthorizationGoogle authorization = requestAccessToken(code);
         GoogleUserInfoResponse userResponse = requestUserInfoByGoogleAuth(authorization.getAccess_token(),
             authorization.getId_token());
@@ -95,6 +135,24 @@ public class OauthService {
         } catch (RestClientException | JsonProcessingException e) {
             e.printStackTrace();
             throw new BusinessException(ErrorCode.LOGIN_GOOGLE_RESPONSE_FAIL);
+        }
+    }
+
+    private KakaoUserInfoResponse requestUserInfoByKakaoAuth(String accessToken) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + accessToken);
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+
+        try {
+            ResponseEntity<KakaoUserInfoResponse> response = restTemplate.postForEntity(KAKAO_USERINFO_URL, request,
+                KakaoUserInfoResponse.class);
+            return response.getBody();
+        } catch (RestClientException e) {
+            e.printStackTrace();
+            throw new BusinessException(ErrorCode.GLOBAL_INTERNAL_SERVER_ERROR);
         }
     }
 
