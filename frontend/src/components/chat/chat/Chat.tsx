@@ -56,14 +56,12 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	});
 	const [showChatList, setShowChatList] = useState<ShowChatListType[]>([]);
 
-	if (roomId) {
-		const { setTarget, savedChatMessage, isLoading } = useInfiniteScroll({
-			roomId,
-			requestApi: (roomId, currentPage) => {
-				return chatApi.getChatList(roomId, currentPage);
-			},
-		});
-	}
+	const { setTarget, savedChatMessage, isLoading } = useInfiniteScroll({
+		roomId,
+		requestApi: (roomId, currentPage) => {
+			return chatApi.getChatList(roomId, currentPage);
+		},
+	});
 
 	const DATA_SET = {
 		buyer: login_id,
@@ -138,6 +136,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 				{roomId && (
 					<>
 						<TopSection>
+							<div ref={setTarget}>{isLoading && <p></p>}</div>
 							<ul>
 								{showChatList &&
 									showChatList
