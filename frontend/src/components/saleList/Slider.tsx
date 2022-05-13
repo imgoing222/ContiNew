@@ -1,4 +1,5 @@
 import { noop } from "lodash";
+import ReactSlider from "react-slider";
 import React, {
 	ChangeEvent,
 	InputHTMLAttributes,
