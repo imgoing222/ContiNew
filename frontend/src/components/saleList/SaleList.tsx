@@ -25,10 +25,14 @@ function SaleList({ saleList, searchCondition, setSearchCondition }: SaleList) {
 		<Container>
 			<Box>
 				{saleType.map((item, idx) => (
-					<SaleTypeFilter id={item} changeSaleType={changeSaleType} key={idx} />
+					<SaleTypeFilter
+						searchCondition={searchCondition}
+						id={item}
+						changeSaleType={changeSaleType}
+						key={idx}
+					/>
 				))}
 			</Box>
-
 			{saleList.length > 0 ? (
 				<DetailOfSale saleList={saleList} />
 			) : (
@@ -46,7 +50,6 @@ const Container = styled.section`
 	min-width: 38rem;
 	display: flex;
 	flex-direction: column;
-	margin-top: 1rem;
 `;
 
 const Div = styled.div`
@@ -59,5 +62,5 @@ const Div = styled.div`
 
 const Box = styled.div`
 	display: flex;
-	justify-content: center;
+	margin: 1rem 0;
 `;
