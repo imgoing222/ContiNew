@@ -68,7 +68,7 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 				<IconPart
 					content1="floor"
 					content2="price"
-					info1={`${houseInfo.floor}층`}
+					info1={houseInfo.floor === 0 ? "반지하" : `${houseInfo.floor}층`}
 					info2={`월 ${houseInfo.maintenanceFee}만원`}
 				/>
 				<Hr />
