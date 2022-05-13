@@ -1,38 +1,76 @@
 import { useState } from "react";
 import styled from "styled-components";
+import Container from "./Container";
 import Slider from "./Slider";
 
 function PriceTab() {
-	const [isOpen, setIsOpen] = useState(false);
-
-	const tabChagneHandler = () => {
-		setIsOpen(!isOpen);
-	};
 	return (
-		<div style={{ marginLeft: "2rem" }}>
-			<button onClick={tabChagneHandler}>전세, 월세</button>
-			<div>
-				<div>
-					{/* <h1>거래 유형</h1>
-					<label htmlFor="월세" style={{ cursor: "pointer" }}>
-						월세
-					</label>
-					<input type="checkbox" id="월세" />
-					<label htmlFor="전세">전세</label>
-					<input type="checkbox" id="전세" style={{ cursor: "pointer" }} /> */}
-				</div>
-				<div>
-					<h1>가격 정보</h1>
-					<p>보증금/전세가</p>
-					<Slider minValue={0} maxValue={1000} label={{ min: "0", max: "1억" }} />
-				</div>
-			</div>
-		</div>
+		<Container title="거래 유형 / 가격">
+			<SmallBox>
+				<Title>거래 유형</Title>
+				<Tab>
+					<InputBox>
+						<Input type="checkbox" id="월세" />
+						<Label htmlFor="월세" style={{ cursor: "pointer" }}>
+							월세
+						</Label>
+					</InputBox>
+					<InputBox>
+						<Input type="checkbox" id="전세" style={{ cursor: "pointer" }} />
+						<Label htmlFor="전세">전세</Label>
+					</InputBox>
+				</Tab>
+			</SmallBox>
+			<SmallBox>
+				<Slider
+					title="가격"
+					step={5}
+					maxMin={{ min: 0, max: 100 }}
+					subTitle="보증금 / 전세금"
+					unit="만원"
+				/>
+			</SmallBox>
+			<SmallBox>
+				<Slider step={5} maxMin={{ min: 0, max: 100 }} subTitle="월세" unit="가격" />
+			</SmallBox>
+		</Container>
 	);
 }
 
 export default PriceTab;
 
-const SliderBox = styled.div`
+const Title = styled.h1`
+	font-size: 2rem;
+	margin-bottom: 2rem;
+`;
+
+const Tab = styled.div`
 	display: flex;
+	margin-bottom: 2rem;
+`;
+
+const InputBox = styled.div`
+	display: flex;
+	align-items: center;
+`;
+
+const Input = styled.input`
+	font-size: 1.4rem;
+`;
+
+const Label = styled.label`
+	font-size: 1.4rem;
+	margin-left: 0.5rem;
+	margin-right: 5rem;
+`;
+
+const SmallBox = styled.div`
+	margin-bottom: 2rem;
+	&::after {
+		content: "";
+		display: block;
+		border: ${(props) => `0.05rem solid rgba(233, 233, 233,0.4)}`};
+		width: 100%;
+		margin-top: 2rem;
+	}
 `;
