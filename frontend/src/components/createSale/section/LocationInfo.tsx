@@ -6,6 +6,7 @@ import axios from "axios";
 import { Container } from "../Container";
 import { TableRowAndHead } from "../TableRow";
 import LocationTableData from "../LocationComponent";
+import styled from "styled-components";
 
 function LocationInfo({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 	useEffect(() => {
@@ -80,6 +81,7 @@ function LocationInfo({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 						onChange={changeEvent}
 					/>
 					<Text>층</Text>
+					<StyledP>반지하는 0으로 입력해주세요</StyledP>
 				</LocationTableData>
 			</TableRowAndHead>
 		</Container>
@@ -87,3 +89,8 @@ function LocationInfo({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 }
 
 export default LocationInfo;
+
+const StyledP = styled.p`
+	margin-left: 2rem;
+	color: rgba(0, 0, 0, 0.5);
+`;
