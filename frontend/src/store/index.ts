@@ -3,7 +3,6 @@ import { HYDRATE, createWrapper } from "next-redux-wrapper";
 import userInfo from "./user";
 import articleId from "./articleId";
 import searchFilter from "./searchFilter";
-
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 
@@ -27,7 +26,7 @@ const reducer = (state: any, action: any) => {
 const persistConfig = {
 	key: "root",
 	storage,
-	whitelist: ["userInfo", "articleId"],
+	whitelist: ["userInfo", "articleId", "searchFilter"],
 };
 
 export const persistedReducer = persistReducer(persistConfig, rootReducer);
