@@ -1,4 +1,4 @@
-import { Axios, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { persistor } from "src/pages/_app";
 import { authRequest, request } from "./request";
 import cookie from "react-cookies";
