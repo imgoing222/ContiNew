@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import useIntersectionObserver from "./useIntersectionObserver";
 
 interface useInfiniteScrollProps {
-  roomId: string;
-	requestApi: (roomId:string, currentPage: number) => Promise<any>;
+  roomId: string | null | undefined;
+	requestApi: (roomId:string | null | undefined, currentPage: number) => Promise<any>;
 }
 
 interface ChatMessageType {
@@ -24,7 +24,7 @@ const useInfiniteScroll = ({ roomId, requestApi }: useInfiniteScrollProps) => {
 		if (currentPage) getChatList(roomId, currentPage);
 	}, [currentPage]);
 
-	const getChatList = async (roomId: string, currentPage: number) => {
+	const getChatList = async (roomId: string | null | undefined, currentPage: number) => {
 		try {
 			setIsLoading(true);
 			await new Promise((resolve) => setTimeout(resolve, 500));
