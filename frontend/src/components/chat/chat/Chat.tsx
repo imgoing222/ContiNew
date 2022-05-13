@@ -49,14 +49,9 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	const dispatch = useDispatch();
 	const chatBoxRef = useRef<HTMLDivElement>(null);
 	const { login_id } = useSelector((state: RootState) => state.userInfo);
-	const [savedChattings, setSavedChattings] = useState<SavedChattingsType>({
-		chat_message: [],
-		current_page_count: 0,
-		total_page_count: 0,
-	});
 	const [showChatList, setShowChatList] = useState<ShowChatListType[]>([]);
 
-	const { setTarget, savedChatMessage, isLoading } = useInfiniteScroll({
+	const { setTarget, savedChatMessage, isLoading, currentPage } = useInfiniteScroll({
 		roomId,
 		requestApi: (roomId, currentPage) => {
 			return chatApi.getChatList(roomId, currentPage);
@@ -86,13 +81,18 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 
 	useEffect(() => {
 		setShowChatList([]);
-
-		getChatList();
 	}, [roomId]);
 
 	useEffect(() => {
-		addChat(savedChattings.chat_message);
-	}, [savedChattings]);
+		if (currentPage) {
+			setShowChatList([...showChatList, ...savedChatMessage]);
+		} else {
+			setShowChatList(savedChatMessage);
+		}
+	}, [savedChatMessage]);
+
+	console.log(savedChatMessage);
+	console.log(showChatList);
 
 	useEffect(() => {
 		if (receivedChatData) {
@@ -104,23 +104,9 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 		scrollToBottom();
 	}, [showChatList]);
 
-	const getChatList = async () => {
-		try {
-			if (roomId) {
-				const res = await chatApi.getChatList(roomId);
-				setSavedChattings(res.data);
-			}
-		} catch (error) {
-			console.log(error);
-		}
-	};
-
-	const addChat = (chatMessage: ChatMessageType[]) => {
-		setShowChatList(chatMessage);
-		// chatMessage.map((chat) => setShowChatList((prevShowChatList) => [...prevShowChatList, chat]));
-	};
-
 	const scrollToBottom = () => {
+		if (currentPage) return;
+
 		if (chatBoxRef.current) {
 			chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
 		}
@@ -136,7 +122,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 				{roomId && (
 					<>
 						<TopSection>
-							<div ref={setTarget}>{isLoading && <p></p>}</div>
+							{<div ref={setTarget}>{isLoading && <p></p>}</div>}
 							<ul>
 								{showChatList &&
 									showChatList
