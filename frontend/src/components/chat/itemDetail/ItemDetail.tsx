@@ -43,7 +43,7 @@ function ItemDetail({ isIndex }: Props) {
 							<p>
 								{houseInfo.contractType}: {houseInfo.deposit}/{houseInfo.monthlyRent}
 							</p>
-							<p>관리비: 매월 {houseInfo.maintenanceFee} 원</p>
+							<p>관리비: 매월 {houseInfo.maintenanceFee} 만 원</p>
 							<h3>위치</h3>
 							<p>{houseInfo.jibunAddress}</p>
 						</div>
