@@ -15,16 +15,6 @@ interface TextProp {
 	margin?: string;
 }
 
-interface ChatDataType {
-	sendMessage: {};
-	buyer: string;
-	lastMessage: string;
-	lastMessageTime: string;
-	id: string;
-	sale: number;
-	seller: string;
-}
-
 function CardDescription({ houseInfo }: HouseInfoProps) {
 	const dispatch = useDispatch();
 	const router = useRouter();
@@ -35,13 +25,14 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 			const chatDataSet = { buyer: userName, seller: houseInfo.username, sale: houseInfo.houseId };
 			const res = await chatApi.createChattingRoom(chatDataSet);
 			dispatch(SET_ARTICLEID(chatDataSet.sale));
-			toChattingRoom(res.data);
+			toChattingRoom(res.data.id);
 		} catch (error) {
 			console.log(error);
 		}
 	};
-	const toChattingRoom = (chatData: ChatDataType) => {
-		router.push(`/chat/${chatData.id}`);
+	const toChattingRoom = (roomId: string) => {
+		router.push(`/chat/${roomId}`);
+		localStorage.setItem("RoomId", roomId);
 	};
 	const setBookmark = () => {
 		articleApi.addBookmark(houseInfo.houseId);
