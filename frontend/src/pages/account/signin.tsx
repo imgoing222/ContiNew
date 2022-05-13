@@ -55,7 +55,7 @@ function Signin() {
 					<LinkButton>비밀번호를 잊으셨나요?</LinkButton>
 				</Link>
 				<Link href="/account/signup">
-					<LinkButton>회원가입 하러가기</LinkButton>
+					<LinkButton>아직 회원이 아니신가요?</LinkButton>
 				</Link>
 			</LinkSection>
 		</Container>
