@@ -29,11 +29,12 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 	const dispatch = useDispatch();
 	const router = useRouter();
 	const userName = useSelector((state: RootStateOrAny) => state.userInfo.username);
-	const DATA_SET = { buyer: userName, seller: houseInfo.username, sale: houseInfo.houseId };
+
 	const startChat = async () => {
 		try {
-			const res = await chatApi.createChattingRoom(DATA_SET);
-			dispatch(SET_ARTICLEID(DATA_SET.sale));
+			const chatDataSet = { buyer: userName, seller: houseInfo.username, sale: houseInfo.houseId };
+			const res = await chatApi.createChattingRoom(chatDataSet);
+			dispatch(SET_ARTICLEID(chatDataSet.sale));
 			toChattingRoom(res.data);
 		} catch (error) {
 			console.log(error);
