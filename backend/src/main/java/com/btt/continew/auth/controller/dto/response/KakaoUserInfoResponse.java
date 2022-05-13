@@ -20,11 +20,10 @@ public class KakaoUserInfoResponse {
     private Map<String, Object> kakaoAccount;
 
     public Member toEntity() {
-        String email = (String) kakaoAccount.get("email");
         String username = (String) properties.get("nickname");
 
         return Member.builder()
-            .loginId(email)
+            .loginId(username)
             .username(username)
             .password(username + id)
             .authority(Authority.ROLE_MEMBER)
