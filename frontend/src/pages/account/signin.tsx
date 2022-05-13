@@ -49,7 +49,9 @@ function Signin() {
 					로그인
 				</Button>
 			</FormContainer>
-			<Button onClick={handleKakaoLoginClick}>카카오로 시작하기</Button>
+			<Button backgroundColor="#FEE500" onClick={handleKakaoLoginClick}>
+				카카오로 시작하기
+			</Button>
 			<LinkSection>
 				<Link href="/account/findPassword">
 					<LinkButton>비밀번호를 잊으셨나요?</LinkButton>

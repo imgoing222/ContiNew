@@ -7,7 +7,7 @@ const socialLogin = {
 	kakao: () =>
 		(window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_URI}&response_type=code`),
 	kakaoLogin: (code: string) =>
-		request.get(`oauth2/authorization/kakao?code=${code}`).then((res) => console.log(res)),
+		request.get(`members/login/kakao/callback?code=${code}`).then((res) => console.log(res)),
 };
 
 export default socialLogin;

@@ -64,7 +64,9 @@ function Signup() {
 					회원가입
 				</Button>
 			</FormContainer>
-			<Button onClick={handleKakaoLoginClick}>카카오로 시작하기</Button>
+			<Button onClick={handleKakaoLoginClick} backgroundColor="#FEE500">
+				카카오로 시작하기
+			</Button>
 			<LinkSection>
 				<Link href="/account/signin">
 					<LinkButton>로그인 하러가기</LinkButton>

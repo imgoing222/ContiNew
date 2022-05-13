@@ -1,6 +1,7 @@
 import { formValidator } from "@utils/index";
 import { useCallback, useState } from "react";
 import authApi from "src/api/auth";
+import socialLogin from "src/api/socialLogin";
 
 interface Props {
 	initialValues: Values;
@@ -87,7 +88,7 @@ const useForm = ({ initialValues, onSubmit }: Props) => {
 	);
 
 	const handleKakaoLoginClick = () => {
-		// window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=1061218236894-vsgtu6jnm857eede27uae3cfesp9kha9.apps.googleusercontent.com&response_type=code&redirect_uri=http://localhost:3000/login/oauth2/code/google&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile`;
+		socialLogin.kakao();
 	};
 
 	return {
