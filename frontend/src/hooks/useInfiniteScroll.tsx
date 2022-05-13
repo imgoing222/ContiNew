@@ -45,6 +45,13 @@ const useInfiniteScroll = ({ requestApi }: useInfiniteScrollProps) => {
 			observer.observe(entry.target);
 		}
 	};
+
+	const { setTarget } = useIntersectionObserver({
+		root: null,
+		rootMargin: "0px",
+		threshold: 1,
+		onIntersect,
+	});
 };
 
 export default useInfiniteScroll;
