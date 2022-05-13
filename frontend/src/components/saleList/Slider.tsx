@@ -1,85 +1,87 @@
-import { noop } from "lodash";
-import ReactSlider from "react-slider";
-import React, {
-	ChangeEvent,
-	InputHTMLAttributes,
-	ReactElement,
-	useCallback,
-	useState,
-} from "react";
+import React, { InputHTMLAttributes, useState } from "react";
+import styled from "styled-components";
+import InputRange from "react-input-range";
+import "react-input-range/lib/css/index.css";
+import { moneyUnitChange } from "@utils/index";
 
 interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
-	value?: number;
-	minValue?: number;
-	maxValue?: number;
-	color?: string;
-	label?: {
-		min: string;
-		max: string;
-		mid?: string;
-	};
-	tooltip?: ReactElement;
-	onChange?: (value: number) => void;
+	title?: string;
+	step: number;
+	maxMin: { min: number; max: number };
+	subTitle?: string;
+	unit: string;
 }
 
-function Slider({
-	min = 0,
-	max = 100,
-	minValue = Number(min),
-	maxValue = Number(max),
-	value: outerValue = (minValue + maxValue) / 2,
-	color,
-	tooltip,
-	label,
-	onChange = noop,
-}: Props) {
-	const [value, setValue] = useState({ min: minValue, max: maxValue });
+interface RangeValue {
+	min: number;
+	max: number;
+}
 
-	const handleChange = useCallback(
-		(event: ChangeEvent<HTMLInputElement>) => {
-			const val = Number(event.target.value);
-			setValue({ ...value, [event.target.name]: val });
-			onChange?.(val);
-		},
-		[onChange],
-	);
+interface RangeProps {
+	color?: string;
+}
+
+function Slider({ title, subTitle, step, maxMin, unit }: Props) {
+	const [localMin, setLocalMin] = useState(maxMin.min);
+	const [localMax, setLocalMax] = useState(maxMin.max);
+
+	const onChangeHandler = (value: RangeValue) => {
+		const { min, max } = value;
+		setLocalMin(Math.max(min, maxMin.min));
+		setLocalMax(Math.min(max, maxMin.max));
+	};
+
 	return (
-		<div>
-			<input
-				type="range"
-				value={value.min}
-				min={minValue}
-				max={maxValue}
-				onChange={handleChange}
-				step={value.min < 50 ? "10" : "50"}
-				name="min"
-			/>
-			<div>
-				<div>slider</div> <div>ragne</div>{" "}
-				<div>
-					<label htmlFor="max">최대값</label>
-				</div>
-				<div>max</div>
-			</div>
-			<input
-				type="range"
-				value={value.max}
-				min={minValue}
-				max={maxValue}
-				onChange={handleChange}
-				step={value.max < 50 ? "10" : "50"}
-				name="max"
-				id="max"
-			/>
+		<>
+			<Title>{title}</Title>
 
-			{label !== undefined && (
-				<>
-					<p>{label.min}</p>
-					<p>{label.max}</p>
-				</>
-			)}
-		</div>
+			<Description>
+				<Range>{subTitle}</Range>
+
+				<Range color="red">
+					{moneyUnitChange(localMin.toString())} ~ {moneyUnitChange(localMax.toString())}
+				</Range>
+			</Description>
+
+			<Form>
+				<InputRange
+					draggableTrack
+					formatLabel={(value) => `${value}`}
+					maxValue={maxMin.max}
+					minValue={maxMin.min}
+					step={localMax > 3000 ? step * 2 : step}
+					value={{ min: localMin, max: localMax }}
+					onChange={(value) => {
+						onChangeHandler(value as RangeValue);
+					}}
+					onChangeComplete={(value) => console.log(value)}
+				/>
+			</Form>
+		</>
 	);
 }
 
 export default Slider;
+
+const Description = styled.div`
+	margin: 1rem 0 3rem 0;
+	display: flex;
+	justify-content: space-between;
+`;
+
+const Title = styled.h1`
+	font-size: 2rem;
+`;
+
+const Range = styled.span<RangeProps>`
+	display: block;
+	font-size: 1.5rem;
+	color: ${(props) => (props.color === "red" ? props.theme.mainColor : "rgba(0,0,0,0.7)")};
+	text-align: right;
+`;
+
+const Form = styled.form`
+	width: 38rem;
+	margin: 0 auto;
+	margin-bottom: 3.5rem;
+`;

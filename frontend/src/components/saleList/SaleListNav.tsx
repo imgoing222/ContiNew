@@ -1,5 +1,7 @@
 import { MapRefType } from "src/pages/saleList";
 import styled from "styled-components";
+import Options from "./Options";
+import Period from "./Period";
 import PriceTab from "./PriceTab";
 import SearchInput from "./SearchInput";
 
@@ -8,6 +10,8 @@ function SaleListNav({ kakaoMap }: MapRefType) {
 		<Nav>
 			<SearchInput kakaoMap={kakaoMap} />
 			<PriceTab />
+			<Period />
+			<Options />
 		</Nav>
 	);
 }
