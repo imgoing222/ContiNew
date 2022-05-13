@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum Provider {
 
     CONTINEW("continew", 1),
-    GOOGLE("google", 2);
+    GOOGLE("google", 2),
+    KAKAO("kakao", 3);
 
     private final String providerName;
     private final Integer providerNumber;
