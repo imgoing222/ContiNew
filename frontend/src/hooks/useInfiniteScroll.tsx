@@ -36,6 +36,15 @@ const useInfiniteScroll = ({ requestApi }: useInfiniteScrollProps) => {
 			console.log(error);
 		}
 	};
+
+	const onIntersect: IntersectionObserverCallback = async ([entry], observer) => {
+		if (entry.isIntersecting && !isLoading) {
+			if (currentPage && currentPage >= totalPage) return;
+			observer.unobserve(entry.target);
+			setCurrentPage((prev) => prev + 1);
+			observer.observe(entry.target);
+		}
+	};
 };
 
 export default useInfiniteScroll;
