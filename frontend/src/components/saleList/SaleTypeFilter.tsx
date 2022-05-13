@@ -13,7 +13,7 @@ interface LabelProps {
 
 function SaleTypeFilter({ changeSaleType, id, searchCondition }: SaleTypeFilter) {
 	const isChecked = (id: string) => {
-		if (id === "전체" && searchCondition.saleType === " ") return true;
+		if (id === "전체" && searchCondition.saleType === "") return true;
 		if (searchCondition.saleType === id) return true;
 		return false;
 	};
@@ -26,7 +26,7 @@ function SaleTypeFilter({ changeSaleType, id, searchCondition }: SaleTypeFilter)
 				name="saleType"
 				onChange={changeSaleType}
 				id={id}
-				value={id === "전체" ? " " : id}
+				value={id === "전체" ? "" : id}
 			/>
 		</Label>
 	);
