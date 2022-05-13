@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import useIntersectionObserver from "./useIntersectionObserver";
 
 interface useInfiniteScrollProps {
-  roomId: string | null | undefined;
-	requestApi: (roomId:string | null | undefined, currentPage: number) => Promise<any>;
+	roomId: string | null | undefined;
+	requestApi: (roomId: string | null | undefined, currentPage: number) => Promise<any>;
 }
 
 interface ChatMessageType {
@@ -21,20 +21,17 @@ const useInfiniteScroll = ({ roomId, requestApi }: useInfiniteScrollProps) => {
 	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
-		if (currentPage) getChatList(roomId, currentPage);
+		getChatList(roomId, currentPage);
 	}, [currentPage]);
 
 	const getChatList = async (roomId: string | null | undefined, currentPage: number) => {
 		try {
 			setIsLoading(true);
 			await new Promise((resolve) => setTimeout(resolve, 500));
-
 			const res = await requestApi(roomId, currentPage);
 			setTotalPage(res.data.total_page_count);
-			setSavedChatMessage((prevSavedChatMessage) => [
-				...prevSavedChatMessage,
-				...res.data.chat_message,
-			]);
+			setSavedChatMessage(res.data.chat_message);
+			console.log(savedChatMessage);
 
 			setIsLoading(false);
 		} catch (error) {
@@ -44,7 +41,7 @@ const useInfiniteScroll = ({ roomId, requestApi }: useInfiniteScrollProps) => {
 
 	const onIntersect: IntersectionObserverCallback = async ([entry], observer) => {
 		if (entry.isIntersecting && !isLoading) {
-			if (currentPage && currentPage >= totalPage) return;
+			if (currentPage >= totalPage) return;
 			observer.unobserve(entry.target);
 			setCurrentPage((prev) => prev + 1);
 			observer.observe(entry.target);
@@ -58,7 +55,7 @@ const useInfiniteScroll = ({ roomId, requestApi }: useInfiniteScrollProps) => {
 		onIntersect,
 	});
 
-	return { setTarget, savedChatMessage, isLoading, setSavedChatMessage };
+	return { setTarget, savedChatMessage, isLoading, currentPage };
 };
 
 export default useInfiniteScroll;
