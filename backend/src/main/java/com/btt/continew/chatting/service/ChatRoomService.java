@@ -63,14 +63,14 @@ public class ChatRoomService {
         System.out.println("2-3. 방 골라내기");
         for (ChatRoom temp : temps){
             // 구매자
-            if(temp.getBuyer().equals(member.getLoginId())){
+            if(temp.getBuyer().equals(member.getUsername())){
                 chatRoomList.add(temp);
 
                 continue;
             }
 
             // 판매자
-            if (temp.getSeller().equals(member.getLoginId())){
+            if (temp.getSeller().equals(member.getUsername())){
                 chatRoomList.add(temp);
             }
         }
