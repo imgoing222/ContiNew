@@ -21,7 +21,7 @@ function ChatDetail() {
 	const router = useRouter();
 	// const { roomId } = router.query;
 	const roomId = localStorage.getItem("RoomId");
-	const { login_id } = useSelector((state: RootState) => state.userInfo);
+	const { username } = useSelector((state: RootState) => state.userInfo);
 	const [receivedChatData, setReceivedChatData] = useState<ReceivedChatDataType>();
 	const isConnected = useRef(false);
 
@@ -64,7 +64,7 @@ function ChatDetail() {
 				JSON.stringify({
 					type: "TALK",
 					room_id: roomId,
-					sender: login_id,
+					sender: username,
 					content: inputChat,
 					created_at: sendTime,
 				}),

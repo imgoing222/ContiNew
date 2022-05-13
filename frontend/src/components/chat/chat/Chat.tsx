@@ -85,14 +85,15 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 		try {
 			const res = await chatApi.createChattingRoom(DATA_SET);
 			dispatch(SET_ARTICLEID(DATA_SET.sale));
-			toChattingRoom(res.data);
+			toChattingRoom(res.data.id);
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
-	const toChattingRoom = (chatData: ChatDataType) => {
-		router.push(`/chat/${chatData.id}`);
+	const toChattingRoom = (roomId: string) => {
+		router.push(`/chat/${roomId}`);
+		localStorage.setItem("RoomId", roomId);
 	};
 
 	useEffect(() => {

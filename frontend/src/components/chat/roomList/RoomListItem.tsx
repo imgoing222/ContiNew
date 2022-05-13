@@ -14,9 +14,9 @@ interface ChatProps {
 }
 
 function RoomListItem({ chat }: ChatProps) {
-	const { login_id } = useSelector((state: RootState) => state.userInfo);
+	const { username } = useSelector((state: RootState) => state.userInfo);
 	let name = "";
-	if (login_id === chat.buyer) {
+	if (username === chat.buyer) {
 		name = chat.seller;
 	} else {
 		name = chat.buyer;
