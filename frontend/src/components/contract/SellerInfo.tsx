@@ -1,5 +1,6 @@
 import { Input } from "./Input";
 import { Label } from "./Label";
+import Signature from "./Signature";
 
 function SellerInfo() {
 	return (
