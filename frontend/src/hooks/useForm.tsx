@@ -92,6 +92,7 @@ const useForm = ({ initialValues, onSubmit }: Props) => {
 
 	return {
 		errors,
+		handleFormSubmit,
 		handleInputChange,
 		handleGoogleLoginClick,
 		disabled,

@@ -1,5 +1,6 @@
 import { Input } from "./Input";
 import { Label } from "./Label";
+import Signature from "./Signature";
 
 function SellerInfo() {
 	return (
@@ -13,6 +14,7 @@ function SellerInfo() {
 			<Label>임차인 전화</Label>
 			<Input />
 			<Label>서명</Label>
+			<Signature />
 		</>
 	);
 }
