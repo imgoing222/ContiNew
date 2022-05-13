@@ -3,10 +3,10 @@ import InputCheck from "./InputCheck";
 import { Label, Pbox } from "./Table";
 
 export interface OptionInfoListProps {
-	value: string;
+	value: number;
 	changeEvent: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	title: string;
-	houseInfo: HouseInfo;
+	houseInfo?: HouseInfo;
 }
 
 function OptionInfoList({ value, changeEvent, title, houseInfo }: OptionInfoListProps) {
@@ -14,7 +14,13 @@ function OptionInfoList({ value, changeEvent, title, houseInfo }: OptionInfoList
 		<li>
 			<Label htmlFor="options">
 				<InputCheck name="options" type="checkbox" value={value} onChange={changeEvent} />
-				<Pbox isCheck={houseInfo.options.includes(+value) ? "checked" : undefined}>{title}</Pbox>
+				<Pbox
+					isCheck={
+						houseInfo !== undefined && houseInfo.options.includes(value) ? "checked" : undefined
+					}
+				>
+					{title}
+				</Pbox>
 			</Label>
 		</li>
 	);
