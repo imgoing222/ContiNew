@@ -86,7 +86,7 @@ const useForm = ({ initialValues, onSubmit }: Props) => {
 		[password],
 	);
 
-	const handleGoogleLoginClick = () => {
+	const handleKakaoLoginClick = () => {
 		// window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=1061218236894-vsgtu6jnm857eede27uae3cfesp9kha9.apps.googleusercontent.com&response_type=code&redirect_uri=http://localhost:3000/login/oauth2/code/google&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile`;
 	};
 
@@ -94,7 +94,7 @@ const useForm = ({ initialValues, onSubmit }: Props) => {
 		errors,
 		handleFormSubmit,
 		handleInputChange,
-		handleGoogleLoginClick,
+		handleKakaoLoginClick,
 		disabled,
 		passwordMatched,
 		onChangePasswordConfirm,
