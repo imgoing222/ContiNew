@@ -78,7 +78,7 @@ public class MemberService {
 
     @Transactional
     public Member loadKaKaoUser(KakaoUserInfoResponse response) {
-        Member member = memberRepository.findByLoginId((String) response.getKakaoAccount().get("email"))
+        Member member = memberRepository.findByLoginId((String) response.getProperties().get("nickname"))
             .orElse(response.toEntity());
         member.checkSocialMember();
         return memberRepository.save(member);
