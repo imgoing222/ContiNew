@@ -19,6 +19,10 @@ const useInfiniteScroll = ({ requestApi }: useInfiniteScrollProps) => {
 	const [currentPage, setCurrentPage] = useState(0);
 	const [isLoading, setIsLoading] = useState(false);
 
+	useEffect(() => {
+		if (currentPage) getChatList(currentPage);
+	}, [currentPage]);
+
 	const getChatList = async (currentPage: number) => {
 		try {
 			setIsLoading(true);
@@ -52,6 +56,8 @@ const useInfiniteScroll = ({ requestApi }: useInfiniteScrollProps) => {
 		threshold: 1,
 		onIntersect,
 	});
+
+	return { setTarget, savedChatMessage, isLoading, setSavedChatMessage };
 };
 
 export default useInfiniteScroll;
