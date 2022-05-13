@@ -42,7 +42,9 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 	const toChattingRoom = (chatData: ChatDataType) => {
 		router.push(`/chat/${chatData.id}`);
 	};
-	const setBookmark = () => {};
+	const setBookmark = () => {
+		articleApi.addBookmark(houseInfo.houseId);
+	};
 	const deleteArticle = (id: number) => {
 		if (window.confirm("정말로 해당 글을 삭제하시겠습니까?")) {
 			articleApi.deleteArticle(id);
