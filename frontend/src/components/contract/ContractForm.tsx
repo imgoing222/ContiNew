@@ -11,10 +11,6 @@ function ContractForm() {
 			<SaleInfo />
 			<ContractInfo />
 			<ContractorsInfo />
-			<div>
-				<button>임시 저장</button>
-				<button>다음 단계</button>
-			</div>
 		</Container>
 	);
 }
