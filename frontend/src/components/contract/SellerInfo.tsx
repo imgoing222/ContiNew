@@ -13,6 +13,7 @@ function SellerInfo() {
 			<Label>임차인 전화</Label>
 			<Input />
 			<Label>서명</Label>
+			<Signature />
 		</>
 	);
 }
