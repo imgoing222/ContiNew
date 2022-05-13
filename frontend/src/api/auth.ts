@@ -41,7 +41,7 @@ const authApi: AuthApiType = {
 	findPassword: (userInfo) => request.post("members/find-pw/phone-send", userInfo),
 	confirmChangeCode: (code) => request.post("members/find-pw/phone-check", { code }),
 	changePassword: (value) => request.post("members/find-pw/change-pw", value),
-	googleLogin: (code) => request.get(`api/members/login/google/callback?code=${code}`),
+	googleLogin: (code) => request.get(`members/login/google/callback?code=${code}`),
 };
 
 export default authApi;
