@@ -3,18 +3,45 @@ import styled from "styled-components";
 import { faIdCard } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { changeMonthToYear, moneyUnitChange } from "@utils/index";
-import { RootStateOrAny, useSelector } from "react-redux";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import articleApi from "src/api/article";
 import { HouseInfoProps } from "src/pages/article/[id]";
 import IconPart from "./IconPart";
+import { chatApi } from "src/api";
+import { SET_ARTICLEID } from "src/store/articleId";
+import { useRouter } from "next/router";
 
 interface TextProp {
 	margin?: string;
 }
 
+interface ChatDataType {
+	sendMessage: {};
+	buyer: string;
+	lastMessage: string;
+	lastMessageTime: string;
+	id: string;
+	sale: number;
+	seller: string;
+}
+
 function CardDescription({ houseInfo }: HouseInfoProps) {
+	const dispatch = useDispatch();
+	const router = useRouter();
 	const userName = useSelector((state: RootStateOrAny) => state.userInfo.username);
-	const startChat = () => {};
+	const DATA_SET = { buyer: userName, seller: houseInfo.username, sale: houseInfo.houseId };
+	const startChat = async () => {
+		try {
+			const res = await chatApi.createChattingRoom(DATA_SET);
+			dispatch(SET_ARTICLEID(DATA_SET.sale));
+			toChattingRoom(res.data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+	const toChattingRoom = (chatData: ChatDataType) => {
+		router.push(`/chat/${chatData.id}`);
+	};
 	const setBookmark = () => {};
 	const deleteArticle = (id: number) => {
 		if (window.confirm("정말로 해당 글을 삭제하시겠습니까?")) {
