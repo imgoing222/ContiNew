@@ -20,6 +20,7 @@ interface AuthApiType {
 	findPassword: (userInfo: { login_id: string; phone_number: string }) => Promise<AxiosResponse>;
 	confirmChangeCode: (code: string) => Promise<AxiosResponse>;
 	changePassword: (value: { new_password: string; change_token: string }) => Promise<AxiosResponse>;
+	googleLogin: () => Promise<AxiosResponse>;
 }
 
 const authApi: AuthApiType = {
@@ -40,6 +41,7 @@ const authApi: AuthApiType = {
 	findPassword: (userInfo) => request.post("members/find-pw/phone-send", userInfo),
 	confirmChangeCode: (code) => request.post("members/find-pw/phone-check", { code }),
 	changePassword: (value) => request.post("members/find-pw/change-pw", value),
+	googleLogin: () => request.get("members/login/google"),
 };
 
 export default authApi;
