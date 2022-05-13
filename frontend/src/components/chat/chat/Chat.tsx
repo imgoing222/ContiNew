@@ -6,6 +6,7 @@ import { RootState } from "src/store";
 
 import { chatApi } from "src/api";
 import { BottomSection, ChatListItem } from "@components/chat";
+import useInfiniteScroll from "@hooks/useInfiniteScroll";
 import { SET_ARTICLEID } from "src/store/articleId";
 
 interface Props {
@@ -64,6 +65,15 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 		total_page_count: 0,
 	});
 	const [showChatList, setShowChatList] = useState<ShowChatListType[]>([]);
+
+	if (roomId) {
+		const { setTarget, savedChatMessage, isLoading } = useInfiniteScroll({
+			roomId,
+			requestApi: (roomId, currentPage) => {
+				return chatApi.getChatList(roomId, currentPage);
+			},
+		});
+	}
 
 	const DATA_SET = {
 		buyer: login_id,
