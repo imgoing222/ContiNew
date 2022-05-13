@@ -8,15 +8,16 @@ interface ChatData {
 }
 
 interface ChatApiType {
-  getChattingRoom: () => Promise<AxiosResponse>;
+	getChattingRoom: () => Promise<AxiosResponse>;
 	createChattingRoom: (chatData: ChatData) => Promise<AxiosResponse>;
-	getChatList: (roomId: string | null) => Promise<AxiosResponse>;
+	getChatList: (roomId: string | null, currentPage: number) => Promise<AxiosResponse>;
 }
 
 const chatApi: ChatApiType = {
 	getChattingRoom: () => request.get("chat/room/list/"),
 	createChattingRoom: (chatData) => request.post("chat/room", chatData),
-	getChatList: (roomId) => request.get(`chat/messages/?room_id=${roomId}`),
+	getChatList: (roomId, currentPage) =>
+		request.get(`chat/messages/?room_id=${roomId}&page=${currentPage}`),
 };
 
 export default chatApi;
