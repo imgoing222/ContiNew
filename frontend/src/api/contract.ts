@@ -2,11 +2,12 @@ import { AxiosResponse } from "axios";
 import { request } from "./request";
 
 interface ContractApiType {
-	breakContract: () => Promise<AxiosResponse>;
+	breakContract: (buyer: string, house_id: number, seller: string) => Promise<AxiosResponse>;
 }
 
 const contractApi: ContractApiType = {
-	breakContract: () => request.delete(`auth/contracts`),
+	breakContract: (buyer, house_id, seller) =>
+		request.delete(`auth/contracts?buyer=${buyer}&house_id=${house_id}&seller=${seller}`),
 };
 
 export default contractApi;
