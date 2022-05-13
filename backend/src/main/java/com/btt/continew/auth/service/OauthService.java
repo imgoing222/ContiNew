@@ -73,6 +73,37 @@ public class OauthService {
 //    }
 
     @Transactional
+    public void requestKakaoToken(String code, HttpServletResponse response) {
+        AuthorizationKakao authorization = requestKakaoAccessToken(code);
+        KakaoUserInfoResponse userInfoResponse = requestUserInfoByKakaoAuth(authorization.getAccess_token());
+        Member member = memberService.loadKaKaoUser(userInfoResponse);
+        TokenResponse tokenResponse = jwtTokenProvider.createToken(member.getLoginId(), member.getAuthority());
+        String refreshTokenId = authService.saveRefreshToken(member, tokenResponse);
+        authService.setTokenToCookie(tokenResponse.getAccessToken(), refreshTokenId, response);
+    }
+
+    private AuthorizationKakao requestKakaoAccessToken(String code) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", GRANT_TYPE);
+        params.add("client_id", KAKAO_CLIENT_ID);
+        params.add("redirect_uri", KAKAO_REDIRECT_URL);
+        params.add("code", code);
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity(KAKAO_TOKEN_URL, request, String.class);
+            return objectMapper.readValue(response.getBody(), AuthorizationKakao.class);
+        } catch (RestClientException | JsonProcessingException e) {
+            e.printStackTrace();
+            throw new BusinessException(ErrorCode.GLOBAL_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Transactional
     public void requestToken(HttpServletResponse response, String code) {
         AuthorizationGoogle authorization = requestAccessToken(code);
         GoogleUserInfoResponse userResponse = requestUserInfoByGoogleAuth(authorization.getAccess_token(),
