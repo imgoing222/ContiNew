@@ -138,6 +138,24 @@ public class OauthService {
         }
     }
 
+    private KakaoUserInfoResponse requestUserInfoByKakaoAuth(String accessToken) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + accessToken);
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+
+        try {
+            ResponseEntity<KakaoUserInfoResponse> response = restTemplate.postForEntity(KAKAO_USERINFO_URL, request,
+                KakaoUserInfoResponse.class);
+            return response.getBody();
+        } catch (RestClientException e) {
+            e.printStackTrace();
+            throw new BusinessException(ErrorCode.GLOBAL_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     private GoogleUserInfoResponse requestUserInfoByGoogleAuth(String accessToken, String idToken) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + accessToken);
