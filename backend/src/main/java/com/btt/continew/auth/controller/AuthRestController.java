@@ -55,12 +55,12 @@ public class AuthRestController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/members/login/google")
-    @ApiOperation(value = "구글 회원가입 및 페이지로 이동", notes = "해당 api 주소를 입력하면 구글 로그인 페이지로 이동한다")
-    public ResponseEntity<Void> googleLogin(HttpServletResponse response) {
-        oauthService.requestLoginUrl(response);
-        return ResponseEntity.noContent().build();
-    }
+//    @GetMapping("/members/login/google")
+//    @ApiOperation(value = "구글 회원가입 및 페이지로 이동", notes = "해당 api 주소를 입력하면 구글 로그인 페이지로 이동한다")
+//    public ResponseEntity<Void> googleLogin(HttpServletResponse response) {
+//        oauthService.requestLoginUrl(response);
+//        return ResponseEntity.noContent().build();
+//    }
 
     @GetMapping("/members/login/google/callback")
     @ApiOperation(value = "구글 회원가입 및 로그인 콜백", notes = "구글 로그인 페이지에서 로그인 하면 code를 받을 수 있는데\n"
@@ -71,7 +71,7 @@ public class AuthRestController {
         @ApiResponse(code = 400, message = "BAD REQUEST\n구글의 응답을 받지 못함(L01)\n구글 유저 정보 응답을 받지 못함(L02)"),
         @ApiResponse(code = 403, message = "CONFLICT\n소셜 로그인 회원이 아님(M07)")
     })
-    public ResponseEntity<Void> googleLoginCallback(@RequestParam(name = "code") String code, HttpServletResponse response) {
+    public ResponseEntity<Void> googleLoginCallback(@RequestParam String code, HttpServletResponse response) {
         oauthService.requestToken(response, code);
         return ResponseEntity.noContent().build();
     }
