@@ -19,13 +19,13 @@ interface ContainerProps {
 }
 
 function ChatListitem({ chat }: ChatProps) {
-	const { login_id } = useSelector((state: RootState) => state.userInfo);
+	const { username } = useSelector((state: RootState) => state.userInfo);
 
 	return (
-		<Container user={login_id} sender={chat.sender}>
+		<Container user={username} sender={chat.sender}>
 			<SubContainer>
 				<Textarea name="content" cols={20} readOnly defaultValue={chat.content} />
-				<Time user={login_id} sender={chat.sender}>
+				<Time user={username} sender={chat.sender}>
 					{chat.created_at?.slice(-8, -3)}
 				</Time>
 			</SubContainer>

@@ -21,16 +21,6 @@ interface Props {
 	};
 }
 
-interface ChatDataType {
-	sendMessage: {};
-	buyer: string;
-	lastMessage: string;
-	lastMessageTime: string;
-	id: string;
-	sale: number;
-	seller: string;
-}
-
 interface SavedChattingsType {
 	chat_message: ChatMessageType[];
 	total_page_count: number;
