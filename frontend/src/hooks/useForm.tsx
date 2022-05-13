@@ -87,7 +87,7 @@ const useForm = ({ initialValues, onSubmit }: Props) => {
 	);
 
 	const handleGoogleLoginClick = () => {
-		window.location.href = "http://localhost:8080/api/members/login/google";
+		window.location.href = `${process.env.NEXT_PUBLIC_URL}members/login/google`;
 	};
 
 	return {
