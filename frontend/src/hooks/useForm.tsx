@@ -87,7 +87,7 @@ const useForm = ({ initialValues, onSubmit }: Props) => {
 	);
 
 	const handleGoogleLoginClick = () => {
-		window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?scope=email%20profile&response_type=code&redirect_uri=https://k6d105.p.ssafy.io/login/oauth2/code/google&client_id=1061218236894-vsgtu6jnm857eede27uae3cfesp9kha9.apps.googleusercontent.com`;
+		window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=1061218236894-vsgtu6jnm857eede27uae3cfesp9kha9.apps.googleusercontent.com&response_type=code&redirect_uri=http://localhost:3000/login/oauth2/code/google&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile`;
 	};
 
 	return {
