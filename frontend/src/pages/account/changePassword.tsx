@@ -18,7 +18,7 @@ function ChangePassword() {
 	const handleChangeClick = async () => {
 		await authApi.changePassword(value);
 		alert("비밀번호가 변경되었습니다.");
-		router.push("account/signin");
+		router.push("/account/signin");
 	};
 
 	return (
