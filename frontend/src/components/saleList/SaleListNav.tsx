@@ -1,11 +1,13 @@
 import { MapRefType } from "src/pages/saleList";
 import styled from "styled-components";
+import PriceTab from "./PriceTab";
 import SearchInput from "./SearchInput";
 
 function SaleListNav({ kakaoMap }: MapRefType) {
 	return (
 		<Nav>
 			<SearchInput kakaoMap={kakaoMap} />
+			<PriceTab />
 		</Nav>
 	);
 }
