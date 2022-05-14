@@ -29,7 +29,7 @@ interface ChatMessageType {
 	created_at: string;
 }
 
-interface ShowChatListType {
+interface ChatListType {
 	room_id: string;
 	sender: string;
 	content: string;
@@ -43,7 +43,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	const dispatch = useDispatch();
 	const chatBoxRef = useRef<HTMLDivElement>(null);
 	const { login_id } = useSelector((state: RootState) => state.userInfo);
-	const [showChatList, setShowChatList] = useState<ShowChatListType[]>([]);
+	const [showChatList, setShowChatList] = useState<ChatListType[]>([]);
 
 	const {
 		setTarget,
@@ -99,7 +99,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 
 	useEffect(() => {
 		if (receivedChatData) {
-			setShowChatList((prevShowChatList) => [receivedChatData, ...prevShowChatList]);
+			setShowChatList((prev) => [receivedChatData, ...prev]);
 		}
 	}, [receivedChatData]);
 
@@ -134,13 +134,12 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 						<TopSection ref={chatBoxRef}>
 							{<div ref={setTarget}>{isLoading && <p></p>}</div>}
 							<ul>
-								{showChatList &&
+								{showChatList.length &&
 									showChatList
 										.slice(0)
 										.reverse()
 										.map((chat, idx) => <ChatListItem key={idx} chat={chat} />)}
 							</ul>
-							<div />
 						</TopSection>
 						<BottomSection sendMessage={sendMessage} />
 					</>
@@ -178,6 +177,13 @@ const TopSection = styled.div`
 	margin: 1rem 0;
 	flex-direction: column;
 	overflow: auto;
+`;
+
+const Textarea = styled.textarea`
+	font-size: 2rem;
+	border: solid 1px #d3d3d3;
+	resize: none;
+	border-radius: 10px;
 `;
 
 export default Chat;

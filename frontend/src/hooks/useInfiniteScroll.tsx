@@ -33,11 +33,7 @@ const useInfiniteScroll = ({ roomId, chatBoxRef, requestApi }: useInfiniteScroll
 			await new Promise((resolve) => setTimeout(resolve, 500));
 			const res = await requestApi(roomId, currentPage);
 			setTotalPage(res.data.total_page_count);
-			if (currentPage) {
-				setSavedChatMessage((prev) => [...prev, ...res.data.chat_message]);
-			} else {
-				setSavedChatMessage(res.data.chat_message);
-			}
+			setSavedChatMessage(res.data.chat_message);
 
 			setIsLoading(false);
 		} catch (error) {
