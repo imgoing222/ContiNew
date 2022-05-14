@@ -2,7 +2,9 @@ import Map from "@components/saleList/Map";
 import SaleList from "@components/saleList/SaleList";
 import SaleListNav from "@components/saleList/SaleListNav";
 import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { saleApi } from "src/api";
+import { RootState } from "src/store";
 import House from "src/types/getListType";
 import styled from "styled-components";
 
@@ -11,29 +13,25 @@ export interface MapRefType {
 }
 
 export interface SearchCondition {
-	yBottom: number;
-	yTop: number;
-	xLeft: number;
-	xRight: number;
+	yBottom?: number;
+	yTop?: number;
+	xLeft?: number;
+	xRight?: number;
 	saleType?: string;
 	houseType?: string;
 	contractType?: string;
 	minDeposit?: number;
 	maxDeposit?: number;
 	minMonthlyRent?: number;
-	minMaintenanceFee?: number;
+	maxMonthlyRent?: number;
 	maxMaintenanceFee?: number;
+	minMaintenanceFee?: number;
 	period?: number;
 }
 
 function index() {
 	const kakaoMap = useRef<kakao.maps.Map>();
-	const [searchCondition, setSearchCondition] = useState<SearchCondition>({
-		xRight: 0,
-		yTop: 0,
-		xLeft: 0,
-		yBottom: 0,
-	});
+	const searchCondition = useSelector((state: RootState) => state.searchFilter);
 
 	const [saleList, setSaleList] = useState<House[]>([]);
 
@@ -50,14 +48,9 @@ function index() {
 		<>
 			<SaleListNav kakaoMap={kakaoMap as React.MutableRefObject<kakao.maps.Map>} />
 			<Container>
-				<SaleList
-					saleList={saleList}
-					setSearchCondition={setSearchCondition}
-					searchCondition={searchCondition}
-				/>
+				<SaleList saleList={saleList} searchCondition={searchCondition} />
 				<Map
 					kakaoMap={kakaoMap as React.MutableRefObject<kakao.maps.Map>}
-					setSearchCondition={setSearchCondition}
 					searchCondition={searchCondition}
 				/>
 			</Container>
