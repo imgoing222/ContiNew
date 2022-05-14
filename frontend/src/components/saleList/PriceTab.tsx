@@ -89,14 +89,16 @@ function PriceTab() {
 					setChange={setDeposit}
 				/>
 			</SmallBox>
-			<SmallBox>
-				<Slider
-					maxMin={{ min: 0, max: 300 }}
-					subTitle="월세"
-					itemName="MonthlyRent"
-					setChange={setMonthlyRent}
-				/>
-			</SmallBox>
+			{contractTypes !== "전세" && (
+				<SmallBox>
+					<Slider
+						maxMin={{ min: 0, max: 300 }}
+						subTitle="월세"
+						itemName="MonthlyRent"
+						setChange={setMonthlyRent}
+					/>
+				</SmallBox>
+			)}
 			<SmallBox>
 				<Slider
 					maxMin={{ min: 0, max: 50 }}
