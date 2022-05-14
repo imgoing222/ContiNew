@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import useIntersectionObserver from "./useIntersectionObserver";
 
 interface useInfiniteScrollProps {
-  roomId: string;
-	requestApi: (roomId:string, currentPage: number) => Promise<any>;
+	roomId: string | null | undefined;
+	chatBoxRef: React.RefObject<HTMLDivElement>;
+	requestApi: (roomId: string | null | undefined, currentPage: number) => Promise<any>;
 }
 
 interface ChatMessageType {
@@ -14,27 +15,25 @@ interface ChatMessageType {
 	created_at: string;
 }
 
-const useInfiniteScroll = ({ roomId, requestApi }: useInfiniteScrollProps) => {
+const useInfiniteScroll = ({ roomId, chatBoxRef, requestApi }: useInfiniteScrollProps) => {
 	const [savedChatMessage, setSavedChatMessage] = useState<ChatMessageType[]>([]);
 	const [totalPage, setTotalPage] = useState(0);
 	const [currentPage, setCurrentPage] = useState(0);
 	const [isLoading, setIsLoading] = useState(false);
+	const [prevScrollHeight, setPrevScrollHeight] = useState<number | null | undefined>(null);
 
 	useEffect(() => {
-		if (currentPage) getChatList(roomId, currentPage);
-	}, [currentPage]);
+		getChatList(roomId, currentPage);
+	}, [currentPage, roomId]);
 
-	const getChatList = async (roomId: string, currentPage: number) => {
+	const getChatList = async (roomId: string | null | undefined, currentPage: number) => {
 		try {
 			setIsLoading(true);
+			setPrevScrollHeight(chatBoxRef.current?.scrollHeight);
 			await new Promise((resolve) => setTimeout(resolve, 500));
-
 			const res = await requestApi(roomId, currentPage);
 			setTotalPage(res.data.total_page_count);
-			setSavedChatMessage((prevSavedChatMessage) => [
-				...prevSavedChatMessage,
-				...res.data.chat_message,
-			]);
+			setSavedChatMessage(res.data.chat_message);
 
 			setIsLoading(false);
 		} catch (error) {
@@ -44,7 +43,7 @@ const useInfiniteScroll = ({ roomId, requestApi }: useInfiniteScrollProps) => {
 
 	const onIntersect: IntersectionObserverCallback = async ([entry], observer) => {
 		if (entry.isIntersecting && !isLoading) {
-			if (currentPage && currentPage >= totalPage) return;
+			if (currentPage >= totalPage) return;
 			observer.unobserve(entry.target);
 			setCurrentPage((prev) => prev + 1);
 			observer.observe(entry.target);
@@ -58,7 +57,16 @@ const useInfiniteScroll = ({ roomId, requestApi }: useInfiniteScrollProps) => {
 		onIntersect,
 	});
 
-	return { setTarget, savedChatMessage, isLoading, setSavedChatMessage };
+	return {
+		setTarget,
+		savedChatMessage,
+		isLoading,
+		currentPage,
+		setCurrentPage,
+		setSavedChatMessage,
+		prevScrollHeight,
+		setPrevScrollHeight,
+	};
 };
 
 export default useInfiniteScroll;

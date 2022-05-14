@@ -21,12 +21,6 @@ interface Props {
 	};
 }
 
-interface SavedChattingsType {
-	chat_message: ChatMessageType[];
-	total_page_count: number;
-	current_page_count: number;
-}
-
 interface ChatMessageType {
 	room_id: string;
 	sender: string;
@@ -35,7 +29,7 @@ interface ChatMessageType {
 	created_at: string;
 }
 
-interface ShowChatListType {
+interface ChatListType {
 	room_id: string;
 	sender: string;
 	content: string;
@@ -49,21 +43,24 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	const dispatch = useDispatch();
 	const chatBoxRef = useRef<HTMLDivElement>(null);
 	const { login_id } = useSelector((state: RootState) => state.userInfo);
-	const [savedChattings, setSavedChattings] = useState<SavedChattingsType>({
-		chat_message: [],
-		current_page_count: 0,
-		total_page_count: 0,
-	});
-	const [showChatList, setShowChatList] = useState<ShowChatListType[]>([]);
+	const [showChatList, setShowChatList] = useState<ChatListType[]>([]);
 
-	if (roomId) {
-		const { setTarget, savedChatMessage, isLoading } = useInfiniteScroll({
-			roomId,
-			requestApi: (roomId, currentPage) => {
-				return chatApi.getChatList(roomId, currentPage);
-			},
-		});
-	}
+	const {
+		setTarget,
+		savedChatMessage,
+		isLoading,
+		currentPage,
+		setCurrentPage,
+		setSavedChatMessage,
+		prevScrollHeight,
+		setPrevScrollHeight,
+	} = useInfiniteScroll({
+		roomId,
+		chatBoxRef,
+		requestApi: (roomId, currentPage) => {
+			return chatApi.getChatList(roomId, currentPage);
+		},
+	});
 
 	const DATA_SET = {
 		buyer: login_id,
@@ -87,44 +84,41 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	};
 
 	useEffect(() => {
+		setCurrentPage(0);
+		setSavedChatMessage([]);
 		setShowChatList([]);
-
-		getChatList();
 	}, [roomId]);
 
 	useEffect(() => {
-		addChat(savedChattings.chat_message);
-	}, [savedChattings]);
+		if (currentPage) {
+			setShowChatList((prev) => [...prev, ...savedChatMessage]);
+		} else {
+			setShowChatList(savedChatMessage);
+		}
+	}, [savedChatMessage]);
 
 	useEffect(() => {
 		if (receivedChatData) {
-			setShowChatList((prevShowChatList) => [receivedChatData, ...prevShowChatList]);
+			setShowChatList((prev) => [receivedChatData, ...prev]);
 		}
 	}, [receivedChatData]);
 
 	useEffect(() => {
-		scrollToBottom();
+		handleScroll();
 	}, [showChatList]);
 
-	const getChatList = async () => {
-		try {
-			if (roomId) {
-				const res = await chatApi.getChatList(roomId);
-				setSavedChattings(res.data);
-			}
-		} catch (error) {
-			console.log(error);
-		}
-	};
-
-	const addChat = (chatMessage: ChatMessageType[]) => {
-		setShowChatList(chatMessage);
-		// chatMessage.map((chat) => setShowChatList((prevShowChatList) => [...prevShowChatList, chat]));
-	};
-
-	const scrollToBottom = () => {
+	const handleScroll = () => {
 		if (chatBoxRef.current) {
-			chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+			if (prevScrollHeight) {
+				chatBoxRef.current.scrollTo({
+					top: chatBoxRef.current.scrollHeight - prevScrollHeight,
+				});
+				return setPrevScrollHeight(null);
+			}
+
+			chatBoxRef.current.scrollTo({
+				top: chatBoxRef.current.scrollHeight - chatBoxRef.current.clientHeight,
+			});
 		}
 	};
 
@@ -137,15 +131,15 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 			<Content>
 				{roomId && (
 					<>
-						<TopSection>
+						<TopSection ref={chatBoxRef}>
+							{<div ref={setTarget}>{isLoading && <p></p>}</div>}
 							<ul>
-								{showChatList &&
+								{showChatList.length &&
 									showChatList
 										.slice(0)
 										.reverse()
 										.map((chat, idx) => <ChatListItem key={idx} chat={chat} />)}
 							</ul>
-							<div ref={chatBoxRef} />
 						</TopSection>
 						<BottomSection sendMessage={sendMessage} />
 					</>
@@ -183,6 +177,13 @@ const TopSection = styled.div`
 	margin: 1rem 0;
 	flex-direction: column;
 	overflow: auto;
+`;
+
+const Textarea = styled.textarea`
+	font-size: 2rem;
+	border: solid 1px #d3d3d3;
+	resize: none;
+	border-radius: 10px;
 `;
 
 export default Chat;
