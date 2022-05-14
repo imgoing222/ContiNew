@@ -27,6 +27,7 @@ export interface SearchCondition {
 	maxMaintenanceFee?: number;
 	minMaintenanceFee?: number;
 	period?: number;
+	options?: number[];
 }
 
 function index() {
