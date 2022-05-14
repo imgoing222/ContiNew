@@ -6,7 +6,7 @@ interface ActionType {
 }
 
 interface DataType {
-	id: number;
+	sale: number;
 	seller: string;
 	buyer: string;
 }
@@ -24,7 +24,7 @@ function ArticleInfo(state = initialState, action: ActionType) {
 		case STORE:
 			return {
 				...state,
-				article_id: action.data.id,
+				article_id: action.data.sale,
 				seller_name: action.data.seller,
 				buyer_name: action.data.buyer,
 			};

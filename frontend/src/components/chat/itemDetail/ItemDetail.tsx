@@ -12,7 +12,7 @@ interface Props {
 }
 
 function ItemDetail({ isIndex }: Props) {
-	const { article_id } = useSelector((state: RootState) => state.articleId);
+	const { article_id } = useSelector((state: RootState) => state.articleInfo);
 	const [houseInfo, setHouseInfo] = useState<ArticleType | null>(null);
 
 	useEffect(() => {

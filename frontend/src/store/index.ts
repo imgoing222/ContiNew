@@ -1,14 +1,14 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { HYDRATE, createWrapper } from "next-redux-wrapper";
 import userInfo from "./user";
-import articleId from "./articleInfo";
+import articleInfo from "./articleInfo";
 import searchFilter from "./searchFilter";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 
 export const rootReducer = combineReducers({
 	userInfo,
-	articleId,
+	articleInfo,
 	searchFilter,
 });
 

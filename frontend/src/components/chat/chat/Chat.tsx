@@ -71,7 +71,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	const createChattingRoom = async () => {
 		try {
 			const res = await chatApi.createChattingRoom(DATA_SET);
-			dispatch(SET_ARTICLEINFO(DATA_SET.sale));
+			dispatch(SET_ARTICLEINFO(DATA_SET));
 			toChattingRoom(res.data.id);
 		} catch (error) {
 			console.log(error);

@@ -24,7 +24,7 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 		try {
 			const chatDataSet = { buyer: userName, seller: houseInfo.username, sale: houseInfo.houseId };
 			const res = await chatApi.createChattingRoom(chatDataSet);
-			dispatch(SET_ARTICLEINFO(chatDataSet.sale));
+			dispatch(SET_ARTICLEINFO(chatDataSet));
 			toChattingRoom(res.data.id);
 		} catch (error) {
 			console.log(error);
