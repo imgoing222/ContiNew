@@ -14,43 +14,38 @@ interface actionType {
 	data: SearchCondition;
 }
 
-export const SET_FILTER = (data: string | number, name: string) => {
-	const mapper = {
-		coordinates: () => ({
-			type: COORDINATES,
-			data,
-		}),
-		saleType: () => ({
-			type: SALE_TYPE,
-			data,
-		}),
-		houseType: () => ({
-			type: HOUSE_TYPE,
-			data,
-		}),
-		contractType: () => ({
-			type: CONTRACT_TYPE,
-			data,
-		}),
-		deposit: () => ({
-			type: DEPOSIT,
-			data,
-		}),
-		monthlyRent: () => ({
-			type: MONTHLY_RENT,
-			data,
-		}),
-		maintenanceFee: () => ({
-			type: MAINTENANCE_FEE,
-			data,
-		}),
-		period: () => ({
-			type: PERIOD,
-			data,
-		}),
-	};
-	mapper[name as keyof typeof mapper]();
-};
+export const setSaleType = (data: SearchCondition) => ({
+	type: SALE_TYPE,
+	data,
+});
+export const setCoodinates = (data: SearchCondition) => ({
+	type: COORDINATES,
+	data,
+});
+export const sethouseType = (data: SearchCondition) => ({
+	type: HOUSE_TYPE,
+	data,
+});
+export const setContractType = (data: SearchCondition) => ({
+	type: CONTRACT_TYPE,
+	data,
+});
+export const setDeposit = (data: SearchCondition) => ({
+	type: DEPOSIT,
+	data,
+});
+export const setMonthlyRent = (data: SearchCondition) => ({
+	type: MONTHLY_RENT,
+	data,
+});
+export const setMaintenanceFee = (data: SearchCondition) => ({
+	type: MAINTENANCE_FEE,
+	data,
+});
+export const setPeriod = (data: SearchCondition) => ({
+	type: PERIOD,
+	data,
+});
 
 const initialState = {
 	yBottom: 32.438093757167825,
@@ -70,6 +65,7 @@ const initialState = {
 };
 
 function searchFilter(state = initialState, action: actionType) {
+	console.log(action.data);
 	switch (action.type) {
 		case COORDINATES:
 			return {
