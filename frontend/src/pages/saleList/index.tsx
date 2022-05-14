@@ -37,6 +37,7 @@ function index() {
 
 	useEffect(() => {
 		const getSales = async () => {
+			console.log(searchCondition);
 			const sales = await saleApi.getSales(searchCondition);
 			setSaleList(sales.data.houses);
 		};
