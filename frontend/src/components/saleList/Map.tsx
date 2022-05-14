@@ -2,13 +2,15 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { SearchCondition, MapRefType } from "src/pages/saleList";
 import { saleApi } from "src/api";
+import { useDispatch } from "react-redux";
+import { setCoodinates } from "src/store/searchFilter";
 
 interface Map extends MapRefType {
-	setSearchCondition: React.Dispatch<React.SetStateAction<SearchCondition>>;
 	searchCondition: SearchCondition;
 }
 
-function Map({ kakaoMap, setSearchCondition, searchCondition }: Map) {
+function Map({ kakaoMap, searchCondition }: Map) {
+	const dispatch = useDispatch();
 	const getSales = async () => {
 		const coordinate = kakaoMap.current.getBounds();
 		const coordinates = {
@@ -17,7 +19,7 @@ function Map({ kakaoMap, setSearchCondition, searchCondition }: Map) {
 			xLeft: coordinate.ha,
 			yBottom: coordinate.qa,
 		};
-		setSearchCondition({ ...searchCondition, ...coordinates });
+		dispatch(setCoodinates(coordinates));
 		const sale = (await saleApi.getSales(coordinates)).data.houses;
 		const clusterer = new kakao.maps.MarkerClusterer({
 			map: kakaoMap.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
@@ -64,7 +66,7 @@ function Map({ kakaoMap, setSearchCondition, searchCondition }: Map) {
 				const zoomControl = new kakao.maps.ZoomControl();
 				kakaoMap.current.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-				kakao.maps.event.addListener(kakaoMap.current, "bounds_changed", getSales);
+				kakao.maps.event.addListener(kakaoMap.current, "dragend", getSales);
 			});
 		};
 		$script.addEventListener("load", onLoadKakaoMap);

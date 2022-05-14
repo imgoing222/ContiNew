@@ -1,14 +1,54 @@
 import { SearchCondition } from "src/pages/saleList";
 
-const SEARCH = "user/setUserInfo";
+const COORDINATES = "searchFilter/setCoodinates";
+const SALE_TYPE = "searchFilter/saleType";
+const HOUSE_TYPE = "searchFilter/houseType";
+const CONTRACT_TYPE = "searchFilter/contractType";
+const DEPOSIT = "searchFilter/deposit";
+const MONTHLY_RENT = "searchFilter/monthlyRent";
+const MAINTENANCE_FEE = "searchFilter/maintenanceFee";
+const PERIOD = "searchFilter/Period";
+
+export interface actionProps extends SearchCondition {
+	min?: number;
+	max?: number;
+}
 
 interface actionType {
 	type: string;
-	data: SearchCondition;
+	data: actionProps;
 }
 
-export const SET_FILTER = (data: string | number) => ({
-	type: SEARCH,
+export const setSaleType = (data: actionProps) => ({
+	type: SALE_TYPE,
+	data,
+});
+export const setCoodinates = (data: actionProps) => ({
+	type: COORDINATES,
+	data,
+});
+export const sethouseType = (data: actionProps) => ({
+	type: HOUSE_TYPE,
+	data,
+});
+export const setContractType = (data: actionProps) => ({
+	type: CONTRACT_TYPE,
+	data,
+});
+export const setDeposit = (data: actionProps) => ({
+	type: DEPOSIT,
+	data,
+});
+export const setMonthlyRent = (data: actionProps) => ({
+	type: MONTHLY_RENT,
+	data,
+});
+export const setMaintenanceFee = (data: actionProps) => ({
+	type: MAINTENANCE_FEE,
+	data,
+});
+export const setPeriod = (data: actionProps) => ({
+	type: PERIOD,
 	data,
 });
 
@@ -21,21 +61,63 @@ const initialState = {
 	houseType: "",
 	contractType: "",
 	minDeposit: 0,
-	maxDeposit: Number.MAX_SAFE_INTEGER,
+	maxDeposit: 10000,
 	minMonthlyRent: 0,
-	maxMonthlyRnet: Number.MAX_SAFE_INTEGER,
+	maxMonthlyRent: 300,
 	minMaintenanceFee: 0,
-	maxMaintenanceFee: Number.MAX_SAFE_INTEGER,
-	period: Number.MAX_SAFE_INTEGER,
+	maxMaintenanceFee: 50,
+	period: 12,
 };
 
 function searchFilter(state = initialState, action: actionType) {
 	switch (action.type) {
-		case SEARCH:
+		case COORDINATES:
 			return {
 				...state,
 				xRight: action.data.xRight,
+				yBottom: action.data.yBottom,
+				yTop: action.data.yTop,
+				xLeft: action.data.xLeft,
 			};
+		case SALE_TYPE:
+			return {
+				...state,
+				saleType: action.data.saleType,
+			};
+		case HOUSE_TYPE:
+			return {
+				...state,
+				houseType: action.data.houseType,
+			};
+		case CONTRACT_TYPE:
+			return {
+				...state,
+				contractType: action.data.contractType,
+			};
+		case DEPOSIT:
+			return {
+				...state,
+				minDeposit: action.data.min,
+				maxDeposit: action.data.max,
+			};
+		case MONTHLY_RENT:
+			return {
+				...state,
+				maxMonthlyRent: action.data.max,
+				minMonthlyRent: action.data.min,
+			};
+		case MAINTENANCE_FEE:
+			return {
+				...state,
+				minMaintenanceFee: action.data.min,
+				maxMaintenanceFee: action.data.max,
+			};
+		case PERIOD:
+			return {
+				...state,
+				period: action.data.period,
+			};
+
 		default:
 			return state;
 	}

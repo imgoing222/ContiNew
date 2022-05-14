@@ -1,22 +1,73 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
+import {
+	setContractType,
+	setDeposit,
+	setMaintenanceFee,
+	setMonthlyRent,
+} from "src/store/searchFilter";
 import styled from "styled-components";
 import Container from "./Container";
 import Slider from "./Slider";
+import { useDispatch } from "react-redux";
 
 function PriceTab() {
+	const dispatch = useDispatch();
+	const [contractTypes, setContractTypes] = useState("전체");
+	const changeContractTypeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+		const { value, id } = e.target;
+		if (id === "전세" && contractTypes === "") {
+			setContractTypes("전세");
+			return chagneRedux("전세");
+		}
+		if (id === "월세" && contractTypes === "") {
+			setContractTypes("월세");
+			return chagneRedux("월세");
+		}
+		if (id === "월세" && contractTypes === "전세") {
+			setContractTypes("전체");
+			return chagneRedux("");
+		}
+		if (id === "전세" && contractTypes === "월세") {
+			setContractTypes("전체");
+			return chagneRedux("");
+		}
+		if (id === "월세" && contractTypes === "전체") {
+			setContractTypes("전세");
+			return chagneRedux("전세");
+		}
+		if (id === "전세" && contractTypes === "전체") {
+			setContractTypes("월세");
+			return chagneRedux("월세");
+		}
+	};
+
+	const chagneRedux = (str: string) => {
+		dispatch(setContractType({ contractType: str }));
+	};
 	return (
 		<Container title="거래 유형 / 가격">
 			<SmallBox>
 				<Title>거래 유형</Title>
 				<Tab>
 					<InputBox>
-						<Input type="checkbox" id="월세" />
+						<Input
+							type="checkbox"
+							id="월세"
+							onChange={changeContractTypeHandler}
+							checked={contractTypes === "전체" || contractTypes === "월세"}
+						/>
 						<Label htmlFor="월세" style={{ cursor: "pointer" }}>
 							월세
 						</Label>
 					</InputBox>
 					<InputBox>
-						<Input type="checkbox" id="전세" style={{ cursor: "pointer" }} />
+						<Input
+							type="checkbox"
+							id="전세"
+							style={{ cursor: "pointer" }}
+							onChange={changeContractTypeHandler}
+							checked={contractTypes === "전체" || contractTypes === "전세"}
+						/>
 						<Label htmlFor="전세">전세</Label>
 					</InputBox>
 				</Tab>
@@ -24,14 +75,27 @@ function PriceTab() {
 			<SmallBox>
 				<Slider
 					title="가격"
-					step={5}
-					maxMin={{ min: 0, max: 100 }}
+					maxMin={{ min: 0, max: 10000 }}
 					subTitle="보증금 / 전세금"
-					unit="만원"
+					itemName="Deposit"
+					setChange={setDeposit}
 				/>
 			</SmallBox>
 			<SmallBox>
-				<Slider step={5} maxMin={{ min: 0, max: 100 }} subTitle="월세" unit="가격" />
+				<Slider
+					maxMin={{ min: 0, max: 300 }}
+					subTitle="월세"
+					itemName="MonthlyRent"
+					setChange={setMonthlyRent}
+				/>
+			</SmallBox>
+			<SmallBox>
+				<Slider
+					maxMin={{ min: 0, max: 50 }}
+					subTitle="관리비"
+					itemName="MaintenanceFee"
+					setChange={setMaintenanceFee}
+				/>
 			</SmallBox>
 		</Container>
 	);

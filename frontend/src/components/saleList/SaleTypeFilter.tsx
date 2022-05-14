@@ -1,8 +1,9 @@
+import { useDispatch } from "react-redux";
 import { SearchCondition } from "src/pages/saleList";
+import { setSaleType } from "src/store/searchFilter";
 import styled from "styled-components";
 
 interface SaleTypeFilter {
-	changeSaleType: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	id: string;
 	searchCondition: SearchCondition;
 }
@@ -11,7 +12,8 @@ interface LabelProps {
 	isChecked: boolean;
 }
 
-function SaleTypeFilter({ changeSaleType, id, searchCondition }: SaleTypeFilter) {
+function SaleTypeFilter({ id, searchCondition }: SaleTypeFilter) {
+	const dispatch = useDispatch();
 	const isChecked = (id: string) => {
 		if (id === "전체" && searchCondition.saleType === "") return true;
 		if (searchCondition.saleType === id) return true;
@@ -24,7 +26,7 @@ function SaleTypeFilter({ changeSaleType, id, searchCondition }: SaleTypeFilter)
 			<Input
 				type="radio"
 				name="saleType"
-				onChange={changeSaleType}
+				onChange={() => dispatch(setSaleType({ saleType: id === "전체" ? "" : id }))}
 				id={id}
 				value={id === "전체" ? "" : id}
 			/>

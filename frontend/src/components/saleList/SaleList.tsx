@@ -1,5 +1,7 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { SearchCondition } from "src/pages/saleList";
+import { RootState } from "src/store";
 import House from "src/types/getListType";
 import styled from "styled-components";
 import DetailOfSale from "./DetailOfSale";
@@ -10,27 +12,16 @@ export interface SaleListProps {
 }
 
 interface SaleList extends SaleListProps {
-	setSearchCondition: React.Dispatch<React.SetStateAction<SearchCondition>>;
 	searchCondition: SearchCondition;
 }
 
-function SaleList({ saleList, searchCondition, setSearchCondition }: SaleList) {
-	const changeSaleType = (e: React.ChangeEvent<HTMLInputElement>) => {
-		console.log(e.target);
-		if (searchCondition)
-			setSearchCondition({ ...searchCondition, [e.target.name]: e.target.value });
-	};
+function SaleList({ saleList, searchCondition }: SaleList) {
 	const saleType = ["전체", "이어살기", "쉐어하우스"];
 	return (
 		<Container>
 			<Box>
 				{saleType.map((item, idx) => (
-					<SaleTypeFilter
-						searchCondition={searchCondition}
-						id={item}
-						changeSaleType={changeSaleType}
-						key={idx}
-					/>
+					<SaleTypeFilter searchCondition={searchCondition} id={item} key={idx} />
 				))}
 			</Box>
 			{saleList.length > 0 ? (
