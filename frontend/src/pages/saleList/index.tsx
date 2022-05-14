@@ -35,10 +35,8 @@ function index() {
 	const searchCondition = useSelector((state: RootState) => state.searchFilter);
 
 	const [saleList, setSaleList] = useState<House[]>([]);
-
 	useEffect(() => {
 		const getSales = async () => {
-			console.log(searchCondition);
 			const sales = await saleApi.getSales(searchCondition);
 			setSaleList(sales.data.houses);
 		};
@@ -52,8 +50,8 @@ function index() {
 			<Container>
 				<SaleList saleList={saleList} searchCondition={searchCondition} />
 				<Map
-					kakaoMap={kakaoMap as React.MutableRefObject<kakao.maps.Map>}
 					searchCondition={searchCondition}
+					kakaoMap={kakaoMap as React.MutableRefObject<kakao.maps.Map>}
 				/>
 			</Container>
 		</>
