@@ -20,6 +20,7 @@ function Options() {
 		addOptions.push(+e.target.value);
 		dispatch(setOptions({ options: addOptions }));
 	};
+
 	const options = [
 		"에어컨",
 		"세탁기",
