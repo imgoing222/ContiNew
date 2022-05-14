@@ -134,7 +134,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 						<TopSection ref={chatBoxRef}>
 							{<div ref={setTarget}>{isLoading && <p></p>}</div>}
 							<ul>
-								{showChatList.length &&
+								{showChatList &&
 									showChatList
 										.slice(0)
 										.reverse()
