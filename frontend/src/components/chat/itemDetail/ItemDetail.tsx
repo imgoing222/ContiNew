@@ -12,7 +12,7 @@ interface Props {
 }
 
 function ItemDetail({ isIndex }: Props) {
-	const { article_id } = useSelector((state: RootState) => state.articleId);
+	const { article_id } = useSelector((state: RootState) => state.articleInfo);
 	const [houseInfo, setHouseInfo] = useState<ArticleType | null>(null);
 
 	useEffect(() => {
@@ -47,6 +47,7 @@ function ItemDetail({ isIndex }: Props) {
 							<h3>위치</h3>
 							<p>{houseInfo.jibunAddress}</p>
 						</div>
+						<button>계약 요청</button>
 					</div>
 				)}
 			</Content>

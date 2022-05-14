@@ -22,6 +22,8 @@ function ChatDetail() {
 	// const { roomId } = router.query;
 	const roomId = localStorage.getItem("RoomId");
 	const { username } = useSelector((state: RootState) => state.userInfo);
+	const { article_id, seller_name, buyer_name } = useSelector((state: RootState) => state.articleInfo);
+	console.log(article_id, seller_name, buyer_name);
 	const [receivedChatData, setReceivedChatData] = useState<ReceivedChatDataType>();
 	const isConnected = useRef(false);
 
