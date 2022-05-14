@@ -10,6 +10,7 @@ import IconPart from "./IconPart";
 import { chatApi } from "src/api";
 import { SET_ARTICLEINFO } from "src/store/articleInfo";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 interface TextProp {
 	margin?: string;
@@ -34,8 +35,14 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 		router.push(`/chat/${roomId}`);
 		localStorage.setItem("RoomId", roomId);
 	};
-	const setBookmark = () => {
-		articleApi.addBookmark(houseInfo.houseId);
+	const setBookmark = async () => {
+		const res = await articleApi.addBookmark(houseInfo.houseId);
+		console.log(res);
+		if (res.status === 204) return toast.success("관심매물에 등록하였습니다.");
+		if ((res as unknown as string) === "L01") {
+			articleApi.deleteBookmark(houseInfo.houseId);
+			return toast.warn("관심매물에서 삭제하였습니다.");
+		}
 	};
 	const deleteArticle = (id: number) => {
 		if (window.confirm("정말로 해당 글을 삭제하시겠습니까?")) {
