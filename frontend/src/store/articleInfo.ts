@@ -2,13 +2,21 @@ const STORE = "chat/setArticleInfo";
 
 interface ActionType {
 	type: string;
-	id: number;
+	data: DataType
 }
 
-export const SET_ARTICLEINFO = (id: number) => ({ type: STORE, id });
+interface DataType {
+	id: number;
+	seller: string;
+	buyer: string;
+}
+
+export const SET_ARTICLEINFO = (data: DataType) => ({ type: STORE, data });
 
 const initialState = {
 	article_id: 0,
+	seller_name: "",
+	buyer_name: "",
 };
 
 function ArticleInfo(state = initialState, action: ActionType) {
@@ -16,7 +24,9 @@ function ArticleInfo(state = initialState, action: ActionType) {
 		case STORE:
 			return {
 				...state,
-				article_id: action.id,
+				article_id: action.data.id,
+				seller_name: action.data.seller,
+				buyer_name: action.data.buyer,
 			};
 		default:
 			return state;
