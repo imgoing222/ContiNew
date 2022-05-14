@@ -1,17 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { SearchCondition, MapRefType } from "src/pages/saleList";
+import { MapRefType } from "src/pages/saleList";
 import { saleApi } from "src/api";
 import { useDispatch } from "react-redux";
 import { setCoodinates } from "src/store/searchFilter";
+import House from "src/types/getListType";
+import cluster from "cluster";
 
 interface Map extends MapRefType {
-	searchCondition: SearchCondition;
+	searchCondition: never;
 }
-
 function Map({ kakaoMap, searchCondition }: Map) {
+	const [loadMap, setLoadMap] = useState(false);
 	const dispatch = useDispatch();
-	const getSales = async () => {
+	const getSales = () => {
 		const coordinate = kakaoMap.current.getBounds();
 		const coordinates = {
 			xRight: coordinate.oa,
@@ -19,8 +21,11 @@ function Map({ kakaoMap, searchCondition }: Map) {
 			xLeft: coordinate.ha,
 			yBottom: coordinate.qa,
 		};
+
 		dispatch(setCoodinates(coordinates));
-		const sale = (await saleApi.getSales(coordinates)).data.houses;
+	};
+
+	const createmakers = (sale: House[]) => {
 		const clusterer = new kakao.maps.MarkerClusterer({
 			map: kakaoMap.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
 			averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
@@ -37,6 +42,7 @@ function Map({ kakaoMap, searchCondition }: Map) {
 				},
 			],
 		});
+
 		const markers = sale.map(
 			(item) =>
 				new kakao.maps.Marker({
@@ -44,8 +50,10 @@ function Map({ kakaoMap, searchCondition }: Map) {
 				}),
 		);
 		clusterer.setMinClusterSize(0);
+		clusterer.clear();
 		clusterer.addMarkers(markers);
 	};
+
 	useEffect(() => {
 		const $script = document.createElement("script");
 		$script.async = true;
@@ -69,11 +77,20 @@ function Map({ kakaoMap, searchCondition }: Map) {
 				kakao.maps.event.addListener(kakaoMap.current, "dragend", getSales);
 			});
 		};
+
 		$script.addEventListener("load", onLoadKakaoMap);
+		$script.addEventListener("load", () => setLoadMap(true));
 
 		return () => $script.removeEventListener("load", onLoadKakaoMap);
 	}, []);
 
+	useEffect(() => {
+		const getSales = async () => {
+			const sale = (await saleApi.getSales(searchCondition)).data.houses;
+			createmakers(sale);
+		};
+		if (loadMap) getSales();
+	}, [searchCondition]);
 	return (
 		<>
 			<Container id="map"></Container>
