@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { SearchCondition, MapRefType } from "src/pages/saleList";
 import { saleApi } from "src/api";
 import { useDispatch } from "react-redux";
-import { SET_FILTER } from "src/store/searchFilter";
+import { setCoodinates } from "src/store/searchFilter";
 
 interface Map extends MapRefType {
 	searchCondition: SearchCondition;
@@ -19,7 +19,7 @@ function Map({ kakaoMap, searchCondition }: Map) {
 			xLeft: coordinate.ha,
 			yBottom: coordinate.qa,
 		};
-		// dispatch(SET_FILTER(coordinates, "coordinates"));
+		dispatch(setCoodinates(coordinates));
 		const sale = (await saleApi.getSales(coordinates)).data.houses;
 		const clusterer = new kakao.maps.MarkerClusterer({
 			map: kakaoMap.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
