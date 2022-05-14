@@ -47,6 +47,7 @@ function ItemDetail({ isIndex }: Props) {
 							<h3>위치</h3>
 							<p>{houseInfo.jibunAddress}</p>
 						</div>
+						<button>계약 요청</button>
 					</div>
 				)}
 			</Content>
