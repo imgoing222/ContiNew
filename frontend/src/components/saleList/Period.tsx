@@ -1,11 +1,13 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setPeriod } from "src/store/searchFilter";
 import Container from "./Container";
-import Slider from "./Slider";
 
 function Period() {
+	setPeriod;
 	return (
 		<Container title="임대 기간">
-			<Slider title="기간" step={1} maxMin={{ min: 0, max: 24 }} subTitle="임대 기간" unit="기간" />
+			<div>a</div>
 		</Container>
 	);
 }
