@@ -24,7 +24,9 @@ function ChatListitem({ chat }: ChatProps) {
 	return (
 		<Container user={username} sender={chat.sender}>
 			<SubContainer>
-				<Textarea name="content" cols={20} readOnly defaultValue={chat.content} />
+				<TextContainer>
+					<Textarea>{chat.content}</Textarea>
+				</TextContainer>
 				<Time user={username} sender={chat.sender}>
 					{chat.created_at?.slice(-8, -3)}
 				</Time>
@@ -33,7 +35,7 @@ function ChatListitem({ chat }: ChatProps) {
 	);
 }
 
-const Container = styled.li<ContainerProps>`
+const Container = styled.div<ContainerProps>`
 	margin: 1rem;
 	display: flex;
 	justify-content: ${({ user, sender }) => (user === sender ? "end" : "start")};
@@ -44,11 +46,17 @@ const SubContainer = styled.div`
 	flex-direction: column;
 `;
 
-const Textarea = styled.textarea`
-	font-size: 2rem;
+const TextContainer = styled.div`
+	max-width: 30rem;
+	display: flex;
+	justify-content: center;
 	border: solid 1px #d3d3d3;
-	resize: none;
 	border-radius: 10px;
+`;
+
+const Textarea = styled.div`
+	font-size: 2rem;
+	padding: 1rem;
 `;
 
 const Time = styled.div<ContainerProps>`
