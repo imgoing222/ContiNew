@@ -7,7 +7,7 @@ import { RootState } from "src/store";
 import { chatApi } from "src/api";
 import { BottomSection, ChatListItem } from "@components/chat";
 import useInfiniteScroll from "@hooks/useInfiniteScroll";
-import { SET_ARTICLEID } from "src/store/articleId";
+import { SET_ARTICLEINFO } from "src/store/articleInfo";
 
 interface Props {
 	sendMessage?: (inputChat: string) => void;
@@ -71,7 +71,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	const createChattingRoom = async () => {
 		try {
 			const res = await chatApi.createChattingRoom(DATA_SET);
-			dispatch(SET_ARTICLEID(DATA_SET.sale));
+			dispatch(SET_ARTICLEINFO(DATA_SET.sale));
 			toChattingRoom(res.data.id);
 		} catch (error) {
 			console.log(error);

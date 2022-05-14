@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { chatApi } from "src/api";
 import { RoomListItem } from "@components/chat";
-import { SET_ARTICLEID } from "src/store/articleId";
+import { SET_ARTICLEINFO } from "src/store/articleInfo";
 
 interface ChatListDataType {
 	chat_rooms: {
@@ -43,7 +43,7 @@ function RoomList() {
 	};
 
 	const toChattingRoom = (roomId: string, articleId: number) => {
-		dispatch(SET_ARTICLEID(articleId));
+		dispatch(SET_ARTICLEINFO(articleId));
 		router.push(`/chat/${roomId}`);
 		localStorage.setItem("RoomId", roomId);
 	};

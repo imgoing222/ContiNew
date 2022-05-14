@@ -8,7 +8,7 @@ import articleApi from "src/api/article";
 import { HouseInfoProps } from "src/pages/article/[id]";
 import IconPart from "./IconPart";
 import { chatApi } from "src/api";
-import { SET_ARTICLEID } from "src/store/articleId";
+import { SET_ARTICLEINFO } from "src/store/articleInfo";
 import { useRouter } from "next/router";
 
 interface TextProp {
@@ -24,7 +24,7 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 		try {
 			const chatDataSet = { buyer: userName, seller: houseInfo.username, sale: houseInfo.houseId };
 			const res = await chatApi.createChattingRoom(chatDataSet);
-			dispatch(SET_ARTICLEID(chatDataSet.sale));
+			dispatch(SET_ARTICLEINFO(chatDataSet.sale));
 			toChattingRoom(res.data.id);
 		} catch (error) {
 			console.log(error);
