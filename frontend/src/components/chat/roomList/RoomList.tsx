@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { chatApi } from "src/api";
 import { RoomListItem } from "@components/chat";
-import { SET_ARTICLEID } from "src/store/articleId";
+import { SET_ARTICLEINFO } from "src/store/articleInfo";
 
 interface ChatListDataType {
 	chat_rooms: {
@@ -18,6 +18,15 @@ interface ChatListDataType {
 	}[];
 	current_page_count: number;
 	total_page_count: number;
+}
+
+interface ChatDataType {
+	buyer: string;
+	last_message: string;
+	last_message_time: string;
+	room_id: string;
+	sale: number;
+	seller: string;
 }
 
 function RoomList() {
@@ -42,10 +51,11 @@ function RoomList() {
 		}
 	};
 
-	const toChattingRoom = (roomId: string, articleId: number) => {
-		dispatch(SET_ARTICLEID(articleId));
-		router.push(`/chat/${roomId}`);
-		localStorage.setItem("RoomId", roomId);
+	const toChattingRoom = (chatData: ChatDataType) => {
+		const articleDataSet = { sale: chatData.sale, seller: chatData.seller, buyer: chatData.buyer };
+		dispatch(SET_ARTICLEINFO(articleDataSet));
+		router.push(`/chat/${chatData.room_id}`);
+		localStorage.setItem("RoomId", chatData.room_id);
 	};
 
 	return (
@@ -56,10 +66,7 @@ function RoomList() {
 			<Content>
 				{chatListData.chat_rooms &&
 					chatListData.chat_rooms.map((chat) => (
-						<ContentContainer
-							key={chat.room_id}
-							onClick={() => toChattingRoom(chat.room_id, chat.sale)}
-						>
+						<ContentContainer key={chat.room_id} onClick={() => toChattingRoom(chat)}>
 							<RoomListItem chat={chat} />
 						</ContentContainer>
 					))}
