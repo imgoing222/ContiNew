@@ -39,6 +39,14 @@ function PriceTab() {
 			setContractTypes("월세");
 			return chagneRedux("월세");
 		}
+		if (id === "전세" && contractTypes === "전세") {
+			setContractTypes("");
+			return chagneRedux("");
+		}
+		if (id === "월세" && contractTypes === "월세") {
+			setContractTypes("");
+			return chagneRedux("");
+		}
 	};
 
 	const chagneRedux = (str: string) => {

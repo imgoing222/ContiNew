@@ -1,7 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { SearchCondition } from "src/pages/saleList";
-import { RootState } from "src/store";
 import House from "src/types/getListType";
 import styled from "styled-components";
 import DetailOfSale from "./DetailOfSale";
