@@ -15,29 +15,27 @@ function PriceTab() {
 	const [contractTypes, setContractTypes] = useState("전체");
 	const changeContractTypeHandler = (e: ChangeEvent<HTMLInputElement>) => {
 		const { value, id } = e.target;
-		if (id === "전세" && contractTypes === "") {
-			setContractTypes("전세");
-			return chagneRedux("전세");
+		if (contractTypes === "") {
+			setContractTypes(id);
+			return chagneRedux(id);
 		}
-		if (id === "월세" && contractTypes === "") {
-			setContractTypes("월세");
-			return chagneRedux("월세");
-		}
-		if (id === "월세" && contractTypes === "전세") {
+		if (id !== contractTypes && contractTypes !== "전체") {
 			setContractTypes("전체");
 			return chagneRedux("");
 		}
-		if (id === "전세" && contractTypes === "월세") {
-			setContractTypes("전체");
+		if (contractTypes === "전체") {
+			if (id === "월세") {
+				setContractTypes("전세");
+				return chagneRedux("전세");
+			} else {
+				setContractTypes("월세");
+				return chagneRedux("월세");
+			}
+		}
+
+		if (id === contractTypes) {
+			setContractTypes("");
 			return chagneRedux("");
-		}
-		if (id === "월세" && contractTypes === "전체") {
-			setContractTypes("전세");
-			return chagneRedux("전세");
-		}
-		if (id === "전세" && contractTypes === "전체") {
-			setContractTypes("월세");
-			return chagneRedux("월세");
 		}
 	};
 
@@ -81,14 +79,16 @@ function PriceTab() {
 					setChange={setDeposit}
 				/>
 			</SmallBox>
-			<SmallBox>
-				<Slider
-					maxMin={{ min: 0, max: 300 }}
-					subTitle="월세"
-					itemName="MonthlyRent"
-					setChange={setMonthlyRent}
-				/>
-			</SmallBox>
+			{contractTypes !== "전세" && (
+				<SmallBox>
+					<Slider
+						maxMin={{ min: 0, max: 300 }}
+						subTitle="월세"
+						itemName="MonthlyRent"
+						setChange={setMonthlyRent}
+					/>
+				</SmallBox>
+			)}
 			<SmallBox>
 				<Slider
 					maxMin={{ min: 0, max: 50 }}
