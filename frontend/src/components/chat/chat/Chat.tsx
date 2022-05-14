@@ -21,12 +21,6 @@ interface Props {
 	};
 }
 
-interface SavedChattingsType {
-	chat_message: ChatMessageType[];
-	total_page_count: number;
-	current_page_count: number;
-}
-
 interface ChatMessageType {
 	room_id: string;
 	sender: string;
@@ -51,8 +45,18 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	const { login_id } = useSelector((state: RootState) => state.userInfo);
 	const [showChatList, setShowChatList] = useState<ShowChatListType[]>([]);
 
-	const { setTarget, savedChatMessage, isLoading, currentPage } = useInfiniteScroll({
+	const {
+		setTarget,
+		savedChatMessage,
+		isLoading,
+		currentPage,
+		setCurrentPage,
+		setSavedChatMessage,
+		prevScrollHeight,
+		setPrevScrollHeight,
+	} = useInfiniteScroll({
 		roomId,
+		chatBoxRef,
 		requestApi: (roomId, currentPage) => {
 			return chatApi.getChatList(roomId, currentPage);
 		},
@@ -80,19 +84,18 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	};
 
 	useEffect(() => {
+		setCurrentPage(0);
+		setSavedChatMessage([]);
 		setShowChatList([]);
 	}, [roomId]);
 
 	useEffect(() => {
 		if (currentPage) {
-			setShowChatList([...showChatList, ...savedChatMessage]);
+			setShowChatList((prev) => [...prev, ...savedChatMessage]);
 		} else {
 			setShowChatList(savedChatMessage);
 		}
 	}, [savedChatMessage]);
-
-	console.log(savedChatMessage);
-	console.log(showChatList);
 
 	useEffect(() => {
 		if (receivedChatData) {
@@ -101,14 +104,21 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	}, [receivedChatData]);
 
 	useEffect(() => {
-		scrollToBottom();
+		handleScroll();
 	}, [showChatList]);
 
-	const scrollToBottom = () => {
-		if (currentPage) return;
-
+	const handleScroll = () => {
 		if (chatBoxRef.current) {
-			chatBoxRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+			if (prevScrollHeight) {
+				chatBoxRef.current.scrollTo({
+					top: chatBoxRef.current.scrollHeight - prevScrollHeight,
+				});
+				return setPrevScrollHeight(null);
+			}
+
+			chatBoxRef.current.scrollTo({
+				top: chatBoxRef.current.scrollHeight - chatBoxRef.current.clientHeight,
+			});
 		}
 	};
 
@@ -121,7 +131,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 			<Content>
 				{roomId && (
 					<>
-						<TopSection>
+						<TopSection ref={chatBoxRef}>
 							{<div ref={setTarget}>{isLoading && <p></p>}</div>}
 							<ul>
 								{showChatList &&
@@ -130,7 +140,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 										.reverse()
 										.map((chat, idx) => <ChatListItem key={idx} chat={chat} />)}
 							</ul>
-							<div ref={chatBoxRef} />
+							<div />
 						</TopSection>
 						<BottomSection sendMessage={sendMessage} />
 					</>
