@@ -23,8 +23,8 @@ function Options() {
 		<Container title="옵션">
 			<StyledUl>
 				{options.map((option, idx) => (
-					<Div>
-						<OptionInfoList value={idx + 1} title={option} key={idx} changeEvent={changeEvent} />
+					<Div key={idx}>
+						<OptionInfoList value={idx + 1} title={option} changeEvent={changeEvent} />
 					</Div>
 				))}
 			</StyledUl>
