@@ -9,40 +9,45 @@ const MONTHLY_RENT = "searchFilter/monthlyRent";
 const MAINTENANCE_FEE = "searchFilter/maintenanceFee";
 const PERIOD = "searchFilter/Period";
 
-interface actionType {
-	type: string;
-	data: SearchCondition;
+export interface actionProps extends SearchCondition {
+	min?: number;
+	max?: number;
 }
 
-export const setSaleType = (data: SearchCondition) => ({
+interface actionType {
+	type: string;
+	data: actionProps;
+}
+
+export const setSaleType = (data: actionProps) => ({
 	type: SALE_TYPE,
 	data,
 });
-export const setCoodinates = (data: SearchCondition) => ({
+export const setCoodinates = (data: actionProps) => ({
 	type: COORDINATES,
 	data,
 });
-export const sethouseType = (data: SearchCondition) => ({
+export const sethouseType = (data: actionProps) => ({
 	type: HOUSE_TYPE,
 	data,
 });
-export const setContractType = (data: SearchCondition) => ({
+export const setContractType = (data: actionProps) => ({
 	type: CONTRACT_TYPE,
 	data,
 });
-export const setDeposit = (data: SearchCondition) => ({
+export const setDeposit = (data: actionProps) => ({
 	type: DEPOSIT,
 	data,
 });
-export const setMonthlyRent = (data: SearchCondition) => ({
+export const setMonthlyRent = (data: actionProps) => ({
 	type: MONTHLY_RENT,
 	data,
 });
-export const setMaintenanceFee = (data: SearchCondition) => ({
+export const setMaintenanceFee = (data: actionProps) => ({
 	type: MAINTENANCE_FEE,
 	data,
 });
-export const setPeriod = (data: SearchCondition) => ({
+export const setPeriod = (data: actionProps) => ({
 	type: PERIOD,
 	data,
 });
@@ -56,16 +61,15 @@ const initialState = {
 	houseType: "",
 	contractType: "",
 	minDeposit: 0,
-	maxDeposit: 2147483646,
+	maxDeposit: 10000,
 	minMonthlyRent: 0,
-	maxMonthlyRent: 2147483646,
+	maxMonthlyRent: 300,
 	minMaintenanceFee: 0,
-	maxMaintenanceFee: 2147483646,
-	period: 2147483646,
+	maxMaintenanceFee: 50,
+	period: 12,
 };
 
 function searchFilter(state = initialState, action: actionType) {
-	console.log(action.data);
 	switch (action.type) {
 		case COORDINATES:
 			return {
@@ -93,20 +97,20 @@ function searchFilter(state = initialState, action: actionType) {
 		case DEPOSIT:
 			return {
 				...state,
-				minDeposit: action.data.minDeposit,
-				maxDeposit: action.data.maxDeposit,
+				minDeposit: action.data.min,
+				maxDeposit: action.data.max,
 			};
 		case MONTHLY_RENT:
 			return {
 				...state,
-				maxMonthlyRent: action.data.maxMonthlyRent,
-				minMonthlyRent: action.data.minMonthlyRent,
+				maxMonthlyRent: action.data.max,
+				minMonthlyRent: action.data.min,
 			};
 		case MAINTENANCE_FEE:
 			return {
 				...state,
-				minMaintenanceFee: action.data.minMaintenanceFee,
-				maxMaintenanceFee: action.data.maxMaintenanceFee,
+				minMaintenanceFee: action.data.min,
+				maxMaintenanceFee: action.data.max,
 			};
 		case PERIOD:
 			return {
