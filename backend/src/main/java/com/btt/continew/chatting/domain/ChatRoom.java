@@ -17,6 +17,7 @@ public class ChatRoom implements Serializable {
 
     @Id
     String id;
+
     @Column(name = "seller")
     String seller;
 
@@ -25,6 +26,12 @@ public class ChatRoom implements Serializable {
 
     @Column(name = "sale")
     Long sale;
+
+    @Column(name = "seller_id")
+    String sellerId;
+
+    @Column(name = "buyer_id")
+    String buyerId;
 
     @Column(name = "last_message")
     String lastMessage;
@@ -41,6 +48,8 @@ public class ChatRoom implements Serializable {
         chatRoom.seller = request.getSeller();
         chatRoom.buyer = request.getBuyer();
         chatRoom.sale = request.getSale();
+        chatRoom.sellerId = request.getSellerId();
+        chatRoom.buyerId = request.getBuyerId();
         chatRoom.lastMessage = "";
         chatRoom.lastMessageTime = LocalDateTime.now();
 
