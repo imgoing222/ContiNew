@@ -3,6 +3,7 @@ import { ContractType } from "src/types/contractType";
 const CONTRACT = "user/setContractInfo";
 const ID = "user/setContractIds";
 const LEVEL = "user/setContractLevel";
+const ROLE = "user/setRole";
 
 interface actionType {
 	type: string;
@@ -12,6 +13,7 @@ interface actionType {
 export const SET_CONTRACT = (data: ContractType) => ({ type: CONTRACT, data });
 export const SET_ID = (data: ContractType) => ({ type: ID, data });
 export const SET_LEVEL = (data: ContractType) => ({ type: LEVEL, data });
+export const SET_ROLE = (data: string) => ({ type: ROLE, data });
 
 const initialState = {
 	contract: {
@@ -103,6 +105,13 @@ function contractInfo(state = initialState, action: actionType) {
 				...state,
 				level: {
 					next_level: action.data.next_level,
+				},
+			};
+		case ROLE:
+			return {
+				...state,
+				role: {
+					user_role: action.data,
 				},
 			};
 		default:
