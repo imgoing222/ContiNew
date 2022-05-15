@@ -22,14 +22,10 @@ function createFormData(houseInfo: HouseInfo) {
 		options: houseInfo.options,
 		contract_type: houseInfo.contractType,
 	};
-
 	formData.append("house", new Blob([JSON.stringify(article)], { type: "application/json" })),
 		houseInfo.images !== null
-			? Array.from(houseInfo.images).forEach((file) =>
-					formData.append("images", file as unknown as File),
-			  )
+			? Array.from(houseInfo.images).forEach((file) => formData.append("images", file))
 			: formData.append("images", new Blob([]));
-
 	return formData;
 }
 
