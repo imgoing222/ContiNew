@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import { useRouter } from "next/router";
 import SockJS from "sockjs-client";
 import StompJS from "stompjs";
 import cookie from "react-cookies";
@@ -18,12 +17,8 @@ interface ReceivedChatDataType {
 }
 
 function ChatDetail() {
-	const router = useRouter();
-	// const { roomId } = router.query;
 	const roomId = localStorage.getItem("RoomId");
 	const { username } = useSelector((state: RootState) => state.userInfo);
-	const { article_id, seller_name, buyer_name } = useSelector((state: RootState) => state.articleInfo);
-	console.log(article_id, seller_name, buyer_name);
 	const [receivedChatData, setReceivedChatData] = useState<ReceivedChatDataType>();
 	const isConnected = useRef(false);
 
