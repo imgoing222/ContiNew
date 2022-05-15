@@ -53,13 +53,16 @@ function MainPage() {
 				withCredentials: false,
 			})
 			.then((response) => {
-				console.log(response.data)
-				const addressData = {
-					sido_name: response.data.documents[0].address.region_1depth_name,
-					gungu_name: response.data.documents[0].address.region_2depth_name,
-					dong_name: response.data.documents[0].address.region_3depth_name,
-				};
-				setAddressData(addressData);
+				if (response.data.documents.length) {
+					const addressData = {
+						sido_name: response.data.documents[0].address.region_1depth_name,
+						gungu_name: response.data.documents[0].address.region_2depth_name,
+						dong_name: response.data.documents[0].address.region_3depth_name,
+					};
+					setAddressData(addressData);
+				} else {
+					alert("위치 정보를 받아오는데 실패했습니다.")
+				}
 			});
 	};
 
