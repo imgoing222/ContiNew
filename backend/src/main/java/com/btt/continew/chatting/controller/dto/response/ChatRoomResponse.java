@@ -26,6 +26,14 @@ public class ChatRoomResponse {
     @ApiModelProperty(position = 3, notes = "매물 번호", example = "1")
     private Long sale;
 
+    @JsonProperty("seller_id")
+    @ApiModelProperty(position = 4, notes = "판매자 ID", example = "continew")
+    private String sellerId;
+
+    @JsonProperty("buyer_id")
+    @ApiModelProperty(position = 5, notes = "구매자 ID", example = "btt")
+    private String buyerId;
+
     @JsonProperty("last_message")
     @ApiModelProperty(position = 4, notes = "마지막 메시지", example = "뭔지 모르지만, 저기에다 마지막 잎새 하나를 남겨 둬서...")
     private String lastMessage;
@@ -39,11 +47,14 @@ public class ChatRoomResponse {
 
     }
 
-    public ChatRoomResponse(String id, String seller, String buyer, Long sale, String lastMessage, LocalDateTime lastMessageTime){
+    public ChatRoomResponse(String id, String seller, String buyer, Long sale, String sellerId, String buyerId,
+        String lastMessage, LocalDateTime lastMessageTime){
         this.id = id;
         this.seller = seller;
         this.buyer = buyer;
         this.sale = sale;
+        this.sellerId = sellerId;
+        this.buyerId = buyerId;
         this.lastMessage = lastMessage;
         this.lastMessageTime = lastMessageTime;
     }
@@ -54,6 +65,8 @@ public class ChatRoomResponse {
             chatRoom.getSeller(),
             chatRoom.getBuyer(),
             chatRoom.getSale(),
+            chatRoom.getSellerId(),
+            chatRoom.getBuyerId(),
             chatRoom.getLastMessage(),
             chatRoom.getLastMessageTime()
         );
