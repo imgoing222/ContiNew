@@ -54,7 +54,7 @@ public class HouseService {
     }
 
     @Transactional
-    public void create(HouseSaveRequest request, List<MultipartFile> images, String email) {
+    public Long create(HouseSaveRequest request, List<MultipartFile> images, String email) {
         Member member = memberService.findByLoginId(email);
 
         if(houseRepository.existsByMember(member)){
@@ -87,6 +87,7 @@ public class HouseService {
 
 //        saveHouseOptions(request, house);
         saveImages(images, house);
+        return house.getId();
     }
 
     private void saveImages(List<MultipartFile> images, House house) {
