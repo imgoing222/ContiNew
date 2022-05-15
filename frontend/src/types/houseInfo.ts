@@ -16,7 +16,7 @@ interface HouseInfo {
 	period: string;
 	description: string;
 	options: number[];
-	images: FileList | File[] | null;
+	images: FileList | null;
 	contractType: string;
 	agreement: string;
 }
