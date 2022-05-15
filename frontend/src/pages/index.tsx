@@ -54,12 +54,12 @@ function MainPage() {
 			})
 			.then((response) => {
 				console.log(response.data)
-				// const addressData = {
-				// 	sido_name: response.data.documents[0].address.region_1depth_name,
-				// 	gungu_name: response.data.documents[0].address.region_2depth_name,
-				// 	dong_name: response.data.documents[0].address.region_3depth_name,
-				// };
-				// setAddressName(addressData);
+				const addressData = {
+					sido_name: response.data.documents[0].address.region_1depth_name,
+					gungu_name: response.data.documents[0].address.region_2depth_name,
+					dong_name: response.data.documents[0].address.region_3depth_name,
+				};
+				setAddressName(addressData);
 			});
 	};
 
