@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { mainApi } from "src/api";
 import House from "src/types/getListType";
+import RecommendItem from "./RecommendItem";
 
 interface DataProps {
 	addressData: {
@@ -37,9 +38,7 @@ function RecommendSection({ addressData }: DataProps) {
 			<Title>{addressData.dong_name} 추천매물</Title>
 			<Ul>
 				{aroundHousesData.map((house) => (
-					<Li key={house.house_id}>
-						<Image src={house.main_image} alt="house-img" />
-					</Li>
+					<RecommendItem key={house.house_id} house={house} />
 				))}
 			</Ul>
 		</Section>
