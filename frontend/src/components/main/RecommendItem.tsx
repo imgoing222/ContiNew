@@ -19,6 +19,7 @@ function RecommendItem({ house }: HouseType) {
 
 const Li = styled.li`
 	margin: 1rem;
+  cursor: pointer;
 `;
 
 const Image = styled.img`
