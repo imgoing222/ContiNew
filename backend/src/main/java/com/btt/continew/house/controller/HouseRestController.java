@@ -74,7 +74,7 @@ public class HouseRestController {
 
     @PostMapping("/houses/list")
     @ApiOperation(value = "매물 목록", notes = "매물 목록 api")
-    public ResponseEntity<HouseListResponse> showHouses(@RequestBody HouseListRequest request, Pageable pageable) {
+    public ResponseEntity<HouseListResponse> showHouses(@RequestBody HouseListRequest request, @PageableDefault Pageable pageable) {
         return ResponseEntity.ok().body(houseService.showHouses(request, pageable));
     }
 
