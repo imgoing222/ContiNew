@@ -18,14 +18,13 @@ const saleApi: SaleApiType = {
 export default saleApi;
 
 const checkMaxValue = (houseInfo: SearchCondition) => {
-	if (houseInfo.maxDeposit && houseInfo.maxDeposit === 10000)
-		houseInfo.maxDeposit = "" as unknown as number;
-	if (houseInfo.maxMonthlyRent && houseInfo.maxMonthlyRent === 300)
-		houseInfo.maxMonthlyRent = "" as unknown as number;
-	if (houseInfo.maxMaintenanceFee && houseInfo.maxMaintenanceFee === 50)
-		houseInfo.maxMaintenanceFee = "" as unknown as number;
-	if (houseInfo.period && houseInfo.period === 13) houseInfo.period = "" as unknown as number;
+	const temp = Object.assign({}, houseInfo);
+	if (temp.maxDeposit && temp.maxDeposit === 10000) temp.maxDeposit = "" as unknown as number;
+	if (temp.maxMonthlyRent && temp.maxMonthlyRent === 300)
+		temp.maxMonthlyRent = "" as unknown as number;
+	if (temp.maxMaintenanceFee && temp.maxMaintenanceFee === 50)
+		temp.maxMaintenanceFee = "" as unknown as number;
+	if (temp.period && temp.period === 13) temp.period = "" as unknown as number;
 
-	console.log(houseInfo);
-	return houseInfo;
+	return temp;
 };
