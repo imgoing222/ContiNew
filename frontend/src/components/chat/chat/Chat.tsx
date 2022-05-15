@@ -21,14 +21,6 @@ interface Props {
 	};
 }
 
-interface ChatMessageType {
-	room_id: string;
-	sender: string;
-	content: string;
-	read_at: string;
-	created_at: string;
-}
-
 interface ChatListType {
 	room_id: string;
 	sender: string;
