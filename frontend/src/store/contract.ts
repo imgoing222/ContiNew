@@ -51,7 +51,7 @@ const initialState = {
 		buyer_login_id: "",
 	},
 	step: {
-		current_step: 1,
+		current_step: 2,
 	},
 	role: {
 		user_role: "",
