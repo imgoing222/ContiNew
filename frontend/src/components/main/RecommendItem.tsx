@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import House from "src/types/getListType";
@@ -7,8 +8,10 @@ interface HouseType {
 }
 
 function RecommendItem({ house }: HouseType) {
+	const router = useRouter();
+
 	return (
-		<Li>
+		<Li onClick={() => router.push(`/article/${house.house_id}`)}>
 			<Image src={house.main_image} alt="house-img" />
 		</Li>
 	);
