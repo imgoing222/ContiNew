@@ -37,8 +37,10 @@ export default SaleList;
 
 const Container = styled.section`
 	min-width: 38rem;
+	max-height: calc(100vh - 12.5rem);
 	display: flex;
 	flex-direction: column;
+	overflow-y: scroll;
 `;
 
 const Div = styled.div`
