@@ -19,11 +19,18 @@ interface TextProp {
 function CardDescription({ houseInfo }: HouseInfoProps) {
 	const dispatch = useDispatch();
 	const router = useRouter();
-	const userName = useSelector((state: RootStateOrAny) => state.userInfo.username);
+	const { login_id, username } = useSelector((state: RootStateOrAny) => state.userInfo);
 
 	const startChat = async () => {
 		try {
-			const chatDataSet = { buyer: userName, seller: houseInfo.username, sale: houseInfo.houseId };
+			const chatDataSet = {
+				buyer: username,
+				buyerId: login_id,
+				seller: houseInfo.username,
+				sellerId: houseInfo.loginId,
+				sale: houseInfo.houseId,
+			};
+			console.log(chatDataSet);
 			const res = await chatApi.createChattingRoom(chatDataSet);
 			dispatch(SET_ARTICLEINFO(chatDataSet));
 			toChattingRoom(res.data.id);
@@ -81,7 +88,7 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 				<Hr />
 			</div>
 			<ButtonDiv>
-				{userName === houseInfo.username ? (
+				{username === houseInfo.username ? (
 					<>
 						<Link
 							href={{ pathname: "/createSale", query: { id: houseInfo.houseId } }}
