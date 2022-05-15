@@ -1,6 +1,7 @@
 import ContractForm from "@components/contract/ContractForm";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Step, Stepper } from "react-form-stepper";
 import { useDispatch, useSelector } from "react-redux";
 import contractApi from "src/api/contract";
 import { RootState } from "src/store";
@@ -51,7 +52,11 @@ function Contract() {
 
 	return (
 		<>
-			<h1>{step}단계</h1>
+			<Stepper activeStep={step - 1}>
+				<Step label="계약 조건 작성" />
+				<Step label="신규 임차인 정보 작성 및 서명" />
+				<Step label="임차인 서명" />
+			</Stepper>
 			<ContractForm />
 			<div>
 				<button>임시 저장</button>
