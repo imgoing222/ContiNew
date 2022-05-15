@@ -12,7 +12,7 @@ interface AddressType {
 }
 
 function MainPage() {
-	const [addressName, setAddressName] = useState<AddressType>({
+	const [addressData, setAddressData] = useState<AddressType>({
 		sido_name: "서울",
 		gungu_name: "동대문구",
 		dong_name: "이문동",
@@ -59,7 +59,7 @@ function MainPage() {
 					gungu_name: response.data.documents[0].address.region_2depth_name,
 					dong_name: response.data.documents[0].address.region_3depth_name,
 				};
-				setAddressName(addressData);
+				setAddressData(addressData);
 			});
 	};
 
@@ -67,7 +67,7 @@ function MainPage() {
 		<>
 			<Main>
 				<SearchSection />
-				<RecommendSection addressName={addressName} />
+				<RecommendSection addressData={addressData} />
 			</Main>
 			<Footer />
 		</>
