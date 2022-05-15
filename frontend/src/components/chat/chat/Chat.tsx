@@ -64,9 +64,9 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 
 	const DATA_SET = {
 		buyer: username,
-		buyerId: login_id,
+		buyer_id: login_id,
 		seller: "Seller",
-		sellerId: "Seller",
+		seller_id: "Seller",
 		sale: 1,
 	};
 

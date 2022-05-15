@@ -25,9 +25,9 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 		try {
 			const chatDataSet = {
 				buyer: username,
-				buyerId: login_id,
+				buyer_id: login_id,
 				seller: houseInfo.username,
-				sellerId: houseInfo.loginId,
+				seller_id: houseInfo.loginId,
 				sale: houseInfo.houseId,
 			};
 			const res = await chatApi.createChattingRoom(chatDataSet);
