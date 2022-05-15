@@ -15,6 +15,7 @@ function Map({ kakaoMap, searchCondition }: Map) {
 	const dispatch = useDispatch();
 	const getSales = () => {
 		const coordinate = kakaoMap.current.getBounds();
+		console.log(coordinate);
 		const coordinates = {
 			xRight: coordinate.oa,
 			yTop: coordinate.pa,
