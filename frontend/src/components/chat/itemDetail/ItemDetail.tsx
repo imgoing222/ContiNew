@@ -12,13 +12,13 @@ interface Props {
 }
 
 function ItemDetail({ isIndex }: Props) {
-	const { article_id } = useSelector((state: RootState) => state.articleInfo);
+	const { articleId } = useSelector((state: RootState) => state.articleInfo);
 	const [houseInfo, setHouseInfo] = useState<ArticleType | null>(null);
 
 	useEffect(() => {
 		if (!isIndex) {
 			const setData = async () => {
-				const data = await getArticleData(article_id);
+				const data = await getArticleData(articleId);
 
 				setHouseInfo(snakeToCamel(data) as ArticleType);
 			};
