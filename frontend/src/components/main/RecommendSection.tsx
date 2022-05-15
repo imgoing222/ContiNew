@@ -3,16 +3,17 @@ import styled from "styled-components";
 
 import { mainApi } from "src/api";
 import House from "src/types/getListType";
+import RecommendItem from "./RecommendItem";
 
 interface DataProps {
-	addressName: {
+	addressData: {
 		sido_name: string;
 		gungu_name: string;
 		dong_name: string;
 	};
 }
 
-function RecommendSection({ addressName }: DataProps) {
+function RecommendSection({ addressData }: DataProps) {
 	const [aroundHousesData, setAroundHousesData] = useState<House[]>([]);
 	const testData = {
 		sido_name: "서울",
@@ -34,12 +35,10 @@ function RecommendSection({ addressName }: DataProps) {
 	};
 	return (
 		<Section>
-			<Title>{addressName.dong_name} 추천매물</Title>
+			<Title>{addressData.dong_name} 추천매물</Title>
 			<Ul>
 				{aroundHousesData.map((house) => (
-					<Li key={house.house_id}>
-						<Image src={house.main_image} alt="house-img" />
-					</Li>
+					<RecommendItem key={house.house_id} house={house} />
 				))}
 			</Ul>
 		</Section>
