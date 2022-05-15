@@ -99,8 +99,8 @@ function index() {
 		e.preventDefault();
 		if (checkData(houseInfo) && houseInfo.agreement === "agree") {
 			if (router.query.id) articleApi.editArticle(createFormData(houseInfo), +router.query.id);
+			window.location.replace(`/article/${router.query.id}`);
 		}
-		// window.location.replace(`/article/${router.query.id}`);
 	};
 
 	return (

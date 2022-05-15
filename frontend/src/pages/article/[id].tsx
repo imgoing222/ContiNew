@@ -18,18 +18,22 @@ export interface HouseInfoProps {
 function index() {
 	const router = useRouter();
 	const [houseInfo, setHouseInfo] = useState<ArticleType | null>(null);
+	const id = router.query.id;
 
 	useEffect(() => {
 		const setData = async () => {
-			if (router.query.id) {
-				const data = await getArticleData(+router.query.id);
+			if (id !== undefined) {
+				const data = await getArticleData(+id);
 				setHouseInfo(snakeToCamel(data) as ArticleType);
 			}
 		};
 
 		setData();
-	}, []);
+	}, [id]);
 
+	if (router.isFallback) {
+		return <div>loading</div>;
+	}
 	return (
 		houseInfo !== null && (
 			<Div>
