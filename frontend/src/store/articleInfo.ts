@@ -8,15 +8,19 @@ interface ActionType {
 interface DataType {
 	sale: number;
 	seller: string;
+	seller_id: string;
 	buyer: string;
+	buyer_id: string;
 }
 
 export const SET_ARTICLEINFO = (data: DataType) => ({ type: STORE, data });
 
 const initialState = {
-	article_id: 0,
-	seller_name: "",
-	buyer_name: "",
+	articleId: 0,
+	sellerName: "",
+	sellerId: "",
+	buyerName: "",
+	buyerId: "",
 };
 
 function ArticleInfo(state = initialState, action: ActionType) {
@@ -24,9 +28,11 @@ function ArticleInfo(state = initialState, action: ActionType) {
 		case STORE:
 			return {
 				...state,
-				article_id: action.data.sale,
-				seller_name: action.data.seller,
-				buyer_name: action.data.buyer,
+				articleId: action.data.sale,
+				sellerName: action.data.seller,
+				sellerId: action.data.seller_id,
+				buyerName: action.data.buyer,
+				buyerId: action.data.buyer_id,
 			};
 		default:
 			return state;

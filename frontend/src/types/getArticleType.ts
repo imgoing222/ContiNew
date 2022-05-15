@@ -15,6 +15,7 @@ interface ArticleType {
 	period: number;
 	phoneAuth: boolean;
 	saleType: "이어살기" | "쉐어하우스";
+	loginId: string;
 	username: string;
 	sidoName: string;
 	gunguName: string;
