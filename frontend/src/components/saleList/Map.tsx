@@ -50,7 +50,7 @@ function Map({ kakaoMap, searchCondition }: Map) {
 					position: new kakao.maps.LatLng(item.latitude, item.longitude),
 				}),
 		);
-		clusterer.setMinClusterSize(0);
+		clusterer.setMinClusterSize(1);
 		clusterer.clear();
 		clusterer.addMarkers(markers);
 	};
@@ -103,5 +103,5 @@ export default Map;
 
 const Container = styled.div`
 	width: 100%;
-	height: calc(100vh - 5rem);
+	height: calc(100vh - 12.5em);
 `;
