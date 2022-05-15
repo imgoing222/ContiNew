@@ -54,14 +54,14 @@ function index() {
 	});
 
 	useEffect(() => {
-		if (router.query.id) {
-			const setData = async () => {
+		const setData = async () => {
+			if (router.query.id) {
 				const data = await getArticleData(+router.query.id as number);
 				setHouseInfo(snakeToCamel(data, "modified") as HouseInfo);
-			};
+			}
+		};
 
-			setData();
-		}
+		setData();
 	}, []);
 
 	const handleOptions = (e: React.ChangeEvent<HTMLInputElement>) => {
