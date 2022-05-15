@@ -70,7 +70,7 @@ const initialState = {
 	maxMonthlyRent: 300,
 	minMaintenanceFee: 0,
 	maxMaintenanceFee: 50,
-	period: 13,
+	period: "",
 	options: [],
 };
 
@@ -120,7 +120,7 @@ function searchFilter(state = initialState, action: actionType) {
 		case PERIOD:
 			return {
 				...state,
-				period: action.data.period !== 12 ? action.data.period : 13,
+				period: action.data.period !== 12 ? action.data.period : "",
 			};
 		case OPTIONS:
 			return {
