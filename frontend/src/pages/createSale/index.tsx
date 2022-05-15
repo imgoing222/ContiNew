@@ -56,7 +56,7 @@ function index() {
 	useEffect(() => {
 		if (router.query.id) {
 			const setData = async () => {
-				const data = await getArticleData(16);
+				const data = await getArticleData(+router.query.id as number);
 				setHouseInfo(snakeToCamel(data, "modified") as HouseInfo);
 			};
 
