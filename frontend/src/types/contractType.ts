@@ -1,4 +1,4 @@
-interface ContractType {
+export interface ContractType {
 	location: string;
 	area: number;
 	net_leasable_area: number;
@@ -23,7 +23,9 @@ interface ContractType {
 	buyer_birth: string;
 	buyer_phone: string;
 	buyer_signature: string;
-	current_level: number;
+	current_level: number | undefined;
+	house_id: number | undefined;
+	seller_login_id: string | undefined;
+	buyer_login_id: string | undefined;
+	next_level: boolean | undefined;
 }
-
-export default ContractType;
