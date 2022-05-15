@@ -3,7 +3,9 @@ import { request } from "./request";
 
 interface ChatData {
 	buyer: string;
+	buyer_id: string;
 	seller: string;
+	seller_id: string;
 	sale: number;
 }
 
