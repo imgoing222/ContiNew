@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import java.net.URI;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -68,13 +69,14 @@ public class HouseRestController {
     public ResponseEntity<Void> create(@RequestPart(value = "house") HouseSaveRequest request,
         @RequestPart(value = "images") List<MultipartFile> images,
         @ApiParam(hidden = true) @AuthenticationPrincipal String email) {
-        houseService.create(request, images, email);
-        return ResponseEntity.noContent().build();
+        Long houseId = houseService.create(request, images, email);
+        URI uri = URI.create("/" + houseId);
+        return ResponseEntity.created(uri).build();
     }
 
     @PostMapping("/houses/list")
     @ApiOperation(value = "매물 목록", notes = "매물 목록 api")
-    public ResponseEntity<HouseListResponse> showHouses(@RequestBody HouseListRequest request, Pageable pageable) {
+    public ResponseEntity<HouseListResponse> showHouses(@RequestBody HouseListRequest request, @PageableDefault Pageable pageable) {
         return ResponseEntity.ok().body(houseService.showHouses(request, pageable));
     }
 
