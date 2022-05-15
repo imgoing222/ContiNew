@@ -46,9 +46,9 @@ function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 		if (setHouseInfo && houseInfo.images) {
 			previewImgs.splice(idx, 1);
 			setPreviewImgs([...previewImgs]);
-			const img = [...houseInfo.images];
+			const img = [houseInfo.images];
 			img.splice(idx, 1);
-			setHouseInfo({ ...houseInfo, images: img });
+			setHouseInfo({ ...houseInfo, images: img as unknown as FileList });
 		}
 	};
 
