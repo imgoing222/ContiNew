@@ -75,7 +75,7 @@ function Map({ kakaoMap, searchCondition }: Map) {
 				const zoomControl = new kakao.maps.ZoomControl();
 				kakaoMap.current.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-				kakao.maps.event.addListener(kakaoMap.current, "dragend", getSales);
+				kakao.maps.event.addListener(kakaoMap.current, "idle", getSales);
 			});
 		};
 
