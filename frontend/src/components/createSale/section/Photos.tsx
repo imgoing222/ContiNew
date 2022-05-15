@@ -27,8 +27,11 @@ function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 				setUploadImgs(selectedImages);
 			}
 
-			if (houseInfo.images) {
-				setHouseInfo({ ...houseInfo, images: { ...houseInfo.images, ...selectedImages } });
+			if (houseInfo.images && selectedImages) {
+				const dataTransfer = new DataTransfer();
+				const img = [...Array.from(houseInfo.images), ...Array.from(selectedImages)];
+				img.forEach((file) => dataTransfer.items.add(file));
+				setHouseInfo({ ...houseInfo, images: dataTransfer.files });
 			} else {
 				setHouseInfo({ ...houseInfo, images: selectedImages });
 			}
@@ -46,9 +49,11 @@ function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 		if (setHouseInfo && houseInfo.images) {
 			previewImgs.splice(idx, 1);
 			setPreviewImgs([...previewImgs]);
-			const img = [houseInfo.images];
+			const dataTransfer = new DataTransfer();
+			const img = Array.from(houseInfo.images);
 			img.splice(idx, 1);
-			setHouseInfo({ ...houseInfo, images: img as unknown as FileList });
+			img.forEach((file) => dataTransfer.items.add(file));
+			setHouseInfo({ ...houseInfo, images: dataTransfer.files });
 		}
 	};
 

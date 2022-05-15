@@ -95,11 +95,13 @@ function index() {
 		}
 	};
 
-	const editSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+	const editSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		if (checkData(houseInfo) && houseInfo.agreement === "agree") {
-			if (router.query.id) articleApi.editArticle(createFormData(houseInfo), +router.query.id);
-			window.location.replace(`/article/${router.query.id}`);
+			if (router.query.id) {
+				const res = await articleApi.editArticle(createFormData(houseInfo), +router.query.id);
+				if (res.status === 204) window.location.replace(`/article/${router.query.id}`);
+			}
 		}
 	};
 
