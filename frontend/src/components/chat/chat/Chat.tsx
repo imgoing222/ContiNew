@@ -21,14 +21,6 @@ interface Props {
 	};
 }
 
-interface ChatMessageType {
-	room_id: string;
-	sender: string;
-	content: string;
-	read_at: string;
-	created_at: string;
-}
-
 interface ChatListType {
 	room_id: string;
 	sender: string;
@@ -42,7 +34,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const chatBoxRef = useRef<HTMLDivElement>(null);
-	const { login_id } = useSelector((state: RootState) => state.userInfo);
+	const { login_id, username } = useSelector((state: RootState) => state.userInfo);
 	const [showChatList, setShowChatList] = useState<ChatListType[]>([]);
 
 	const {
@@ -63,8 +55,10 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	});
 
 	const DATA_SET = {
-		buyer: login_id,
+		buyer: username,
+		buyer_id: login_id,
 		seller: "Seller",
+		seller_id: "Seller",
 		sale: 1,
 	};
 

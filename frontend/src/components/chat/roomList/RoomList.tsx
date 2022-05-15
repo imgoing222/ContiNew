@@ -9,24 +9,28 @@ import { SET_ARTICLEINFO } from "src/store/articleInfo";
 
 interface ChatListDataType {
 	chat_rooms: {
-		buyer: string;
 		last_message: string;
 		last_message_time: string;
 		room_id: string;
 		sale: number;
+		buyer: string;
+		buyer_id: string;
 		seller: string;
+		seller_id: string;
 	}[];
 	current_page_count: number;
 	total_page_count: number;
 }
 
 interface ChatDataType {
-	buyer: string;
 	last_message: string;
 	last_message_time: string;
 	room_id: string;
 	sale: number;
+	buyer: string;
+	buyer_id: string;
 	seller: string;
+	seller_id: string;
 }
 
 function RoomList() {
@@ -52,7 +56,13 @@ function RoomList() {
 	};
 
 	const toChattingRoom = (chatData: ChatDataType) => {
-		const articleDataSet = { sale: chatData.sale, seller: chatData.seller, buyer: chatData.buyer };
+		const articleDataSet = {
+			sale: chatData.sale,
+			seller: chatData.seller,
+			seller_id: chatData.seller_id,
+			buyer: chatData.buyer,
+			buyer_id: chatData.buyer_id,
+		};
 		dispatch(SET_ARTICLEINFO(articleDataSet));
 		router.push(`/chat/${chatData.room_id}`);
 		localStorage.setItem("RoomId", chatData.room_id);
