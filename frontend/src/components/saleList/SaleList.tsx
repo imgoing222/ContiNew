@@ -51,5 +51,6 @@ const Div = styled.div`
 
 const Box = styled.div`
 	display: flex;
-	margin: 1rem 0;
+	margin: 1.5rem 0;
+	justify-content: center;
 `;
