@@ -42,7 +42,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const chatBoxRef = useRef<HTMLDivElement>(null);
-	const { login_id } = useSelector((state: RootState) => state.userInfo);
+	const { login_id, username } = useSelector((state: RootState) => state.userInfo);
 	const [showChatList, setShowChatList] = useState<ChatListType[]>([]);
 
 	const {
@@ -63,8 +63,10 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	});
 
 	const DATA_SET = {
-		buyer: login_id,
+		buyer: username,
+		buyerId: login_id,
 		seller: "Seller",
+		sellerId: "Seller",
 		sale: 1,
 	};
 
