@@ -120,7 +120,7 @@ function searchFilter(state = initialState, action: actionType) {
 		case PERIOD:
 			return {
 				...state,
-				period: action.data.period !== 12 ? action.data.period : 13,
+				period: action.data.period,
 			};
 		case OPTIONS:
 			return {
