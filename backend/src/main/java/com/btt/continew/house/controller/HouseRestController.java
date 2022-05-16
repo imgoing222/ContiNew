@@ -6,6 +6,7 @@ import com.btt.continew.house.controller.dto.request.HouseSaveRequest;
 import com.btt.continew.house.controller.dto.response.HouseDetailResponse;
 import com.btt.continew.house.controller.dto.response.HouseIdResponse;
 import com.btt.continew.house.controller.dto.response.HouseListResponse;
+import com.btt.continew.house.controller.dto.response.HouseLocationResponse;
 import com.btt.continew.house.service.HouseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -13,7 +14,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import java.net.URI;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -42,7 +42,7 @@ public class HouseRestController {
     }
 
     @PostMapping("/auth/houses")
-    @ApiOperation(value = "매물 등록", notes = "매물 등록 api (page는 쿼리스트링으로 요청)")
+    @ApiOperation(value = "매물 등록", notes = "매물 등록 api")
     @ApiResponses({
         @ApiResponse(code = 404, message = "NOT_FOUND\n옵션이 존재하지 않을 때(O01)"),
         @ApiResponse(code = 400, message = "BAD_REQUEST\n이미지 등록에 실패했을 때(Z01)")
@@ -74,9 +74,15 @@ public class HouseRestController {
     }
 
     @PostMapping("/houses/list")
-    @ApiOperation(value = "매물 목록", notes = "매물 목록 api")
+    @ApiOperation(value = "매물 목록 (pagination 포함)", notes = "매물 목록 api (page는 쿼리스트링으로 요청)")
     public ResponseEntity<HouseListResponse> showHouses(@RequestBody HouseListRequest request, @PageableDefault Pageable pageable) {
         return ResponseEntity.ok().body(houseService.showHouses(request, pageable));
+    }
+
+    @PostMapping("/houses/all-list")
+    @ApiOperation(value = "매물 목록 (좌표 내 전체 목록)", notes = "매물 목록 api")
+    public ResponseEntity<List<HouseLocationResponse>> showAllHouses(@RequestBody HouseListRequest request) {
+        return ResponseEntity.ok().body(houseService.showAllHouses(request));
     }
 
     @GetMapping("/houses/{house_id}")
