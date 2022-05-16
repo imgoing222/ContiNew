@@ -115,4 +115,16 @@ const Form = styled.form`
 	width: 38rem;
 	margin: 0 auto;
 	margin-bottom: 3.5rem;
+	@media ${(props) => props.theme.tabletS} {
+		width: 35rem;
+	}
+	@media ${(props) => props.theme.mobile} {
+		width: 30rem;
+	}
+	@media ${(props) => props.theme.mobileS} {
+		width: 26rem;
+	}
+	@media ${(props) => props.theme.mobileXS} {
+		width: 24rem;
+	}
 `;

@@ -52,12 +52,23 @@ const Box = styled.div`
 	display: flex;
 	margin-bottom: 1.5rem;
 	cursor: pointer;
+	@media ${(props) => props.theme.mobile} {
+		margin-bottom: 1rem;
+	}
 `;
 
 const MainImg = styled.img`
 	width: 12rem;
 	height: 13rem;
 	margin-right: 1rem;
+	@media ${(props) => props.theme.mobileS} {
+		width: 10rem;
+		height: 10rem;
+	}
+	@media ${(props) => props.theme.mobileXS} {
+		width: 7rem;
+		height: 7rem;
+	}
 `;
 
 const TextBox = styled.div`
@@ -69,4 +80,11 @@ const Text = styled.p<TextProp>`
 	font-size: ${({ fontSize }) => (fontSize ? +fontSize + "rem" : "1.3rem")};
 	font-weight: ${({ bold }) => bold && "bold"};
 	margin-bottom: 0.5rem;
+	@media ${(props) => props.theme.mobile} {
+		font-size: ${({ fontSize }) => (fontSize ? "1.3rem" : "1rem")};
+	}
+	@media ${(props) => props.theme.mobileXS} {
+		font-size: 0.7rem;
+		margin-bottom: 0;
+	}
 `;

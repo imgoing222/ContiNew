@@ -43,7 +43,7 @@ function PriceTab() {
 		dispatch(setContractType({ contractType: str }));
 	};
 	return (
-		<Container title="거래 유형 / 가격">
+		<Container title="거래 유형 / 가격" isPrice="price">
 			<SmallBox>
 				<Title>거래 유형</Title>
 				<Tab>

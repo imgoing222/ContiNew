@@ -103,4 +103,7 @@ export default Map;
 const Container = styled.div`
 	width: 100%;
 	height: calc(100vh - 12.5em);
+	@media ${(props) => props.theme.mobileXS} {
+		height: calc(100vh - 10em);
+	}
 `;
