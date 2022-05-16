@@ -13,7 +13,7 @@ function Contract() {
 	// 매물id, seller_id, buyer_id 계약 버튼 눌렀을때 / 내 계약에서 눌렀을 때 받아올것 router.query로
 
 	// 더미데이터
-	const buyer = "test1212";
+	const buyer = "test112";
 	const seller = "wjinh";
 	const houseId = 43;
 
