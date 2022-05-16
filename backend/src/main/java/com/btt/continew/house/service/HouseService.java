@@ -6,6 +6,7 @@ import com.btt.continew.house.controller.dto.request.HouseAroundRequest;
 import com.btt.continew.house.controller.dto.request.HouseListRequest;
 import com.btt.continew.house.controller.dto.request.HouseSaveRequest;
 import com.btt.continew.house.controller.dto.response.HouseDetailResponse;
+import com.btt.continew.house.controller.dto.response.HouseIdResponse;
 import com.btt.continew.house.controller.dto.response.HouseListResponse;
 import com.btt.continew.house.controller.dto.response.HouseSimpleResponse;
 import com.btt.continew.house.domain.House;
@@ -31,8 +32,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class HouseService {
 
     private final HouseRepository houseRepository;
-    private final OptionRepository optionRepository;
-    private final HouseOptionRepository houseOptionRepository;
     private final ImageRepository imageRepository;
     private final MemberService memberService;
     private final ImageUploader imageUploader;
@@ -40,13 +39,10 @@ public class HouseService {
 
     private static final int LISTING_PERIOD = 1;
 
-    public HouseService(HouseRepository houseRepository, OptionRepository optionRepository,
-        HouseOptionRepository houseOptionRepository, ImageRepository imageRepository,
+    public HouseService(HouseRepository houseRepository, ImageRepository imageRepository,
         MemberService memberService, ImageUploader imageUploader,
         HouseRepositorySupport houseRepositorySupport) {
         this.houseRepository = houseRepository;
-        this.optionRepository = optionRepository;
-        this.houseOptionRepository = houseOptionRepository;
         this.imageRepository = imageRepository;
         this.memberService = memberService;
         this.imageUploader = imageUploader;
@@ -54,7 +50,7 @@ public class HouseService {
     }
 
     @Transactional
-    public Long create(HouseSaveRequest request, List<MultipartFile> images, String email) {
+    public HouseIdResponse create(HouseSaveRequest request, List<MultipartFile> images, String email) {
         Member member = memberService.findByLoginId(email);
 
         if(houseRepository.existsByMember(member)){
@@ -87,7 +83,7 @@ public class HouseService {
 
 //        saveHouseOptions(request, house);
         saveImages(images, house);
-        return house.getId();
+        return new HouseIdResponse(house.getId());
     }
 
     private void saveImages(List<MultipartFile> images, House house) {

@@ -4,6 +4,7 @@ import com.btt.continew.house.controller.dto.request.HouseAroundRequest;
 import com.btt.continew.house.controller.dto.request.HouseListRequest;
 import com.btt.continew.house.controller.dto.request.HouseSaveRequest;
 import com.btt.continew.house.controller.dto.response.HouseDetailResponse;
+import com.btt.continew.house.controller.dto.response.HouseIdResponse;
 import com.btt.continew.house.controller.dto.response.HouseListResponse;
 import com.btt.continew.house.service.HouseService;
 import io.swagger.annotations.Api;
@@ -41,7 +42,7 @@ public class HouseRestController {
     }
 
     @PostMapping("/auth/houses")
-    @ApiOperation(value = "매물 등록", notes = "매물 등록 api")
+    @ApiOperation(value = "매물 등록", notes = "매물 등록 api (page는 쿼리스트링으로 요청)")
     @ApiResponses({
         @ApiResponse(code = 404, message = "NOT_FOUND\n옵션이 존재하지 않을 때(O01)"),
         @ApiResponse(code = 400, message = "BAD_REQUEST\n이미지 등록에 실패했을 때(Z01)")
@@ -66,12 +67,10 @@ public class HouseRestController {
         + "  \"description\": \"교환학생 가게 되어서 6개월 살고 급하게 내놓습니다 위치 좋고 남향에다가 어쩌고저쩌고\",\n"
         + "  \"options\": [1, 2, 3]\n"
         + "}")
-    public ResponseEntity<Void> create(@RequestPart(value = "house") HouseSaveRequest request,
+    public ResponseEntity<HouseIdResponse> create(@RequestPart(value = "house") HouseSaveRequest request,
         @RequestPart(value = "images") List<MultipartFile> images,
         @ApiParam(hidden = true) @AuthenticationPrincipal String email) {
-        Long houseId = houseService.create(request, images, email);
-        URI uri = URI.create("/" + houseId);
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.ok().body(houseService.create(request, images, email));
     }
 
     @PostMapping("/houses/list")
@@ -92,7 +91,6 @@ public class HouseRestController {
     public ResponseEntity<HouseListResponse> showAroundHouses(@RequestBody HouseAroundRequest request, @PageableDefault Pageable pageable) {
         return ResponseEntity.ok().body(houseService.showAroundHouses(request, pageable));
     }
-
 
     @PutMapping("/auth/houses/{house_id}")
     @ApiOperation(value = "매물 수정", notes = "매물 수정 api")

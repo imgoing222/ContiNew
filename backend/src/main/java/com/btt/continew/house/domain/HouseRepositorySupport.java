@@ -7,6 +7,7 @@ import com.btt.continew.house.controller.dto.request.HouseListRequest;
 import com.btt.continew.house.controller.dto.response.HouseSimpleResponse;
 import com.btt.continew.house.controller.dto.response.QHouseSimpleResponse;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -33,7 +34,7 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
 
     public Page<HouseSimpleResponse> findHouses(HouseListRequest request, Pageable pageable) {
         // 이미지 한장 포함
-        List<HouseSimpleResponse> responses = jpaQueryFactory
+        QueryResults<HouseSimpleResponse> responses = jpaQueryFactory
             .select(new QHouseSimpleResponse(
                 house.id,
                 house.deposit,
@@ -67,7 +68,11 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
                 house.expiredAt.after(LocalDateTime.now()),
                 house.deletedAt.isNull()
                 )
-            .fetch();
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetchResults();
+
+        List<HouseSimpleResponse> content = responses.getResults();
 
         JPAQuery<House> countQuery = jpaQueryFactory
             .selectFrom(house)
@@ -85,7 +90,7 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
                 house.deletedAt.isNull()
             );
 
-        return PageableExecutionUtils.getPage(responses, pageable, () -> countQuery.fetch().size());
+        return PageableExecutionUtils.getPage(content, pageable, () -> countQuery.fetch().size());
     }
 
     private BooleanExpression depositBetween(Long minDeposit, Long maxDeposit) {
