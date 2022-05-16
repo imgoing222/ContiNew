@@ -27,7 +27,7 @@ function ContractButton({ sendMessage }: Props) {
 		seller_agree: false,
 	});
 	const { buyerId, sellerId, articleId } = useSelector((state: RootState) => state.articleInfo);
-	const { login_id } = useSelector((state: RootState) => state.userInfo);
+	const { login_id, username } = useSelector((state: RootState) => state.userInfo);
 
 	const requestInfo = {
 		house_id: articleId,
@@ -78,9 +78,20 @@ function ContractButton({ sendMessage }: Props) {
 		}
 	};
 
+  const contractRequest = async () => {
+		try {
+			await contractApi.agreeContractRequest(requestInfo);
+      autoMessage(`${username} 님이 계약 요청을 하였습니다.`);
+			setContractState("request");
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	const agreeContractRequest = async () => {
 		try {
 			await contractApi.agreeContractRequest(requestInfo);
+      autoMessage(`${username} 님이 계약 요청을 수락하였습니다.`);
 			setContractState("request");
 		} catch (error) {
 			console.log(error);
@@ -90,6 +101,7 @@ function ContractButton({ sendMessage }: Props) {
 	const disagreeContractRequest = async () => {
 		try {
 			await contractApi.disagreeContractRequest(requestInfo);
+      autoMessage(`${username} 님이 계약 요청을 거절하였습니다.`);
 			setContractState("before");
 		} catch (error) {
 			console.log(error);
@@ -104,7 +116,7 @@ function ContractButton({ sendMessage }: Props) {
 
 	switch (contractState) {
 		case "before":
-			return <button onClick={agreeContractRequest}>계약 요청</button>;
+			return <button onClick={contractRequest}>계약 요청</button>;
 		case "request":
 			return (
 				<>
