@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
 interface Props {
+	onUserInfo: boolean;
 	setOnUserInfo: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Tabs({ setOnUserInfo }: Props) {
+function Tabs({ onUserInfo, setOnUserInfo }: Props) {
 	const handleTabClick = (e: React.MouseEvent<HTMLParagraphElement>) => {
 		const { innerHTML } = e.target as HTMLParagraphElement;
 		if (innerHTML === "내 정보") setOnUserInfo(true);
@@ -30,6 +31,7 @@ const Tab = styled.p`
 	font-size: 1.8rem;
 	cursor: pointer;
 	margin: 2rem 0;
+	color: #ababab;
 `;
 
 export default Tabs;
