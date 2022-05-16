@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import contractApi from "src/api/contract";
 import { RootState } from "src/store";
 import { SET_CONTRACT, SET_LEVEL, SET_ROLE } from "src/store/contract";
-import { ContractType } from "src/types/contractType";
+import { ContractStore, ContractType } from "src/types/contractType";
 
 function Contract() {
 	// 매물 id로 url 생성
@@ -19,14 +19,15 @@ function Contract() {
 
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const contract = useSelector((state: RootState) => state.contractInfo);
+	const contract: ContractStore = useSelector((state: RootState) => state.contractInfo);
 	const loginId = useSelector((state: RootState) => state.userInfo.login_id);
 	console.log(contract);
-	const step = contract["step"]["current_step"];
+	const step = contract.step.current_step;
 
 	const value = { buyer, seller, house_id: houseId };
 
 	useEffect(() => {
+		// store에 buyer seller houseId 저장
 		getContractInfo();
 		console.log(loginId);
 		if (loginId === buyer) dispatch(SET_ROLE("buyer"));
@@ -43,15 +44,20 @@ function Contract() {
 
 	const handleBreakContractButton = async () => {
 		if (window.confirm("계약을 파기하시겠습니까?")) {
-			await contractApi.breakContract(value);
-			router.push("/");
+			const res = await contractApi.breakContract(value);
+			console.log(res);
+			// router.push("/");
 		}
 	};
 
-	const handleNextStepClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+	const handleNextStepClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		const { id } = e.target as HTMLElement;
 		if (id === "next") dispatch(SET_LEVEL(true));
 		else if (id === "save") dispatch(SET_LEVEL(false));
+		const contractInfo = { ...contract.id, ...contract.contract, ...contract.level };
+		console.log(contractInfo);
+		const res = await contractApi.createContract(contractInfo);
+		console.log(res);
 	};
 
 	return (
