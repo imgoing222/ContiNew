@@ -6,6 +6,7 @@ import { RootState } from "src/store";
 import ArticleType from "src/types/getArticleType";
 import getArticleData from "@utils/getArticle";
 import snakeToCamel from "@utils/snakeToCamel";
+import ContractButton from "./ContractButton";
 
 interface Props {
 	isIndex?: boolean;
@@ -48,6 +49,7 @@ function ItemDetail({ isIndex }: Props) {
 							<p>{houseInfo.jibunAddress}</p>
 						</div>
 						<button>계약 요청</button>
+						<ContractButton />
 					</div>
 				)}
 			</Content>
