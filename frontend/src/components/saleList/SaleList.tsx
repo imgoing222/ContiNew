@@ -33,7 +33,7 @@ function SaleList({ saleList, searchCondition, totalPage, currentPage, setData }
 				</>
 			) : (
 				<Div>
-					<h2>매물 목록이 없습니다</h2>
+					<StyledH2>매물 목록이 없습니다</StyledH2>
 				</Div>
 			)}
 		</Container>
@@ -48,6 +48,15 @@ const Container = styled.section`
 	display: flex;
 	flex-direction: column;
 	overflow-y: scroll;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+	@media ${(props) => props.theme.mobile} {
+		min-width: 25rem;
+	}
+	@media ${(props) => props.theme.mobileXS} {
+		min-width: 11rem;
+	}
 `;
 
 const Div = styled.div`
@@ -62,4 +71,10 @@ const Box = styled.div`
 	display: flex;
 	margin: 1.5rem 0;
 	justify-content: center;
+`;
+
+const StyledH2 = styled.h2`
+	@media ${(props) => props.theme.mobileXS} {
+		font-size: 0.9rem;
+	}
 `;

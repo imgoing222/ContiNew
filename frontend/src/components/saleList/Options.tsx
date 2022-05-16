@@ -33,7 +33,7 @@ function Options() {
 		"주차장",
 	];
 	return (
-		<Container title="옵션">
+		<Container title="옵션" isPrice="option">
 			<StyledUl>
 				{options.map((option, idx) => (
 					<Div key={idx}>
@@ -59,4 +59,7 @@ const StyledUl = styled.ul`
 
 const Div = styled.div`
 	margin: 0.5rem;
+	@media ${(props) => props.theme.mobileS} {
+		margin: 0.1rem 0;
+	}
 `;

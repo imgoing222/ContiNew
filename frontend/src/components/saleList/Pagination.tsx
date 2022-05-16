@@ -49,6 +49,10 @@ const Nav = styled.nav`
 	margin: 2rem;
 	margin-right: 3rem;
 	margin-bottom: 5rem;
+	@media ${(props) => props.theme.mobileXS} {
+		margin: 0;
+		gap: 0.1rem;
+	}
 `;
 
 const Button = styled.button`
@@ -81,5 +85,12 @@ const Button = styled.button`
 		font-size: 2rem;
 		width: max-content;
 		height: auto;
+	}
+	@media ${(props) => props.theme.mobileXS} {
+		font-size: 1.2rem;
+		width: 1rem;
+		&[aria-current="true"] {
+			font-size: 1.3rem;
+		}
 	}
 `;
