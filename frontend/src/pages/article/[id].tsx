@@ -60,10 +60,13 @@ const Container = styled.div`
 	display: flex;
 `;
 const Div = styled.div`
-	width: 120rem;
+	max-width: 120rem;
 	margin: 4rem auto;
 	display: flex;
 	flex-direction: column;
+	@media ${(props) => props.theme.mobileXS} {
+		width: auto;
+	}
 `;
 
 const SaleInfo = styled.div`
