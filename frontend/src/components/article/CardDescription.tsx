@@ -118,23 +118,39 @@ const Container = styled.div`
 	padding: 2rem;
 	position: sticky;
 	top: 10rem;
+	@media ${(props) => props.theme.mobile} {
+		width: 25rem;
+		height: 34rem;
+	}
+	@media ${(props) => props.theme.mobileXS} {
+		display: none;
+	}
 `;
 
 const SaleType = styled.h1`
 	font-size: 3rem;
 	font-weight: bold;
 	margin-right: 3rem;
+	@media ${(props) => props.theme.mobile} {
+		font-size: 1.8rem;
+	}
 `;
 
 const Text = styled.p<TextProp>`
 	font-size: 1.5rem;
 	margin-bottom: ${({ margin }) => margin && "4rem"};
+	@media ${(props) => props.theme.mobile} {
+		font-size: 1.3rem;
+	}
 `;
 
 const Div = styled.div`
 	display: flex;
 	align-items: center;
 	margin-bottom: 4rem;
+	@media ${(props) => props.theme.mobile} {
+		margin-bottom: 2rem;
+	}
 `;
 
 const Hr = styled.hr`
@@ -152,6 +168,11 @@ const Button = styled.button`
 	margin-right: 1rem;
 	font-size: 1.8rem;
 	text-align: center;
+	@media ${(props) => props.theme.mobile} {
+		font-size: 1.5rem;
+		width: 10rem;
+		height: 3.5rem;
+	}
 `;
 
 const ButtonDiv = styled.div`
@@ -165,6 +186,9 @@ const Price = styled.p`
 	font-size: 1.8rem;
 	font-weight: bold;
 	margin-bottom: 1rem;
+	@media ${(props) => props.theme.mobile} {
+		font-size: 1.5rem;
+	}
 `;
 
 const AuthorizedIcon = styled(FontAwesomeIcon)`
