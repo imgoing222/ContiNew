@@ -1,7 +1,7 @@
 import Map from "@components/saleList/Map";
 import SaleList from "@components/saleList/SaleList";
 import SaleListNav from "@components/saleList/SaleListNav";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { saleApi } from "src/api";
 import { RootState } from "src/store";
@@ -29,26 +29,42 @@ export interface SearchCondition {
 	period?: number;
 	options?: number[];
 }
+export interface ArticleData {
+	houses: House[];
+	totalPage: number;
+	currentPage: number;
+}
 
 function index() {
 	const kakaoMap = useRef<kakao.maps.Map>();
 	const searchCondition = useSelector((state: RootState) => state.searchFilter);
+	const [data, setData] = useState<ArticleData>({ houses: [], totalPage: 0, currentPage: 0 });
+	const { totalPage, currentPage } = data;
 
-	const [saleList, setSaleList] = useState<House[]>([]);
 	useEffect(() => {
 		const getSales = async () => {
-			const sales = await saleApi.getSales(searchCondition);
-			setSaleList(sales.data.houses);
+			const sales = await saleApi.getSales(searchCondition, currentPage);
+			setData({
+				houses: sales.data.houses,
+				totalPage: sales.data.total_page_count,
+				currentPage: sales.data.current_page_count,
+			});
 		};
 
 		getSales();
-	}, [searchCondition]);
+	}, [searchCondition, currentPage]);
 
 	return (
 		<>
 			<SaleListNav kakaoMap={kakaoMap as React.MutableRefObject<kakao.maps.Map>} />
 			<Container>
-				<SaleList saleList={saleList} searchCondition={searchCondition} />
+				<SaleList
+					saleList={data.houses}
+					searchCondition={searchCondition}
+					totalPage={totalPage}
+					currentPage={currentPage}
+					setData={setData}
+				/>
 				<Map
 					searchCondition={searchCondition}
 					kakaoMap={kakaoMap as React.MutableRefObject<kakao.maps.Map>}
