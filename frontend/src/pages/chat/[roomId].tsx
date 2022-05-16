@@ -73,7 +73,7 @@ function ChatDetail() {
 		<Container>
 			<RoomList />
 			<Chat sendMessage={sendMessage} roomId={roomId} receivedChatData={receivedChatData} />
-			<ItemDetail />
+			<ItemDetail sendMessage={sendMessage} />
 		</Container>
 	);
 }

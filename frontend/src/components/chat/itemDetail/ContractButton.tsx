@@ -6,13 +6,17 @@ import { RootState } from "src/store";
 
 import { contractApi } from "src/api";
 
+interface Props {
+  sendMessage?: (inputChat: string) => void;
+}
+
 interface AgreeInfoType {
 	buyer_agree: boolean;
 	house_id: number;
 	seller_agree: boolean;
 }
 
-function ContractButton() {
+function ContractButton({ sendMessage }: Props) {
 	const router = useRouter();
 	const [contractState, setContractState] = useState("before");
 	const [userType, setUserType] = useState("");
@@ -91,6 +95,12 @@ function ContractButton() {
 			console.log(error);
 		}
 	};
+
+  const autoMessage = (inputChat: string) => {
+    if (sendMessage) {
+      sendMessage(inputChat)
+    }
+  };
 
 	switch (contractState) {
 		case "before":
