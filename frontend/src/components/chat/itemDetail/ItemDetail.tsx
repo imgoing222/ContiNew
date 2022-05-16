@@ -10,9 +10,10 @@ import ContractButton from "./ContractButton";
 
 interface Props {
 	isIndex?: boolean;
+	sendMessage?: (inputChat: string) => void;
 }
 
-function ItemDetail({ isIndex }: Props) {
+function ItemDetail({ isIndex, sendMessage }: Props) {
 	const { articleId } = useSelector((state: RootState) => state.articleInfo);
 	const [houseInfo, setHouseInfo] = useState<ArticleType | null>(null);
 
@@ -49,7 +50,7 @@ function ItemDetail({ isIndex }: Props) {
 							<h3>위치</h3>
 							<p>{houseInfo.jibunAddress}</p>
 						</div>
-						<ContractButton />
+						<ContractButton sendMessage={sendMessage} />
 					</div>
 				)}
 			</Content>
