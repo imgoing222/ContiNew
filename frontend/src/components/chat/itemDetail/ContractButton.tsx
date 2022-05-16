@@ -59,8 +59,7 @@ function ContractButton() {
 				buyer_login_id: buyerId,
 				member_type: userType,
 			};
-			const res = await contractApi.agreeContractRequest(requestInfo);
-			console.log(res.data);
+			await contractApi.agreeContractRequest(requestInfo);
 		} catch (error) {
 			console.log(error);
 		}
