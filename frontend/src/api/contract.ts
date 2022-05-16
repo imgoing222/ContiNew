@@ -29,9 +29,7 @@ const contractApi: ContractApiType = {
 		request.delete(`auth/contracts?buyer=${buyer}&house_id=${house_id}&seller=${seller}`),
 	createContract: (contractInfo) => request.post(`auth/contracts`, contractInfo),
 	getContractRequest: ({ buyer, house_id, seller }) =>
-		request.get(
-			`auth/contracts/agree?buyer_agree=${buyer}&house_id=${house_id}&seller_agree=${seller}`,
-		),
+		request.get(`auth/contracts/agree?buyer=${buyer}&house_id=${house_id}&seller=${seller}`),
 	agreeContractRequest: (requestInfo) => request.post(`auth/contracts/agree`, requestInfo),
 	disagreeContractRequest: (requestInfo) => request.post(`auth/contracts/disagree`, requestInfo),
 };
