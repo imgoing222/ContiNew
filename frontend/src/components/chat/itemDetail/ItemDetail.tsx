@@ -26,6 +26,7 @@ function ItemDetail({ isIndex }: Props) {
 
 			setData();
 		}
+		return setHouseInfo(null);
 	}, []);
 
 	return (
@@ -48,7 +49,6 @@ function ItemDetail({ isIndex }: Props) {
 							<h3>위치</h3>
 							<p>{houseInfo.jibunAddress}</p>
 						</div>
-						<button>계약 요청</button>
 						<ContractButton />
 					</div>
 				)}
