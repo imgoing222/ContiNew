@@ -122,9 +122,6 @@ const Container = styled.div`
 		width: 25rem;
 		height: 34rem;
 	}
-	@media ${(props) => props.theme.mobileXS} {
-		display: none;
-	}
 `;
 
 const SaleType = styled.h1`

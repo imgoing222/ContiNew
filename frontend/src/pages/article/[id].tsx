@@ -71,10 +71,16 @@ const Div = styled.div`
 
 const SaleInfo = styled.div`
 	width: 78rem;
+	@media ${(props) => props.theme.mobileXS} {
+		width: auto;
+	}
 `;
 
 const Card = styled.div`
 	width: 46rem;
 	display: flex;
 	flex-direction: row-reverse;
+	@media ${(props) => props.theme.mobileXS} {
+		display: none;
+	}
 `;
