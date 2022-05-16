@@ -20,12 +20,17 @@ function Photos({ houseInfo }: HouseInfoProps) {
 	return (
 		<Container>
 			<StyledDiv id="container">
-				<ButtonDiv direction="right">
-					<Button icon={faChevronRight} onClick={() => handleScroll()} />
-				</ButtonDiv>
-				<ButtonDiv>
-					<Button icon={faChevronLeft} onClick={() => handleScroll("left")} />
-				</ButtonDiv>
+				{houseInfo.images.length > 3 && (
+					<>
+						<ButtonDiv direction="right">
+							<Button icon={faChevronRight} onClick={() => handleScroll()} />
+						</ButtonDiv>
+						<ButtonDiv>
+							<Button icon={faChevronLeft} onClick={() => handleScroll("left")} />
+						</ButtonDiv>
+					</>
+				)}
+
 				{houseInfo.images.map((item, idx) => (
 					<Img src={item} key={idx} />
 				))}
