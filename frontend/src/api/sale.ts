@@ -6,7 +6,7 @@ import { request } from "./request";
 
 interface SaleApiType {
 	getSales: (coordinateInfo: SearchCondition) => Promise<AxiosResponse<{ houses: Array<House> }>>;
-	createSale: (data: FormData) => Promise<AxiosResponse>;
+	createSale: (data: FormData) => Promise<AxiosResponse> | string;
 }
 
 const saleApi: SaleApiType = {
