@@ -29,3 +29,21 @@ export interface ContractType {
 	buyer_login_id: string | undefined;
 	next_level: boolean | undefined;
 }
+
+export interface ContractStore {
+	contract: ContractType;
+	level: {
+		next_level: boolean;
+	};
+	id: {
+		house_id: number;
+		seller_login_id: string;
+		buyer_login_id: string;
+	};
+	step: {
+		current_step: number;
+	};
+	role: {
+		user_role: string;
+	};
+}
