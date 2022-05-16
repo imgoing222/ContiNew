@@ -12,7 +12,7 @@ interface actionType {
 
 export const SET_CONTRACT = (data: ContractType) => ({ type: CONTRACT, data });
 export const SET_ID = (data: ContractType) => ({ type: ID, data });
-export const SET_LEVEL = (data: ContractType) => ({ type: LEVEL, data });
+export const SET_LEVEL = (data: boolean) => ({ type: LEVEL, data });
 export const SET_ROLE = (data: string) => ({ type: ROLE, data });
 
 const initialState = {

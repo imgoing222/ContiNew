@@ -5,7 +5,7 @@ import { Step, Stepper } from "react-form-stepper";
 import { useDispatch, useSelector } from "react-redux";
 import contractApi from "src/api/contract";
 import { RootState } from "src/store";
-import { SET_CONTRACT, SET_ROLE } from "src/store/contract";
+import { SET_CONTRACT, SET_LEVEL, SET_ROLE } from "src/store/contract";
 import { ContractType } from "src/types/contractType";
 
 function Contract() {
@@ -48,7 +48,11 @@ function Contract() {
 		}
 	};
 
-	const handleNextStepClick = () => {};
+	const handleNextStepClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+		const { id } = e.target as HTMLElement;
+		if (id === "next") dispatch(SET_LEVEL(true));
+		else if (id === "save") dispatch(SET_LEVEL(false));
+	};
 
 	return (
 		<>
@@ -59,8 +63,12 @@ function Contract() {
 			</Stepper>
 			<ContractForm />
 			<div>
-				<button>임시 저장</button>
-				<button onClick={handleNextStepClick}>다음 단계</button>
+				<button id="save" onClick={handleNextStepClick}>
+					임시 저장
+				</button>
+				<button id="next" onClick={handleNextStepClick}>
+					다음 단계
+				</button>
 			</div>
 			<button onClick={handleBreakContractButton}>계약 파기</button>
 		</>
