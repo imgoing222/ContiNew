@@ -46,4 +46,11 @@ const Label = styled.label<LabelProps>`
 	font-size: 1.6rem;
 	font-weight: ${({ isChecked }) => (isChecked ? "bold" : "200")};
 	color: ${({ isChecked }) => (isChecked ? "black" : "gray")};
+	@media ${(props) => props.theme.mobile} {
+		font-size: 1.4rem;
+	}
+	@media ${(props) => props.theme.mobileXS} {
+		font-size: 0.9rem;
+		/* margin-right: 0.1rem; */
+	}
 `;

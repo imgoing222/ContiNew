@@ -55,6 +55,9 @@ const Container = styled.div`
 
 const SearchForm = styled.form`
 	display: flex;
+	@media ${(props) => props.theme.mobileXS} {
+		align-items: center;
+	}
 `;
 
 const Input = styled.input`
@@ -63,6 +66,12 @@ const Input = styled.input`
 	font-size: 1.5rem;
 	outline: none;
 	border: none;
+	@media ${(props) => props.theme.mobile} {
+		width: 17rem;
+	}
+	@media ${(props) => props.theme.mobileXS} {
+		width: 6rem;
+	}
 `;
 
 const Button = styled.button`
@@ -76,10 +85,19 @@ const Button = styled.button`
 	&:hover {
 		cursor: pointer;
 	}
+	@media ${(props) => props.theme.mobileXS} {
+		width: 3rem;
+		height: 3rem;
+		font-size: 1rem;
+	}
 `;
 
 const MagnifyingGlass = styled(FontAwesomeIcon)`
 	width: 2rem;
 	height: 2rem;
 	margin-right: 1rem;
+	@media ${(props) => props.theme.mobileXS} {
+		width: 1rem;
+		height: 1rem;
+	}
 `;
