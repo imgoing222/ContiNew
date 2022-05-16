@@ -14,6 +14,7 @@ interface AgreeInfoType {
 function ContractButton() {
 	const [contractState, setContractState] = useState("before");
 	const [userType, setUserType] = useState("");
+	const [isAgree, setIsAgree] = useState(false);
 	const [agreeInfo, setAgreeInfo] = useState<AgreeInfoType>({
 		buyer_agree: false,
 		house_id: 0,
@@ -25,6 +26,12 @@ function ContractButton() {
 	useEffect(() => {
 		if (agreeInfo.buyer_agree !== agreeInfo.seller_agree) {
 			setContractState("request");
+			if (
+				(buyerId === login_id && agreeInfo.buyer_agree) ||
+				(sellerId === login_id && agreeInfo.seller_agree)
+			) {
+				setIsAgree(true);
+			}
 		} else if (agreeInfo.buyer_agree === true && agreeInfo.seller_agree === true) {
 			setContractState("under");
 		}
@@ -77,9 +84,20 @@ function ContractButton() {
 		case "before":
 			return <button onClick={agreeContractRequest}>계약 요청</button>;
 		case "request":
-			return <button></button>;
+			return (
+				<>
+					{isAgree ? (
+						<button>계약 요청 중</button>
+					) : (
+						<div>
+							<button>계약 수락</button>
+							<button>계약 거절</button>
+						</div>
+					)}
+				</>
+			);
 		default:
-			return <></>;
+			return <button>계약 중</button>;
 	}
 }
 
