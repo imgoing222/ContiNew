@@ -50,6 +50,9 @@ const Img = styled.img`
 	width: auto;
 	max-height: 30rem;
 	margin-right: 2rem;
+	@media ${(props) => props.theme.tabletS} {
+		width: 26rem;
+	}
 `;
 
 const StyledDiv = styled.div`
@@ -80,6 +83,6 @@ const ButtonDiv = styled.div<Button>`
 	background-color: rgba(34, 34, 34, 0.6);
 	top: 45%;
 	position: absolute;
-	right: ${({ direction }) => direction && "-5rem"};
-	left: ${({ direction }) => !direction && "-5rem"};
+	right: ${({ direction }) => direction && "0"};
+	left: ${({ direction }) => !direction && "0"};
 `;

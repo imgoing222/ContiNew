@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ArticleType from "src/types/getArticleType";
 import styled from "styled-components";
+import CardButton from "@components/article/CardButton";
 
 export interface HouseInfoProps {
 	houseInfo: ArticleType;
@@ -44,6 +45,7 @@ function index() {
 						<OptionInfo houseInfo={houseInfo} />
 						<LocationInfo houseInfo={houseInfo} />
 						<Description houseInfo={houseInfo} />
+						<CardButton houseInfo={houseInfo} />
 					</SaleInfo>
 					<Card>
 						<CardDescription houseInfo={houseInfo} />
@@ -60,18 +62,27 @@ const Container = styled.div`
 	display: flex;
 `;
 const Div = styled.div`
-	width: 120rem;
+	max-width: 120rem;
 	margin: 4rem auto;
 	display: flex;
 	flex-direction: column;
+	@media ${(props) => props.theme.mobileXS} {
+		width: auto;
+	}
 `;
 
 const SaleInfo = styled.div`
 	width: 78rem;
+	@media ${(props) => props.theme.mobileXS} {
+		width: auto;
+	}
 `;
 
 const Card = styled.div`
 	width: 46rem;
 	display: flex;
 	flex-direction: row-reverse;
+	@media ${(props) => props.theme.mobileXS} {
+		display: none;
+	}
 `;

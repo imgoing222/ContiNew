@@ -40,4 +40,8 @@ const IconText = styled.p`
 	font-size: 1.5rem;
 	margin-left: 2rem;
 	width: 15rem;
+	@media ${(props) => props.theme.mobile} {
+		width: 10rem;
+		font-size: 1.2rem;
+	}
 `;

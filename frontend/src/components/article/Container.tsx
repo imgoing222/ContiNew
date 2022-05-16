@@ -20,6 +20,11 @@ const Section = styled.section`
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 8rem;
+	@media ${(props) => props.theme.mobile} {
+		&:last-of-type {
+			margin: 0;
+		}
+	}
 `;
 
 const Title = styled.h1`
