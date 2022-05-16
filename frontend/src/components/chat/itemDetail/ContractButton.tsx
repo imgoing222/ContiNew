@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { RootState } from "src/store";
@@ -12,6 +13,7 @@ interface AgreeInfoType {
 }
 
 function ContractButton() {
+	const router = useRouter();
 	const [contractState, setContractState] = useState("before");
 	const [userType, setUserType] = useState("");
 	const [isAgree, setIsAgree] = useState(false);
@@ -107,7 +109,7 @@ function ContractButton() {
 				</>
 			);
 		default:
-			return <button>계약 중</button>;
+			return <button onClick={() => router.push(`/contract/${articleId}`)}>계약 중</button>;
 	}
 }
 
