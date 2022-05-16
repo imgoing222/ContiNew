@@ -4,10 +4,8 @@ import { ContractType } from "src/types/contractType";
 
 interface required {
 	buyer: string;
-	buyer_agree: string;
 	house_id: number;
 	seller: string;
-	seller_agree: string;
 }
 interface ContractRequestType {
 	house_id: number;
@@ -30,9 +28,9 @@ const contractApi: ContractApiType = {
 	breakContract: ({ buyer, seller, house_id }) =>
 		request.delete(`auth/contracts?buyer=${buyer}&house_id=${house_id}&seller=${seller}`),
 	createContract: (contractInfo) => request.post(`auth/contracts`, contractInfo),
-	getContractRequest: ({ buyer_agree, house_id, seller_agree }) =>
+	getContractRequest: ({ buyer, house_id, seller }) =>
 		request.get(
-			`auth/contracts/agree?buyer_agree=${buyer_agree}&house_id=${house_id}&seller_agree=${seller_agree}`,
+			`auth/contracts/agree?buyer_agree=${buyer}&house_id=${house_id}&seller_agree=${seller}`,
 		),
 	agreeContractRequest: (requestInfo) => request.post(`auth/contracts/agree`, requestInfo),
 	disagreeContractRequest: (requestInfo) => request.post(`auth/contracts/disagree`, requestInfo),
