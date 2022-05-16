@@ -10,10 +10,12 @@ interface Props {
 }
 function BuyerInfo({ step, role, contractInfo }: Props) {
 	const [disabled, setDisabled] = useState(true);
+	const [signatureDisabled, setSignatureDisabled] = useState(true);
 
 	useEffect(() => {
 		if (step === 2 && role === "buyer") {
 			setDisabled(false);
+			setSignatureDisabled(false);
 		}
 	}, []);
 
@@ -28,7 +30,7 @@ function BuyerInfo({ step, role, contractInfo }: Props) {
 			<Label>신규 임차인 전화</Label>
 			<Input disabled={disabled} />
 			<Label>서명</Label>
-			<Signature />
+			<Signature signatureDisabled={signatureDisabled} />
 		</>
 	);
 }
