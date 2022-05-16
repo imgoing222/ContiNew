@@ -8,14 +8,13 @@ import com.btt.continew.house.controller.dto.request.HouseSaveRequest;
 import com.btt.continew.house.controller.dto.response.HouseDetailResponse;
 import com.btt.continew.house.controller.dto.response.HouseIdResponse;
 import com.btt.continew.house.controller.dto.response.HouseListResponse;
+import com.btt.continew.house.controller.dto.response.HouseLocationResponse;
 import com.btt.continew.house.controller.dto.response.HouseSimpleResponse;
 import com.btt.continew.house.domain.House;
-import com.btt.continew.house.domain.HouseOptionRepository;
 import com.btt.continew.house.domain.HouseRepository;
 import com.btt.continew.house.domain.HouseRepositorySupport;
 import com.btt.continew.house.domain.Image;
 import com.btt.continew.house.domain.ImageRepository;
-import com.btt.continew.house.domain.OptionRepository;
 import com.btt.continew.image.ImageUploader;
 import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
@@ -125,6 +124,11 @@ public class HouseService {
     public HouseListResponse showHouses(HouseListRequest request, Pageable pageable) {
         Page<HouseSimpleResponse> responses = houseRepositorySupport.findHouses(request, pageable);
         return HouseListResponse.from(responses);
+    }
+
+    @Transactional(readOnly = true)
+    public List<HouseLocationResponse> showAllHouses(HouseListRequest request) {
+        return houseRepositorySupport.findAllHouses(request);
     }
 
     @Transactional(readOnly = true)
