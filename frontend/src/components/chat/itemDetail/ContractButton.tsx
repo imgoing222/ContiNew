@@ -6,13 +6,17 @@ import { RootState } from "src/store";
 
 import { contractApi } from "src/api";
 
+interface Props {
+	sendMessage?: (inputChat: string) => void;
+}
+
 interface AgreeInfoType {
 	buyer_agree: boolean;
 	house_id: number;
 	seller_agree: boolean;
 }
 
-function ContractButton() {
+function ContractButton({ sendMessage }: Props) {
 	const router = useRouter();
 	const [contractState, setContractState] = useState("before");
 	const [userType, setUserType] = useState("");
@@ -23,7 +27,7 @@ function ContractButton() {
 		seller_agree: false,
 	});
 	const { buyerId, sellerId, articleId } = useSelector((state: RootState) => state.articleInfo);
-	const { login_id } = useSelector((state: RootState) => state.userInfo);
+	const { login_id, username } = useSelector((state: RootState) => state.userInfo);
 
 	const requestInfo = {
 		house_id: articleId,
@@ -74,9 +78,21 @@ function ContractButton() {
 		}
 	};
 
+	const contractRequest = async () => {
+		try {
+			await contractApi.agreeContractRequest(requestInfo);
+			autoMessage(`${username} 님이 계약 요청을 하였습니다.`);
+			setIsAgree(true);
+			setContractState("request");
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	const agreeContractRequest = async () => {
 		try {
 			await contractApi.agreeContractRequest(requestInfo);
+			autoMessage(`${username} 님이 계약 요청을 수락하였습니다.`);
 			setContractState("request");
 		} catch (error) {
 			console.log(error);
@@ -86,15 +102,22 @@ function ContractButton() {
 	const disagreeContractRequest = async () => {
 		try {
 			await contractApi.disagreeContractRequest(requestInfo);
+			autoMessage(`${username} 님이 계약 요청을 거절하였습니다.`);
 			setContractState("before");
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
+	const autoMessage = (inputChat: string) => {
+		if (sendMessage) {
+			sendMessage(inputChat);
+		}
+	};
+
 	switch (contractState) {
 		case "before":
-			return <button onClick={agreeContractRequest}>계약 요청</button>;
+			return <button onClick={contractRequest}>계약 요청</button>;
 		case "request":
 			return (
 				<>
