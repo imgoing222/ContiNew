@@ -15,6 +15,7 @@ import { checkData, createFormData, getArticleData } from "@utils/index";
 import { useRouter } from "next/router";
 import snakeToCamel from "@utils/snakeToCamel";
 import articleApi from "src/api/article";
+import { toast } from "react-toastify";
 
 interface ButtonProps {
 	isApplyBtn?: boolean;
@@ -92,7 +93,8 @@ function index() {
 		e.preventDefault();
 		if (checkData(houseInfo) && houseInfo.agreement === "agree") {
 			const res = await saleApi.createSale(createFormData(houseInfo));
-			if (res.status == 200) window.location.replace(`/article/${res.data.house_id}`);
+			if (res === "H03") return toast.error("1인당 1개의 매물만 올릴 수 있습니다.");
+			if (typeof res !== "string") window.location.replace(`/article/${res.data.house_id}`);
 		}
 	};
 
