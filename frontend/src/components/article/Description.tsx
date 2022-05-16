@@ -19,4 +19,8 @@ const TextArea = styled.div`
 	padding: 3rem 1rem;
 	font-size: 1.5rem;
 	margin-bottom: 10rem;
+	@media ${(props) => props.theme.mobileXS} {
+		margin-bottom: 2rem;
+		height: 25rem;
+	}
 `;

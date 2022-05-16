@@ -1,62 +1,16 @@
-import Link from "next/link";
 import styled from "styled-components";
 import { faIdCard } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { changeMonthToYear, moneyUnitChange } from "@utils/index";
-import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import articleApi from "src/api/article";
 import { HouseInfoProps } from "src/pages/article/[id]";
 import IconPart from "./IconPart";
-import { chatApi } from "src/api";
-import { SET_ARTICLEINFO } from "src/store/articleInfo";
-import { useRouter } from "next/router";
-import { toast } from "react-toastify";
+import CardButton from "./CardButton";
 
 interface TextProp {
 	margin?: string;
 }
 
 function CardDescription({ houseInfo }: HouseInfoProps) {
-	const dispatch = useDispatch();
-	const router = useRouter();
-	const { login_id, username } = useSelector((state: RootStateOrAny) => state.userInfo);
-
-	const startChat = async () => {
-		try {
-			const chatDataSet = {
-				buyer: username,
-				buyer_id: login_id,
-				seller: houseInfo.username,
-				seller_id: houseInfo.loginId,
-				sale: houseInfo.houseId,
-			};
-			const res = await chatApi.createChattingRoom(chatDataSet);
-			dispatch(SET_ARTICLEINFO(chatDataSet));
-			toChattingRoom(res.data.id);
-		} catch (error) {
-			console.log(error);
-		}
-	};
-	const toChattingRoom = (roomId: string) => {
-		router.push(`/chat/${roomId}`);
-		localStorage.setItem("RoomId", roomId);
-	};
-	const setBookmark = async () => {
-		const res = await articleApi.addBookmark(houseInfo.houseId);
-		console.log(res);
-		if (res.status === 204) return toast.success("관심매물에 등록하였습니다.");
-		if ((res as unknown as string) === "L01") {
-			articleApi.deleteBookmark(houseInfo.houseId);
-			return toast.warn("관심매물에서 삭제하였습니다.");
-		}
-	};
-	const deleteArticle = (id: number) => {
-		if (window.confirm("정말로 해당 글을 삭제하시겠습니까?")) {
-			articleApi.deleteArticle(id);
-			window.location.replace("/saleList");
-		}
-	};
-
 	return (
 		<Container>
 			<Div>
@@ -86,25 +40,7 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 				/>
 				<Hr />
 			</div>
-			<ButtonDiv>
-				{username === houseInfo.username ? (
-					<>
-						<Link
-							href={{ pathname: "/createSale", query: { id: houseInfo.houseId } }}
-							as={`/updateArticle/${houseInfo.houseId}`}
-						>
-							<Button>수정</Button>
-						</Link>
-						<Button onClick={() => deleteArticle(houseInfo.houseId)}>삭제</Button>
-					</>
-				) : (
-					<>
-						<Button onClick={startChat}>채팅 하기</Button>
-
-						<Button onClick={setBookmark}>북마크</Button>
-					</>
-				)}
-			</ButtonDiv>
+			<CardButton houseInfo={houseInfo} />
 		</Container>
 	);
 }
@@ -118,23 +54,36 @@ const Container = styled.div`
 	padding: 2rem;
 	position: sticky;
 	top: 10rem;
+	@media ${(props) => props.theme.mobile} {
+		width: 25rem;
+		height: 34rem;
+	}
 `;
 
 const SaleType = styled.h1`
 	font-size: 3rem;
 	font-weight: bold;
 	margin-right: 3rem;
+	@media ${(props) => props.theme.mobile} {
+		font-size: 1.8rem;
+	}
 `;
 
 const Text = styled.p<TextProp>`
 	font-size: 1.5rem;
 	margin-bottom: ${({ margin }) => margin && "4rem"};
+	@media ${(props) => props.theme.mobile} {
+		font-size: 1.3rem;
+	}
 `;
 
 const Div = styled.div`
 	display: flex;
 	align-items: center;
 	margin-bottom: 4rem;
+	@media ${(props) => props.theme.mobile} {
+		margin-bottom: 2rem;
+	}
 `;
 
 const Hr = styled.hr`
@@ -142,29 +91,13 @@ const Hr = styled.hr`
 	border-color: #fff;
 `;
 
-const Button = styled.button`
-	width: 14rem;
-	height: 4rem;
-	border: none;
-	background-color: ${(props) => props.theme.mainColor};
-	color: #fff;
-	cursor: pointer;
-	margin-right: 1rem;
-	font-size: 1.8rem;
-	text-align: center;
-`;
-
-const ButtonDiv = styled.div`
-	width: 100%;
-	display: flex;
-	margin-top: 2rem;
-	justify-content: center;
-`;
-
 const Price = styled.p`
 	font-size: 1.8rem;
 	font-weight: bold;
 	margin-bottom: 1rem;
+	@media ${(props) => props.theme.mobile} {
+		font-size: 1.5rem;
+	}
 `;
 
 const AuthorizedIcon = styled(FontAwesomeIcon)`
