@@ -4,7 +4,9 @@ import static com.btt.continew.house.domain.QHouse.house;
 import static org.springframework.util.StringUtils.hasText;
 
 import com.btt.continew.house.controller.dto.request.HouseListRequest;
+import com.btt.continew.house.controller.dto.response.HouseLocationResponse;
 import com.btt.continew.house.controller.dto.response.HouseSimpleResponse;
+import com.btt.continew.house.controller.dto.response.QHouseLocationResponse;
 import com.btt.continew.house.controller.dto.response.QHouseSimpleResponse;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
@@ -91,6 +93,30 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
             );
 
         return PageableExecutionUtils.getPage(content, pageable, () -> countQuery.fetch().size());
+    }
+
+    public List<HouseLocationResponse> findAllHouses(HouseListRequest request) {
+        List<HouseLocationResponse> responses = jpaQueryFactory
+            .select(new QHouseLocationResponse(
+                house.latitude,
+                house.longitude
+            ))
+            .from(house)
+            .where(house.latitude.between(request.getYBottom(), request.getYTop()),
+                house.longitude.between(request.getXLeft(), request.getXRight()),
+                saleTypeEq(request.getSaleType()),
+                houseTypeEq(request.getHouseType()),
+                contractTypeEq(request.getContractType()),
+                depositBetween(request.getMinDeposit(), request.getMaxDeposit()),
+                monthlyRentBetween(request.getMinMonthlyRent(), request.getMaxMonthlyRent()),
+                maintenanceFeeBetween(request.getMinMaintenanceFee(), request.getMaxMaintenanceFee()),
+                periodEq(request.getPeriod()),
+                optionsEq(request.getOptions()),
+                house.expiredAt.after(LocalDateTime.now()),
+                house.deletedAt.isNull()
+            )
+            .fetch();
+        return responses;
     }
 
     private BooleanExpression depositBetween(Long minDeposit, Long maxDeposit) {
