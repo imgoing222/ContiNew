@@ -23,6 +23,13 @@ function ContractButton() {
 	const { buyerId, sellerId, articleId } = useSelector((state: RootState) => state.articleInfo);
 	const { login_id } = useSelector((state: RootState) => state.userInfo);
 
+	const requestInfo = {
+		house_id: articleId,
+		seller_login_id: sellerId,
+		buyer_login_id: buyerId,
+		member_type: userType,
+	};
+
 	useEffect(() => {
 		if (agreeInfo.buyer_agree !== agreeInfo.seller_agree) {
 			setContractState("request");
@@ -67,14 +74,17 @@ function ContractButton() {
 
 	const agreeContractRequest = async () => {
 		try {
-			const requestInfo = {
-				house_id: articleId,
-				seller_login_id: sellerId,
-				buyer_login_id: buyerId,
-				member_type: userType,
-			};
 			await contractApi.agreeContractRequest(requestInfo);
 			setContractState("request");
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const disagreeContractRequest = async () => {
+		try {
+			await contractApi.disagreeContractRequest(requestInfo);
+			setContractState("before");
 		} catch (error) {
 			console.log(error);
 		}
@@ -90,8 +100,8 @@ function ContractButton() {
 						<button>계약 요청 중</button>
 					) : (
 						<div>
-							<button>계약 수락</button>
-							<button>계약 거절</button>
+							<button onClick={agreeContractRequest}>계약 수락</button>
+							<button onClick={disagreeContractRequest}>계약 거절</button>
 						</div>
 					)}
 				</>
