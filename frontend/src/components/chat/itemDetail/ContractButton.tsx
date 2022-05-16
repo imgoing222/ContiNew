@@ -7,7 +7,7 @@ import { RootState } from "src/store";
 import { contractApi } from "src/api";
 
 interface Props {
-  sendMessage?: (inputChat: string) => void;
+	sendMessage?: (inputChat: string) => void;
 }
 
 interface AgreeInfoType {
@@ -78,10 +78,11 @@ function ContractButton({ sendMessage }: Props) {
 		}
 	};
 
-  const contractRequest = async () => {
+	const contractRequest = async () => {
 		try {
 			await contractApi.agreeContractRequest(requestInfo);
-      autoMessage(`${username} 님이 계약 요청을 하였습니다.`);
+			autoMessage(`${username} 님이 계약 요청을 하였습니다.`);
+			setIsAgree(true);
 			setContractState("request");
 		} catch (error) {
 			console.log(error);
@@ -91,7 +92,7 @@ function ContractButton({ sendMessage }: Props) {
 	const agreeContractRequest = async () => {
 		try {
 			await contractApi.agreeContractRequest(requestInfo);
-      autoMessage(`${username} 님이 계약 요청을 수락하였습니다.`);
+			autoMessage(`${username} 님이 계약 요청을 수락하였습니다.`);
 			setContractState("request");
 		} catch (error) {
 			console.log(error);
@@ -101,18 +102,18 @@ function ContractButton({ sendMessage }: Props) {
 	const disagreeContractRequest = async () => {
 		try {
 			await contractApi.disagreeContractRequest(requestInfo);
-      autoMessage(`${username} 님이 계약 요청을 거절하였습니다.`);
+			autoMessage(`${username} 님이 계약 요청을 거절하였습니다.`);
 			setContractState("before");
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
-  const autoMessage = (inputChat: string) => {
-    if (sendMessage) {
-      sendMessage(inputChat)
-    }
-  };
+	const autoMessage = (inputChat: string) => {
+		if (sendMessage) {
+			sendMessage(inputChat);
+		}
+	};
 
 	switch (contractState) {
 		case "before":
