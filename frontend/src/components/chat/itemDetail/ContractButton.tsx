@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { RootState } from "src/store";
 
@@ -13,12 +13,22 @@ interface AgreeInfoType {
 
 function ContractButton() {
 	const [isUnderContract, setIsUnderContract] = useState(false);
+  const [userType, setUserType] = useState("");
 	const [agreeInfo, setAgreeInfo] = useState<AgreeInfoType>({
 		buyer_agree: false,
 		house_id: 0,
 		seller_agree: false,
 	});
 	const { buyerId, sellerId, articleId } = useSelector((state: RootState) => state.articleInfo);
+	const { login_id } = useSelector((state: RootState) => state.userInfo);
+
+  useEffect(() => {
+    if (buyerId === login_id) {
+      setUserType("buyer");
+    } else {
+      setUserType("seller");
+    }
+  }, []);
 
 	useEffect(() => {
 		getContractRequest();
@@ -33,13 +43,25 @@ function ContractButton() {
 			};
 			const res = await contractApi.getContractRequest(contractRequestData);
 			if (res.data) {
-        setAgreeInfo(res.data);
+				setIsUnderContract(true);
+				setAgreeInfo(res.data);
 			}
 		} catch (error) {
 			console.log(error);
 		}
 	};
-	return <></>;
+
+  // const agreeContractRequest = async () => {
+  //   try {
+
+  //   }
+  // };
+
+	return (
+		<Container>{!isUnderContract ? <button>계약요청</button> : <button>계약 중</button>}</Container>
+	);
 }
+
+const Container = styled.div``;
 
 export default ContractButton;
