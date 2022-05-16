@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ArticleType from "src/types/getArticleType";
 import styled from "styled-components";
+import CardButton from "@components/article/CardButton";
 
 export interface HouseInfoProps {
 	houseInfo: ArticleType;
@@ -44,6 +45,7 @@ function index() {
 						<OptionInfo houseInfo={houseInfo} />
 						<LocationInfo houseInfo={houseInfo} />
 						<Description houseInfo={houseInfo} />
+						<CardButton houseInfo={houseInfo} />
 					</SaleInfo>
 					<Card>
 						<CardDescription houseInfo={houseInfo} />
