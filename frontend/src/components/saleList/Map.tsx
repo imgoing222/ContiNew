@@ -5,7 +5,6 @@ import { saleApi } from "src/api";
 import { useDispatch } from "react-redux";
 import { setCoodinates } from "src/store/searchFilter";
 import House from "src/types/getListType";
-import cluster from "cluster";
 
 interface Map extends MapRefType {
 	searchCondition: never;
@@ -87,7 +86,7 @@ function Map({ kakaoMap, searchCondition }: Map) {
 
 	useEffect(() => {
 		const getSales = async () => {
-			const sale = (await saleApi.getSales(searchCondition)).data.houses;
+			const sale = (await saleApi.getSales(searchCondition, 0)).data.houses;
 			createmakers(sale);
 		};
 		if (loadMap) getSales();
