@@ -58,7 +58,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 		buyer: username,
 		buyer_id: login_id,
 		seller: "Seller",
-		seller_id: "Seller",
+		seller_id: "kkkk",
 		sale: 1,
 	};
 
