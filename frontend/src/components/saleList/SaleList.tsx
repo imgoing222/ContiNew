@@ -1,8 +1,9 @@
 import React from "react";
-import { SearchCondition } from "src/pages/saleList";
+import { ArticleData, SearchCondition } from "src/pages/saleList";
 import House from "src/types/getListType";
 import styled from "styled-components";
 import DetailOfSale from "./DetailOfSale";
+import Pagination from "./Pagination";
 import SaleTypeFilter from "./SaleTypeFilter";
 
 export interface SaleListProps {
@@ -11,9 +12,12 @@ export interface SaleListProps {
 
 interface SaleList extends SaleListProps {
 	searchCondition: SearchCondition;
+	currentPage: number;
+	totalPage: number;
+	setData: React.Dispatch<React.SetStateAction<ArticleData>>;
 }
 
-function SaleList({ saleList, searchCondition }: SaleList) {
+function SaleList({ saleList, searchCondition, totalPage, currentPage, setData }: SaleList) {
 	const saleType = ["전체", "이어살기", "쉐어하우스"];
 	return (
 		<Container>
@@ -23,7 +27,10 @@ function SaleList({ saleList, searchCondition }: SaleList) {
 				))}
 			</Box>
 			{saleList.length > 0 ? (
-				<DetailOfSale saleList={saleList} />
+				<>
+					<DetailOfSale saleList={saleList} />
+					<Pagination page={currentPage} total={totalPage} setData={setData} />
+				</>
 			) : (
 				<Div>
 					<h2>매물 목록이 없습니다</h2>
