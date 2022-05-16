@@ -88,10 +88,11 @@ function index() {
 		setHouseInfo({ ...houseInfo, [e.target.name]: e.target.value });
 	};
 
-	const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+	const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		if (checkData(houseInfo) && houseInfo.agreement === "agree") {
-			saleApi.createSale(createFormData(houseInfo));
+			const res = await saleApi.createSale(createFormData(houseInfo));
+			if (res.status == 200) window.location.replace(`/article/${res.data.house_id}`);
 		}
 	};
 
