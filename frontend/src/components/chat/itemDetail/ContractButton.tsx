@@ -12,7 +12,7 @@ interface AgreeInfoType {
 }
 
 function ContractButton() {
-	const [isUnderContract, setIsUnderContract] = useState(false);
+	const [contractState, setContractState] = useState("before");
 	const [userType, setUserType] = useState("");
 	const [agreeInfo, setAgreeInfo] = useState<AgreeInfoType>({
 		buyer_agree: false,
@@ -21,6 +21,14 @@ function ContractButton() {
 	});
 	const { buyerId, sellerId, articleId } = useSelector((state: RootState) => state.articleInfo);
 	const { login_id } = useSelector((state: RootState) => state.userInfo);
+
+	useEffect(() => {
+		if (agreeInfo.buyer_agree !== agreeInfo.seller_agree) {
+			setContractState("request");
+		} else if (agreeInfo.buyer_agree === true && agreeInfo.seller_agree === true) {
+			setContractState("under");
+		}
+	}, [agreeInfo]);
 
 	useEffect(() => {
 		if (buyerId === login_id) {
@@ -43,7 +51,6 @@ function ContractButton() {
 			};
 			const res = await contractApi.getContractRequest(contractRequestData);
 			if (res.data) {
-				setIsUnderContract(true);
 				setAgreeInfo(res.data);
 			}
 		} catch (error) {
@@ -60,20 +67,20 @@ function ContractButton() {
 				member_type: userType,
 			};
 			await contractApi.agreeContractRequest(requestInfo);
+			setContractState("request");
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
-	return (
-		<Container>
-			{!isUnderContract ? (
-				<button onClick={agreeContractRequest}>계약요청</button>
-			) : (
-				<button>계약 중</button>
-			)}
-		</Container>
-	);
+	switch (contractState) {
+		case "before":
+			return <button onClick={agreeContractRequest}>계약 요청</button>;
+		case "request":
+			return <button></button>;
+		default:
+			return <></>;
+	}
 }
 
 const Container = styled.div``;
