@@ -36,6 +36,7 @@ const Image = styled.img`
 `;
 
 const Content = styled.div`
+	width: 280px;
 	display: flex;
 	flex-direction: column;
 `;
@@ -50,10 +51,12 @@ const Fee = styled.h3`
 	font-size: 1.5rem;
 `;
 
-const Text = styled.p`
-	padding-bottom: 1rem;
+const Text = styled.div`
 	font-size: 2rem;
 	color: #a9a9a9;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 `;
 
 export default RecommendItem;
