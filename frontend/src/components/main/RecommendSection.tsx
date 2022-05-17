@@ -46,11 +46,10 @@ function RecommendSection({ addressData }: DataProps) {
 }
 
 const Section = styled.section`
-	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	height: 40rem;
+	margin: 10% 20%;
 `;
 
 const Title = styled.div`
@@ -65,12 +64,4 @@ const Ul = styled.ul`
 	padding: 0;
 `;
 
-const Li = styled.li`
-	margin: 1rem;
-`;
-
-const Image = styled.img`
-	width: 15rem;
-	height: 15rem;
-`;
 export default RecommendSection;

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 function SearchSection() {
+
 	return <Section></Section>;
 }
 
