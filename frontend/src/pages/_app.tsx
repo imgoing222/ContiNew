@@ -34,5 +34,5 @@ function MyApp({ Component, pageProps }: AppProps) {
 export default wrapper.withRedux(MyApp);
 
 const Container = styled.div`
-	padding: 1rem 0 0 1rem;
+	padding: 1rem 1rem 0 1rem;
 `;
