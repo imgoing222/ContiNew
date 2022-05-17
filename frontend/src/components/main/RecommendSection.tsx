@@ -48,7 +48,9 @@ function RecommendSection({ addressData }: DataProps) {
 				{aroundHousesData.length ? (
 					aroundHousesData.map((house) => <RecommendItem key={house.house_id} house={house} />)
 				) : (
-					<p>등록된 매물이 없습니다.</p>
+					<TextBox>
+						<Text>등록된 매물이 없습니다.</Text>
+					</TextBox>
 				)}
 			</Ul>
 		</Section>
@@ -65,7 +67,7 @@ const Section = styled.section`
 
 const Title = styled.div`
 	height: 5rem;
-	font-size: 3rem;
+	font-size: 4rem;
 `;
 
 const Ul = styled.ul`
@@ -73,6 +75,19 @@ const Ul = styled.ul`
 	list-style: none;
 	padding: 0;
 	overflow: hidden;
+`;
+
+const TextBox = styled.div`
+	width: 100%;
+	height: 25rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
+
+const Text = styled.p`
+	font-size: 2.5rem;
+	margin: 2rem;
 `;
 
 const Button = styled(FontAwesomeIcon)`
