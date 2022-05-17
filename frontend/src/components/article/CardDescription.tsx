@@ -5,12 +5,15 @@ import { changeMonthToYear, moneyUnitChange } from "@utils/index";
 import { HouseInfoProps } from "src/pages/article/[id]";
 import IconPart from "./IconPart";
 import CardButton from "./CardButton";
+import cookie from "react-cookies";
 
 interface TextProp {
 	margin?: string;
 }
 
 function CardDescription({ houseInfo }: HouseInfoProps) {
+	const accessToken = cookie.load("access_token");
+
 	return (
 		<Container>
 			<Div>
@@ -19,7 +22,7 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 				{houseInfo.phoneAuth ? <AuthorizedIcon icon={faIdCard} /> : <AuthorText>미인증</AuthorText>}
 			</Div>
 			<Price>
-				{houseInfo.contractType}{" "}
+				{houseInfo.contractType}
 				{houseInfo.contractType === "월세"
 					? moneyUnitChange(houseInfo.monthlyRent.toString())
 					: moneyUnitChange(houseInfo.deposit.toString())}
@@ -40,7 +43,7 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 				/>
 				<Hr />
 			</div>
-			<CardButton houseInfo={houseInfo} />
+			{accessToken && <CardButton houseInfo={houseInfo} />}
 		</Container>
 	);
 }
