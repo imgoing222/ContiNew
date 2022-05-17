@@ -1,14 +1,18 @@
 import styled from "styled-components";
 
-function SearchSection() {
+export interface MapRefType {
+	kakaoMap: React.MutableRefObject<kakao.maps.Map>;
+}
 
+function SearchSection() {
 	return <Section></Section>;
 }
 
 const Section = styled.section`
-	height: 30rem;
-	background: url("/main_background.jpg");
-	background-size: cover;
+	height: 60rem;
+	background: url("/background.png");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 	opacity: 0.7;
 `;
 
