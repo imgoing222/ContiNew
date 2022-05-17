@@ -39,9 +39,13 @@ public class ChatRoom implements Serializable {
     @Column(name = "last_message_time")
     LocalDateTime lastMessageTime;
 
+    @Column(name = "main_image")
+    String mainImage;
 
 
-    public static ChatRoom create (ChatRoomRequest request){
+
+
+    public static ChatRoom create (ChatRoomRequest request, String imageURL){
         ChatRoom chatRoom = new ChatRoom();
 
         chatRoom.id = UUID.randomUUID().toString();
@@ -52,6 +56,7 @@ public class ChatRoom implements Serializable {
         chatRoom.buyerId = request.getBuyerId();
         chatRoom.lastMessage = "";
         chatRoom.lastMessageTime = LocalDateTime.now();
+        chatRoom.mainImage = imageURL;
 
         return chatRoom;
     }
