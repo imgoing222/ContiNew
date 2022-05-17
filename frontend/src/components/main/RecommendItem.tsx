@@ -18,13 +18,13 @@ function RecommendItem({ house }: HouseType) {
 }
 
 const Li = styled.li`
-	margin: 1rem;
-  cursor: pointer;
+	margin: 10px;
+	cursor: pointer;
 `;
 
 const Image = styled.img`
-	width: 15rem;
-	height: 15rem;
+	width: 280px;
+	height: 180px;
 `;
 
 export default RecommendItem;

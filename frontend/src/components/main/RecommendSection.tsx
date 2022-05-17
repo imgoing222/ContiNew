@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 
 import { mainApi } from "src/api";
@@ -36,6 +38,16 @@ function RecommendSection({ addressData }: DataProps) {
 	return (
 		<Section>
 			<Title>{addressData.dong_name} 추천매물</Title>
+			{aroundHousesData.length > 3 && (
+				<>
+					<ButtonDiv direction="right">
+						<Button icon={faChevronRight} />
+					</ButtonDiv>
+					<ButtonDiv>
+						<Button icon={faChevronLeft} />
+					</ButtonDiv>
+				</>
+			)}
 			<Ul>
 				{aroundHousesData.map((house) => (
 					<RecommendItem key={house.house_id} house={house} />
@@ -46,10 +58,12 @@ function RecommendSection({ addressData }: DataProps) {
 }
 
 const Section = styled.section`
+	width: 900px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	margin: 10% 20%;
+	margin: 10rem auto;
+	overflow: hidden;
 `;
 
 const Title = styled.div`
@@ -59,9 +73,31 @@ const Title = styled.div`
 
 const Ul = styled.ul`
 	display: flex;
-	justify-content: center;
 	list-style: none;
 	padding: 0;
+	transition: 0.6s;
+`;
+
+const Button = styled(FontAwesomeIcon)`
+	display: block;
+	font-size: 3rem;
+	cursor: pointer;
+`;
+
+interface Button {
+	direction?: string;
+}
+
+const ButtonDiv = styled.div<Button>`
+	width: 5rem;
+	height: 5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 50%;
+	position: absolute;
+	right: ${({ direction }) => direction && "0"};
+	left: ${({ direction }) => !direction && "0"};
 `;
 
 export default RecommendSection;
