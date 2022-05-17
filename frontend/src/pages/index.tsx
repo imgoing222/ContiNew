@@ -77,6 +77,8 @@ function MainPage() {
 	);
 }
 
-const Main = styled.main``;
+const Main = styled.main`
+	min-height: 100vh;
+`;
 
 export default MainPage;
