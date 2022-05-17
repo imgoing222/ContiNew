@@ -1,18 +1,28 @@
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import articleApi from "src/api/article";
 import styled from "styled-components";
-import { chatApi } from "src/api";
+import { chatApi, articleApi } from "src/api";
 import { SET_ARTICLEINFO } from "src/store/articleInfo";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { HouseInfoProps } from "src/pages/article/[id]";
+import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 
 function CardButton({ houseInfo }: HouseInfoProps) {
 	const dispatch = useDispatch();
+	const [isBookmark, setIsBookmark] = useState(false);
 	const router = useRouter();
 	const { login_id, username } = useSelector((state: RootStateOrAny) => state.userInfo);
 
+	useEffect(() => {
+		const checkBookmark = async () => {
+			const bookmarkConfirm = (await articleApi.checkBoomark(houseInfo.houseId)).data.is_liked;
+			setIsBookmark(bookmarkConfirm);
+		};
+		checkBookmark();
+	}, []);
 	const startChat = async () => {
 		try {
 			const chatDataSet = {
@@ -35,10 +45,13 @@ function CardButton({ houseInfo }: HouseInfoProps) {
 	};
 	const setBookmark = async () => {
 		const res = await articleApi.addBookmark(houseInfo.houseId);
-		console.log(res);
-		if (res.status === 204) return toast.success("관심매물에 등록하였습니다.");
+		if (res.status === 204) {
+			toast.success("관심매물에 등록하였습니다.");
+			return setIsBookmark(!isBookmark);
+		}
 		if ((res as unknown as string) === "L01") {
 			articleApi.deleteBookmark(houseInfo.houseId);
+			setIsBookmark(!isBookmark);
 			return toast.warn("관심매물에서 삭제하였습니다.");
 		}
 	};
@@ -64,8 +77,13 @@ function CardButton({ houseInfo }: HouseInfoProps) {
 			) : (
 				<>
 					<Button onClick={startChat}>채팅 하기</Button>
-
-					<Button onClick={setBookmark}>북마크</Button>
+					<Button onClick={setBookmark}>
+						{isBookmark ? (
+							<FontAwesomeIcon icon={faBookmark} color="#000" />
+						) : (
+							<FontAwesomeIcon icon={faBookmark} />
+						)}
+					</Button>
 				</>
 			)}
 		</ButtonDiv>
