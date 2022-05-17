@@ -70,6 +70,7 @@ public class HouseRepositorySupport extends QuerydslRepositorySupport {
                 house.expiredAt.after(LocalDateTime.now()),
                 house.deletedAt.isNull()
                 )
+            .orderBy(house.id.desc())
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetchResults();
