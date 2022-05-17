@@ -35,20 +35,24 @@ public class ChatRoomResponse {
     private String buyerId;
 
     @JsonProperty("last_message")
-    @ApiModelProperty(position = 4, notes = "마지막 메시지", example = "뭔지 모르지만, 저기에다 마지막 잎새 하나를 남겨 둬서...")
+    @ApiModelProperty(position = 6, notes = "마지막 메시지", example = "뭔지 모르지만, 저기에다 마지막 잎새 하나를 남겨 둬서...")
     private String lastMessage;
 
     @JsonProperty("last_message_time")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    @ApiModelProperty(position = 5, notes = "마지막 메시지 시간", example = "2022-3-13 14:59:51")
+    @ApiModelProperty(position = 7, notes = "마지막 메시지 시간", example = "2022-3-13 14:59:51")
     private LocalDateTime lastMessageTime;
+
+    @JsonProperty("main_image")
+    @ApiModelProperty(position = 8, notes = "메인 이미지 URL", example = "String")
+    private String mainImage;
 
     public ChatRoomResponse(){
 
     }
 
     public ChatRoomResponse(String id, String seller, String buyer, Long sale, String sellerId, String buyerId,
-        String lastMessage, LocalDateTime lastMessageTime){
+        String lastMessage, LocalDateTime lastMessageTime, String mainImage){
         this.id = id;
         this.seller = seller;
         this.buyer = buyer;
@@ -57,6 +61,7 @@ public class ChatRoomResponse {
         this.buyerId = buyerId;
         this.lastMessage = lastMessage;
         this.lastMessageTime = lastMessageTime;
+        this.mainImage = mainImage;
     }
 
     public static ChatRoomResponse from (ChatRoom chatRoom){
@@ -68,7 +73,8 @@ public class ChatRoomResponse {
             chatRoom.getSellerId(),
             chatRoom.getBuyerId(),
             chatRoom.getLastMessage(),
-            chatRoom.getLastMessageTime()
+            chatRoom.getLastMessageTime(),
+            chatRoom.getMainImage()
         );
     }
 
