@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { mainApi } from "src/api";
 import House from "src/types/getListType";
 import RecommendItem from "./RecommendItem";
+import { Button } from "./Button";
 
 interface DataProps {
 	addressData: {
@@ -50,6 +51,10 @@ function RecommendSection({ addressData }: DataProps) {
 				) : (
 					<TextBox>
 						<Text>등록된 매물이 없습니다.</Text>
+						<div>
+							<Span>다른 동네</Span>
+							<Button>보러 가기</Button>
+						</div>
 					</TextBox>
 				)}
 			</Ul>
@@ -81,34 +86,18 @@ const TextBox = styled.div`
 	width: 100%;
 	height: 25rem;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+`;
+
+const Span =styled.span`
+	font-size: 1.5rem;
+	padding: 0.5rem;
 `;
 
 const Text = styled.p`
 	font-size: 2.5rem;
 	margin: 2rem;
 `;
-
-const Button = styled(FontAwesomeIcon)`
-	display: block;
-	font-size: 3rem;
-	cursor: pointer;
-`;
-
-interface Button {
-	direction?: string;
-}
-
-const ButtonDiv = styled.div<Button>`
-	width: 5rem;
-	height: 5rem;
-	// display: flex;
-	// align-items: center;
-	// justify-content: center;
-	position: relative;
-	right: ${({ direction }) => direction && "0"};
-	left: ${({ direction }) => !direction && "0"};
-`;
-
 export default RecommendSection;
