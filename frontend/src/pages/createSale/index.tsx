@@ -141,7 +141,7 @@ function index() {
 					<InputRadio type="radio" name="agreement" onChange={handleHouseInfo} value="disagree" />
 				</Div>
 				<Div>
-					<Button>취소</Button>
+					<Button onClick={() => router.back()}>취소</Button>
 					{router.query.id ? (
 						<Button isApplyBtn={true} onClick={editSubmit}>
 							수정 하기
