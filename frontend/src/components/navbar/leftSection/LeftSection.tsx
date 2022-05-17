@@ -26,7 +26,7 @@ function LeftSection() {
 			<Menu isToggle={isToggle} ref={Ref}>
 				<CloseButton icon={faX} onClick={() => setIsToggle(!isToggle)} on={isToggle ? 0 : 1} />
 				{menu.map((item) => (
-					<MenuItem key={item.id} item={item} />
+					<MenuItem key={item.id} item={item} setIsToggle={setIsToggle} />
 				))}
 			</Menu>
 			<MenuBars icon={faBars} onClick={() => setIsToggle(!isToggle)} />

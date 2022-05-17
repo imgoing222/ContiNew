@@ -1,16 +1,18 @@
+import { SetStateAction } from "react";
 import Link from "next/link";
 import cookie from "react-cookies";
 import styled from "styled-components";
 
 interface ItemProps {
 	item: { name: string; address: string };
+	setIsToggle: React.Dispatch<SetStateAction<boolean>>;
 }
 
-function MenuItem({ item }: ItemProps) {
+function MenuItem({ item, setIsToggle }: ItemProps) {
 	const token = cookie.load("access_token");
 
 	return (
-		<Container>
+		<Container onClick={() => setIsToggle(false)}>
 			{item.name === "방내놓기" ? (
 				<Link href={token ? item.address : "/account/signin"} passHref>
 					<Title>{item.name}</Title>
