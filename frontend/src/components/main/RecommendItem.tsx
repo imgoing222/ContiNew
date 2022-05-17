@@ -42,7 +42,7 @@ const Content = styled.div`
 `;
 
 const SaleType = styled.h1`
-	font-size: 2.5rem;
+	font-size: 2.3rem;
 	font-weight: bold;
 `;
 
