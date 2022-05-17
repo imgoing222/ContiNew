@@ -30,7 +30,7 @@ function BuyerInfo({ step, role, contractInfo }: Props) {
 			<Label>신규 임차인 전화</Label>
 			<Input disabled={disabled} />
 			<Label>서명</Label>
-			<Signature signatureDisabled={signatureDisabled} />
+			<Signature signatureDisabled={signatureDisabled} role={role} />
 		</>
 	);
 }
