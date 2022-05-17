@@ -154,6 +154,15 @@ public class HouseService {
         return HouseListResponse.fromHouses(houses);
     }
 
+    @Transactional(readOnly = true)
+    public List<HouseSimpleResponse> showMyHouses(String loginId) {
+        Member member = memberService.findByLoginId(loginId);
+        List<House> houses = houseRepository.findAllByMemberOrderByIdDesc(member);
+        return houses.stream()
+            .map(HouseSimpleResponse::from)
+            .collect(Collectors.toList());
+    }
+
     @Transactional
     public void update(Long houseId, HouseSaveRequest request, List<MultipartFile> images, String loginId) {
         House house = houseRepository.findById(houseId)
