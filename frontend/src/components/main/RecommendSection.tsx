@@ -19,6 +19,7 @@ interface DataProps {
 
 function RecommendSection({ addressData }: DataProps) {
 	const router = useRouter();
+	const [scrollState, setScrollState] = useState(0);
 	const [aroundHousesData, setAroundHousesData] = useState<House[]>([]);
 
 	useEffect(() => {
@@ -34,20 +35,28 @@ function RecommendSection({ addressData }: DataProps) {
 		}
 	};
 
+	const handleScroll = (direction?: string) => {
+		if (direction) {
+			setScrollState(scrollState - 25);
+		} else {
+			setScrollState(scrollState + 25);
+		}
+	};
+
 	return (
 		<Section>
 			<Title>{addressData.dong_name} 추천매물</Title>
-			{/* {aroundHousesData.length > 3 && (
-				<>
-					<ButtonDiv direction="right">
-						<Button icon={faChevronRight} />
-					</ButtonDiv>
-					<ButtonDiv>
-						<Button icon={faChevronLeft} />
-					</ButtonDiv>
-				</>
-			)} */}
-			<Ul>
+			{aroundHousesData.length > 3 && (
+				<ArrowButtonBox>
+					<ArrowButtonDiv scrollState={scrollState}>
+						<ArrowButton icon={faChevronLeft} onClick={() => handleScroll()} />
+					</ArrowButtonDiv>
+					<ArrowButtonDiv direction="right" scrollState={scrollState}>
+						<ArrowButton icon={faChevronRight} onClick={() => handleScroll("right")} />
+					</ArrowButtonDiv>
+				</ArrowButtonBox>
+			)}
+			<Ul scrollState={scrollState}>
 				{aroundHousesData.length ? (
 					aroundHousesData.map((house) => <RecommendItem key={house.house_id} house={house} />)
 				) : (
@@ -70,6 +79,7 @@ const Section = styled.section`
 	flex-direction: column;
 	justify-content: center;
 	margin: 10rem auto;
+	overflow: hidden;
 `;
 
 const Title = styled.div`
@@ -77,11 +87,16 @@ const Title = styled.div`
 	font-size: 4rem;
 `;
 
-const Ul = styled.ul`
+interface UIType {
+	scrollState: number;
+}
+
+const Ul = styled.ul<UIType>`
 	display: flex;
 	list-style: none;
 	padding: 0;
-	overflow: hidden;
+	transform: ${({ scrollState }) => "translateX(" + scrollState + "%);"}
+	transition: all 0.5s;
 `;
 
 const TextBox = styled.div`
@@ -102,4 +117,32 @@ const Text = styled.p`
 	font-size: 2.5rem;
 	margin: 2rem;
 `;
+
+const ArrowButton = styled(FontAwesomeIcon)`
+	display: block;
+	font-size: 3rem;
+	z-index: 2;
+	cursor: pointer;
+	color: #000;
+`;
+
+interface ArrowButtonType {
+	direction?: string;
+	scrollState: number;
+}
+
+const ArrowButtonDiv = styled.div<ArrowButtonType>`
+	pointer-events: ${({ direction, scrollState }) =>
+		direction && scrollState === -100 ? "none" : ""};
+	pointer-events: ${({ direction, scrollState }) =>
+		!direction && scrollState === 0 ? "none" : ""};
+	opacity: ${({ direction, scrollState }) => (direction && scrollState === -100 ? "0.2" : "")};
+	opacity: ${({ direction, scrollState }) => (!direction && scrollState === 0 ? "0.2" : "")};
+`;
+
+const ArrowButtonBox = styled.div`
+	display: flex;
+	justify-content: space-between;
+`;
+
 export default RecommendSection;
