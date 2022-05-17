@@ -16,4 +16,5 @@ public interface HouseRepository extends JpaRepository<House, Long> {
 
     Page<House> findAllBySidoNameAndGunguNameAndDongNameAndExpiredAtAfter(String sidoName, String gunguName, String dongName, LocalDateTime now, Pageable pageable);
 
+    List<House> findAllByMemberOrderByIdDesc(Member member);
 }
