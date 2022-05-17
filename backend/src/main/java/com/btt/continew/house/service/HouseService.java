@@ -21,6 +21,7 @@ import com.btt.continew.member.service.MemberService;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -52,7 +53,7 @@ public class HouseService {
     public HouseIdResponse create(HouseSaveRequest request, List<MultipartFile> images, String email) {
         Member member = memberService.findByLoginId(email);
 
-        if(houseRepository.existsByMember(member)){
+        if(houseRepository.existsByMemberAndExpiredAtAfter(member, LocalDateTime.now())){
             throw new BusinessException(ErrorCode.HOUSE_ALREADY_EXISTS_BY_LOGINID);
         }
 
@@ -148,8 +149,8 @@ public class HouseService {
 
     @Transactional(readOnly = true)
     public HouseListResponse showAroundHouses(HouseAroundRequest request, Pageable pageable) {
-        Page<House> houses = houseRepository.findAllBySidoNameAndGunguNameAndDongName(request.getSidoName(),
-            request.getGunguName(), request.getDongName(), pageable);
+        Page<House> houses = houseRepository.findAllBySidoNameAndGunguNameAndDongNameAndExpiredAtAfter(request.getSidoName(),
+            request.getGunguName(), request.getDongName(), LocalDateTime.now(), pageable);
         return HouseListResponse.fromHouses(houses);
     }
 
