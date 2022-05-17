@@ -18,6 +18,7 @@ function Contract() {
 	const contract: ContractStore = useSelector((state: RootState) => state.contractInfo);
 	const loginId = useSelector((state: RootState) => state.userInfo.login_id);
 	console.log(contract);
+
 	const step = contract.step.current_step;
 
 	const value = { buyer: buyerId, seller: sellerId, house_id: articleId };
@@ -40,9 +41,8 @@ function Contract() {
 
 	const handleBreakContractButton = async () => {
 		if (window.confirm("계약을 파기하시겠습니까?")) {
-			const res = await contractApi.breakContract(value);
-			console.log(res);
-			// router.push("/");
+			await contractApi.breakContract(value);
+			router.push("/");
 		}
 	};
 

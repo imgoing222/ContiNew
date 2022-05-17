@@ -20,7 +20,7 @@ function SellerInfo({ step, role, contractInfo }: Props) {
 		if (step === 3 && role === "seller") {
 			setSignatureDisabled(false);
 		}
-	}, []);
+	}, [step]);
 
 	return (
 		<>
