@@ -13,7 +13,9 @@ function RightSection() {
 }
 
 const Container = styled.div`
+	width: 20%;
 	display: flex;
+	justify-content: end;
 	align-items: center;
 `;
 
