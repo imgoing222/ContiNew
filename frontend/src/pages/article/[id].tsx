@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import ArticleType from "src/types/getArticleType";
 import styled from "styled-components";
 import Error from "next/error";
+import Spinner from "@components/Spinner";
 export interface HouseInfoProps {
 	houseInfo: ArticleType;
 }
@@ -21,21 +22,22 @@ function index() {
 	const router = useRouter();
 	const [houseInfo, setHouseInfo] = useState<ArticleType | null>(null);
 	const id = router.query.id;
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		const setData = async () => {
 			if (id !== undefined) {
 				const data = await getArticleData(+id);
-				console.log(data);
 				if (data !== undefined) setHouseInfo(snakeToCamel(data) as ArticleType);
+				setIsLoading(false);
 			}
 		};
 
 		setData();
 	}, [id]);
 
-	if (router.isFallback) {
-		return <div>loading</div>;
+	if (isLoading) {
+		return <Spinner />;
 	}
 	return houseInfo !== null ? (
 		<Div>
