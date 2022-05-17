@@ -102,4 +102,7 @@ const MoneyText = styled.p`
 	margin-left: 3rem;
 	color: gray;
 	font-size: 1.25rem;
+	@media ${(props) => props.theme.mobile} {
+		display: none;
+	}
 `;
