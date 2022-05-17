@@ -7,6 +7,7 @@ interface ArticleApiType {
 	getArticle: (id: number) => Promise<AxiosResponse>;
 	addBookmark: (id: number) => Promise<AxiosResponse>;
 	deleteBookmark: (id: number) => Promise<AxiosResponse>;
+	checkBoomark: (id: number) => Promise<AxiosResponse>;
 }
 
 const articleApi: ArticleApiType = {
@@ -15,6 +16,7 @@ const articleApi: ArticleApiType = {
 	getArticle: (id) => request.get(`houses/${id}`),
 	addBookmark: (id) => request.post(`auth/houses/likes/${id}`),
 	deleteBookmark: (id) => request.delete(`auth/houses/likes/${id}`),
+	checkBoomark: (id) => request.get(`auth/houses/likes/${id}`),
 };
 
 export default articleApi;
