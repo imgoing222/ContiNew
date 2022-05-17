@@ -17,11 +17,6 @@ interface DataProps {
 
 function RecommendSection({ addressData }: DataProps) {
 	const [aroundHousesData, setAroundHousesData] = useState<House[]>([]);
-	const testData = {
-		sido_name: "서울",
-		gungu_name: "동대문구",
-		dong_name: "이문동",
-	};
 
 	useEffect(() => {
 		getAroundHouse();
@@ -29,13 +24,13 @@ function RecommendSection({ addressData }: DataProps) {
 
 	const getAroundHouse = async () => {
 		try {
-			const res = await mainApi.getAroundHouse(testData);
+			const res = await mainApi.getAroundHouse(addressData);
 			setAroundHousesData(res.data.houses);
 		} catch (error) {
 			console.log(error);
 		}
 	};
-	
+
 	return (
 		<Section>
 			<Title>{addressData.dong_name} 추천매물</Title>
@@ -50,9 +45,11 @@ function RecommendSection({ addressData }: DataProps) {
 				</>
 			)} */}
 			<Ul>
-				{aroundHousesData.map((house) => (
-					<RecommendItem key={house.house_id} house={house} />
-				))}
+				{aroundHousesData.length ? (
+					aroundHousesData.map((house) => <RecommendItem key={house.house_id} house={house} />)
+				) : (
+					<p>등록된 매물이 없습니다.</p>
+				)}
 			</Ul>
 		</Section>
 	);

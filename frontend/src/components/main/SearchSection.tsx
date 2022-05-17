@@ -13,7 +13,7 @@ const Section = styled.section`
 	background: url("/background.png");
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
-	opacity: 0.7;
+	opacity: 0.8;
 `;
 
 export default SearchSection;
