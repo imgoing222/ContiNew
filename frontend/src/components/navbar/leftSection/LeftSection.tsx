@@ -13,6 +13,8 @@ interface IsToggle {
 
 function LeftSection() {
 	const [isToggle, setIsToggle] = useState(false);
+	const Ref = useRef<HTMLDivElement>(null);
+	useOutside({ Ref, setFunction: setIsToggle as React.Dispatch<React.SetStateAction<boolean>> });
 	const menu = [
 		{ id: 1, name: "지도", address: "/saleList" },
 		{ id: 2, name: "방내놓기", address: "/createSale" },
@@ -21,8 +23,8 @@ function LeftSection() {
 
 	return (
 		<Container>
-			<CloseButton icon={faX} onClick={() => setIsToggle(!isToggle)} on={isToggle ? 0 : 1} />
-			<Menu isToggle={isToggle}>
+			<Menu isToggle={isToggle} ref={Ref}>
+				<CloseButton icon={faX} onClick={() => setIsToggle(!isToggle)} on={isToggle ? 0 : 1} />
 				{menu.map((item) => (
 					<MenuItem key={item.id} item={item} />
 				))}
@@ -67,7 +69,7 @@ const MenuBars = styled(FontAwesomeIcon)`
 
 const CloseButton = styled(FontAwesomeIcon)<IsToggle>`
 	font-size: 2rem;
-	display: none;
+	visibility: hidden;
 	z-index: 3;
 	color: #000;
 	position: absolute;
@@ -75,7 +77,7 @@ const CloseButton = styled(FontAwesomeIcon)<IsToggle>`
 	left: 22rem;
 	cursor: pointer;
 	@media ${(props) => props.theme.tabletS} {
-		display: ${(props) => (props.on ? "none" : "block")};
+		visibility: ${(props) => (props.on ? "hidden" : "visible")};
 	}
 `;
 
