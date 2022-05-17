@@ -26,13 +26,16 @@ function MenuItem({ item }: ItemProps) {
 
 const Container = styled.li`
 	@media ${(props) => props.theme.tabletS} {
-		display: none;
 	}
 `;
 
 const Title = styled.a`
 	font-size: 2rem;
 	margin-left: 1.5rem;
+
+	@media ${(props) => props.theme.tabletS} {
+		font-size: 3rem;
+	}
 `;
 
 export default MenuItem;
