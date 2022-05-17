@@ -4,6 +4,8 @@ const CONTRACT = "user/setContractInfo";
 const ID = "user/setContractIds";
 const LEVEL = "user/setContractLevel";
 const ROLE = "user/setRole";
+const STEP2 = "user/step2";
+const STEP3 = "user/step3";
 
 interface actionType {
 	type: string;
@@ -14,6 +16,8 @@ export const SET_CONTRACT = (data: ContractType) => ({ type: CONTRACT, data });
 export const SET_ID = (data: ContractType) => ({ type: ID, data });
 export const SET_LEVEL = (data: boolean) => ({ type: LEVEL, data });
 export const SET_ROLE = (data: string) => ({ type: ROLE, data });
+export const SET_STEP2 = (data: string) => ({ type: STEP2, data });
+export const SET_STEP3 = (data: string) => ({ type: STEP3, data });
 
 const initialState = {
 	contract: {
@@ -64,6 +68,7 @@ function contractInfo(state = initialState, action: actionType) {
 			return {
 				...state,
 				contract: {
+					...state.contract,
 					location: action.data.location,
 					area: action.data.area,
 					net_leasable_area: action.data.net_leasable_area,
@@ -82,19 +87,19 @@ function contractInfo(state = initialState, action: actionType) {
 					seller_name: action.data.seller_name,
 					seller_birth: action.data.seller_birth,
 					seller_phone: action.data.seller_phone,
-					seller_signature: action.data.seller_signature,
 					buyer_address: action.data.buyer_address,
 					buyer_name: action.data.buyer_name,
 					buyer_birth: action.data.buyer_birth,
 					buyer_phone: action.data.buyer_phone,
 					buyer_signature: action.data.buyer_signature,
 				},
-				step: { current_step: action.data.current_level },
+				step: { ...state.step, current_step: action.data.current_level },
 			};
 		case ID:
 			return {
 				...state,
 				id: {
+					...state.id,
 					house_id: action.data.house_id,
 					seller_login_id: action.data.seller_login_id,
 					buyer_login_id: action.data.buyer_login_id,
@@ -112,6 +117,22 @@ function contractInfo(state = initialState, action: actionType) {
 				...state,
 				role: {
 					user_role: action.data,
+				},
+			};
+		case STEP2:
+			return {
+				...state,
+				contract: {
+					...state.contract,
+					buyer_signature: action.data,
+				},
+			};
+		case STEP3:
+			return {
+				...state,
+				contract: {
+					...state.contract,
+					seller_signature: action.data,
 				},
 			};
 		default:
