@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
@@ -17,11 +18,12 @@ interface DataProps {
 }
 
 function RecommendSection({ addressData }: DataProps) {
+	const router = useRouter();
 	const [aroundHousesData, setAroundHousesData] = useState<House[]>([]);
 
 	useEffect(() => {
 		getAroundHouse();
-	}, []);
+	}, [addressData]);
 
 	const getAroundHouse = async () => {
 		try {
@@ -53,7 +55,7 @@ function RecommendSection({ addressData }: DataProps) {
 						<Text>등록된 매물이 없습니다.</Text>
 						<div>
 							<Span>다른 동네</Span>
-							<Button>보러 가기</Button>
+							<Button onClick={() => router.push("/saleList")}>보러 가기</Button>
 						</div>
 					</TextBox>
 				)}
@@ -91,7 +93,7 @@ const TextBox = styled.div`
 	align-items: center;
 `;
 
-const Span =styled.span`
+const Span = styled.span`
 	font-size: 1.5rem;
 	padding: 0.5rem;
 `;
