@@ -4,6 +4,10 @@ interface CheckedProps {
 	isCheck: string | undefined;
 }
 
+interface TextProps {
+	size?: number;
+}
+
 export const Label = styled.label`
 	position: relative;
 	display: block;
@@ -22,7 +26,12 @@ export const InputRadio = styled.input`
 
 export const Text = styled.p`
 	display: inline;
-	font-size: 2rem;
+	font-size: 1.4rem;
+	margin-left: 0.5rem;
+	@media ${(props) => props.theme.mobileXS} {
+		margin: 0;
+		font-size: 1.2rem;
+	}
 `;
 
 export const Pbox = styled.p<CheckedProps>`

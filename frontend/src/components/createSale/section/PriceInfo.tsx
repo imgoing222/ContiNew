@@ -56,7 +56,6 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 						value={houseInfo.deposit}
 						placeholder="전세 금액"
 					/>
-					<Text> / </Text>
 					<Text> 만원 </Text>
 					<MoneyText>{`${changeMoneyUnit(houseInfo.deposit)}`}</MoneyText>
 				</TableRowAndDivBox>
@@ -77,7 +76,7 @@ function PriceInfo({ changeEvent, houseInfo }: EventProps) {
 					onChange={changeEvent}
 					value={houseInfo.maintenanceDetail}
 					placeholder="관리비 포함 항목"
-					width={55}
+					width={30}
 					margin={5}
 				/>
 			</TableRowAndDivBox>
@@ -103,4 +102,7 @@ const MoneyText = styled.p`
 	margin-left: 3rem;
 	color: gray;
 	font-size: 1.25rem;
+	@media ${(props) => props.theme.mobile} {
+		display: none;
+	}
 `;

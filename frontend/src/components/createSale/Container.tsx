@@ -20,7 +20,6 @@ export const SmallContainer = ({ title, children }: TableProps) => (
 
 const Layout = styled.section`
 	border: 1px solid ${(props) => props.theme.borderColor};
-	width: 100%;
 	margin-bottom: 4rem;
 `;
 
