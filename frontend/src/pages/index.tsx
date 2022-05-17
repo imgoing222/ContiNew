@@ -78,7 +78,7 @@ function MainPage() {
 }
 
 const Main = styled.main`
-	height: 100vh;
+	min-height: 100vh;
 `;
 
 export default MainPage;
