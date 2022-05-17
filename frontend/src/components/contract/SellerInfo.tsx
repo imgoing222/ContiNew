@@ -25,15 +25,15 @@ function SellerInfo({ step, role, contractInfo }: Props) {
 	return (
 		<>
 			<Label>임차인 주소</Label>
-			<Input disabled={disabled} />
+			<Input disabled={disabled} name="seller_address" />
 			<Label>임차인 성명</Label>
-			<Input disabled={disabled} />
+			<Input disabled={disabled} name="seller_name" />
 			<Label>임차인 생년월일</Label>
-			<Input disabled={disabled} />
+			<Input disabled={disabled} name="seller_birth" />
 			<Label>임차인 전화</Label>
-			<Input disabled={disabled} />
+			<Input disabled={disabled} name="seller_phone" />
 			<Label>서명</Label>
-			<Signature signatureDisabled={signatureDisabled} />
+			<Signature signatureDisabled={signatureDisabled} role={role} />
 		</>
 	);
 }
