@@ -12,8 +12,14 @@ interface actionType {
 	data: ContractType;
 }
 
+interface required {
+	buyer: string;
+	house_id: number;
+	seller: string;
+}
+
 export const SET_CONTRACT = (data: ContractType) => ({ type: CONTRACT, data });
-export const SET_ID = (data: ContractType) => ({ type: ID, data });
+export const SET_ID = (data: required) => ({ type: ID, data });
 export const SET_LEVEL = (data: boolean) => ({ type: LEVEL, data });
 export const SET_ROLE = (data: string) => ({ type: ROLE, data });
 export const SET_STEP2 = (data: string) => ({ type: STEP2, data });
@@ -101,8 +107,8 @@ function contractInfo(state = initialState, action: actionType) {
 				id: {
 					...state.id,
 					house_id: action.data.house_id,
-					seller_login_id: action.data.seller_login_id,
-					buyer_login_id: action.data.buyer_login_id,
+					seller_login_id: action.data.seller,
+					buyer_login_id: action.data.buyer,
 				},
 			};
 		case LEVEL:

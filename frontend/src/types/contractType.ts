@@ -28,6 +28,8 @@ export interface ContractType {
 	seller_login_id: string | undefined;
 	buyer_login_id: string | undefined;
 	next_level: boolean | undefined;
+	seller: string | undefined;
+	buyer: string | undefined;
 }
 
 export interface ContractStore {
