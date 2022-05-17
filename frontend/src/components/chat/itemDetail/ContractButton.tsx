@@ -132,7 +132,21 @@ function ContractButton({ sendMessage }: Props) {
 				</>
 			);
 		default:
-			return <button onClick={() => router.push(`/contract/${articleId}`)}>계약 중</button>;
+			return (
+				<button
+					onClick={() => {
+						router.push(
+							{
+								pathname: `/contract/${articleId}`,
+								query: { buyerId, sellerId, articleId },
+							},
+							`/contract/${articleId}`,
+						);
+					}}
+				>
+					계약 중
+				</button>
+			);
 	}
 }
 

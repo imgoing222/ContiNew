@@ -5,32 +5,28 @@ import { Step, Stepper } from "react-form-stepper";
 import { useDispatch, useSelector } from "react-redux";
 import contractApi from "src/api/contract";
 import { RootState } from "src/store";
-import { SET_CONTRACT, SET_LEVEL, SET_ROLE } from "src/store/contract";
+import { SET_CONTRACT, SET_ID, SET_LEVEL, SET_ROLE } from "src/store/contract";
 import { ContractStore, ContractType } from "src/types/contractType";
 
 function Contract() {
-	// 매물 id로 url 생성
-	// 매물id, seller_id, buyer_id 계약 버튼 눌렀을때 / 내 계약에서 눌렀을 때 받아올것 router.query로
-
-	// 더미데이터
-	const buyer = "test112";
-	const seller = "wjinh";
-	const houseId = 43;
-
 	const router = useRouter();
 	const dispatch = useDispatch();
+	const buyerId = router.query.buyerId as string;
+	const sellerId = router.query.sellerId as string;
+	const articleId = Number(router.query.articleId as string);
+
 	const contract: ContractStore = useSelector((state: RootState) => state.contractInfo);
 	const loginId = useSelector((state: RootState) => state.userInfo.login_id);
 	console.log(contract);
 	const step = contract.step.current_step;
 
-	const value = { buyer, seller, house_id: houseId };
+	const value = { buyer: buyerId, seller: sellerId, house_id: articleId };
 
 	useEffect(() => {
-		// store에 buyer seller houseId 저장
+		dispatch(SET_ID(value));
 		getContractInfo();
 		console.log(loginId);
-		if (loginId === buyer) dispatch(SET_ROLE("buyer"));
+		if (loginId === buyerId) dispatch(SET_ROLE("buyer"));
 		else dispatch(SET_ROLE("seller"));
 	}, []);
 
