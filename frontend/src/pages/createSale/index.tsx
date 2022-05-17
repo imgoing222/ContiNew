@@ -159,6 +159,9 @@ const Container = styled.div`
 	flex-direction: column;
 	margin: 0 auto;
 	width: 120rem;
+	@media ${(props) => props.theme.tabletS} {
+		width: auto;
+	}
 `;
 
 const Button = styled.button<ButtonProps>`

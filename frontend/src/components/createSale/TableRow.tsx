@@ -2,12 +2,15 @@ import TableProps from "src/types/TableProps";
 import styled from "styled-components";
 import DivBox from "./DivBox";
 
+interface Props {
+	title?: string;
+}
 export function TableRow({ title, children }: TableProps) {
 	return (
 		<Tr>
 			<Th>{title}</Th>
 			<Td>
-				<Ul>{children}</Ul>
+				<Ul title={title}>{children}</Ul>
 			</Td>
 		</Tr>
 	);
@@ -32,8 +35,18 @@ export function TableRowAndDivBox({ title, children }: TableProps) {
 	);
 }
 
-export const Ul = styled.ul`
+export const Ul = styled.ul<Props>`
 	display: flex;
+	@media ${(props) => props.theme.tabletS} {
+		display: ${(props) => props.title === "옵션항목" && "grid"};
+		grid-template-columns: repeat(3, 1fr);
+	}
+	@media ${(props) => props.theme.mobile} {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	@media ${(props) => props.theme.mobileXS} {
+		grid-template-columns: repeat(1, 1fr);
+	}
 `;
 
 export const Tr = styled.tr`
@@ -47,8 +60,10 @@ export const Th = styled.th`
 	width: 15rem;
 	height: 100%;
 	border-top: 1px solid ${(props) => props.theme.borderColor};
-
 	margin-right: 2rem;
+	@media ${(props) => props.theme.mobile} {
+		width: 10rem;
+	}
 `;
 
 export const Td = styled.td`
