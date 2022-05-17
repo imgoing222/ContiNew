@@ -7,6 +7,7 @@ import com.btt.continew.house.controller.dto.response.HouseDetailResponse;
 import com.btt.continew.house.controller.dto.response.HouseIdResponse;
 import com.btt.continew.house.controller.dto.response.HouseListResponse;
 import com.btt.continew.house.controller.dto.response.HouseLocationResponse;
+import com.btt.continew.house.controller.dto.response.HouseSimpleResponse;
 import com.btt.continew.house.service.HouseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -16,6 +17,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -75,7 +77,8 @@ public class HouseRestController {
 
     @PostMapping("/houses/list")
     @ApiOperation(value = "매물 목록 (pagination 포함)", notes = "매물 목록 api (page는 쿼리스트링으로 요청)")
-    public ResponseEntity<HouseListResponse> showHouses(@RequestBody HouseListRequest request, @PageableDefault Pageable pageable) {
+    public ResponseEntity<HouseListResponse> showHouses(@RequestBody HouseListRequest request,
+        @PageableDefault Pageable pageable) {
         return ResponseEntity.ok().body(houseService.showHouses(request, pageable));
     }
 
@@ -94,8 +97,15 @@ public class HouseRestController {
 
     @PostMapping("/houses/around")
     @ApiOperation(value = "주변 매물 조회", notes = "주변 매물 조회 api")
-    public ResponseEntity<HouseListResponse> showAroundHouses(@RequestBody HouseAroundRequest request, @PageableDefault Pageable pageable) {
+    public ResponseEntity<HouseListResponse> showAroundHouses(@RequestBody HouseAroundRequest request,
+        @PageableDefault(sort = "id", direction = Direction.DESC) Pageable pageable) {
         return ResponseEntity.ok().body(houseService.showAroundHouses(request, pageable));
+    }
+
+    @GetMapping("/auth/houses/mine")
+    @ApiOperation(value = "내 매물 조회", notes = "내 매물을 조회하는 api")
+    public ResponseEntity<List<HouseSimpleResponse>> showMyHouses(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
+        return ResponseEntity.ok().body(houseService.showMyHouses(loginId));
     }
 
     @PutMapping("/auth/houses/{house_id}")
@@ -111,7 +121,8 @@ public class HouseRestController {
     @DeleteMapping("/auth/houses/{house_id}")
     @ApiOperation(value = "매물 삭제", notes = "매물 삭제 api")
     @ApiImplicitParam(name = "house_id", value = "매물 id", readOnly = true)
-    public ResponseEntity<Void> delete(@PathVariable(value = "house_id") Long houseId, @ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
+    public ResponseEntity<Void> delete(@PathVariable(value = "house_id") Long houseId,
+        @ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
         houseService.delete(houseId, loginId);
         return ResponseEntity.noContent().build();
     }
