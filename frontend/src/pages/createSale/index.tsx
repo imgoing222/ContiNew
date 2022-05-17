@@ -129,7 +129,12 @@ function index() {
 					setHouseInfo={setHouseInfo}
 				/>
 				<Div>
-					<AgreementText>다음의 약관을 읽고 동의함 </AgreementText>
+					<StyledSpan
+						onClick={() => window.open("/agreement", "이용약관", "width=500px, height=500px")}
+					>
+						다음의 약관
+					</StyledSpan>
+					<AgreementText>을 읽고 동의하십니까?</AgreementText>
 					<RadioText>동의</RadioText>
 					<InputRadio type="radio" name="agreement" onChange={handleHouseInfo} value="agree" />
 					<RadioText>비동의</RadioText>
@@ -184,6 +189,7 @@ const Div = styled.div`
 const AgreementText = styled.p`
 	font-size: 1.5rem;
 	margin-right: 1rem;
+	font-weight: 300;
 `;
 
 const RadioText = styled.p`
@@ -192,4 +198,11 @@ const RadioText = styled.p`
 
 const InputRadio = styled.input`
 	margin-right: 1.5rem;
+`;
+
+const StyledSpan = styled.span`
+	font-weight: bold;
+	cursor: pointer;
+	font-size: 1.5rem;
+	text-decoration: underline;
 `;
