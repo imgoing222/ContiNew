@@ -17,7 +17,7 @@ function BuyerInfo({ step, role, contractInfo }: Props) {
 			setDisabled(false);
 			setSignatureDisabled(false);
 		}
-	}, []);
+	}, [step]);
 
 	return (
 		<>
