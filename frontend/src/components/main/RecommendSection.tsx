@@ -35,10 +35,11 @@ function RecommendSection({ addressData }: DataProps) {
 			console.log(error);
 		}
 	};
+	
 	return (
 		<Section>
 			<Title>{addressData.dong_name} 추천매물</Title>
-			{aroundHousesData.length > 3 && (
+			{/* {aroundHousesData.length > 3 && (
 				<>
 					<ButtonDiv direction="right">
 						<Button icon={faChevronRight} />
@@ -47,7 +48,7 @@ function RecommendSection({ addressData }: DataProps) {
 						<Button icon={faChevronLeft} />
 					</ButtonDiv>
 				</>
-			)}
+			)} */}
 			<Ul>
 				{aroundHousesData.map((house) => (
 					<RecommendItem key={house.house_id} house={house} />
@@ -63,7 +64,6 @@ const Section = styled.section`
 	flex-direction: column;
 	justify-content: center;
 	margin: 10rem auto;
-	overflow: hidden;
 `;
 
 const Title = styled.div`
@@ -75,7 +75,7 @@ const Ul = styled.ul`
 	display: flex;
 	list-style: none;
 	padding: 0;
-	transition: 0.6s;
+	overflow: hidden;
 `;
 
 const Button = styled(FontAwesomeIcon)`
@@ -91,11 +91,10 @@ interface Button {
 const ButtonDiv = styled.div<Button>`
 	width: 5rem;
 	height: 5rem;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	top: 50%;
-	position: absolute;
+	// display: flex;
+	// align-items: center;
+	// justify-content: center;
+	position: relative;
 	right: ${({ direction }) => direction && "0"};
 	left: ${({ direction }) => !direction && "0"};
 `;
