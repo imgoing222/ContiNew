@@ -29,6 +29,7 @@ const Section = styled.section`
 `;
 
 const SearchBox = styled.div`
+	margin: auto 0 10rem;
 	width: 40rem;
 	height: 5rem;
 	border-radius: 10px;
