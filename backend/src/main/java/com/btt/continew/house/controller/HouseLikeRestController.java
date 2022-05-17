@@ -1,5 +1,6 @@
 package com.btt.continew.house.controller;
 
+import com.btt.continew.house.controller.dto.response.HouseLikeResponse;
 import com.btt.continew.house.controller.dto.response.HouseListResponse;
 import com.btt.continew.house.service.HouseLikeService;
 import io.swagger.annotations.Api;
@@ -42,9 +43,17 @@ public class HouseLikeRestController {
 
     @GetMapping("/auth/houses/likes")
     @ApiOperation(value = "관심 매물 목록", notes = "관심 매물 목록 api")
-    public ResponseEntity<HouseListResponse> show(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId, @PageableDefault
-        Pageable pageable) {
+    public ResponseEntity<HouseListResponse> show(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
+        @PageableDefault
+            Pageable pageable) {
         return ResponseEntity.ok().body(houseLikeService.show(loginId, pageable));
+    }
+
+    @GetMapping("/auth/houses/likes/{house_id}")
+    @ApiOperation(value = "관심 매물 확인", notes = "관심 매물 여부를 확인하는 api")
+    public ResponseEntity<HouseLikeResponse> checkLiked(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId,
+        @PathVariable(value = "house_id") Long houseId) {
+        return ResponseEntity.ok().body(houseLikeService.checkLiked(loginId, houseId));
     }
 
     @DeleteMapping("/auth/houses/likes/{house_id}")
