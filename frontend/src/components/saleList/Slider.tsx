@@ -1,7 +1,6 @@
 import React, { InputHTMLAttributes, useState } from "react";
 import styled from "styled-components";
 import InputRange from "react-input-range";
-import "react-input-range/lib/css/index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { actionProps } from "src/store/searchFilter";
 import { RootState } from "src/store";

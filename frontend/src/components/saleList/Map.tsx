@@ -86,7 +86,7 @@ function Map({ kakaoMap, searchCondition }: Map) {
 
 	useEffect(() => {
 		const getSales = async () => {
-			const sale = (await saleApi.getSales(searchCondition, 0)).data.houses;
+			const sale = (await saleApi.getCoodinates(searchCondition)).data;
 			createmakers(sale);
 		};
 		if (loadMap) getSales();

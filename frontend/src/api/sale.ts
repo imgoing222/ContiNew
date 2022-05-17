@@ -16,6 +16,7 @@ interface SaleApiType {
 		currentPage: number,
 	) => Promise<AxiosResponse<ArticleData>>;
 	createSale: (data: FormData) => Promise<AxiosResponse> | string;
+	getCoodinates: (searchCondition: SearchCondition) => Promise<AxiosResponse>;
 }
 
 const saleApi: SaleApiType = {
@@ -25,6 +26,7 @@ const saleApi: SaleApiType = {
 			camelToSnake(checkMaxValue(coordinateInfo)),
 		),
 	createSale: (data) => request.post("auth/houses", data),
+	getCoodinates: (data) => request.post("houses/all-list", camelToSnake(checkMaxValue(data))),
 };
 
 export default saleApi;
