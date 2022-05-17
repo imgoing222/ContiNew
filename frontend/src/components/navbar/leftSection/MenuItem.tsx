@@ -24,7 +24,11 @@ function MenuItem({ item }: ItemProps) {
 	);
 }
 
-const Container = styled.li``;
+const Container = styled.li`
+	@media ${(props) => props.theme.tabletS} {
+		display: none;
+	}
+`;
 
 const Title = styled.a`
 	font-size: 2rem;
