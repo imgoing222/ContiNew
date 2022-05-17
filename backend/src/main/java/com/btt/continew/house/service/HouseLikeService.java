@@ -2,6 +2,7 @@ package com.btt.continew.house.service;
 
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
+import com.btt.continew.house.controller.dto.response.HouseLikeResponse;
 import com.btt.continew.house.controller.dto.response.HouseListResponse;
 import com.btt.continew.house.domain.House;
 import com.btt.continew.house.domain.HouseLike;
@@ -48,6 +49,13 @@ public class HouseLikeService {
         Member member = memberService.findByLoginId(loginId);
         Page<HouseLike> houseLikes = houseLikeRepository.findAllByMember(member, pageable);
         return HouseListResponse.fromHouseLikes(houseLikes);
+    }
+
+    @Transactional(readOnly = true)
+    public HouseLikeResponse checkLiked(String loginId, Long houseId) {
+        Member member = memberService.findByLoginId(loginId);
+        House house = houseService.findById(houseId);
+        return new HouseLikeResponse(houseLikeRepository.existsByHouseAndMember(house, member));
     }
 
     @Transactional
