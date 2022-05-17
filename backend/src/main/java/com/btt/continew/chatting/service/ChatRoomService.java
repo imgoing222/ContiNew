@@ -5,6 +5,8 @@ import com.btt.continew.chatting.controller.dto.response.ChatRoomResponse;
 import com.btt.continew.chatting.controller.dto.response.ChatRoomsResponse;
 import com.btt.continew.chatting.domain.ChatMessage;
 import com.btt.continew.chatting.domain.ChatRoom;
+import com.btt.continew.house.domain.House;
+import com.btt.continew.house.service.HouseService;
 import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ public class ChatRoomService {
     private HashOperations<String, String, ChatMessage> opsHashChatMessage;
 
     private final MemberService memberService;
+    private final HouseService houseService;
 
     @PostConstruct
     private void init() {
@@ -39,8 +42,11 @@ public class ChatRoomService {
 
     @Transactional
     public ChatRoom createChatRoom(ChatRoomRequest request){
+        House house = houseService.findById(request.getSale());
+        String imageURL = house.getMainImage();
+
         System.out.println("1-2. 방 생성");
-        ChatRoom chatRoom = ChatRoom.create(request);
+        ChatRoom chatRoom = ChatRoom.create(request, imageURL);
 
         System.out.println("1-3. 방 저장");
         opsHashChatRoom.put(CHAT_ROOMS,chatRoom.getId(),chatRoom);
