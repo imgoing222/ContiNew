@@ -14,5 +14,6 @@ public interface HouseRepository extends JpaRepository<House, Long> {
 
     boolean existsByMemberAndExpiredAtAfter(Member member, LocalDateTime now);
 
-    Page<House> findAllBySidoNameAndGunguNameAndDongName(String sidoName, String gunguName, String dongName, Pageable pageable);
+    Page<House> findAllBySidoNameAndGunguNameAndDongNameAndExpiredAtAfter(String sidoName, String gunguName, String dongName, LocalDateTime now, Pageable pageable);
+
 }
