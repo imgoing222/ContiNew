@@ -25,7 +25,7 @@ function ChatDetail() {
 	const token = cookie.load("access_token");
 	const sock = new SockJS(String(process.env.NEXT_PUBLIC_SOCKET_URL));
 	const stomp = StompJS.over(sock);
-	// stomp.debug = null;
+	stomp.debug = null;
 
 	useEffect(() => {
 		stomp.connect({ Authorization: `Bearer ${token}` }, () => {
