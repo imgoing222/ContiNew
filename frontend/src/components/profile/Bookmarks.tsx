@@ -20,7 +20,6 @@ function Bookmarks() {
 
 	const getBookmarks = async (page: number) => {
 		const res = await profileApi.getBookmarks(page);
-		console.log(res);
 		if (bookmarks) setFavorites((prev) => prev?.concat(res.data.houses));
 		else setFavorites(res.data.houses);
 		setCurrentPage(res.data.current_page_count);
