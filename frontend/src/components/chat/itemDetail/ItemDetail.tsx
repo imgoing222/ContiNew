@@ -29,7 +29,7 @@ function ItemDetail({ isIndex, sendMessage }: Props) {
 			setData();
 		}
 		return setHouseInfo(null);
-	}, []);
+	}, [articleId]);
 
 	return (
 		<Container>
