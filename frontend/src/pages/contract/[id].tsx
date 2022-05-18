@@ -58,7 +58,13 @@ function Contract() {
 		console.log(res);
 		if (res.status) {
 			alert(`${step}단계 계약서 작성이 완료되었습니다.`);
-			router.push("/");
+			router.push(
+				{
+					pathname: `/contract/${articleId}`,
+					query: { buyerId, sellerId, articleId },
+				},
+				`/contract/${articleId}`,
+			);
 		}
 	};
 
