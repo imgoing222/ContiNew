@@ -24,16 +24,16 @@ function Contract() {
 	const value = { buyer: buyerId, seller: sellerId, house_id: articleId };
 
 	useEffect(() => {
+		console.log("실행");
 		dispatch(SET_ID(value));
 		getContractInfo();
-		console.log(loginId);
 		if (loginId === buyerId) dispatch(SET_ROLE("buyer"));
 		else dispatch(SET_ROLE("seller"));
 	}, []);
 
 	const getContractInfo = async () => {
 		const res = await contractApi.getContract(value);
-		console.log(res);
+		console.log(res.data);
 		if (res.status) {
 			dispatch(SET_CONTRACT(res.data));
 		}
