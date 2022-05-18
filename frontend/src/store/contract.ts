@@ -118,7 +118,7 @@ function contractInfo(state = initialState, action: actionType) {
 			return {
 				...state,
 				level: {
-					next_level: action.data.next_level,
+					next_level: action.data,
 				},
 			};
 		case ROLE:
