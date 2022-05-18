@@ -39,7 +39,9 @@ function ItemDetail({ isIndex, sendMessage }: Props) {
 			{houseInfo && (
 				<Content>
 					<MainImage src={houseInfo.images[0]} />
-					<ContractButton sendMessage={sendMessage} />
+					<ButtonContainer>
+						<ContractButton sendMessage={sendMessage} />
+					</ButtonContainer>
 					<PriceInfo houseInfo={houseInfo} />
 					<LocationTitle>위치 정보</LocationTitle>
 					<Address>{houseInfo.jibunAddress}</Address>
@@ -86,6 +88,12 @@ const Address = styled.p`
 const MainImage = styled.img`
 	width: 100%;
 	max-height: 20rem;
+`;
+
+const ButtonContainer = styled.div`
+	display: flex;
+	justify-content: end;
+	margin: 1rem;
 `;
 
 export default ItemDetail;
