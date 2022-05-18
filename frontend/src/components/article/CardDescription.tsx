@@ -5,7 +5,6 @@ import { changeMonthToYear, moneyUnitChange } from "@utils/index";
 import { HouseInfoProps } from "src/pages/article/[id]";
 import IconPart from "./IconPart";
 import CardButton from "./CardButton";
-import cookie from "react-cookies";
 import { Dispatch, SetStateAction } from "react";
 
 interface TextProp {
@@ -17,8 +16,6 @@ export interface CardProps extends HouseInfoProps {
 }
 
 function CardDescription({ houseInfo, isBookmark, setIsBookmark }: CardProps) {
-	const accessToken = cookie.load("access_token");
-
 	return (
 		<Container>
 			<Div>
@@ -48,9 +45,7 @@ function CardDescription({ houseInfo, isBookmark, setIsBookmark }: CardProps) {
 				/>
 				<Hr />
 			</div>
-			{accessToken && (
-				<CardButton houseInfo={houseInfo} isBookmark={isBookmark} setIsBookmark={setIsBookmark} />
-			)}
+			<CardButton houseInfo={houseInfo} isBookmark={isBookmark} setIsBookmark={setIsBookmark} />
 		</Container>
 	);
 }

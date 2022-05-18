@@ -54,7 +54,7 @@ const StyleDiv = styled.div`
 
 const Text = styled.p<TextProps>`
 	font-size: 1.4rem;
-	color: ${({ color }) => (color ? color : "rgba(0, 0, 0, 0.3)")};
+	color: ${({ color }) => (color ? "#000" : "rgba(0, 0, 0, 0.3)")};
 `;
 
 const StyledInput = styled.input`

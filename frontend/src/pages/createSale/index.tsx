@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import snakeToCamel from "@utils/snakeToCamel";
 import articleApi from "src/api/article";
 import { toast } from "react-toastify";
+import cookie from "react-cookies";
 
 interface ButtonProps {
 	isApplyBtn?: boolean;
@@ -25,11 +26,20 @@ export interface EventProps {
 	changeEvent: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	houseInfo: HouseInfo;
 	setHouseInfo?: React.Dispatch<React.SetStateAction<HouseInfo>>;
+	articleId?: number;
+}
+
+export interface TextAreaProps {
+	changeEvent: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+	houseInfo: HouseInfo;
+	setHouseInfo?: React.Dispatch<React.SetStateAction<HouseInfo>>;
 }
 
 const numberKey = ["deposit", "monthlyRent", "maintenanceFee", "period", "floor"];
 
 function index() {
+	const accessToken = cookie.load("access_token");
+
 	const router = useRouter();
 	const [houseInfo, setHouseInfo] = useState<HouseInfo>({
 		saleType: "",
@@ -59,6 +69,7 @@ function index() {
 			if (router.query.id) {
 				const data = await getArticleData(+router.query.id as number);
 				setHouseInfo(snakeToCamel(data, "modified") as HouseInfo);
+				console.log(data);
 			}
 		};
 
@@ -88,6 +99,9 @@ function index() {
 		if (numberKey.includes(e.target.name)) return onlyNumber(e);
 		setHouseInfo({ ...houseInfo, [e.target.name]: e.target.value });
 	};
+	const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setHouseInfo({ ...houseInfo, [e.target.name]: e.target.value });
+	};
 
 	const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
 		e.preventDefault();
@@ -108,7 +122,7 @@ function index() {
 		}
 	};
 
-	return (
+	return accessToken ? (
 		<>
 			<Head>
 				<title>매물 등록</title>
@@ -122,10 +136,17 @@ function index() {
 					changeEvent={handleHouseInfo}
 					setHouseInfo={setHouseInfo}
 				/>
-				<Photos houseInfo={houseInfo} changeEvent={handleHouseInfo} setHouseInfo={setHouseInfo} />
-				<Description
+				<Photos
 					houseInfo={houseInfo}
 					changeEvent={handleHouseInfo}
+					setHouseInfo={setHouseInfo}
+					articleId={
+						router.query.id !== undefined ? parseInt(router.query.id as string) : undefined
+					}
+				/>
+				<Description
+					houseInfo={houseInfo}
+					changeEvent={handleTextArea}
 					setHouseInfo={setHouseInfo}
 				/>
 				<Div>
@@ -154,6 +175,8 @@ function index() {
 				</Div>
 			</Container>
 		</>
+	) : (
+		router.push("/account/signin")
 	);
 }
 

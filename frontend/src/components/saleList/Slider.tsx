@@ -106,8 +106,9 @@ const Title = styled.h1`
 const Range = styled.span<RangeProps>`
 	display: block;
 	font-size: 1.5rem;
-	color: ${(props) => (props.color === "red" ? props.theme.mainColor : "rgba(0,0,0,0.7)")};
+	color: ${(props) => (props.color === "red" ? "#000" : "rgba(0,0,0,0.7)")};
 	text-align: right;
+	font-weight: ${(props) => props.color === "red" && "bold"};
 `;
 
 const Form = styled.form`
