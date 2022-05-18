@@ -5,7 +5,14 @@ import Container from "./Container";
 function Description({ houseInfo }: HouseInfoProps) {
 	return (
 		<Container title="상세 설명">
-			<TextArea>{houseInfo.description}</TextArea>
+			<TextArea>
+				{houseInfo.description.split("\n").map((line) => (
+					<span>
+						{line}
+						<br />
+					</span>
+				))}
+			</TextArea>
 		</Container>
 	);
 }
