@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 				<Container>
 					<GlobalStyle />
 					<ThemeProvider theme={theme}>
-						<Navbar />
+						{Component.displayName !== "term" && <Navbar />}
 						<Component {...pageProps} />
 						<ToastContainer style={{ fontSize: "1.4rem" }} />
 					</ThemeProvider>
