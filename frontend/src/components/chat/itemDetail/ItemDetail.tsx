@@ -74,6 +74,17 @@ const Content = styled.div`
 	height: 100%;
 	min-height: 5rem;
 	overflow: auto;
+
+	::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	::-webkit-scrollbar-thumb {
+    background-color: #d3d3d3;
+  }
+
+	::-webkit-scrollbar-track {
+    background-color: #fff;
 `;
 
 const LocationTitle = styled.h1`

@@ -142,6 +142,17 @@ const TopSection = styled.div`
 	margin: 1rem 0;
 	flex-direction: column;
 	overflow: auto;
+
+	::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	::-webkit-scrollbar-thumb {
+    background-color: #d3d3d3;
+  }
+
+	::-webkit-scrollbar-track {
+    background-color: #fff;
 `;
 
 export default Chat;
