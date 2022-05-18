@@ -32,10 +32,22 @@ function SearchSection() {
 		}
 	};
 
+	const onKeyDownEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+		if (event.key == "Enter" && !event.shiftKey) {
+			event.preventDefault();
+			search();
+		}
+	};
+
 	return (
 		<Section>
 			<SearchBox>
-				<Input type="text" onChange={handleChange} placeholder="지역명을 입력해주세요." />
+				<Input
+					type="text"
+					onChange={handleChange}
+					placeholder="지역명을 입력해주세요."
+					onKeyDown={onKeyDownEnter}
+				/>
 				<Button onClick={search}>검색</Button>
 			</SearchBox>
 		</Section>
