@@ -20,7 +20,7 @@ function SearchSection() {
 
 const Section = styled.section`
 	height: 60rem;
-	background: url("/background2.webp");
+	background: url("/background.webp");
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	display: flex;
