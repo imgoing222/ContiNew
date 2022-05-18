@@ -10,7 +10,8 @@ function index() {
 				<Title>이용 약관</Title>
 				<StyledUl>
 					<StyledLi>
-						1. ContiNew는 거래를 중개 해줄뿐 회원간의 거래에 관해 어떠한 법적 책임도 지지 앟는다.
+						1. ContiNew는 단지 거래 중개자 역할로서, 회원간의 거래에 관해 어떠한 법적 책임도 지지
+						않는다.
 					</StyledLi>
 					<StyledLi>
 						2. 임차권의 양도는 임차인(양도인)과 양수인 사이의 계약만으로 유효하게 성립하나,
@@ -32,7 +33,7 @@ function index() {
 		</>
 	);
 }
-
+index.displayName = "term";
 export default index;
 
 const StyledDiv = styled.div`
