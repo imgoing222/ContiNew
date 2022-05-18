@@ -22,12 +22,14 @@ function SearchSection() {
 	};
 
 	const search = () => {
-		router.push({
-			pathname: "/saleList",
-			query: {
-				inputValue: inputValue,
-			},
-		});
+		if (inputValue) {
+			router.push({
+				pathname: "/saleList",
+				query: {
+					inputValue: inputValue,
+				},
+			});
+		}
 	};
 
 	return (
