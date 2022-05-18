@@ -11,9 +11,9 @@ function SearchSection() {
 	const kakaoMap = useRef<kakao.maps.Map>();
 	return (
 		<Section>
-			<SearchBox>
+			{/* <SearchBox>
 				<SearchInput kakaoMap={kakaoMap as React.MutableRefObject<kakao.maps.Map>} />
-			</SearchBox>
+			</SearchBox> */}
 		</Section>
 	);
 }
