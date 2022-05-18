@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import snakeToCamel from "@utils/snakeToCamel";
 import articleApi from "src/api/article";
 import { toast } from "react-toastify";
+import cookie from "react-cookies";
 
 interface ButtonProps {
 	isApplyBtn?: boolean;
@@ -25,6 +26,7 @@ export interface EventProps {
 	changeEvent: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	houseInfo: HouseInfo;
 	setHouseInfo?: React.Dispatch<React.SetStateAction<HouseInfo>>;
+	articleId?: number;
 }
 
 export interface TextAreaProps {
@@ -36,6 +38,8 @@ export interface TextAreaProps {
 const numberKey = ["deposit", "monthlyRent", "maintenanceFee", "period", "floor"];
 
 function index() {
+	const accessToken = cookie.load("access_token");
+
 	const router = useRouter();
 	const [houseInfo, setHouseInfo] = useState<HouseInfo>({
 		saleType: "",
@@ -65,6 +69,7 @@ function index() {
 			if (router.query.id) {
 				const data = await getArticleData(+router.query.id as number);
 				setHouseInfo(snakeToCamel(data, "modified") as HouseInfo);
+				console.log(data);
 			}
 		};
 
@@ -117,7 +122,7 @@ function index() {
 		}
 	};
 
-	return (
+	return accessToken ? (
 		<>
 			<Head>
 				<title>매물 등록</title>
@@ -131,7 +136,14 @@ function index() {
 					changeEvent={handleHouseInfo}
 					setHouseInfo={setHouseInfo}
 				/>
-				<Photos houseInfo={houseInfo} changeEvent={handleHouseInfo} setHouseInfo={setHouseInfo} />
+				<Photos
+					houseInfo={houseInfo}
+					changeEvent={handleHouseInfo}
+					setHouseInfo={setHouseInfo}
+					articleId={
+						router.query.id !== undefined ? parseInt(router.query.id as string) : undefined
+					}
+				/>
 				<Description
 					houseInfo={houseInfo}
 					changeEvent={handleTextArea}
@@ -163,6 +175,8 @@ function index() {
 				</Div>
 			</Container>
 		</>
+	) : (
+		router.push("/account/signin")
 	);
 }
 
