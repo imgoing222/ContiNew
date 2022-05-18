@@ -49,11 +49,15 @@ public class ContractSimpleResponse {
     @ApiModelProperty(position = 8, notes = "현재 단계", example = "1")
     private Integer currentLevel;
 
+    @JsonProperty("house_image")
+    @ApiModelProperty(position = 9, notes = "매물 사진", example = "")
+    private String houseImage;
+
     public ContractSimpleResponse() {
     }
 
     public ContractSimpleResponse(Long contractId, String sellerId, String buyerId, String location, String contractType,
-        LocalDate contractStart, LocalDate contractEnd, String contractorUsername, Integer currentLevel) {
+        LocalDate contractStart, LocalDate contractEnd, String contractorUsername, Integer currentLevel, String houseImage) {
         this.contractId = contractId;
         this.sellerId = sellerId;
         this.buyerId = buyerId;
@@ -63,6 +67,7 @@ public class ContractSimpleResponse {
         this.contractEnd = contractEnd;
         this.contractorUsername = contractorUsername;
         this.currentLevel = currentLevel;
+        this.houseImage = houseImage;
     }
 
     public static ContractSimpleResponse fromSeller(Contract contract) {
@@ -75,7 +80,8 @@ public class ContractSimpleResponse {
             contract.getContractStart(),
             contract.getContractEnd(),
             contract.getBuyer().getUsername(),
-            contract.getLevel()
+            contract.getLevel(),
+            contract.getHouse().getMainImage()
         );
     }
 
@@ -89,7 +95,8 @@ public class ContractSimpleResponse {
             contract.getContractStart(),
             contract.getContractEnd(),
             contract.getBuyer().getUsername(),
-            contract.getLevel()
+            contract.getLevel(),
+            contract.getHouse().getMainImage()
             );
     }
 }
