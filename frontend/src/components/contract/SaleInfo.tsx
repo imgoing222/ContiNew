@@ -19,7 +19,6 @@ function SaleInfo({ disabled, contractInfo }: Props) {
 	const handleSaleInfoChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target as HTMLInputElement;
 		dispatch(SET_STEP1({ ...contractInfo, [name]: value }));
-		console.log(value);
 	}, 500);
 
 	return (
@@ -36,18 +35,16 @@ function SaleInfo({ disabled, contractInfo }: Props) {
 				<Label>면적</Label>
 				<Input
 					name="area"
-					type="number"
 					disabled={disabled}
-					defaultValue={contractInfo.area}
 					onChange={handleSaleInfoChange}
+					defaultValue={contractInfo.area}
 				/>
 				<Label>전용면적</Label>
 				<Input
 					name="net_leasable_area"
-					type="number"
 					disabled={disabled}
-					defaultValue={contractInfo.net_leasable_area}
 					onChange={handleSaleInfoChange}
+					defaultValue={contractInfo.net_leasable_area}
 				/>
 			</Section>
 		</>
