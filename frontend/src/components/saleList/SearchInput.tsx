@@ -1,11 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { MapRefType } from "src/pages/saleList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { GeoCodeType, Result } from "src/types/addressresult";
+import { useRouter } from "next/router";
 
 function SearchInput({ kakaoMap }: MapRefType) {
+	const router = useRouter();
+	const buttonRef = useRef<HTMLButtonElement>(null);
+	const inputValue = String(router.query.inputValue);
+
+	useEffect(() => {
+		if (inputValue !== "undefined") {
+			setKeyword(inputValue);
+			setTimeout(() => {buttonRef.current && buttonRef.current.click()}, 100);
+		}
+	}, []);
+
 	const [keyword, setKeyword] = useState("");
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,7 +52,8 @@ function SearchInput({ kakaoMap }: MapRefType) {
 			<MagnifyingGlass icon={faMagnifyingGlass} />
 			<SearchForm onSubmit={handleSubmit}>
 				<Input value={keyword} onChange={handleChange} placeholder="ex) 서초동, 서울대학교" />
-				<Button>검색</Button>
+				<Button ref={buttonRef}>검색</Button>
+
 			</SearchForm>
 		</Container>
 	);
