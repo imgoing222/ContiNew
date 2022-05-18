@@ -22,6 +22,7 @@ function Map({ kakaoMap, searchCondition }: Map) {
 			xLeft: coordinate.ha,
 			yBottom: coordinate.qa,
 		};
+		console.log(coordinates);
 		dispatch(setCoodinates(coordinates));
 	};
 
