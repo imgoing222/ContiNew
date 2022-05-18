@@ -10,6 +10,7 @@ interface ChatProps {
 		room_id: string;
 		sale: number;
 		seller: string;
+		main_image: string;
 	};
 }
 
@@ -20,17 +21,16 @@ function RoomListItem({ chat }: ChatProps) {
 		name = chat.seller;
 	} else {
 		name = chat.buyer;
-	};
+	}
 
 	return (
 		<Container>
 			<LeftSection>
-				<h3>{name}</h3>
-				<div>{chat.last_message}</div>
+				<MainImage src={chat.main_image} alt="Img" />
 			</LeftSection>
 			<RightSection>
-				<div>Img</div>
-				<div>시간</div>
+				<h1>{name}</h1>
+				<Text>{chat.last_message}</Text>
 			</RightSection>
 		</Container>
 	);
@@ -42,19 +42,39 @@ const Container = styled.div`
 	display: flex;
 	align-items: center;
 	border-bottom: solid 1px #d3d3d3;
+
+	&:hover {
+		background-color: #fffafa;
+	}
 `;
 
 const LeftSection = styled.div`
+	width: 10rem;
 	display: flex;
-	flex: 7;
 	flex-direction: column;
+	border-radius: 20%;
+	overflow: hidden;
 `;
 
 const RightSection = styled.div`
+	width: 20rem;
 	display: flex;
-	flex: 3;
+	margin: 1rem;
 	flex-direction: column;
-	align-items: center;
+`;
+
+const MainImage = styled.img`
+	width: 100%;
+	max-height: 6rem;
+`;
+
+const Text = styled.div`
+	width: 10rem;
+	font-size: 1.5rem;
+	color: #a9a9a9;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 `;
 
 export default RoomListItem;
