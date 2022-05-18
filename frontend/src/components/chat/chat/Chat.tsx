@@ -89,7 +89,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	return (
 		<Container>
 			<Title>
-				<h3>여긴 채팅창</h3>
+				<h2>Chattings</h2>
 			</Title>
 			<Content>
 				{roomId && (
@@ -122,7 +122,9 @@ const Container = styled.div`
 const Title = styled.div`
 	width: 100%;
 	height: 8rem;
-	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	border-bottom: solid 2px #d3d3d3;
 `;
 
