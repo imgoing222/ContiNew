@@ -16,12 +16,12 @@ public class ContractSimpleResponse {
     private Long contractId;
 
     @JsonProperty("seller_id")
-    @ApiModelProperty(position = 1, notes = "판매자 id", example = "3")
-    private Long sellerId;
+    @ApiModelProperty(position = 1, notes = "판매자 login id", example = "loling3")
+    private String sellerId;
 
     @JsonProperty("buyer_id")
-    @ApiModelProperty(position = 2, notes = "구매자 id", example = "5")
-    private Long buyerId;
+    @ApiModelProperty(position = 2, notes = "구매자 login id", example = "imgoing22")
+    private String buyerId;
 
     @JsonProperty("location")
     @ApiModelProperty(position = 3, notes = "소재지", example = "서울특별시 강남구 압구정동 369-1")
@@ -52,7 +52,7 @@ public class ContractSimpleResponse {
     public ContractSimpleResponse() {
     }
 
-    public ContractSimpleResponse(Long contractId, Long sellerId, Long buyerId, String location, String contractType,
+    public ContractSimpleResponse(Long contractId, String sellerId, String buyerId, String location, String contractType,
         LocalDate contractStart, LocalDate contractEnd, String contractorUsername, Integer currentLevel) {
         this.contractId = contractId;
         this.sellerId = sellerId;
@@ -68,8 +68,8 @@ public class ContractSimpleResponse {
     public static ContractSimpleResponse fromSeller(Contract contract) {
         return new ContractSimpleResponse(
             contract.getId(),
-            contract.getSeller().getId(),
-            contract.getBuyer().getId(),
+            contract.getSeller().getLoginId(),
+            contract.getBuyer().getLoginId(),
             contract.getLocation(),
             contract.getContractType(),
             contract.getContractStart(),
@@ -82,8 +82,8 @@ public class ContractSimpleResponse {
     public static ContractSimpleResponse fromBuyer(Contract contract) {
         return new ContractSimpleResponse(
             contract.getId(),
-            contract.getSeller().getId(),
-            contract.getBuyer().getId(),
+            contract.getSeller().getLoginId(),
+            contract.getBuyer().getLoginId(),
             contract.getLocation(),
             contract.getContractType(),
             contract.getContractStart(),
