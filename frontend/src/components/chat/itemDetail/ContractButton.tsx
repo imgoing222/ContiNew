@@ -117,23 +117,46 @@ function ContractButton({ sendMessage }: Props) {
 
 	switch (contractState) {
 		case "before":
-			return <button onClick={contractRequest}>계약 요청</button>;
+			return (
+				<Button isWait={false} color={"#fff"} backgroundColor={"#dc143c"} onClick={contractRequest}>
+					계약 요청
+				</Button>
+			);
 		case "request":
 			return (
 				<>
 					{isAgree ? (
-						<button>계약 요청 중</button>
+						<Button isWait={true} color={"#fff"} backgroundColor={"#dc143c"}>
+							계약 요청 중
+						</Button>
 					) : (
 						<div>
-							<button onClick={agreeContractRequest}>계약 수락</button>
-							<button onClick={disagreeContractRequest}>계약 거절</button>
+							<Button
+								isWait={false}
+								color={"#fff"}
+								backgroundColor={"#dc143c"}
+								onClick={agreeContractRequest}
+							>
+								계약 수락
+							</Button>
+							<Button
+								isWait={false}
+								color={"#fff"}
+								backgroundColor={"#dc143c"}
+								onClick={disagreeContractRequest}
+							>
+								계약 거절
+							</Button>
 						</div>
 					)}
 				</>
 			);
 		default:
 			return (
-				<button
+				<Button
+					isWait={false}
+					color={"#fff"}
+					backgroundColor={"#dc143c"}
 					onClick={() => {
 						router.push(
 							{
@@ -145,11 +168,27 @@ function ContractButton({ sendMessage }: Props) {
 					}}
 				>
 					계약 중
-				</button>
+				</Button>
 			);
 	}
 }
 
-const Container = styled.div``;
+interface ButtonProps {
+	isWait: boolean;
+	color: string;
+	backgroundColor: string;
+}
+
+const Button = styled.button<ButtonProps>`
+	color: ${({ color }) => color};
+	border: 0.2px solid #dedede;
+	background-color: ${({ backgroundColor }) => backgroundColor};
+	font-size: 1.5rem;
+	padding: 0.5rem;
+
+	&:hover {
+		cursor: ${({ isWait }) => (isWait ? null : "pointer")};
+	}
+`;
 
 export default ContractButton;
