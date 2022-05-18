@@ -1,8 +1,7 @@
 import { Button } from "@components/account/Button";
 import { Header } from "@components/account/Header";
-import { LinkButton } from "@components/account/LinkButton";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "src/store";
 
 function signupComplete() {

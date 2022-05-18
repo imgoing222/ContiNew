@@ -20,6 +20,7 @@ interface ContractApiType {
 	getContractRequest: (vlalue: required) => Promise<AxiosResponse>;
 	agreeContractRequest: (requestInfo: ContractRequestType) => Promise<AxiosResponse>;
 	disagreeContractRequest: (requestInfo: ContractRequestType) => Promise<AxiosResponse>;
+	getMyContracts: () => Promise<AxiosResponse>;
 }
 
 const contractApi: ContractApiType = {
@@ -32,6 +33,7 @@ const contractApi: ContractApiType = {
 		request.get(`auth/contracts/agree?buyer=${buyer}&house_id=${house_id}&seller=${seller}`),
 	agreeContractRequest: (requestInfo) => request.post(`auth/contracts/agree`, requestInfo),
 	disagreeContractRequest: (requestInfo) => request.post(`auth/contracts/disagree`, requestInfo),
+	getMyContracts: () => request.get(`auth/contracts/mine`),
 };
 
 export default contractApi;
