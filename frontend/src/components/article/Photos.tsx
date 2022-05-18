@@ -20,7 +20,7 @@ function Photos({ houseInfo }: HouseInfoProps) {
 	return (
 		<Container>
 			<StyledDiv id="container">
-				{houseInfo.images.length > 3 && (
+				{houseInfo.images.length > 0 && (
 					<>
 						<ButtonDiv direction="right">
 							<Button icon={faChevronRight} onClick={() => handleScroll()} />
