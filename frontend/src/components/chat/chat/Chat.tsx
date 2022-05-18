@@ -1,7 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { RootState } from "src/store";
 
 import { chatApi } from "src/api";
 import { BottomSection, ChatListItem } from "@components/chat";
@@ -30,7 +28,6 @@ interface ChatListType {
 
 function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	const chatBoxRef = useRef<HTMLDivElement>(null);
-	const { username } = useSelector((state: RootState) => state.userInfo);
 	const [showChatList, setShowChatList] = useState<ChatListType[]>([]);
 
 	const {
