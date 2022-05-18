@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { MapRefType } from "src/pages/saleList";
 import { saleApi } from "src/api";
@@ -10,11 +10,12 @@ interface Map extends MapRefType {
 	searchCondition: never;
 }
 function Map({ kakaoMap, searchCondition }: Map) {
+	const [mapLoaded, setMapLoaded] = useState<boolean>(false);
 	const [loadMap, setLoadMap] = useState(false);
 	const dispatch = useDispatch();
-	const getSales = () => {
+	const cluster = useRef<kakao.maps.MarkerClusterer>();
+	const setCoodinate = () => {
 		const coordinate = kakaoMap.current.getBounds();
-		console.log(coordinate);
 		const coordinates = {
 			xRight: coordinate.oa,
 			yTop: coordinate.pa,
@@ -26,9 +27,48 @@ function Map({ kakaoMap, searchCondition }: Map) {
 	};
 
 	const createmakers = (sale: House[]) => {
-		const clusterer = new kakao.maps.MarkerClusterer({
-			map: kakaoMap.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
-			averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+		const markers = sale.map(
+			(item) =>
+				new kakao.maps.Marker({
+					position: new kakao.maps.LatLng(item.latitude, item.longitude),
+				}),
+		);
+		if (cluster.current !== undefined && cluster !== undefined) {
+			cluster.current.setMinClusterSize(1);
+			cluster.current.clear();
+			cluster.current.addMarkers(markers);
+		}
+	};
+
+	useEffect(() => {
+		const $script = document.createElement("script");
+		$script.async = true;
+		$script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&autoload=false&libraries=services,clusterer,drawing`;
+		$script.addEventListener("load", () => setMapLoaded(true));
+		document.head.appendChild($script);
+	}, []);
+
+	useEffect(() => {
+		if (!mapLoaded) return;
+		kakao.maps.load(() => {
+			const container = document.getElementById("map") as HTMLElement;
+			const options = {
+				center: new kakao.maps.LatLng(37.3595316, 127.1052133),
+				level: 5,
+			};
+			kakaoMap.current = new kakao.maps.Map(container, options);
+			const zoomControl = new kakao.maps.ZoomControl();
+			kakaoMap.current.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+			kakao.maps.event.addListener(kakaoMap.current, "idle", setCoodinate);
+			setLoadMap(true);
+		});
+	}, [mapLoaded]);
+
+	useEffect(() => {
+		if (!loadMap) return;
+		cluster.current = new kakao.maps.MarkerClusterer({
+			map: kakaoMap.current,
+			averageCenter: true,
 			styles: [
 				{
 					background: "rgba(255, 80, 80, .8)",
@@ -42,55 +82,17 @@ function Map({ kakaoMap, searchCondition }: Map) {
 				},
 			],
 		});
+		getSaleList();
+	}, [loadMap]);
 
-		const markers = sale.map(
-			(item) =>
-				new kakao.maps.Marker({
-					position: new kakao.maps.LatLng(item.latitude, item.longitude),
-				}),
-		);
-		clusterer.setMinClusterSize(1);
-		clusterer.clear();
-		clusterer.addMarkers(markers);
+	const getSaleList = async () => {
+		const sale = (await saleApi.getCoodinates(searchCondition)).data;
+		createmakers(sale);
 	};
-
 	useEffect(() => {
-		const $script = document.createElement("script");
-		$script.async = true;
-		$script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&autoload=false&libraries=services,clusterer,drawing`;
-		document.head.appendChild($script);
-
-		const onLoadKakaoMap = () => {
-			kakao.maps.load(() => {
-				//  지도 생성
-				const container = document.getElementById("map") as HTMLElement;
-				const options = {
-					center: new kakao.maps.LatLng(37.3595316, 127.1052133),
-					level: 5,
-				};
-				kakaoMap.current = new kakao.maps.Map(container, options);
-
-				//  줌 옵션 설정
-				const zoomControl = new kakao.maps.ZoomControl();
-				kakaoMap.current.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-
-				kakao.maps.event.addListener(kakaoMap.current, "idle", getSales);
-			});
-		};
-
-		$script.addEventListener("load", onLoadKakaoMap);
-		$script.addEventListener("load", () => setLoadMap(true));
-
-		return () => $script.removeEventListener("load", onLoadKakaoMap);
-	}, []);
-
-	useEffect(() => {
-		const getSales = async () => {
-			const sale = (await saleApi.getCoodinates(searchCondition)).data;
-			createmakers(sale);
-		};
-		if (loadMap) getSales();
+		if (loadMap) getSaleList();
 	}, [searchCondition]);
+
 	return (
 		<>
 			<Container id="map"></Container>
