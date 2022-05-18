@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Getter;
@@ -99,6 +100,7 @@ public class Contract extends BaseEntity {
     @Column(name = "seller_phone", length = 16)
     private String sellerPhone;
 
+    @Lob
     @Column(name = "seller_signature")
     private String sellerSignature;
 
@@ -114,6 +116,7 @@ public class Contract extends BaseEntity {
     @Column(name = "buyer_phone", length = 16)
     private String buyerPhone;
 
+    @Lob
     @Column(name = "buyer_signature")
     private String buyerSignature;
 
