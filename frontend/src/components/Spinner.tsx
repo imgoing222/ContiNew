@@ -1,5 +1,5 @@
 import Image from "next/image";
-import SpinImg from "public/Spinner.gif";
+import SpinImg from "public/spinner.gif";
 import styled from "styled-components";
 
 function Spinner() {
