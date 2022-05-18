@@ -35,7 +35,7 @@ function PriceTab() {
 
 		if (id === contractTypes) {
 			setContractTypes("");
-			return chagneRedux("");
+			return chagneRedux("전체");
 		}
 	};
 

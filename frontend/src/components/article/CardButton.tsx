@@ -8,11 +8,13 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { CardProps } from "./CardDescription";
+import cookie from "react-cookies";
 
 function CardButton({ houseInfo, isBookmark, setIsBookmark }: CardProps) {
 	const dispatch = useDispatch();
 	const router = useRouter();
 	const { login_id, username } = useSelector((state: RootStateOrAny) => state.userInfo);
+	const accessToken = cookie.load("access_token");
 
 	const startChat = async () => {
 		try {
@@ -31,10 +33,13 @@ function CardButton({ houseInfo, isBookmark, setIsBookmark }: CardProps) {
 		}
 	};
 	const toChattingRoom = (roomId: string) => {
+		if (!accessToken) return router.push("/account/signin");
 		router.push(`/chat/${roomId}`);
 		localStorage.setItem("RoomId", roomId);
 	};
 	const setBookmark = async () => {
+		if (!accessToken) return router.push("/account/signin");
+
 		const res = await articleApi.addBookmark(houseInfo.houseId);
 		if (res.status === 204) {
 			toast.success("관심매물에 등록하였습니다.");

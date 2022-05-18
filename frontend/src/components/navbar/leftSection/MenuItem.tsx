@@ -14,9 +14,15 @@ function MenuItem({ item, setIsToggle }: ItemProps) {
 	return (
 		<Container onClick={() => setIsToggle(false)}>
 			{item.name === "방내놓기" ? (
-				<Link href={token ? item.address : "/account/signin"} passHref>
-					<Title>{item.name}</Title>
-				</Link>
+				<Title
+					onClick={() =>
+						token
+							? (window.location.href = "/createSale")
+							: (window.location.href = "/account/signin")
+					}
+				>
+					{item.name}
+				</Title>
 			) : (
 				<Link href={item.address} passHref>
 					<Title>{item.name}</Title>
@@ -34,6 +40,7 @@ const Container = styled.li`
 const Title = styled.a`
 	font-size: 2rem;
 	margin-left: 1.5rem;
+	cursor: pointer;
 
 	@media ${(props) => props.theme.tabletS} {
 		font-size: 3rem;

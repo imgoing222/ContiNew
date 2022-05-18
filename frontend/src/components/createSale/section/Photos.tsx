@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { convertURLtoFile } from "@utils/convertURLtoFile";
+import { useEffect, useState } from "react";
+import { articleApi } from "src/api";
 import { EventProps } from "src/pages/createSale";
 import styled from "styled-components";
 import { SmallContainer } from "../Container";
@@ -14,7 +16,7 @@ interface DivProps {
 	hide?: boolean;
 }
 
-function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
+function Photos({ houseInfo, changeEvent, setHouseInfo, articleId }: EventProps) {
 	const [uploadImgs, setUploadImgs] = useState<FileList | null>(null);
 	const [previewImgs, setPreviewImgs] = useState<string[]>([]);
 
@@ -51,6 +53,7 @@ function Photos({ houseInfo, changeEvent, setHouseInfo }: EventProps) {
 			setPreviewImgs([...previewImgs]);
 			const dataTransfer = new DataTransfer();
 			const img = Array.from(houseInfo.images);
+			console.log(img);
 			img.splice(idx, 1);
 			img.forEach((file) => dataTransfer.items.add(file));
 			setHouseInfo({ ...houseInfo, images: dataTransfer.files });

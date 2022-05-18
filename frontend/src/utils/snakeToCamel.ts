@@ -5,7 +5,6 @@ import HouseInfo from "src/types/houseInfo";
 function snakeToCamel(data: any, modified?: string) {
 	const newObj = _.mapKeys(data, (value, key) => _.camelCase(key));
 	if (modified) {
-		newObj.images = null;
 		return newObj as HouseInfo;
 	}
 	return newObj as ArticleType;
