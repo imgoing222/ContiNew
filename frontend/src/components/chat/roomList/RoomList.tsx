@@ -17,6 +17,7 @@ interface ChatListDataType {
 		buyer_id: string;
 		seller: string;
 		seller_id: string;
+		main_image: string;
 	}[];
 	current_page_count: number;
 	total_page_count: number;

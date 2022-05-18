@@ -10,6 +10,7 @@ interface ChatProps {
 		room_id: string;
 		sale: number;
 		seller: string;
+		main_image: string;
 	};
 }
 
@@ -29,8 +30,7 @@ function RoomListItem({ chat }: ChatProps) {
 				<div>{chat.last_message}</div>
 			</LeftSection>
 			<RightSection>
-				<div>Img</div>
-				<div>시간</div>
+				<MainImage src={chat.main_image} alt="Img" />
 			</RightSection>
 		</Container>
 	);
@@ -45,16 +45,21 @@ const Container = styled.div`
 `;
 
 const LeftSection = styled.div`
+	width: 20rem;
 	display: flex;
-	flex: 7;
 	flex-direction: column;
 `;
 
 const RightSection = styled.div`
+	width: 10rem;
 	display: flex;
-	flex: 3;
 	flex-direction: column;
 	align-items: center;
+`;
+
+const MainImage = styled.img`
+	width: 100%;
+	max-height: 6rem;
 `;
 
 export default RoomListItem;
