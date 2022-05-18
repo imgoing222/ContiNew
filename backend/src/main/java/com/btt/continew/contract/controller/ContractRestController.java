@@ -3,7 +3,7 @@ package com.btt.continew.contract.controller;
 import com.btt.continew.contract.controller.dto.request.ContractAgreeRequest;
 import com.btt.continew.contract.controller.dto.request.ContractRequest;
 import com.btt.continew.contract.controller.dto.response.ContractAgreeResponse;
-import com.btt.continew.contract.controller.dto.response.ContractMineResponse;
+import com.btt.continew.contract.controller.dto.response.ContractSimpleResponse;
 import com.btt.continew.contract.controller.dto.response.ContractResponse;
 import com.btt.continew.contract.service.ContractService;
 import io.swagger.annotations.Api;
@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -161,7 +162,7 @@ public class ContractRestController {
 
     @GetMapping("/auth/contracts/mine")
     @ApiOperation(value = "내 계약 목록 조회", notes = "내 계약 목록을 조회하는 API")
-    public ResponseEntity<ContractMineResponse> showMyContracts(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
+    public ResponseEntity<List<ContractSimpleResponse>> showMyContracts(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
         return ResponseEntity.ok().body(contractService.showMyContracts(loginId));
     }
 }
