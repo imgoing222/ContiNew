@@ -22,7 +22,6 @@ function Map({ kakaoMap, searchCondition }: Map) {
 			xLeft: coordinate.ha,
 			yBottom: coordinate.qa,
 		};
-
 		dispatch(setCoodinates(coordinates));
 	};
 
@@ -53,8 +52,8 @@ function Map({ kakaoMap, searchCondition }: Map) {
 		kakao.maps.load(() => {
 			const container = document.getElementById("map") as HTMLElement;
 			const options = {
-				center: new kakao.maps.LatLng(37.3595316, 127.1052133),
-				level: 5,
+				center: new kakao.maps.LatLng(37.555078, 126.970702),
+				level: 8,
 			};
 			kakaoMap.current = new kakao.maps.Map(container, options);
 			const zoomControl = new kakao.maps.ZoomControl();
@@ -69,15 +68,46 @@ function Map({ kakaoMap, searchCondition }: Map) {
 		cluster.current = new kakao.maps.MarkerClusterer({
 			map: kakaoMap.current,
 			averageCenter: true,
+			calculator: [10, 30, 100, 1000],
 			styles: [
 				{
 					background: "rgba(255, 80, 80, .8)",
-					width: "4rem",
-					height: "4rem",
+					width: "3rem",
+					height: "3rem",
+					color: "#fff",
+					borderRadius: "3rem",
+					textAlign: "center",
+					lineHeight: "3.3rem",
+					fontSize: "1.5rem",
+				},
+				{
+					background: "rgba(255, 80, 80, .8)",
+					width: "3.5rem",
+					height: "3.5rem",
 					color: "#fff",
 					borderRadius: "3rem",
 					textAlign: "center",
 					lineHeight: "4.1rem",
+					fontSize: "2rem",
+				},
+				{
+					background: "rgba(255, 80, 80, .8)",
+					width: "5rem",
+					height: "5rem",
+					color: "#fff",
+					borderRadius: "3rem",
+					textAlign: "center",
+					lineHeight: "5rem",
+					fontSize: "2rem",
+				},
+				{
+					background: "rgba(255, 80, 80, .8)",
+					width: "6rem",
+					height: "6rem",
+					color: "#fff",
+					borderRadius: "3rem",
+					textAlign: "center",
+					lineHeight: "6rem",
 					fontSize: "2rem",
 				},
 			],
