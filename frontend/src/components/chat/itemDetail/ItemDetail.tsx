@@ -42,9 +42,11 @@ function ItemDetail({ isIndex, sendMessage }: Props) {
 					<ButtonContainer>
 						<ContractButton sendMessage={sendMessage} />
 					</ButtonContainer>
-					<PriceInfo houseInfo={houseInfo} />
-					<LocationTitle>위치 정보</LocationTitle>
-					<Address>{houseInfo.jibunAddress}</Address>
+					<SubContainer>
+						<PriceInfo houseInfo={houseInfo} />
+						<LocationTitle>위치 정보</LocationTitle>
+						<Address>{houseInfo.jibunAddress}</Address>
+					</SubContainer>
 				</Content>
 			)}
 		</Container>
@@ -105,6 +107,11 @@ const ButtonContainer = styled.div`
 	display: flex;
 	justify-content: end;
 	margin: 1rem;
+`;
+
+const SubContainer = styled.div`
+	width: 80%;
+	margin: 0 auto;
 `;
 
 export default ItemDetail;
