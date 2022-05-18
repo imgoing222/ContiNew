@@ -21,7 +21,7 @@ function SaleInfo({ disabled, contractInfo }: Props) {
 	const handleSaleInfoChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target as HTMLInputElement;
 		dispatch(SET_STEP1({ ...contractInfo, [name]: value }));
-	}, 500);
+	}, 200);
 
 	return (
 		<>

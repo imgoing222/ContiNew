@@ -20,7 +20,7 @@ function ContractInfo({ disabled, contractInfo }: Props) {
 		console.log(contractInfo);
 		dispatch(SET_STEP1({ ...contractInfo, [name]: value }));
 		console.log(value);
-	}, 500);
+	}, 200);
 
 	return (
 		<>

@@ -22,7 +22,7 @@ function BuyerInfo({ step, role, contractInfo }: Props) {
 		const { name, value } = e.target as HTMLInputElement;
 		dispatch(SET_STEP2({ ...contractInfo, [name]: value }));
 		console.log(name, value);
-	}, 500);
+	}, 200);
 
 	useEffect(() => {
 		if (step === 2 && role === "buyer") {
