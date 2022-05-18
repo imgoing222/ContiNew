@@ -1,13 +1,11 @@
 import { useEffect, useState, useRef } from "react";
-import { useRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { RootState } from "src/store";
 
 import { chatApi } from "src/api";
 import { BottomSection, ChatListItem } from "@components/chat";
 import useInfiniteScroll from "@hooks/useInfiniteScroll";
-import { SET_ARTICLEINFO } from "src/store/articleInfo";
 
 interface Props {
 	sendMessage?: (inputChat: string) => void;
@@ -31,10 +29,8 @@ interface ChatListType {
 }
 
 function Chat({ sendMessage, roomId, receivedChatData }: Props) {
-	const router = useRouter();
-	const dispatch = useDispatch();
 	const chatBoxRef = useRef<HTMLDivElement>(null);
-	const { login_id, username } = useSelector((state: RootState) => state.userInfo);
+	const { username } = useSelector((state: RootState) => state.userInfo);
 	const [showChatList, setShowChatList] = useState<ChatListType[]>([]);
 
 	const {
@@ -53,29 +49,6 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 			return chatApi.getChatList(roomId, currentPage);
 		},
 	});
-
-	const DATA_SET = {
-		buyer: username,
-		buyer_id: login_id,
-		seller: "Seller",
-		seller_id: "kkkk",
-		sale: 1,
-	};
-
-	const createChattingRoom = async () => {
-		try {
-			const res = await chatApi.createChattingRoom(DATA_SET);
-			dispatch(SET_ARTICLEINFO(DATA_SET));
-			toChattingRoom(res.data.id);
-		} catch (error) {
-			console.log(error);
-		}
-	};
-
-	const toChattingRoom = (roomId: string) => {
-		router.push(`/chat/${roomId}`);
-		localStorage.setItem("RoomId", roomId);
-	};
 
 	useEffect(() => {
 		setCurrentPage(0);
@@ -120,7 +93,6 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 		<Container>
 			<Title>
 				<h3>여긴 채팅창</h3>
-				<button onClick={createChattingRoom}>채팅방생성[임시]</button>
 			</Title>
 			<Content>
 				{roomId && (
@@ -171,13 +143,6 @@ const TopSection = styled.div`
 	margin: 1rem 0;
 	flex-direction: column;
 	overflow: auto;
-`;
-
-const Textarea = styled.textarea`
-	font-size: 2rem;
-	border: solid 1px #d3d3d3;
-	resize: none;
-	border-radius: 10px;
 `;
 
 export default Chat;
