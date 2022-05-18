@@ -23,8 +23,8 @@ public class KakaoUserInfoResponse {
         String username = (String) properties.get("nickname");
 
         return Member.builder()
-            .loginId(username)
-            .username(username)
+            .loginId("k_" + id)
+            .username("k_" + username)
             .password(username + id)
             .authority(Authority.ROLE_MEMBER)
             .provider((Provider.KAKAO))
