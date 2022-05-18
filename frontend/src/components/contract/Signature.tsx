@@ -9,8 +9,9 @@ import styled from "styled-components";
 interface Props {
 	signatureDisabled: boolean;
 	role: string;
+	from: string;
 }
-function Signature({ signatureDisabled, role }: Props) {
+function Signature({ signatureDisabled, role, from }: Props) {
 	const dispatch = useDispatch();
 	const signCanvas = useRef() as React.MutableRefObject<any>;
 	const contract = useSelector((state: RootState) => state.contractInfo);
@@ -27,23 +28,31 @@ function Signature({ signatureDisabled, role }: Props) {
 	return (
 		<div>
 			{signatureDisabled ? (
-				<DisabledCanvas></DisabledCanvas>
+				<DisabledCanvas>
+					<img
+						src={
+							from === "sellerInfo" ? contractInfo.seller_signature : contractInfo.buyer_signature
+						}
+					/>
+				</DisabledCanvas>
 			) : (
-				<ReactSignatureCanvas
-					ref={signCanvas}
-					canvasProps={{ width: 300, height: 100, className: "sigCanvas" }}
-					clearOnResize={false}
-					backgroundColor="rgb(245, 245, 245)"
-					onEnd={formatIntoPng}
-				/>
+				<>
+					<ReactSignatureCanvas
+						ref={signCanvas}
+						canvasProps={{ width: 300, height: 100, className: "sigCanvas" }}
+						clearOnResize={false}
+						backgroundColor="rgb(245, 245, 245)"
+						onEnd={formatIntoPng}
+					/>
+					<button
+						onClick={() => {
+							signCanvas.current.clear();
+						}}
+					>
+						clear
+					</button>
+				</>
 			)}
-			<button
-				onClick={() => {
-					signCanvas.current.clear();
-				}}
-			>
-				clear
-			</button>
 		</div>
 	);
 }

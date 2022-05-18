@@ -25,9 +25,9 @@ function ContractorsInfo() {
 			<Section>
 				<SellerInfo step={step} role={role} contractInfo={contractInfo} />
 				<BuyerInfo step={step} role={role} contractInfo={contractInfo} />
-				<ContractionDate>
+				{/* <ContractionDate>
 					{year}년 {month}월 {date}일
-				</ContractionDate>
+				</ContractionDate> */}
 			</Section>
 		</>
 	);
