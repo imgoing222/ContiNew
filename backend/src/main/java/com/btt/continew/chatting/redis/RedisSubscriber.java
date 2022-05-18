@@ -17,12 +17,11 @@ public class RedisSubscriber {
 
 
     public void sendMessage(String publishMessage) {
-        System.out.println("4-2. 레디스 구독 처리");
+
         try {
-            System.out.println("publishMessage : "+publishMessage);
+
             ChatMessageRequest chatMessage = objectMapper.readValue(publishMessage, ChatMessageRequest.class);
 
-            System.out.println("4-3. 레디스 메시지 전달");
             messagingTemplate.convertAndSend("/sub/chat/room/" + chatMessage.getRoomId(), chatMessage);
         } catch (Exception e) {
             log.error("Exception {}", e);
