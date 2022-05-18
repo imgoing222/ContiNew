@@ -54,7 +54,7 @@ function ContractTerms() {
 	);
 }
 
-const Term = styled.p`
+const Term = styled.div`
 	font-size: 1.2rem;
 	font-weight: 900;
 	margin-bottom: 1.5rem;

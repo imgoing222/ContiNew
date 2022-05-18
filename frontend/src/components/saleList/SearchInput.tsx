@@ -51,8 +51,9 @@ function SearchInput({ kakaoMap }: MapRefType) {
 		<Container>
 			<MagnifyingGlass icon={faMagnifyingGlass} />
 			<SearchForm onSubmit={handleSubmit}>
-				<Input value={keyword} onChange={handleChange} />
+				<Input value={keyword} onChange={handleChange} placeholder="ex) 서초동, 서울대학교" />
 				<Button ref={buttonRef}>검색</Button>
+
 			</SearchForm>
 		</Container>
 	);
