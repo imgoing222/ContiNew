@@ -28,7 +28,7 @@ const reducer = (state: any, action: any) => {
 const persistConfig = {
 	key: "root",
 	storage,
-	whitelist: ["userInfo", "articleId"],
+	whitelist: ["userInfo", "articleInfo"],
 };
 
 export const persistedReducer = persistReducer(persistConfig, rootReducer);
