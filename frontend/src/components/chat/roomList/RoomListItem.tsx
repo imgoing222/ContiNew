@@ -26,11 +26,11 @@ function RoomListItem({ chat }: ChatProps) {
 	return (
 		<Container>
 			<LeftSection>
-				<h3>{name}</h3>
-				<div>{chat.last_message}</div>
+				<MainImage src={chat.main_image} alt="Img" />
 			</LeftSection>
 			<RightSection>
-				<MainImage src={chat.main_image} alt="Img" />
+				<h3>{name}</h3>
+				<div>{chat.last_message}</div>
 			</RightSection>
 		</Container>
 	);
@@ -45,16 +45,16 @@ const Container = styled.div`
 `;
 
 const LeftSection = styled.div`
-	width: 20rem;
+	width: 10rem;
 	display: flex;
 	flex-direction: column;
 `;
 
 const RightSection = styled.div`
-	width: 10rem;
+	width: 20rem;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	// align-items: center;
 `;
 
 const MainImage = styled.img`
