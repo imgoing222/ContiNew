@@ -37,27 +37,26 @@ public class ChatMessageService {
 
     @Transactional
     public void createMessage(ChatMessageRequest request) {
-        System.out.println("4-5. 메시지 생성 ");
+
         ChatMessage chatMessage = ChatMessage.create(request);
 
-        System.out.println("4-6. 라스트 메시지 세팅 ");
+
         ChatRoom chatRoom = opsHasChatRoom.get(CHAT_ROOMS, request.getRoomId());
         chatRoom.setLastMessage(request.getContent());
         chatRoom.setLastMessageTime(LocalDateTime.now());
         opsHasChatRoom.put(CHAT_ROOMS, chatRoom.getId(), chatRoom);
 
-        System.out.println("4-7. 메시지 Redis 저장");
+
         opsHashChatMessage.put(CHAT_MESSAGE, chatMessage.getId(), chatMessage);
     }
 
     @Transactional
     public ChatMessagesResponse showChatMessage(String roomId,Pageable pageable) {
-        System.out.println("5-2. 메시지 조회");
+
         List<ChatMessage> temps = opsHashChatMessage.values(CHAT_MESSAGE);
 
         List<ChatMessage> chatMessageList = new ArrayList<>();
 
-        System.out.println("5-3. 메시지 골라내기");
         for (ChatMessage temp : temps){
 
             if(temp.getRoomId().equals(roomId)){
@@ -65,15 +64,12 @@ public class ChatMessageService {
             }
         }
 
-        System.out.println("5-4. 메시지 정렬");
         chatMessageList.sort(Comparator.comparing(ChatMessage::getCreatedAt).reversed());
 
-        System.out.println("5-5. 메시지 페이지 네이션");
         int start = (int)pageable.getOffset();
         int end = Math.min((start+pageable.getPageSize()), chatMessageList.size());
         Page<ChatMessage> chatMessages = new PageImpl<>(chatMessageList.subList(start,end),pageable,chatMessageList.size());
 
-        System.out.println("5-6. 메시지 리스트 반환");
         return ChatMessagesResponse.from(chatMessages);
     }
 }
