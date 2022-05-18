@@ -23,7 +23,7 @@ function ContractForm() {
 
 	return (
 		<Container>
-			<Header>임차권 양도 양수 계약서</Header>
+			<Title>임차권 양도 양수 계약서</Title>
 			<SaleInfo disabled={disabled} contractInfo={contractInfo} />
 			<ContractInfo disabled={disabled} contractInfo={contractInfo} />
 			<ContractorsInfo />
@@ -38,6 +38,13 @@ const Container = styled.div`
 	margin: 3rem auto;
 	border: 0.3px solid #dddddd;
 	padding: 1.5rem;
+`;
+
+const Title = styled(Header)`
+	font-size: 3rem;
+	@media ${(props) => props.theme.mobile} {
+		font-size: 2.4rem;
+	}
 `;
 
 export default ContractForm;
