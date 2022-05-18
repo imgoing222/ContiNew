@@ -7,6 +7,11 @@ import contractApi from "src/api/contract";
 import { RootState } from "src/store";
 import { SET_CONTRACT, SET_ID, SET_LEVEL, SET_ROLE } from "src/store/contract";
 import { ContractStore } from "src/types/contractType";
+import styled from "styled-components";
+
+interface ButtonProps {
+	isColor?: boolean;
+}
 
 function Contract() {
 	const router = useRouter();
@@ -80,15 +85,17 @@ function Contract() {
 						<Step label="임차인 서명" />
 					</Stepper>
 					<ContractForm />
-					<div>
-						<button id="save" onClick={handleNextStepClick}>
+					<StyledDiv>
+						<Button id="save" onClick={handleNextStepClick}>
 							임시 저장
-						</button>
-						<button id="next" onClick={handleNextStepClick}>
+						</Button>
+						<Button id="next" onClick={handleNextStepClick} isColor={true}>
 							다음 단계
-						</button>
-					</div>
-					<button onClick={handleBreakContractButton}>계약 파기</button>
+						</Button>
+					</StyledDiv>
+					<Button onClick={handleBreakContractButton} isColor={true}>
+						계약 파기
+					</Button>
 				</>
 			)}
 		</>
@@ -96,3 +103,19 @@ function Contract() {
 }
 
 export default Contract;
+
+const StyledDiv = styled.div`
+	display: flex;
+	justify-content: center;
+`;
+
+const Button = styled.button<ButtonProps>`
+	border: ${(props) => (props.isColor ? "none" : `1px solid ${props.theme.borderColor}`)};
+	width: 10rem;
+	height: 3rem;
+	border-radius: 0.4rem;
+	background-color: ${(props) => (props.isColor ? props.theme.mainColor : "#fff")};
+	color: ${(props) => (props.isColor ? "#fff" : "#000")};
+	margin-right: 2rem;
+	cursor: pointer;
+`;
