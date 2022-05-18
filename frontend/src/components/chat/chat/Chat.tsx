@@ -1,7 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { RootState } from "src/store";
 
 import { chatApi } from "src/api";
 import { BottomSection, ChatListItem } from "@components/chat";
@@ -30,7 +28,6 @@ interface ChatListType {
 
 function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	const chatBoxRef = useRef<HTMLDivElement>(null);
-	const { username } = useSelector((state: RootState) => state.userInfo);
 	const [showChatList, setShowChatList] = useState<ChatListType[]>([]);
 
 	const {
@@ -92,7 +89,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	return (
 		<Container>
 			<Title>
-				<h3>여긴 채팅창</h3>
+				<h2>Chattings</h2>
 			</Title>
 			<Content>
 				{roomId && (
@@ -125,7 +122,9 @@ const Container = styled.div`
 const Title = styled.div`
 	width: 100%;
 	height: 8rem;
-	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	border-bottom: solid 2px #d3d3d3;
 `;
 
@@ -143,6 +142,17 @@ const TopSection = styled.div`
 	margin: 1rem 0;
 	flex-direction: column;
 	overflow: auto;
+
+	::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	::-webkit-scrollbar-thumb {
+    background-color: #d3d3d3;
+  }
+
+	::-webkit-scrollbar-track {
+    background-color: #fff;
 `;
 
 export default Chat;

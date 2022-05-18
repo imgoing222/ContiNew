@@ -7,6 +7,7 @@ import ArticleType from "src/types/getArticleType";
 import getArticleData from "@utils/getArticle";
 import snakeToCamel from "@utils/snakeToCamel";
 import ContractButton from "./ContractButton";
+import { PriceInfo } from "@components/article";
 
 interface Props {
 	isIndex?: boolean;
@@ -33,27 +34,19 @@ function ItemDetail({ isIndex, sendMessage }: Props) {
 	return (
 		<Container>
 			<Title>
-				<h3>Detail</h3>
+				<h2>Detail</h2>
 			</Title>
-			<Content>
-				{houseInfo && (
-					<div>
-						<div>
-							<img src={houseInfo.images[0]} alt="Img" width="100%" height={200} />
-						</div>
-						<div>
-							<h3>가격정보.</h3>
-							<p>
-								{houseInfo.contractType}: {houseInfo.deposit}/{houseInfo.monthlyRent}
-							</p>
-							<p>관리비: 매월 {houseInfo.maintenanceFee} 만 원</p>
-							<h3>위치</h3>
-							<p>{houseInfo.jibunAddress}</p>
-						</div>
+			{houseInfo && (
+				<Content>
+					<MainImage src={houseInfo.images[0]} />
+					<ButtonContainer>
 						<ContractButton sendMessage={sendMessage} />
-					</div>
-				)}
-			</Content>
+					</ButtonContainer>
+					<PriceInfo houseInfo={houseInfo} />
+					<LocationTitle>위치 정보</LocationTitle>
+					<Address>{houseInfo.jibunAddress}</Address>
+				</Content>
+			)}
 		</Container>
 	);
 }
@@ -70,7 +63,9 @@ const Container = styled.div`
 const Title = styled.div`
 	width: 100%;
 	height: 8rem;
-	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	border-bottom: solid 2px #d3d3d3;
 `;
 
@@ -78,6 +73,38 @@ const Content = styled.div`
 	width: 100%;
 	height: 100%;
 	min-height: 5rem;
+	overflow: auto;
+
+	::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	::-webkit-scrollbar-thumb {
+    background-color: #d3d3d3;
+  }
+
+	::-webkit-scrollbar-track {
+    background-color: #fff;
+`;
+
+const LocationTitle = styled.h1`
+	font-size: 2.5rem;
+	margin-bottom: 3rem;
+`;
+
+const Address = styled.p`
+	font-size: 1.8rem;
+`;
+
+const MainImage = styled.img`
+	width: 100%;
+	max-height: 20rem;
+`;
+
+const ButtonContainer = styled.div`
+	display: flex;
+	justify-content: end;
+	margin: 1rem;
 `;
 
 export default ItemDetail;
