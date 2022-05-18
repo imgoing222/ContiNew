@@ -27,6 +27,12 @@ export interface EventProps {
 	setHouseInfo?: React.Dispatch<React.SetStateAction<HouseInfo>>;
 }
 
+export interface TextAreaProps {
+	changeEvent: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+	houseInfo: HouseInfo;
+	setHouseInfo?: React.Dispatch<React.SetStateAction<HouseInfo>>;
+}
+
 const numberKey = ["deposit", "monthlyRent", "maintenanceFee", "period", "floor"];
 
 function index() {
@@ -88,6 +94,9 @@ function index() {
 		if (numberKey.includes(e.target.name)) return onlyNumber(e);
 		setHouseInfo({ ...houseInfo, [e.target.name]: e.target.value });
 	};
+	const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setHouseInfo({ ...houseInfo, [e.target.name]: e.target.value });
+	};
 
 	const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
 		e.preventDefault();
@@ -125,7 +134,7 @@ function index() {
 				<Photos houseInfo={houseInfo} changeEvent={handleHouseInfo} setHouseInfo={setHouseInfo} />
 				<Description
 					houseInfo={houseInfo}
-					changeEvent={handleHouseInfo}
+					changeEvent={handleTextArea}
 					setHouseInfo={setHouseInfo}
 				/>
 				<Div>
