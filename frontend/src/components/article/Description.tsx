@@ -6,8 +6,8 @@ function Description({ houseInfo }: HouseInfoProps) {
 	return (
 		<Container title="상세 설명">
 			<TextArea>
-				{houseInfo.description.split("\n").map((line) => (
-					<span>
+				{houseInfo.description.split("\n").map((line, idx) => (
+					<span key={idx}>
 						{line}
 						<br />
 					</span>
