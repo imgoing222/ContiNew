@@ -2,6 +2,8 @@ package com.btt.continew.auth.domain;
 
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
+import java.io.Serializable;
+import java.util.UUID;
 import javax.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,10 +14,10 @@ import org.springframework.data.redis.core.TimeToLive;
 
 @Getter
 @RedisHash("refresh_token")
-public class RefreshToken {
+public class RefreshToken implements Serializable {
 
     @Id
-    Long id;
+    String id;
 
     String refreshToken;
 
@@ -27,6 +29,7 @@ public class RefreshToken {
 
     @Builder
     public RefreshToken(String refreshToken, String subject, Long timeout) {
+        this.id = UUID.randomUUID().toString();
         this.refreshToken = refreshToken;
         this.subject = subject;
         this.timeout = timeout;
