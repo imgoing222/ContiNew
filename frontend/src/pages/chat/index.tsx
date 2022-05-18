@@ -1,14 +1,13 @@
 import styled from "styled-components";
 
-import { Chat, RoomList, ItemDetail } from "@components/chat";
+import { RoomList, ChatMain } from "@components/chat";
 
 function ChatPage() {
 
 	return (
 		<Container>
 			<RoomList />
-			<Chat />
-			<ItemDetail isIndex={true} />
+			<ChatMain />
 		</Container>
 	);
 }
