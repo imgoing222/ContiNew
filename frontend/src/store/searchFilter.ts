@@ -57,10 +57,10 @@ export const setOptions = (data: actionProps) => ({
 });
 
 const initialState = {
-	yBottom: 37.346205843226286,
-	yTop: 37.37289879925311,
-	xLeft: 127.07742096588048,
-	xRight: 127.13308476413413,
+	yBottom: 37.464403462045794,
+	yTop: 37.64268459862409,
+	xLeft: 126.77103447067478,
+	xRight: 127.16968636277439,
 	saleType: "",
 	houseType: "",
 	contractType: "",
