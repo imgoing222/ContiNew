@@ -10,6 +10,7 @@ import com.btt.continew.house.service.HouseService;
 import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -76,6 +77,8 @@ public class ChatRoomService {
                 chatRoomList.add(temp);
             }
         }
+
+        chatRoomList.sort(Comparator.comparing(ChatRoom::getLastMessageTime).reversed());
 
         int start = (int)pageable.getOffset();
         int end = Math.min((start+pageable.getPageSize()), chatRoomList.size());
