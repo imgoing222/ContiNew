@@ -54,22 +54,16 @@ function Contract() {
 	const handleNextStepClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		const { id } = e.target as HTMLElement;
 		console.log(id);
+
 		if (id === "next") dispatch(SET_LEVEL(true));
 		else if (id === "save") dispatch(SET_LEVEL(false));
-		console.log(contract.contract.buyer_signature);
+		console.log(contract);
 		const contractInfo = { ...contract.id, ...contract.contract, ...contract.level };
-		console.log(contractInfo);
 		const res = await contractApi.createContract(contractInfo);
 		console.log(res);
 		if (res.status) {
 			alert(`${step}단계 계약서 작성이 완료되었습니다.`);
-			router.push(
-				{
-					pathname: `/contract/${articleId}`,
-					query: { buyerId, sellerId, articleId },
-				},
-				`/contract/${articleId}`,
-			);
+			router.push("/contract");
 		}
 	};
 
