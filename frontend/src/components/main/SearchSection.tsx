@@ -2,8 +2,6 @@ import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
-import SearchInput from "@components/saleList/SearchInput";
-
 export interface MapRefType {
 	kakaoMap: React.MutableRefObject<kakao.maps.Map>;
 }
@@ -11,7 +9,6 @@ export interface MapRefType {
 function SearchSection() {
 	const router = useRouter();
 	const [inputValue, setInputValue] = useState("");
-	const kakaoMap = useRef<kakao.maps.Map>();
 
 	useEffect(() => {
 		const $script = document.createElement("script");
@@ -36,8 +33,8 @@ function SearchSection() {
 	return (
 		<Section>
 			<SearchBox>
-				<input type="text" onChange={handleChange} />
-				<button onClick={search}>검색</button>
+				<Input type="text" onChange={handleChange} placeholder="지역명을 입력해주세요." />
+				<Button onClick={search}>검색</Button>
 			</SearchBox>
 		</Section>
 	);
@@ -55,12 +52,13 @@ const Section = styled.section`
 
 const SearchBox = styled.div`
 	margin: auto 0 10rem;
-	width: 40rem;
-	height: 5rem;
+	width: 60rem;
+	height: 6rem;
 	border-radius: 10px;
 	display: flex;
 	justify-content: center;
 	background-color: #ffffff;
+	align-items: center;
 
 	@media ${(props) => props.theme.mobile} {
 		width: 27rem;
@@ -69,6 +67,38 @@ const SearchBox = styled.div`
 	@media ${(props) => props.theme.mobileXS} {
 		width: 13rem;
 		height: 4rem;
+	}
+`;
+
+const Input = styled.input`
+	width: 48rem;
+	height: 4rem;
+	font-size: 1.5rem;
+	outline: none;
+	border: none;
+	@media ${(props) => props.theme.mobile} {
+		width: 17rem;
+	}
+	@media ${(props) => props.theme.mobileXS} {
+		width: 6rem;
+	}
+`;
+
+const Button = styled.button`
+	width: 7rem;
+	height: 4rem;
+	color: #fff;
+	background-color: ${(props) => props.theme.mainColor};
+	border: none;
+	font-size: 1.5rem;
+	font-weight: bold;
+	&:hover {
+		cursor: pointer;
+	}
+	@media ${(props) => props.theme.mobileXS} {
+		width: 3rem;
+		height: 3rem;
+		font-size: 1rem;
 	}
 `;
 

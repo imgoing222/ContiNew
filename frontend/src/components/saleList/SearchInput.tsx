@@ -14,7 +14,7 @@ function SearchInput({ kakaoMap }: MapRefType) {
 	useEffect(() => {
 		if (inputValue !== "undefined") {
 			setKeyword(inputValue);
-			setTimeout(() => {buttonRef.current && buttonRef.current.click()}, 20);
+			setTimeout(() => {buttonRef.current && buttonRef.current.click()}, 100);
 		}
 	}, []);
 
