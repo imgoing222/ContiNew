@@ -7,6 +7,7 @@ import ArticleType from "src/types/getArticleType";
 import getArticleData from "@utils/getArticle";
 import snakeToCamel from "@utils/snakeToCamel";
 import ContractButton from "./ContractButton";
+import { PriceInfo } from "@components/article";
 
 interface Props {
 	isIndex?: boolean;
@@ -35,25 +36,15 @@ function ItemDetail({ isIndex, sendMessage }: Props) {
 			<Title>
 				<h2>Detail</h2>
 			</Title>
-			<Content>
-				{houseInfo && (
-					<div>
-						<div>
-							<img src={houseInfo.images[0]} alt="Img" width="100%" height={200} />
-						</div>
-						<div>
-							<h3>가격정보.</h3>
-							<p>
-								{houseInfo.contractType}: {houseInfo.deposit}/{houseInfo.monthlyRent}
-							</p>
-							<p>관리비: 매월 {houseInfo.maintenanceFee} 만 원</p>
-							<h3>위치</h3>
-							<p>{houseInfo.jibunAddress}</p>
-						</div>
-						<ContractButton sendMessage={sendMessage} />
-					</div>
-				)}
-			</Content>
+			{houseInfo && (
+				<Content>
+					<MainImage src={houseInfo.images[0]} />
+					<ContractButton sendMessage={sendMessage} />
+					<PriceInfo houseInfo={houseInfo} />
+					<LocationTitle>위치 정보</LocationTitle>
+					<Address>{houseInfo.jibunAddress}</Address>
+				</Content>
+			)}
 		</Container>
 	);
 }
@@ -80,6 +71,21 @@ const Content = styled.div`
 	width: 100%;
 	height: 100%;
 	min-height: 5rem;
+	overflow: auto;
+`;
+
+const LocationTitle = styled.h1`
+	font-size: 2.5rem;
+	margin-bottom: 3rem;
+`;
+
+const Address = styled.p`
+	font-size: 1.8rem;
+`;
+
+const MainImage = styled.img`
+	width: 100%;
+	max-height: 20rem;
 `;
 
 export default ItemDetail;
