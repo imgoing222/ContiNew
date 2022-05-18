@@ -65,7 +65,7 @@ function SellerInfo({ step, role, contractInfo }: Props) {
 				onChange={handleSellerInfoChange}
 			/>
 			<Label>서명</Label>
-			<Signature signatureDisabled={signatureDisabled} role={role} />
+			<Signature signatureDisabled={signatureDisabled} role={role} from="sellerInfo" />
 		</>
 	);
 }
