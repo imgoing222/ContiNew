@@ -62,7 +62,7 @@ function BuyerInfo({ step, role, contractInfo }: Props) {
 				onChange={handleBuyerInfoChange}
 			/>
 			<Label>서명</Label>
-			<Signature signatureDisabled={signatureDisabled} role={role} />
+			<Signature signatureDisabled={signatureDisabled} role={role} from="buyerInfo" />
 		</>
 	);
 }
