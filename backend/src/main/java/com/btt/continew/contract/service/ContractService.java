@@ -3,8 +3,8 @@ package com.btt.continew.contract.service;
 import com.btt.continew.contract.controller.dto.request.ContractAgreeRequest;
 import com.btt.continew.contract.controller.dto.request.ContractRequest;
 import com.btt.continew.contract.controller.dto.response.ContractAgreeResponse;
-import com.btt.continew.contract.controller.dto.response.ContractMineResponse;
 import com.btt.continew.contract.controller.dto.response.ContractResponse;
+import com.btt.continew.contract.controller.dto.response.ContractSimpleResponse;
 import com.btt.continew.contract.domain.Contract;
 import com.btt.continew.contract.domain.ContractAgree;
 import com.btt.continew.contract.domain.ContractAgreeRepository;
@@ -16,6 +16,7 @@ import com.btt.continew.house.service.HouseService;
 import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -207,10 +208,11 @@ public class ContractService {
     }
 
     @Transactional(readOnly = true)
-    public ContractMineResponse showMyContracts(String loginId) {
+    public List<ContractSimpleResponse> showMyContracts(String loginId) {
         Member user = memberService.findByLoginId(loginId);
-        List<Contract> sellerContracts = contractRepository.findAllBySeller(user);
-        List<Contract> buyerContracts = contractRepository.findAllByBuyer(user);
-        return ContractMineResponse.of(sellerContracts, buyerContracts);
+        List<Contract> contracts = contractRepository.findAllBySellerOrBuyer(user, user);
+        return contracts.stream()
+            .map(ContractSimpleResponse::from)
+            .collect(Collectors.toList());
     }
 }
