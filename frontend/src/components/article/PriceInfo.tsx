@@ -10,9 +10,9 @@ function PriceInfo({ houseInfo }: HouseInfoProps) {
 				name={houseInfo.contractType}
 				content={
 					houseInfo.contractType === "월세"
-						? moneyUnitChange(houseInfo.monthlyRent.toString()) +
+						? moneyUnitChange(houseInfo.deposit.toString()) +
 						  "/" +
-						  moneyUnitChange(houseInfo.maintenanceFee.toString())
+						  moneyUnitChange(houseInfo.monthlyRent.toString())
 						: moneyUnitChange(houseInfo.deposit.toString())
 				}
 			/>

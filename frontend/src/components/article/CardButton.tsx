@@ -5,24 +5,15 @@ import { SET_ARTICLEINFO } from "src/store/articleInfo";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import Link from "next/link";
-import { HouseInfoProps } from "src/pages/article/[id]";
-import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
+import { CardProps } from "./CardDescription";
 
-function CardButton({ houseInfo }: HouseInfoProps) {
+function CardButton({ houseInfo, isBookmark, setIsBookmark }: CardProps) {
 	const dispatch = useDispatch();
-	const [isBookmark, setIsBookmark] = useState(false);
 	const router = useRouter();
 	const { login_id, username } = useSelector((state: RootStateOrAny) => state.userInfo);
 
-	useEffect(() => {
-		const checkBookmark = async () => {
-			const bookmarkConfirm = (await articleApi.checkBoomark(houseInfo.houseId)).data.is_liked;
-			setIsBookmark(bookmarkConfirm);
-		};
-		checkBookmark();
-	}, []);
 	const startChat = async () => {
 		try {
 			const chatDataSet = {

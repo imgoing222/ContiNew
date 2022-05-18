@@ -14,6 +14,7 @@ import ArticleType from "src/types/getArticleType";
 import styled from "styled-components";
 import Error from "next/error";
 import Spinner from "@components/Spinner";
+import { articleApi } from "src/api";
 export interface HouseInfoProps {
 	houseInfo: ArticleType;
 }
@@ -21,6 +22,8 @@ export interface HouseInfoProps {
 function index() {
 	const router = useRouter();
 	const [houseInfo, setHouseInfo] = useState<ArticleType | null>(null);
+	const [isBookmark, setIsBookmark] = useState(false);
+
 	const id = router.query.id;
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -35,6 +38,15 @@ function index() {
 
 		setData();
 	}, [id]);
+	useEffect(() => {
+		const checkBookmark = async () => {
+			if (id !== undefined) {
+				const bookmarkConfirm = (await articleApi.checkBoomark(+id)).data.is_liked;
+				setIsBookmark(bookmarkConfirm);
+			}
+		};
+		checkBookmark();
+	}, [id]);
 
 	if (isLoading) {
 		return <Spinner />;
@@ -48,10 +60,14 @@ function index() {
 					<OptionInfo houseInfo={houseInfo} />
 					<LocationInfo houseInfo={houseInfo} />
 					<Description houseInfo={houseInfo} />
-					<CardButton houseInfo={houseInfo} />
+					<CardButton houseInfo={houseInfo} isBookmark={isBookmark} setIsBookmark={setIsBookmark} />
 				</SaleInfo>
 				<Card>
-					<CardDescription houseInfo={houseInfo} />
+					<CardDescription
+						houseInfo={houseInfo}
+						isBookmark={isBookmark}
+						setIsBookmark={setIsBookmark}
+					/>
 				</Card>
 			</Container>
 		</Div>
