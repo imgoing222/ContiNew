@@ -32,10 +32,8 @@ public class ChatMessageRestController {
     @MessageMapping("/chat/message")
     public void message(ChatMessageRequest request) {
 
-        System.out.println("4-1. 메시지 전달");
         redisTemplate.convertAndSend(channelTopic.getTopic(), request);
 
-        System.out.println("4-4. 메시지 저장 서비스 실행");
         chatMessageService.createMessage(request);
 
     }
@@ -48,8 +46,6 @@ public class ChatMessageRestController {
     public ChatMessagesResponse getChatMessage(
         @PageableDefault(sort = "created_at", direction = Direction.DESC)Pageable pageable,
         @RequestParam("room_id") String roomId){
-
-        System.out.println("5-1. 겟 챗 메시지");
 
         return chatMessageService.showChatMessage(roomId, pageable);
     }
