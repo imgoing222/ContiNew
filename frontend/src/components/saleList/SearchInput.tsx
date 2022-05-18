@@ -14,7 +14,9 @@ function SearchInput({ kakaoMap }: MapRefType) {
 	useEffect(() => {
 		if (inputValue !== "undefined") {
 			setKeyword(inputValue);
-			setTimeout(() => {buttonRef.current && buttonRef.current.click()}, 100);
+			setTimeout(() => {
+				buttonRef.current && buttonRef.current.click();
+			}, 100);
 		}
 	}, []);
 
@@ -53,7 +55,6 @@ function SearchInput({ kakaoMap }: MapRefType) {
 			<SearchForm onSubmit={handleSubmit}>
 				<Input value={keyword} onChange={handleChange} placeholder="ex) 서초동, 서울대학교" />
 				<Button ref={buttonRef}>검색</Button>
-
 			</SearchForm>
 		</Container>
 	);
