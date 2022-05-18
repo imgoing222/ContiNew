@@ -31,7 +31,7 @@ public class RedisConfig {
 
     @Bean
     public ChannelTopic channelTopic() {
-        System.out.println("1-1. 채널 토픽");
+
         return new ChannelTopic("chat_room");
     }
 
@@ -39,7 +39,7 @@ public class RedisConfig {
     public RedisMessageListenerContainer redisMessageListener(RedisConnectionFactory connectionFactory,
         MessageListenerAdapter listenerAdapter,
         ChannelTopic channelTopic) {
-        System.out.println("1-4. 레디스 메시지 리스너");
+
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
         container.addMessageListener(listenerAdapter, channelTopic);
@@ -48,7 +48,7 @@ public class RedisConfig {
 
     @Bean
     public MessageListenerAdapter listenerAdapter(RedisSubscriber subscriber) {
-        System.out.println("1-3. 리스너 어댑터");
+
         return new MessageListenerAdapter(subscriber, "sendMessage");
     }
 
