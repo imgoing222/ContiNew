@@ -32,10 +32,10 @@ public class ContractMineResponse {
     public static ContractMineResponse of(List<Contract> sellerContracts, List<Contract> buyerContracts) {
         return new ContractMineResponse(
             sellerContracts.stream()
-                .map(ContractSimpleResponse::fromSeller)
+                .map(ContractSimpleResponse::from)
                 .collect(Collectors.toList()),
             buyerContracts.stream()
-                .map(ContractSimpleResponse::fromBuyer)
+                .map(ContractSimpleResponse::from)
                 .collect(Collectors.toList())
         );
     }

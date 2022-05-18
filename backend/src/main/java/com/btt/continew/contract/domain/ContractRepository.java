@@ -10,7 +10,5 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
 
     Optional<Contract> findByHouseAndSellerAndBuyer(House house, Member seller, Member buyer);
 
-    List<Contract> findAllBySeller(Member seller);
-
-    List<Contract> findAllByBuyer(Member buyer);
+    List<Contract> findAllBySellerOrBuyer(Member seller, Member buyer);
 }
