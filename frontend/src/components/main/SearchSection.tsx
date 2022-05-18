@@ -1,4 +1,5 @@
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import SearchInput from "@components/saleList/SearchInput";
@@ -8,12 +9,36 @@ export interface MapRefType {
 }
 
 function SearchSection() {
+	const router = useRouter();
+	const [inputValue, setInputValue] = useState("");
 	const kakaoMap = useRef<kakao.maps.Map>();
+
+	useEffect(() => {
+		const $script = document.createElement("script");
+		$script.async = true;
+		$script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&autoload=false&libraries=services,clusterer,drawing`;
+		document.head.appendChild($script);
+	}, []);
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setInputValue(e.target.value);
+	};
+
+	const search = () => {
+		router.push({
+			pathname: "/saleList",
+			query: {
+				inputValue: inputValue,
+			},
+		});
+	};
+
 	return (
 		<Section>
-			{/* <SearchBox>
-				<SearchInput kakaoMap={kakaoMap as React.MutableRefObject<kakao.maps.Map>} />
-			</SearchBox> */}
+			<SearchBox>
+				<input type="text" onChange={handleChange} />
+				<button onClick={search}>검색</button>
+			</SearchBox>
 		</Section>
 	);
 }
