@@ -18,7 +18,7 @@ function LeftSection() {
 	const menu = [
 		{ id: 1, name: "지도", address: "/saleList" },
 		{ id: 2, name: "방내놓기", address: "/createSale" },
-		{ id: 3, name: "계약", address: "/contract/1" },
+		{ id: 3, name: "계약", address: "/contract" },
 	];
 
 	return (
