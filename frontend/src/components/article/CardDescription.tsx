@@ -6,12 +6,17 @@ import { HouseInfoProps } from "src/pages/article/[id]";
 import IconPart from "./IconPart";
 import CardButton from "./CardButton";
 import cookie from "react-cookies";
+import { Dispatch, SetStateAction } from "react";
 
 interface TextProp {
 	margin?: string;
 }
+export interface CardProps extends HouseInfoProps {
+	isBookmark: boolean;
+	setIsBookmark: Dispatch<SetStateAction<boolean>>;
+}
 
-function CardDescription({ houseInfo }: HouseInfoProps) {
+function CardDescription({ houseInfo, isBookmark, setIsBookmark }: CardProps) {
 	const accessToken = cookie.load("access_token");
 
 	return (
@@ -43,7 +48,9 @@ function CardDescription({ houseInfo }: HouseInfoProps) {
 				/>
 				<Hr />
 			</div>
-			{accessToken && <CardButton houseInfo={houseInfo} />}
+			{accessToken && (
+				<CardButton houseInfo={houseInfo} isBookmark={isBookmark} setIsBookmark={setIsBookmark} />
+			)}
 		</Container>
 	);
 }
