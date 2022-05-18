@@ -15,6 +15,8 @@ import styled from "styled-components";
 import Error from "next/error";
 import Spinner from "@components/Spinner";
 import { articleApi } from "src/api";
+import { useSelector } from "react-redux";
+import { RootState } from "src/store";
 export interface HouseInfoProps {
 	houseInfo: ArticleType;
 }
@@ -23,10 +25,9 @@ function index() {
 	const router = useRouter();
 	const [houseInfo, setHouseInfo] = useState<ArticleType | null>(null);
 	const [isBookmark, setIsBookmark] = useState(false);
-
 	const id = router.query.id;
 	const [isLoading, setIsLoading] = useState(true);
-
+	const isLogin = useSelector((state: RootState) => state.userInfo.id);
 	useEffect(() => {
 		const setData = async () => {
 			if (id !== undefined) {
@@ -40,7 +41,7 @@ function index() {
 	}, [id]);
 	useEffect(() => {
 		const checkBookmark = async () => {
-			if (id !== undefined) {
+			if (id !== undefined && isLogin) {
 				const bookmarkConfirm = (await articleApi.checkBoomark(+id)).data.is_liked;
 				setIsBookmark(bookmarkConfirm);
 			}
@@ -60,7 +61,13 @@ function index() {
 					<OptionInfo houseInfo={houseInfo} />
 					<LocationInfo houseInfo={houseInfo} />
 					<Description houseInfo={houseInfo} />
-					<CardButton houseInfo={houseInfo} isBookmark={isBookmark} setIsBookmark={setIsBookmark} />
+					<StyledDiv>
+						<CardButton
+							houseInfo={houseInfo}
+							isBookmark={isBookmark}
+							setIsBookmark={setIsBookmark}
+						/>
+					</StyledDiv>
 				</SaleInfo>
 				<Card>
 					<CardDescription
@@ -104,5 +111,12 @@ const Card = styled.div`
 	flex-direction: row-reverse;
 	@media ${(props) => props.theme.mobileXS} {
 		display: none;
+	}
+`;
+
+const StyledDiv = styled.div`
+	display: none;
+	@media screen and (max-width: 450px) {
+		display: block;
 	}
 `;
