@@ -45,7 +45,7 @@ function SearchSection() {
 				<Input
 					type="text"
 					onChange={handleChange}
-					placeholder="지역명을 입력해주세요."
+					placeholder="ex) 서초동, 서울대학교"
 					onKeyDown={onKeyDownEnter}
 				/>
 				<Button onClick={search}>검색</Button>
