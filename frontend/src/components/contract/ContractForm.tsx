@@ -11,9 +11,9 @@ import SaleInfo from "./SaleInfo";
 function ContractForm() {
 	const [disabled, setDisabled] = useState(true);
 	const contract: ContractStore = useSelector((state: RootState) => state.contractInfo);
-	const contractInfo: ContractType = contract["contract"];
+	const contractInfo: ContractType = contract.contract;
 	const step = contract.step.current_step;
-	const role = contract["role"]["user_role"];
+	const role = contract.role.user_role;
 
 	useEffect(() => {
 		if (step === 1 && role === "seller") {

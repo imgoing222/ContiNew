@@ -24,7 +24,7 @@ export const SET_ID = (data: required) => ({ type: ID, data });
 export const SET_LEVEL = (data: boolean) => ({ type: LEVEL, data });
 export const SET_ROLE = (data: string) => ({ type: ROLE, data });
 export const SET_STEP1 = (data: ContractType) => ({ type: STEP1, data });
-export const SET_STEP2 = (data: string) => ({ type: STEP2, data });
+export const SET_STEP2 = (data: ContractType) => ({ type: STEP2, data });
 export const SET_STEP3 = (data: string) => ({ type: STEP3, data });
 
 const initialState = {
@@ -158,7 +158,11 @@ function contractInfo(state = initialState, action: actionType) {
 				...state,
 				contract: {
 					...state.contract,
-					buyer_signature: action.data,
+					buyer_address: action.data.buyer_address,
+					buyer_name: action.data.buyer_name,
+					buyer_birth: action.data.buyer_birth,
+					buyer_phone: action.data.buyer_phone,
+					buyer_signature: action.data.buyer_signature,
 				},
 			};
 		case STEP3:

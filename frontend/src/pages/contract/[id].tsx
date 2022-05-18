@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import contractApi from "src/api/contract";
 import { RootState } from "src/store";
 import { SET_CONTRACT, SET_ID, SET_LEVEL, SET_ROLE } from "src/store/contract";
-import { ContractStore, ContractType } from "src/types/contractType";
+import { ContractStore } from "src/types/contractType";
 
 function Contract() {
 	const router = useRouter();
@@ -48,12 +48,18 @@ function Contract() {
 
 	const handleNextStepClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		const { id } = e.target as HTMLElement;
+		console.log(id);
 		if (id === "next") dispatch(SET_LEVEL(true));
 		else if (id === "save") dispatch(SET_LEVEL(false));
+		console.log(contract.contract.buyer_signature);
 		const contractInfo = { ...contract.id, ...contract.contract, ...contract.level };
 		console.log(contractInfo);
 		const res = await contractApi.createContract(contractInfo);
 		console.log(res);
+		if (res.status) {
+			alert(`${step}단계 계약서 작성이 완료되었습니다.`);
+			router.push("/");
+		}
 	};
 
 	return (
