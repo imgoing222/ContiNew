@@ -46,16 +46,6 @@ function RecommendSection({ addressData }: DataProps) {
 	return (
 		<Section>
 			<Title>{addressData.dong_name} 추천매물</Title>
-			{aroundHousesData.length > 3 && (
-				<ArrowButtonBox>
-					<ArrowButtonDiv scrollState={scrollState}>
-						<ArrowButton icon={faChevronLeft} onClick={() => handleScroll()} />
-					</ArrowButtonDiv>
-					<ArrowButtonDiv direction="right" scrollState={scrollState}>
-						<ArrowButton icon={faChevronRight} onClick={() => handleScroll("right")} />
-					</ArrowButtonDiv>
-				</ArrowButtonBox>
-			)}
 			<Ul scrollState={scrollState}>
 				{aroundHousesData.length ? (
 					aroundHousesData.map((house) => <RecommendItem key={house.house_id} house={house} />)
@@ -69,6 +59,16 @@ function RecommendSection({ addressData }: DataProps) {
 					</TextBox>
 				)}
 			</Ul>
+			{aroundHousesData.length > 3 && (
+				<ArrowButtonBox>
+					<ArrowButtonDiv scrollState={scrollState}>
+						<ArrowButton icon={faChevronLeft} onClick={() => handleScroll()} />
+					</ArrowButtonDiv>
+					<ArrowButtonDiv direction="right" scrollState={scrollState}>
+						<ArrowButton icon={faChevronRight} onClick={() => handleScroll("right")} />
+					</ArrowButtonDiv>
+				</ArrowButtonBox>
+			)}
 		</Section>
 	);
 }

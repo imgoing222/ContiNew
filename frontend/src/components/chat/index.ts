@@ -6,3 +6,5 @@ export { default as RoomList } from "./roomList/RoomList";
 export { default as RoomListItem } from "./roomList/RoomListItem";
 
 export { default as ItemDetail } from "./itemDetail/ItemDetail";
+
+export { default as ChatMain } from "./ChatMain";
