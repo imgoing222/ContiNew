@@ -9,6 +9,7 @@ interface ProfileApiType {
 		new_password: string;
 	}) => Promise<AxiosResponse>;
 	getBookmarks: (page: number) => Promise<AxiosResponse>;
+	getMyArticles: () => Promise<AxiosResponse>;
 }
 
 const profileApi: ProfileApiType = {
@@ -16,6 +17,7 @@ const profileApi: ProfileApiType = {
 	changeUsername: (username) => request.put(`auth/members/info`, username),
 	changePassword: (passwords) => request.put(`auth/members/password`, passwords),
 	getBookmarks: (page) => request.get(`auth/houses/likes?page=${page}&size=5`),
+	getMyArticles: () => request.get(`auth/houses/mine`),
 };
 
 export default profileApi;

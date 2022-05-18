@@ -1,21 +1,22 @@
 import styled from "styled-components";
 
 interface Props {
-	onUserInfo: boolean;
-	setOnUserInfo: React.Dispatch<React.SetStateAction<boolean>>;
+	setCurrentTab: React.Dispatch<React.SetStateAction<number>>;
+	tabs: string[];
 }
 
-function Tabs({ onUserInfo, setOnUserInfo }: Props) {
-	const handleTabClick = (e: React.MouseEvent<HTMLParagraphElement>) => {
-		const { innerHTML } = e.target as HTMLParagraphElement;
-		if (innerHTML === "내 정보") setOnUserInfo(true);
-		else if (innerHTML === "관심목록") setOnUserInfo(false);
+function Tabs({ setCurrentTab, tabs }: Props) {
+	const handleTabClick = (tab: string) => {
+		if (tab === "내 정보") setCurrentTab(0);
+		else if (tab === "북마크") setCurrentTab(1);
+		else if (tab === "내 매물") setCurrentTab(2);
 	};
 
 	return (
 		<Container>
-			<Tab onClick={handleTabClick}>내 정보</Tab>
-			<Tab onClick={handleTabClick}>관심목록</Tab>
+			{tabs.map((tab) => (
+				<Tab onClick={() => handleTabClick(tab)}>{tab}</Tab>
+			))}
 		</Container>
 	);
 }
