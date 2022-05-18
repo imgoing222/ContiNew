@@ -1,16 +1,13 @@
-import { Header } from "@components/account/Header";
 import { useRouter } from "next/router";
 import { MyContracts } from "src/types/MyContracts";
 import styled from "styled-components";
 
 interface Props {
-	header: string;
 	contracts: MyContracts[] | undefined;
 }
 
-function MyContractsForm({ header, contracts }: Props) {
+function MyContractsForm({ contracts }: Props) {
 	const router = useRouter();
-	console.log(contracts);
 	const handleMyContractClick = (articleId: number, sellerId: string, buyerId: string) => {
 		router.push(
 			{
@@ -22,8 +19,6 @@ function MyContractsForm({ header, contracts }: Props) {
 	};
 	return (
 		<div>
-			<Header>{header}</Header>
-
 			{contracts && contracts.length > 0 ? (
 				<>
 					{contracts.map((contract, idx) => (
@@ -33,7 +28,7 @@ function MyContractsForm({ header, contracts }: Props) {
 								handleMyContractClick(contract.house_id, contract.seller_id, contract.buyer_id);
 							}}
 						>
-							<img src={contract.house_image} />
+							<Img src={contract.house_image} />
 							<div>
 								<p>{contract.location}</p>
 								<p>{contract.contract_type}</p>
@@ -46,7 +41,7 @@ function MyContractsForm({ header, contracts }: Props) {
 					))}
 				</>
 			) : (
-				<p>진행중인 계약이 없습니다</p>
+				<p>진행중이거나 완료된 계약이 없습니다</p>
 			)}
 		</div>
 	);
@@ -59,6 +54,11 @@ const MyContractItem = styled.div`
 	display: flex;
 	max-height: 20vh;
 	margin: 4rem auto;
-	width: 80%;
+	width: 100%;
+`;
+
+const Img = styled.img`
+	display: block;
+	max-width: 30%;
 `;
 export default MyContractsForm;

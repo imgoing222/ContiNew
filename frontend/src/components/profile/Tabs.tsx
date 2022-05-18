@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 interface Props {
@@ -6,16 +7,18 @@ interface Props {
 }
 
 function Tabs({ setCurrentTab, tabs }: Props) {
-	const handleTabClick = (tab: string) => {
-		if (tab === "내 정보") setCurrentTab(0);
-		else if (tab === "북마크") setCurrentTab(1);
-		else if (tab === "내 매물") setCurrentTab(2);
+	const [clicked, setClicked] = useState(0);
+	const handleTabClick = (idx: number) => {
+		setCurrentTab(idx);
+		setClicked(idx);
 	};
 
 	return (
 		<Container>
-			{tabs.map((tab) => (
-				<Tab onClick={() => handleTabClick(tab)}>{tab}</Tab>
+			{tabs.map((tab, idx) => (
+				<Tab onClick={() => handleTabClick(idx)} clicked={clicked === idx ? true : false}>
+					{tab}
+				</Tab>
 			))}
 		</Container>
 	);
@@ -23,16 +26,19 @@ function Tabs({ setCurrentTab, tabs }: Props) {
 
 const Container = styled.div`
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	border-bottom: 0.5px solid #dedede;
 `;
+interface TabProps {
+	clicked?: boolean;
+}
 
-const Tab = styled.p`
+const Tab = styled.p<TabProps>`
 	padding: 0 6rem;
 	font-size: 1.8rem;
 	cursor: pointer;
 	margin: 2rem 0;
-	color: #ababab;
+	color: ${({ clicked }) => (clicked ? "#000000" : "#dedede")};
 `;
 
 export default Tabs;
