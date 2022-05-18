@@ -36,18 +36,34 @@ function SellerInfo({ step, role, contractInfo }: Props) {
 	return (
 		<>
 			<Label>임차인 주소</Label>
-			<Input disabled={disabled} name="seller_address" onChange={handleSellerInfoChange} />
+			<Input
+				disabled={disabled}
+				name="seller_address"
+				defaultValue={contractInfo.seller_address}
+				onChange={handleSellerInfoChange}
+			/>
 			<Label>임차인 성명</Label>
-			<Input disabled={disabled} name="seller_name" onChange={handleSellerInfoChange} />
+			<Input
+				disabled={disabled}
+				name="seller_name"
+				defaultValue={contractInfo.seller_name}
+				onChange={handleSellerInfoChange}
+			/>
 			<Label>임차인 생년월일</Label>
 			<Input
 				disabled={disabled}
 				name="seller_birth"
 				type="date"
+				defaultValue={contractInfo.seller_birth}
 				onChange={handleSellerInfoChange}
 			/>
 			<Label>임차인 전화</Label>
-			<Input disabled={disabled} name="seller_phone" onChange={handleSellerInfoChange} />
+			<Input
+				disabled={disabled}
+				name="seller_phone"
+				defaultValue={contractInfo.seller_phone}
+				onChange={handleSellerInfoChange}
+			/>
 			<Label>서명</Label>
 			<Signature signatureDisabled={signatureDisabled} role={role} />
 		</>

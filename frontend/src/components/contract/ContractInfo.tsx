@@ -16,6 +16,7 @@ function ContractInfo({ disabled, contractInfo }: Props) {
 
 	const handleContractInfoChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target as HTMLInputElement;
+		console.log(contractInfo);
 		dispatch(SET_STEP1({ ...contractInfo, [name]: value }));
 		console.log(value);
 	}, 500);
@@ -30,6 +31,7 @@ function ContractInfo({ disabled, contractInfo }: Props) {
 					type="radio"
 					id="전세"
 					name="contract_type"
+					value="전세"
 					disabled={disabled}
 					defaultChecked={contractInfo.contract_type === "전세"}
 					onChange={handleContractInfoChange}
@@ -38,26 +40,39 @@ function ContractInfo({ disabled, contractInfo }: Props) {
 				<RadioInput
 					type="radio"
 					id="월세"
+					value="월세"
 					name="contract_type"
 					disabled={disabled}
 					defaultChecked={contractInfo.contract_type === "월세"}
 					onChange={handleContractInfoChange}
 				/>
 				<Label>임차보증금</Label>
-				<Input disabled={disabled} name="tenancy_deposit" onChange={handleContractInfoChange} />
+				<Input
+					disabled={disabled}
+					defaultValue={contractInfo.tenancy_deposit}
+					name="tenancy_deposit"
+					onChange={handleContractInfoChange}
+				/>
 				<Label>관리비</Label>
-				<Input disabled={disabled} name="maintenance_fee" onChange={handleContractInfoChange} />
+				<Input
+					disabled={disabled}
+					defaultValue={contractInfo.maintenance_fee}
+					name="maintenance_fee"
+					onChange={handleContractInfoChange}
+				/>
 				<Label>계약 기간</Label>
 				<Input
 					type="date"
 					disabled={disabled}
 					name="contract_start"
+					defaultValue={contractInfo.contract_start}
 					onChange={handleContractInfoChange}
 				/>
 				<Input
 					type="date"
 					disabled={disabled}
 					name="contract_end"
+					defaultValue={contractInfo.contract_end}
 					onChange={handleContractInfoChange}
 				/>
 			</Section>
@@ -65,25 +80,47 @@ function ContractInfo({ disabled, contractInfo }: Props) {
 			<p>제1조&#40;권리금의 지급&#41; 신규임차인은 임차인에게 다음과 같이 권리금을 지급한다.</p>
 			<Section>
 				<Label>총 권리금</Label>
-				<Input disabled={disabled} name="total_premium" onChange={handleContractInfoChange} />
+				<Input
+					disabled={disabled}
+					name="total_premium"
+					defaultValue={contractInfo.total_premium}
+					onChange={handleContractInfoChange}
+				/>
 				<Label>계약금</Label>
-				<Input disabled={disabled} name="down_payment" onChange={handleContractInfoChange} />
+				<Input
+					disabled={disabled}
+					name="down_payment"
+					defaultValue={contractInfo.down_payment}
+					onChange={handleContractInfoChange}
+				/>
 				<Label>중도금</Label>
-				<Input disabled={disabled} name="middle_payment" onChange={handleContractInfoChange} />
+				<Input
+					disabled={disabled}
+					name="middle_payment"
+					defaultValue={contractInfo.middle_payment}
+					onChange={handleContractInfoChange}
+				/>
 				<Label>중도금 기한</Label>
 				<Input
 					type="date"
 					disabled={disabled}
 					name="middle_date"
+					defaultValue={contractInfo.middle_date}
 					onChange={handleContractInfoChange}
 				/>
 				<Label>잔금</Label>
-				<Input disabled={disabled} name="balance_payment" onChange={handleContractInfoChange} />
+				<Input
+					disabled={disabled}
+					name="balance_payment"
+					defaultValue={contractInfo.balance_payment}
+					onChange={handleContractInfoChange}
+				/>
 				<Label>잔금 기한</Label>
 				<Input
 					type="date"
 					disabled={disabled}
 					name="balance_date"
+					defaultValue={contractInfo.balance_date}
 					onChange={handleContractInfoChange}
 				/>
 			</Section>
