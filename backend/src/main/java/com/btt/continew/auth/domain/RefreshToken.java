@@ -2,34 +2,41 @@ package com.btt.continew.auth.domain;
 
 import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
+import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
-import java.util.concurrent.TimeUnit;
-import org.springframework.data.redis.core.index.Indexed;
-import org.springframework.data.redis.core.RedisHash;
-import org.springframework.data.redis.core.TimeToLive;
 
 @Getter
-@RedisHash("refresh_token")
+@Entity
 public class RefreshToken {
 
     @Id
-    Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "refresh_token_id")
+    private Long id;
 
-    String refreshToken;
+    @Column(name = "refresh_token", length = 512)
+    private String refreshToken;
 
-    @Indexed
-    String subject;
+    @Column(name = "subject", length = 32)
+    private String subject;
 
-    @TimeToLive(unit = TimeUnit.MILLISECONDS)
-    Long timeout;
+    @Column(name = "expired_at")
+    private LocalDateTime expiredAt;
+
+    public RefreshToken() {
+    }
 
     @Builder
-    public RefreshToken(String refreshToken, String subject, Long timeout) {
+    public RefreshToken(String refreshToken, String subject, LocalDateTime expiredAt) {
         this.refreshToken = refreshToken;
         this.subject = subject;
-        this.timeout = timeout;
+        this.expiredAt = expiredAt;
     }
 
     public void validateValue(String refreshToken) {
@@ -38,8 +45,8 @@ public class RefreshToken {
         }
     }
 
-    public RefreshToken updateRefreshToken(String token) {
+    public void updateRefreshToken(String token) {
         this.refreshToken = token;
-        return this;
+        this.expiredAt = LocalDateTime.now().plusDays(7);
     }
 }
