@@ -4,9 +4,10 @@ import styled from "styled-components";
 
 interface Props {
 	contracts: MyContracts[] | undefined;
+	currentTab: number;
 }
 
-function MyContractsForm({ contracts }: Props) {
+function MyContractsForm({ contracts, currentTab }: Props) {
 	const router = useRouter();
 	const handleMyContractClick = (articleId: number, sellerId: string, buyerId: string) => {
 		router.push(
@@ -55,8 +56,10 @@ function MyContractsForm({ contracts }: Props) {
 						</MyContractItem>
 					))}
 				</>
+			) : currentTab === 0 ? (
+				<Text>진행중인 계약이 없습니다</Text>
 			) : (
-				<p>진행중이거나 완료된 계약이 없습니다</p>
+				<Text>완료된 계약이 없습니다</Text>
 			)}
 		</div>
 	);
@@ -102,5 +105,11 @@ const StatusBadge = styled.button<StatusProps>`
 	padding: 0.5rem 1rem;
 	margin-left: auto;
 	display: block;
+`;
+
+const Text = styled.p`
+	font-size: 1.6rem;
+	text-align: center;
+	margin-top: 20rem;
 `;
 export default MyContractsForm;

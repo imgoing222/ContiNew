@@ -7,6 +7,7 @@ import { Input, RadioInput } from "./Input";
 import { Label } from "./Label";
 import { Box, Container } from "./SaleInfo";
 import { Section } from "./Section";
+import { Unit } from "./Unit";
 interface Props {
 	disabled: boolean;
 	contractInfo: ContractType;
@@ -65,6 +66,7 @@ function ContractInfo({ disabled, contractInfo }: Props) {
 							onChange={handleContractInfoChange}
 							width={25}
 						/>
+						<Unit>만원</Unit>
 					</Box>
 					<Box>
 						<Label>관리비</Label>
@@ -75,6 +77,7 @@ function ContractInfo({ disabled, contractInfo }: Props) {
 							onChange={handleContractInfoChange}
 							width={25}
 						/>
+						<Unit>만원</Unit>
 					</Box>
 				</Container>
 				<Container>
@@ -109,6 +112,7 @@ function ContractInfo({ disabled, contractInfo }: Props) {
 						defaultValue={contractInfo.total_premium}
 						onChange={handleContractInfoChange}
 					/>
+					<Unit>만원</Unit>
 				</Container>
 				<Container>
 					<Label>계약금</Label>
@@ -118,6 +122,7 @@ function ContractInfo({ disabled, contractInfo }: Props) {
 						defaultValue={contractInfo.down_payment}
 						onChange={handleContractInfoChange}
 					/>
+					<Unit>만원</Unit>
 				</Container>
 				<Container>
 					<Label>중도금</Label>
@@ -127,6 +132,7 @@ function ContractInfo({ disabled, contractInfo }: Props) {
 						defaultValue={contractInfo.middle_payment}
 						onChange={handleContractInfoChange}
 					/>
+					<Unit>만원</Unit>
 				</Container>
 				<Container>
 					<Label>중도금 기한</Label>
@@ -146,6 +152,7 @@ function ContractInfo({ disabled, contractInfo }: Props) {
 						defaultValue={contractInfo.balance_payment}
 						onChange={handleContractInfoChange}
 					/>
+					<Unit>만원</Unit>
 				</Container>
 				<Container>
 					<Label>잔금 기한</Label>
