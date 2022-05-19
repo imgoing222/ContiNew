@@ -11,13 +11,14 @@ interface HouseType {
 function RecommendItem({ house }: HouseType) {
 	const router = useRouter();
 
+	console.log(house.monthly_rent);
 	return (
 		<Li onClick={() => router.push(`/article/${house.house_id}`)}>
 			<Image src={house.main_image} alt="house-img" />
 			<Content>
 				<SaleType>
 					{house.contract_type} {moneyUnitChange(house.deposit.toString())}
-					{house.monthly_rent && <span>/{moneyUnitChange(house.monthly_rent.toString())}</span>}
+					{house.monthly_rent !== 0 && <span>/{moneyUnitChange(house.monthly_rent.toString())}</span>}
 				</SaleType>
 				<Fee>관리비 : {moneyUnitChange(house.maintenance_fee.toString())}</Fee>
 				<Text>{house.description}</Text>
