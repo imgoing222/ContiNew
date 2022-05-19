@@ -29,16 +29,25 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.io.IOUtils;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -50,17 +59,19 @@ public class HouseService {
     private final MemberService memberService;
     private final ImageUploader imageUploader;
     private final HouseRepositorySupport houseRepositorySupport;
+    private final RestTemplate restTemplate;
 
     private static final int LISTING_PERIOD = 1;
 
     public HouseService(HouseRepository houseRepository, ImageRepository imageRepository,
         MemberService memberService, ImageUploader imageUploader,
-        HouseRepositorySupport houseRepositorySupport) {
+        HouseRepositorySupport houseRepositorySupport, RestTemplate restTemplate) {
         this.houseRepository = houseRepository;
         this.imageRepository = imageRepository;
         this.memberService = memberService;
         this.imageUploader = imageUploader;
         this.houseRepositorySupport = houseRepositorySupport;
+        this.restTemplate = restTemplate;
     }
 
     @Transactional
@@ -176,17 +187,24 @@ public class HouseService {
     }
 
     @Transactional(readOnly = true)
-    public HouseUpdateResponse showForUpdateMultipartFile(Long houseId) {
+    public MultiValueMap<String, Object> showForUpdateMultipartFile(Long houseId) {
         House house = houseRepository.findById(houseId)
             .orElseThrow(() -> new BusinessException(ErrorCode.HOUSE_NOT_FOUND_BY_ID));
 //        List<HouseOption> houseOptions = houseOptionRepository.findAllByHouse(house);
         List<Image> images = imageRepository.findAllByHouse(house);
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<String, Object>();
+
         List<MultipartFile> imagesMultipartFile = images.stream()
             .map(i -> imageToMultipartFile(i))
             .collect(Collectors.toList());
 
-        return HouseUpdateResponse.of(house, imagesMultipartFile);
+        for(MultipartFile file: imagesMultipartFile) {
+            body.add("file", file.getResource());
+        }
+        return body;
     }
 
     private String imageToBase64Str(Image image){
@@ -220,6 +238,7 @@ public class HouseService {
             BufferedImage img = ImageIO.read(imageUrl);
 
             File file = new File("downloaded.jpg");
+            ImageIO.write(img, "jpg", file);
             FileItem fileItem = new DiskFileItem("originFile", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length(), file.getParentFile());
 
             InputStream finput = new FileInputStream(file);
