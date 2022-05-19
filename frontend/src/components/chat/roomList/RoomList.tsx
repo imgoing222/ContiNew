@@ -97,7 +97,8 @@ const Container = styled.div`
 	@media ${(props) => props.theme.tabletS} {
 		width: 40rem;
 		flex-direction: row;
-		border: none;
+		border-right: none;
+		border-bottom: solid 2px #d3d3d3;
 	}
 `;
 

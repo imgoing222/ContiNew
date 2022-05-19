@@ -117,6 +117,12 @@ const Container = styled.div`
 	height: 100%;
 	display: flex;
 	flex-direction: column;
+
+	@media ${(props) => props.theme.tabletS} {
+		width: 40rem;
+		min-height: 50rem;
+		border-bottom: solid 2px #d3d3d3;
+	}
 `;
 
 const Title = styled.div`
