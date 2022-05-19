@@ -103,37 +103,37 @@ function PriceTab() {
 
 export default PriceTab;
 
-const Title = styled.h1`
+export const Title = styled.h1`
 	font-size: 2rem;
 	margin-bottom: 2rem;
 `;
 
-const Tab = styled.div`
+export const Tab = styled.div`
 	display: flex;
 	margin-bottom: 2rem;
 `;
 
-const InputBox = styled.div`
+export const InputBox = styled.div`
 	display: flex;
 	align-items: center;
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
 	font-size: 1.4rem;
 `;
 
-const Label = styled.label`
+export const Label = styled.label`
 	font-size: 1.4rem;
 	margin-left: 0.5rem;
 	margin-right: 5rem;
 `;
 
-const SmallBox = styled.div`
+export const SmallBox = styled.div`
 	margin-bottom: 2rem;
 	&::after {
 		content: "";
 		display: block;
-		border: ${(props) => `0.05rem solid rgba(233, 233, 233,0.4)}`};
+		border: 0.05rem solid rgba(233, 233, 233, 0.4);
 		width: 100%;
 		margin-top: 2rem;
 	}

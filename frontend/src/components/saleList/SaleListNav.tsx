@@ -3,12 +3,14 @@ import styled from "styled-components";
 import Options from "./Options";
 import Period from "./Period";
 import PriceTab from "./PriceTab";
+import RoomType from "./RoomType";
 import SearchInput from "./SearchInput";
 
 function SaleListNav({ kakaoMap }: MapRefType) {
 	return (
 		<Nav>
 			<SearchInput kakaoMap={kakaoMap} />
+			<RoomType />
 			<PriceTab />
 			<Period />
 			<Options />
