@@ -150,9 +150,7 @@ function index() {
 					setHouseInfo={setHouseInfo}
 				/>
 				<Div>
-					<StyledSpan
-						onClick={() => window.open("/agreement", "이용약관", "width=500px, height=500px")}
-					>
+					<StyledSpan onClick={() => window.open("/term", "이용약관", "width=500px, height=500px")}>
 						다음의 약관
 					</StyledSpan>
 					<AgreementText>을 읽고 동의하십니까?</AgreementText>
