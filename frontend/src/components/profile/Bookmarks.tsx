@@ -48,8 +48,15 @@ function Bookmarks() {
 							>
 								<Image src={bookmark.main_image} />
 								<div>
-									<p>{bookmark.contract_type}</p>
-									<p>{bookmark.jibun_address}</p>
+									<Info>
+										{bookmark.sale_type}({bookmark.contract_type})
+									</Info>
+									<Info>
+										{bookmark.deposit} / {bookmark.monthly_rent}
+									</Info>
+									<Info></Info>
+									<Info>{bookmark.house_type}</Info>
+									<Info>{bookmark.jibun_address}</Info>
 								</div>
 							</ListItem>
 						))}
@@ -72,13 +79,15 @@ const ListItem = styled.li`
 	margin: 3rem 0;
 	border: 0.3px solid #dddddd;
 	cursor: pointer;
+	padding: 2rem;
 `;
 
 const Image = styled.img`
-	max-width: 50%;
+	width: 50%;
 	display: block;
-	margin-right: 2rem;
+	margin-right: 4rem;
 	height: 20vh;
+	border-radius: 0.5rem;
 `;
 
 const Button = styled.button`
@@ -95,4 +104,10 @@ const Text = styled.p`
 	text-align: center;
 	margin-top: 20rem;
 `;
+
+const Info = styled.p`
+	margin: 1.5rem 0 0;
+	font-size: 1.4rem;
+`;
+
 export default Bookmarks;
