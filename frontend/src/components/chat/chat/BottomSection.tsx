@@ -58,7 +58,7 @@ const Container = styled.div`
 `;
 
 const Textarea = styled.textarea`
-	flex: 1;
+	width: 48rem;
 	margin: 1rem;
 	padding: 1rem;
 	font-size: 2rem;
@@ -70,9 +70,15 @@ const Textarea = styled.textarea`
 	&:focus {
 		outline: 1px solid #d3d3d3;
 	}
+
+	@media ${(props) => props.theme.tabletS} {
+		width: 27rem;
+	}
 `;
 
-const Form = styled.form``;
+const Form = styled.form`
+	width: 8rem;
+`;
 
 const Button = styled.button`
 	margin: 1rem;
@@ -84,6 +90,10 @@ const Button = styled.button`
 
 	&:hover {
 		cursor: pointer;
+	}
+
+	@media ${(props) => props.theme.tabletS} {
+		width: 6rem;
 	}
 `;
 

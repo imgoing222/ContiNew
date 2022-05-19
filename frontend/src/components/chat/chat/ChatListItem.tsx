@@ -25,7 +25,14 @@ function ChatListitem({ chat }: ChatProps) {
 		<Container user={username} sender={chat.sender}>
 			<SubContainer>
 				<TextContainer user={username} sender={chat.sender}>
-					<Textarea>{chat.content}</Textarea>
+					<Textarea>
+						{chat.content.split("\n").map((line, idx) => (
+							<span key={idx}>
+								{line}
+								<br />
+							</span>
+						))}
+					</Textarea>
 				</TextContainer>
 				<Time user={username} sender={chat.sender}>
 					{chat.created_at?.slice(-8, -3)}
@@ -47,12 +54,16 @@ const SubContainer = styled.div`
 `;
 
 const TextContainer = styled.div<ContainerProps>`
-	max-width: 30rem;
+	max-width: 45rem;
 	display: flex;
 	justify-content: center;
 	border: solid 1px #d3d3d3;
 	border-radius: 10px;
 	background-color: ${({ user, sender }) => (user === sender ? "#f5f5f5" : "#ffffff")};
+
+	@media ${(props) => props.theme.tabletS} {
+		max-width: 27rem;
+	}
 `;
 
 const Textarea = styled.div`
