@@ -37,7 +37,7 @@ const useInfiniteScroll = ({ roomId, chatBoxRef, requestApi }: useInfiniteScroll
 
 			setIsLoading(false);
 		} catch (error) {
-			console.log("마지막 페이지 입니다.");
+			console.log("마지막 채팅 입니다.");
 		}
 	};
 
