@@ -24,7 +24,7 @@ function ChatListitem({ chat }: ChatProps) {
 	return (
 		<Container user={username} sender={chat.sender}>
 			<SubContainer>
-				<TextContainer>
+				<TextContainer user={username} sender={chat.sender}>
 					<Textarea>{chat.content}</Textarea>
 				</TextContainer>
 				<Time user={username} sender={chat.sender}>
@@ -46,12 +46,13 @@ const SubContainer = styled.div`
 	flex-direction: column;
 `;
 
-const TextContainer = styled.div`
+const TextContainer = styled.div<ContainerProps>`
 	max-width: 30rem;
 	display: flex;
 	justify-content: center;
 	border: solid 1px #d3d3d3;
 	border-radius: 10px;
+	background-color: ${({ user, sender }) => (user === sender ? "#f5f5f5" : "#ffffff")};
 `;
 
 const Textarea = styled.div`
