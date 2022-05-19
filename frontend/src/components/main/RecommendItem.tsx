@@ -17,7 +17,7 @@ function RecommendItem({ house }: HouseType) {
 			<Content>
 				<SaleType>
 					{house.contract_type} {moneyUnitChange(house.deposit.toString())}
-					{house.monthly_rent && <span>/{moneyUnitChange(house.monthly_rent.toString())}</span>}
+					{house.monthly_rent !== 0 && <span>/{moneyUnitChange(house.monthly_rent.toString())}</span>}
 				</SaleType>
 				<Fee>관리비 : {moneyUnitChange(house.maintenance_fee.toString())}</Fee>
 				<Text>{house.description}</Text>
