@@ -134,7 +134,7 @@ const ContentContainer = styled.div`
 
 	@media ${(props) => props.theme.tabletS} {
 		width: 7rem;
-		margin: 0 auto 0 0;
+		margin: 1rem auto 0 0;
 	}
 `;
 

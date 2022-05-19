@@ -88,6 +88,7 @@ const Container = styled.div`
 
 	@media ${(props) => props.theme.tabletS} {
 		width: 40rem;
+		height: 100%;
 		flex-direction: column;
 		border: none;
 	}
