@@ -29,7 +29,6 @@ function MyContractsList() {
 
 	return (
 		<Container>
-			<Header>내 계약서</Header>
 			<Tabs setCurrentTab={setCurrentTab} tabs={tabs} />
 			<MyContractsForm contracts={currentTab === 0 ? onGoingContracts : completedContracts} />
 		</Container>
@@ -38,6 +37,6 @@ function MyContractsList() {
 
 const Container = styled.div`
 	width: 60%;
-	margin: 0 auto;
+	margin: 5rem auto;
 `;
 export default MyContractsList;
