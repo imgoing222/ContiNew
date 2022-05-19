@@ -1,4 +1,6 @@
 import { useEffect, useState, useRef } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "src/store";
 import styled from "styled-components";
 
 import { chatApi } from "src/api";
@@ -28,7 +30,15 @@ interface ChatListType {
 
 function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	const chatBoxRef = useRef<HTMLDivElement>(null);
+	const { sellerName, buyerName } = useSelector((state: RootState) => state.articleInfo);
+	const { username } = useSelector((state: RootState) => state.userInfo);
 	const [showChatList, setShowChatList] = useState<ChatListType[]>([]);
+	let name = "";
+	if (username === buyerName) {
+		name = sellerName;
+	} else {
+		name = buyerName;
+	}
 
 	const {
 		setTarget,
@@ -89,7 +99,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	return (
 		<Container>
 			<Title>
-				<h2>Chattings</h2>
+				<h2>{name} 님</h2>
 			</Title>
 			<Content>
 				{roomId && (
