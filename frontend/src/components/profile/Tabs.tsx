@@ -28,6 +28,7 @@ const Container = styled.div`
 	display: flex;
 	justify-content: space-evenly;
 	border-bottom: 0.5px solid #dedede;
+	margin-bottom: 7rem;
 `;
 interface TabProps {
 	clicked?: boolean;
