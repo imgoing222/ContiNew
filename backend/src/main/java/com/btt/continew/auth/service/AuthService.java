@@ -10,13 +10,9 @@ import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
 import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
-import javax.annotation.PostConstruct;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -25,36 +21,21 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AuthService {
 
-    //
-    private static final String REFRESH_TOKEN = "REFRESH_TOKEN";
-    private final RedisTemplate<String, Object> redisTemplate;
-    private HashOperations<String, String, RefreshToken> opsHashRefreshToken;
-    //
-
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
     private final long refreshTime;
 
-    //
-    @PostConstruct
-    private void init(){
-        opsHashRefreshToken = redisTemplate.opsForHash();
-    }
-    //
 
     public AuthService(MemberService memberService, PasswordEncoder passwordEncoder,
         JwtTokenProvider jwtTokenProvider, RefreshTokenRepository refreshTokenRepository,
-        @Value("${jwt.token.refresh-time}") long refreshTime, RedisTemplate<String, Object> redisTemplate) {
+        @Value("${jwt.token.refresh-time}") long refreshTime) {
         this.memberService = memberService;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
         this.refreshTokenRepository = refreshTokenRepository;
         this.refreshTime = refreshTime;
-        ///
-        this.redisTemplate = redisTemplate;
-        //
     }
 
     @Transactional
@@ -76,9 +57,7 @@ public class AuthService {
                 .build());
 
         refreshToken.updateRefreshToken(tokenResponse.getRefreshToken());
-//
-        opsHashRefreshToken.put(REFRESH_TOKEN,refreshToken.getRefreshToken(),refreshToken);
-//        refreshTokenRepository.save(refreshToken);
+        refreshTokenRepository.save(refreshToken);
         return refreshToken.getRefreshToken();
     }
 
@@ -103,21 +82,16 @@ public class AuthService {
         jwtTokenProvider.validateRefreshToken(request.getRefreshToken());
         Authentication authentication = jwtTokenProvider.getAuthentication(request.getAccessToken());
 
-//        RefreshToken refreshToken = refreshTokenRepository.findBySubject(authentication.getName())
-//            .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_LOGOUT_USER_JWT));
-//
-        RefreshToken refreshToken = opsHashRefreshToken.get(REFRESH_TOKEN, request.getRefreshToken());
-//            .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_LOGOUT_USER_JWT));
-//
+        RefreshToken refreshToken = refreshTokenRepository.findBySubject(authentication.getName())
+            .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_LOGOUT_USER_JWT));
+
         refreshToken.validateValue(request.getRefreshToken());
 
         TokenResponse tokenResponse = jwtTokenProvider.createToken(authentication.getName(),
             jwtTokenProvider.getAuthority(authentication));
 
         refreshToken.updateRefreshToken(tokenResponse.getRefreshToken());
-        //
-        opsHashRefreshToken.put(REFRESH_TOKEN,refreshToken.getRefreshToken(),refreshToken);
-//        refreshTokenRepository.save(refreshToken);
+        refreshTokenRepository.save(refreshToken);
         setTokenToCookie(tokenResponse.getAccessToken(), refreshToken.getRefreshToken(), response);
     }
 }
