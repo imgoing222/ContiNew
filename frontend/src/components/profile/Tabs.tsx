@@ -16,7 +16,7 @@ function Tabs({ setCurrentTab, tabs }: Props) {
 	return (
 		<Container>
 			{tabs.map((tab, idx) => (
-				<Tab onClick={() => handleTabClick(idx)} clicked={clicked === idx ? true : false}>
+				<Tab onClick={() => handleTabClick(idx)} clicked={clicked === idx ? true : false} key={idx}>
 					{tab}
 				</Tab>
 			))}
