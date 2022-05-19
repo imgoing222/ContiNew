@@ -62,6 +62,7 @@ const Textarea = styled.textarea`
 	margin: 1rem;
 	padding: 1rem;
 	font-size: 2rem;
+	font-family: inherit;
 	border: none;
 	resize: none;
 	border-radius: 10px;
