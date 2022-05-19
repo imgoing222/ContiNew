@@ -10,9 +10,9 @@ import com.btt.continew.global.exception.BusinessException;
 import com.btt.continew.global.exception.ErrorCode;
 import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
+import java.time.LocalDateTime;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -25,17 +25,14 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
-    private final long refreshTime;
 
 
     public AuthService(MemberService memberService, PasswordEncoder passwordEncoder,
-        JwtTokenProvider jwtTokenProvider, RefreshTokenRepository refreshTokenRepository,
-        @Value("${jwt.token.refresh-time}") long refreshTime) {
+        JwtTokenProvider jwtTokenProvider, RefreshTokenRepository refreshTokenRepository) {
         this.memberService = memberService;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
         this.refreshTokenRepository = refreshTokenRepository;
-        this.refreshTime = refreshTime;
     }
 
     @Transactional
@@ -53,7 +50,7 @@ public class AuthService {
         RefreshToken refreshToken = refreshTokenRepository.findBySubject(member.getLoginId())
             .orElse(RefreshToken.builder()
                 .subject(member.getLoginId())
-                .timeout(refreshTime)
+                .expiredAt(LocalDateTime.now().plusDays(7))
                 .build());
 
         refreshToken.updateRefreshToken(tokenResponse.getRefreshToken());
