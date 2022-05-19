@@ -20,9 +20,9 @@ function Description({ houseInfo }: HouseInfoProps) {
 export default Description;
 
 const TextArea = styled.div`
-	background-color: ${(props) => props.theme.borderColor};
+	background-color: rgba(233, 233, 233, 0.3);
 	width: 100%;
-	height: 30rem;
+	min-height: 30rem;
 	padding: 3rem 1rem;
 	font-size: 1.5rem;
 	margin-bottom: 10rem;
