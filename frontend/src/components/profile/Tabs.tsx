@@ -24,11 +24,15 @@ function Tabs({ setCurrentTab, tabs }: Props) {
 	);
 }
 
-const Container = styled.div`
+interface ContainerProps {
+	marginBottom?: number;
+}
+
+const Container = styled.div<ContainerProps>`
 	display: flex;
 	justify-content: space-evenly;
 	border-bottom: 0.5px solid #dedede;
-	margin-bottom: 7rem;
+	margin-bottom: 5rem;
 `;
 interface TabProps {
 	clicked?: boolean;

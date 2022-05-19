@@ -34,7 +34,7 @@ function UserInfo() {
 	}, []);
 
 	return (
-		<Container border>
+		<Container border padding={4}>
 			{userInfo && (
 				<>
 					{userInfo.phone_auth && <p>인증 된 회원입니다</p>}

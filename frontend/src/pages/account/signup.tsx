@@ -6,9 +6,11 @@ import { Label } from "@components/account/Label";
 import { LinkButton } from "@components/account/LinkButton";
 import { LinkSection } from "@components/account/LinkSection";
 import useForm from "@hooks/useForm";
+import getErrorMessage from "@utils/getErrorMessage";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import authApi from "src/api/auth";
 import profileApi from "src/api/profile";
 import { SET_USER } from "src/store/user";
@@ -34,11 +36,13 @@ function Signup() {
 		},
 		onSubmit: async ({ login_id, password, username }) => {
 			try {
-				await authApi.signup({ login_id, password, username });
-				await authApi.signin({ login_id, password });
-				const userInfo = await profileApi.getUserInfo();
-				dispatch(SET_USER(userInfo.data));
-				router.push("/account/smsVerification");
+				const res = await authApi.signup({ login_id, password, username });
+				if (res.status) {
+					await authApi.signin({ login_id, password });
+					const userInfo = await profileApi.getUserInfo();
+					dispatch(SET_USER(userInfo.data));
+					router.push("/account/smsVerification");
+				} else toast.error(getErrorMessage(res));
 			} catch (err) {
 				console.log(err);
 			}
@@ -60,7 +64,7 @@ function Signup() {
 				<ErrorText>{errors.password}</ErrorText>
 				<Label>비밀번호 확인</Label>
 				<Input name="passwordConfirm" type="password" onChange={onChangePasswordConfirm} />
-				<Button disabled={disabled} backgroundColor="#DC143C" color="white">
+				<Button disabled={disabled} backgroundColor="#DC143C" color="white" margin="4rem 0">
 					회원가입
 				</Button>
 			</FormContainer>

@@ -45,7 +45,7 @@ function Signin() {
 				<Input placeholder="" name="login_id" onChange={handleInputChange} />
 				<Label>비밀번호</Label>
 				<Input placeholder="" name="password" type="password" onChange={handleInputChange} />
-				<Button backgroundColor="#DC143C" color="white">
+				<Button backgroundColor="#DC143C" color="white" margin="4rem 0">
 					로그인
 				</Button>
 			</FormContainer>
