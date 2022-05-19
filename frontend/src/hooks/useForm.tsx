@@ -56,7 +56,6 @@ const useForm = ({ initialValues, onSubmit }: Props) => {
 
 		if (name === "login_id") {
 			const res = await authApi.duplicateIdCheck({ value });
-			console.log(res.data.result);
 			if (res.data.result) {
 				tempErrors.id = "이미 사용중인 아이디입니다.";
 			}
