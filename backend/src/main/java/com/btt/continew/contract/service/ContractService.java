@@ -146,6 +146,7 @@ public class ContractService {
             case 3:
                 checkSeller(loginId, sellerMember);
                 contract.levelThreeWrite(request);
+                house.saveExpiredAt();
                 if (request.getNextLevel()) {
                     // TODO: 판매자 -> 구매자 3단계 완료 채팅 메시지 보내기
                 }
