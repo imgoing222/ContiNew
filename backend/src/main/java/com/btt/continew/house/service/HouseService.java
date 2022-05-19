@@ -10,6 +10,7 @@ import com.btt.continew.house.controller.dto.response.HouseIdResponse;
 import com.btt.continew.house.controller.dto.response.HouseListResponse;
 import com.btt.continew.house.controller.dto.response.HouseLocationResponse;
 import com.btt.continew.house.controller.dto.response.HouseSimpleResponse;
+import com.btt.continew.house.controller.dto.response.HouseUpdateResponse;
 import com.btt.continew.house.domain.House;
 import com.btt.continew.house.domain.HouseRepository;
 import com.btt.continew.house.domain.HouseRepositorySupport;
@@ -18,15 +19,28 @@ import com.btt.continew.house.domain.ImageRepository;
 import com.btt.continew.image.ImageUploader;
 import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.imageio.ImageIO;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.io.IOUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 @Service
 public class HouseService {
@@ -145,6 +159,80 @@ public class HouseService {
 //        List<HouseOption> houseOptions = houseOptionRepository.findAllByHouse(house);
         List<Image> images = imageRepository.findAllByHouse(house);
         return HouseDetailResponse.of(house, images);
+    }
+
+    @Transactional(readOnly = true)
+    public HouseDetailResponse showForUpdate(Long houseId) {
+        House house = houseRepository.findById(houseId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.HOUSE_NOT_FOUND_BY_ID));
+//        List<HouseOption> houseOptions = houseOptionRepository.findAllByHouse(house);
+        List<Image> images = imageRepository.findAllByHouse(house);
+
+        List<String> imagesBase64 = images.stream()
+                .map(i -> imageToBase64Str(i))
+                .collect(Collectors.toList());
+
+        return HouseDetailResponse.ofForUpdate(house, imagesBase64);
+    }
+
+    @Transactional(readOnly = true)
+    public HouseUpdateResponse showForUpdateMultipartFile(Long houseId) {
+        House house = houseRepository.findById(houseId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.HOUSE_NOT_FOUND_BY_ID));
+//        List<HouseOption> houseOptions = houseOptionRepository.findAllByHouse(house);
+        List<Image> images = imageRepository.findAllByHouse(house);
+
+        List<MultipartFile> imagesMultipartFile = images.stream()
+            .map(i -> imageToMultipartFile(i))
+            .collect(Collectors.toList());
+
+        return HouseUpdateResponse.of(house, imagesMultipartFile);
+    }
+
+    private String imageToBase64Str(Image image){
+        try{
+            String url = image.getUrl();
+            URL imageUrl = new URL(url);
+            BufferedImage img = ImageIO.read(imageUrl);
+
+            File file = new File("downloaded.jpg");
+            ImageIO.write(img, "jpg", file);
+
+            InputStream finput = new FileInputStream(file);
+            byte[] imageBytes = new byte[(int)file.length()];
+            finput.read(imageBytes, 0, imageBytes.length);
+            finput.close();
+            String filePathName = url.replace("file:///", "");
+            String fileExtName = filePathName.substring(filePathName.lastIndexOf(".")+1);
+
+            return Base64.encodeBase64String(imageBytes);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private MultipartFile imageToMultipartFile(Image image){
+        try{
+            String url = image.getUrl();
+            URL imageUrl = new URL(url);
+            BufferedImage img = ImageIO.read(imageUrl);
+
+            File file = new File("downloaded.jpg");
+            FileItem fileItem = new DiskFileItem("originFile", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length(), file.getParentFile());
+
+            InputStream finput = new FileInputStream(file);
+            OutputStream os = fileItem.getOutputStream();
+            IOUtils.copy(finput, os);
+            finput.close();
+            os.close();
+            MultipartFile mFile = new CommonsMultipartFile(fileItem);
+            return mFile;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Transactional(readOnly = true)
