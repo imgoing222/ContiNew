@@ -60,6 +60,10 @@ const Container = styled.div`
 	flex-direction: column;
 	align-items: center;
 	border-left: solid 2px #d3d3d3;
+
+	@media ${(props) => props.theme.tabletS} {
+		border-left: none;
+	}
 `;
 
 const Title = styled.div`

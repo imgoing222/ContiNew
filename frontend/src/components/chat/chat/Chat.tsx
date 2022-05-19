@@ -1,4 +1,6 @@
 import { useEffect, useState, useRef } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "src/store";
 import styled from "styled-components";
 
 import { chatApi } from "src/api";
@@ -28,7 +30,15 @@ interface ChatListType {
 
 function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 	const chatBoxRef = useRef<HTMLDivElement>(null);
+	const { sellerName, buyerName } = useSelector((state: RootState) => state.articleInfo);
+	const { username } = useSelector((state: RootState) => state.userInfo);
 	const [showChatList, setShowChatList] = useState<ChatListType[]>([]);
+	let name = "";
+	if (username === buyerName) {
+		name = sellerName;
+	} else {
+		name = buyerName;
+	}
 
 	const {
 		setTarget,
@@ -88,9 +98,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 
 	return (
 		<Container>
-			<Title>
-				<h2>Chattings</h2>
-			</Title>
+			<Title>{name}</Title>
 			<Content>
 				{roomId && (
 					<>
@@ -117,15 +125,28 @@ const Container = styled.div`
 	height: 100%;
 	display: flex;
 	flex-direction: column;
+
+	@media ${(props) => props.theme.tabletS} {
+		width: 40rem;
+		height: 50rem;
+		border-bottom: solid 2px #d3d3d3;
+	}
 `;
 
 const Title = styled.div`
 	width: 100%;
 	height: 8rem;
 	display: flex;
-	justify-content: center;
 	align-items: center;
+	font-size: 2rem;
+	font-weight: bold;
+	padding-left: 2rem;
 	border-bottom: solid 2px #d3d3d3;
+
+	@media ${(props) => props.theme.tabletS} {
+		justify-content: center;
+		padding-left: none;
+	}
 `;
 
 const Content = styled.div`

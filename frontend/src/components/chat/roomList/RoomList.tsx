@@ -93,6 +93,13 @@ const Container = styled.div`
 	flex-direction: column;
 	align-items: center;
 	border-right: solid 2px #d3d3d3;
+
+	@media ${(props) => props.theme.tabletS} {
+		width: 40rem;
+		flex-direction: row;
+		border-right: none;
+		border-bottom: solid 2px #d3d3d3;
+	}
 `;
 
 const Title = styled.div`
@@ -102,12 +109,34 @@ const Title = styled.div`
 	justify-content: center;
 	align-items: center;
 	border-bottom: solid 2px #d3d3d3;
+
+	@media ${(props) => props.theme.tabletS} {
+		display: none;
+	}
 `;
 
 const Content = styled.div`
 	width: 100%;
 	height: 100%;
 	min-height: 5rem;
+	overflow: auto;
+
+	::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	::-webkit-scrollbar-thumb {
+    background-color: #d3d3d3;
+  }
+
+	::-webkit-scrollbar-track {
+    background-color: #fff;
+
+	@media ${(props) => props.theme.tabletS} {
+		display: flex;
+		align-items: center;
+		white-space: nowrap 
+	}
 `;
 
 const ContentContainer = styled.div`
@@ -115,6 +144,11 @@ const ContentContainer = styled.div`
 	height: 8rem;
 	margin: 0 auto;
 	cursor: pointer;
+
+	@media ${(props) => props.theme.tabletS} {
+		width: 7rem;
+		margin: 1rem auto 0 0;
+	}
 `;
 
 export default RoomList;
