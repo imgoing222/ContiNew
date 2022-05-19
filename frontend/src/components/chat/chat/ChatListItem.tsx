@@ -25,7 +25,14 @@ function ChatListitem({ chat }: ChatProps) {
 		<Container user={username} sender={chat.sender}>
 			<SubContainer>
 				<TextContainer user={username} sender={chat.sender}>
-					<Textarea>{chat.content}</Textarea>
+					<Textarea>
+						{chat.content.split("\n").map((line, idx) => (
+							<span key={idx}>
+								{line}
+								<br />
+							</span>
+						))}
+					</Textarea>
 				</TextContainer>
 				<Time user={username} sender={chat.sender}>
 					{chat.created_at?.slice(-8, -3)}
