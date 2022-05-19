@@ -102,13 +102,17 @@ public class ContractService {
         Member buyerMember = memberService.findByLoginId(buyer);
         House house = houseService.findById(houseId);
 
-        ContractAgree contractAgree = contractAgreeRepository.findByHouseAndSellerAndBuyer(house, sellerMember, buyerMember)
-            .orElseThrow(() -> new BusinessException(ErrorCode.CONTRACT_NOT_FOUND_CONTRACT_AGREE));
+        try {
+            ContractAgree contractAgree = contractAgreeRepository.findByHouseAndSellerAndBuyer(house, sellerMember, buyerMember)
+                .orElseThrow(() -> new BusinessException(ErrorCode.CONTRACT_NOT_FOUND_CONTRACT_AGREE));
 
-        checkHisContractAgree(loginId, contractAgree);
+            checkHisContractAgree(loginId, contractAgree);
 
-        return ContractAgreeResponse.of(contractAgree.getHouse().getId(), contractAgree.getSellerAgree(),
-            contractAgree.getBuyerAgree());
+            return ContractAgreeResponse.of(contractAgree.getHouse().getId(), contractAgree.getSellerAgree(),
+                contractAgree.getBuyerAgree());
+        } catch (BusinessException b) {
+            return ContractAgreeResponse.of(houseId, false, false);
+        }
     }
 
     private void checkHisContractAgree(String loginId, ContractAgree contractAgree) {
