@@ -15,6 +15,7 @@ import com.btt.continew.house.domain.House;
 import com.btt.continew.house.service.HouseService;
 import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
@@ -203,5 +204,15 @@ public class ContractService {
         return contracts.stream()
             .map(ContractSimpleResponse::from)
             .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void contractDeleteByHouse(House house) {
+        contractRepository.updateDeletedAtByHouse(house, LocalDateTime.now());
+    }
+
+    @Transactional
+    public void contractAgreeDeleteByHouse(House house) {
+        contractAgreeRepository.updateDeletedAtByHouse(house, LocalDateTime.now());
     }
 }
