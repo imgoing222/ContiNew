@@ -2,10 +2,8 @@ import MyContractsForm from "@components/contract/MyContracts";
 import { useEffect, useState } from "react";
 import { contractApi } from "src/api";
 import { MyContracts } from "src/types/MyContracts";
-import { Header } from "@components/account/Header";
 import Tabs from "@components/profile/Tabs";
 import styled from "styled-components";
-import House from "src/types/getListType";
 
 function MyContractsList() {
 	const [onGoingContracts, setOnGoingContracts] = useState<MyContracts[]>([]);
@@ -30,7 +28,10 @@ function MyContractsList() {
 	return (
 		<Container>
 			<Tabs setCurrentTab={setCurrentTab} tabs={tabs} />
-			<MyContractsForm contracts={currentTab === 0 ? onGoingContracts : completedContracts} />
+			<MyContractsForm
+				contracts={currentTab === 0 ? onGoingContracts : completedContracts}
+				currentTab={currentTab}
+			/>
 		</Container>
 	);
 }

@@ -29,7 +29,6 @@ function Contract() {
 	const value = { buyer: buyerId, seller: sellerId, house_id: articleId };
 
 	useEffect(() => {
-		console.log("실행");
 		dispatch(SET_ID(value));
 		getContractInfo();
 		if (loginId === buyerId) dispatch(SET_ROLE("buyer"));
@@ -38,7 +37,6 @@ function Contract() {
 
 	const getContractInfo = async () => {
 		const res = await contractApi.getContract(value);
-		console.log(res.data);
 		if (res.status) {
 			dispatch(SET_CONTRACT(res.data));
 		}
@@ -57,10 +55,8 @@ function Contract() {
 
 		if (id === "next") dispatch(SET_LEVEL(true));
 		else if (id === "save") dispatch(SET_LEVEL(false));
-		console.log(contract);
 		const contractInfo = { ...contract.id, ...contract.contract, ...contract.level };
 		const res = await contractApi.createContract(contractInfo);
-		console.log(res);
 		if (res.status) {
 			alert(`${step}단계 계약서 작성이 완료되었습니다.`);
 			router.push("/contract");
@@ -78,7 +74,10 @@ function Contract() {
 						<Step label="신규 임차인 정보 작성 및 서명" />
 						<Step label="임차인 서명" />
 					</Stepper>
+
 					<ContractForm />
+					<BreakButton onClick={handleBreakContractButton}>계약 파기</BreakButton>
+
 					<StyledDiv>
 						<Button id="save" onClick={handleNextStepClick}>
 							임시 저장
@@ -87,9 +86,6 @@ function Contract() {
 							다음 단계
 						</Button>
 					</StyledDiv>
-					<Button onClick={handleBreakContractButton} isColor={true}>
-						계약 파기
-					</Button>
 				</>
 			)}
 		</>
@@ -112,4 +108,18 @@ const Button = styled.button<ButtonProps>`
 	color: ${(props) => (props.isColor ? "#fff" : "#000")};
 	margin-right: 2rem;
 	cursor: pointer;
+	margin-bottom: 7rem;
+`;
+
+const BreakButton = styled.button`
+	width: 10rem;
+	height: 3rem;
+	border-radius: 0.4rem;
+	cursor: pointer;
+	border: none;
+	background-color: inherit;
+	color: #e31941;
+	display: block;
+	margin: 2rem 0 2rem 83vw;
+	font-size: 1.2rem;
 `;
