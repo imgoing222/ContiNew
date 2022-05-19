@@ -67,14 +67,6 @@ public class ContractService {
 
         if (contractAgree.getBuyerAgree() && contractAgree.getSellerAgree()) {
             contractRepository.save(Contract.builder().seller(sellerMember).buyer(buyerMember).house(house).build());
-            return;
-        }
-
-        if (contractAgree.getSellerAgree()) {
-            //TODO: 채팅 보내기 ex) 판매자가 계약을 요청하셨습니다. 수락하시겠습니까?
-        }
-        if (contractAgree.getBuyerAgree()) {
-            //TODO: 채팅 보내기 ex) 구매자가 계약을 요청하셨습니다. 수락하시겠습니까?
         }
     }
 
@@ -84,14 +76,14 @@ public class ContractService {
         Member buyerMember = memberService.findByLoginId(request.getBuyerLoginId());
         House house = houseService.findById(request.getHouseId());
 
+        checkSellerOrBuyer(loginId, sellerMember.getLoginId(), buyerMember.getLoginId());
+
         ContractAgree contractAgree = contractAgreeRepository.findByHouseAndSellerAndBuyer(house, sellerMember, buyerMember)
             .orElseThrow(() -> new BusinessException(ErrorCode.CONTRACT_NOT_FOUND_CONTRACT_AGREE));
 
         if (contractAgree.getBuyerAgree() && contractAgree.getSellerAgree()) {
             throw new BusinessException(ErrorCode.CONTRACT_AGREE_ALREADY_COMPLETED);
         }
-
-        checkHisContractAgree(loginId, contractAgree);
 
         contractAgree.saveDeletedTime();
     }
@@ -102,11 +94,11 @@ public class ContractService {
         Member buyerMember = memberService.findByLoginId(buyer);
         House house = houseService.findById(houseId);
 
+        checkSellerOrBuyer(loginId, sellerMember.getLoginId(), buyerMember.getLoginId());
+
         try {
             ContractAgree contractAgree = contractAgreeRepository.findByHouseAndSellerAndBuyer(house, sellerMember, buyerMember)
                 .orElseThrow(() -> new BusinessException(ErrorCode.CONTRACT_NOT_FOUND_CONTRACT_AGREE));
-
-            checkHisContractAgree(loginId, contractAgree);
 
             return ContractAgreeResponse.of(contractAgree.getHouse().getId(), contractAgree.getSellerAgree(),
                 contractAgree.getBuyerAgree());
@@ -115,8 +107,8 @@ public class ContractService {
         }
     }
 
-    private void checkHisContractAgree(String loginId, ContractAgree contractAgree) {
-        if (!contractAgree.getSeller().getLoginId().equals(loginId) && !contractAgree.getBuyer().getLoginId().equals(loginId)) {
+    private void checkSellerOrBuyer(String loginId, String buyer, String seller) {
+        if (!buyer.equals(loginId) && !seller.equals(loginId)) {
             throw new BusinessException(ErrorCode.CONTRACT_NOT_YOUR_CONTRACT_AGREE);
         }
     }
@@ -136,24 +128,15 @@ public class ContractService {
             case 1:
                 checkSeller(loginId, sellerMember);
                 contract.levelOneWrite(request);
-                if (request.getNextLevel()) {
-                    // TODO: 판매자 -> 구매자 1단계 완료 채팅 메시지 보내기
-                }
                 break;
             case 2:
                 checkBuyer(loginId, buyerMember);
                 contract.levelTwoWrite(request);
-                if (request.getNextLevel()) {
-                    // TODO: 구매자 -> 판매자 2단계 완료 채팅 메시지 보내기
-                }
                 break;
             case 3:
                 checkSeller(loginId, sellerMember);
                 contract.levelThreeWrite(request);
                 house.saveExpiredAt();
-                if (request.getNextLevel()) {
-                    // TODO: 판매자 -> 구매자 3단계 완료 채팅 메시지 보내기
-                }
                 break;
             case 4:
                 throw new BusinessException(ErrorCode.CONTRACT_ALREADY_FINISHED);
@@ -180,12 +163,13 @@ public class ContractService {
         Member buyerMember = memberService.findByLoginId(buyer);
         House house = houseService.findById(houseId);
 
+        checkSellerOrBuyer(loginId, sellerMember.getLoginId(), buyerMember.getLoginId());
+
         ContractAgree contractAgree = contractAgreeRepository.findByHouseAndSellerAndBuyer(house, sellerMember, buyerMember)
             .orElseThrow(() -> new BusinessException(ErrorCode.CONTRACT_NOT_FOUND_CONTRACT_AGREE));
         Contract contract = contractRepository.findByHouseAndSellerAndBuyer(house, sellerMember, buyerMember)
             .orElseThrow(() -> new BusinessException(ErrorCode.CONTRACT_NOT_FOUND_CONTRACT));
 
-        checkHisContractAgree(loginId, contractAgree);
         checkHisContract(loginId, contract);
 
         contractAgree.saveDeletedTime();
