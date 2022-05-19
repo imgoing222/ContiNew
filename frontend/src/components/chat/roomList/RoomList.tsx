@@ -121,21 +121,10 @@ const Content = styled.div`
 	min-height: 5rem;
 	overflow: auto;
 
-	::-webkit-scrollbar {
-		width: 5px;
-	}
-
-	::-webkit-scrollbar-thumb {
-    background-color: #d3d3d3;
-  }
-
-	::-webkit-scrollbar-track {
-    background-color: #fff;
-
 	@media ${(props) => props.theme.tabletS} {
 		display: flex;
 		align-items: center;
-		white-space: nowrap 
+		white-space: nowrap;
 	}
 `;
 
@@ -147,7 +136,8 @@ const ContentContainer = styled.div`
 
 	@media ${(props) => props.theme.tabletS} {
 		width: 7rem;
-		margin: 1rem auto 0 0;
+		height: 10rem;
+		margin: 0;
 	}
 `;
 

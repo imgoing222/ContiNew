@@ -59,13 +59,9 @@ const LeftSection = styled.div`
 	width: 10rem;
 	display: flex;
 	flex-direction: column;
-	border-radius: 20%;
-	overflow: hidden;
 
 	@media ${(props) => props.theme.tabletS} {
 		width: 6rem;
-		height: 6rem;
-		border-radius: 50%;
 	}
 `;
 
@@ -84,11 +80,18 @@ const RightSection = styled.div`
 const MainImage = styled.img`
 	width: 100%;
 	max-height: 6rem;
+	border-radius: 20%;
+
+	@media ${(props) => props.theme.tabletS} {
+		width: 6rem;
+		height: 6rem;
+		border-radius: 50%;
+	}
 `;
 
 const Name = styled.h1`
 	@media ${(props) => props.theme.tabletS} {
-		font-size: 1rem;
+		font-size: 1.5rem;
 	}
 `;
 
