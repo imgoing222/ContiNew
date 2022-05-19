@@ -3,6 +3,8 @@ interface ButtonProps {
 	color?: string;
 	backgroundColor?: string;
 	disabled?: boolean;
+	width?: number;
+	margin?: string;
 }
 
 export const Button = styled.button<ButtonProps>`
@@ -10,11 +12,11 @@ export const Button = styled.button<ButtonProps>`
 	color: ${({ color, disabled }) => (disabled ? "white" : color)};
 	background-color: ${({ backgroundColor, disabled }) =>
 		backgroundColor ? (disabled ? "#eaeaea" : backgroundColor) : "inherit"};
-	margin-top: 2rem;
+	margin: ${({ margin }) => (margin ? `${margin}` : 0)};
 	font-size: 1.5rem;
 	padding: 0.5rem 0;
-	margin-bottom: 0.5rem;
 	&:hover {
 		cursor: pointer;
 	}
+	width: ${({ width }) => (width ? `${width}%` : "100%")};
 `;

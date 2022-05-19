@@ -16,7 +16,7 @@ function Tabs({ setCurrentTab, tabs }: Props) {
 	return (
 		<Container>
 			{tabs.map((tab, idx) => (
-				<Tab onClick={() => handleTabClick(idx)} clicked={clicked === idx ? true : false}>
+				<Tab onClick={() => handleTabClick(idx)} clicked={clicked === idx ? true : false} key={idx}>
 					{tab}
 				</Tab>
 			))}
@@ -28,6 +28,7 @@ const Container = styled.div`
 	display: flex;
 	justify-content: space-evenly;
 	border-bottom: 0.5px solid #dedede;
+	margin-bottom: 7rem;
 `;
 interface TabProps {
 	clicked?: boolean;
