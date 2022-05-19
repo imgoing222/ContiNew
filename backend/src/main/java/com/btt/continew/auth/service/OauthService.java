@@ -1,6 +1,5 @@
 package com.btt.continew.auth.service;
 
-import com.btt.continew.auth.Oauth.GoogleOauth;
 import com.btt.continew.auth.controller.dto.AuthorizationGoogle;
 import com.btt.continew.auth.controller.dto.AuthorizationKakao;
 import com.btt.continew.auth.controller.dto.response.GoogleUserInfoResponse;
@@ -13,7 +12,6 @@ import com.btt.continew.member.domain.Member;
 import com.btt.continew.member.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
