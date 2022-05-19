@@ -85,6 +85,12 @@ const Container = styled.div`
 	align-items: center;
 	margin: 10rem auto;
 	border: solid 2px #d3d3d3;
+
+	@media ${(props) => props.theme.tabletS} {
+		width: 40rem;
+		flex-direction: column;
+		border: none;
+	}
 `;
 
 export default ChatDetail;
