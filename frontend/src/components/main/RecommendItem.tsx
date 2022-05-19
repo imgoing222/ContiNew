@@ -11,7 +11,6 @@ interface HouseType {
 function RecommendItem({ house }: HouseType) {
 	const router = useRouter();
 
-	console.log(house.monthly_rent);
 	return (
 		<Li onClick={() => router.push(`/article/${house.house_id}`)}>
 			<Image src={house.main_image} alt="house-img" />

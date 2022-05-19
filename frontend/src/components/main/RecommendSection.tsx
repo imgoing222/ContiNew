@@ -20,7 +20,9 @@ interface DataProps {
 function RecommendSection({ addressData }: DataProps) {
 	const router = useRouter();
 	const [scrollState, setScrollState] = useState(0);
+	const [scrollPage, setScrollPage] = useState(0);
 	const [aroundHousesData, setAroundHousesData] = useState<House[]>([]);
+	const totalPage = aroundHousesData.length;
 
 	useEffect(() => {
 		getAroundHouse();
@@ -37,9 +39,11 @@ function RecommendSection({ addressData }: DataProps) {
 
 	const handleScroll = (direction?: string) => {
 		if (direction) {
-			setScrollState(scrollState - 25);
+			setScrollState(scrollState - 340);
+			setScrollPage(scrollPage + 1);
 		} else {
-			setScrollState(scrollState + 25);
+			setScrollState(scrollState + 340);
+			setScrollPage(scrollPage - 1);
 		}
 	};
 
@@ -61,10 +65,10 @@ function RecommendSection({ addressData }: DataProps) {
 			</Ul>
 			{aroundHousesData.length > 3 && (
 				<ArrowButtonBox>
-					<ArrowButtonDiv scrollState={scrollState}>
+					<ArrowButtonDiv totalPage={totalPage} scrollPage={scrollPage}>
 						<ArrowButton icon={faChevronLeft} onClick={() => handleScroll()} />
 					</ArrowButtonDiv>
-					<ArrowButtonDiv direction="right" scrollState={scrollState}>
+					<ArrowButtonDiv direction="right" totalPage={totalPage} scrollPage={scrollPage}>
 						<ArrowButton icon={faChevronRight} onClick={() => handleScroll("right")} />
 					</ArrowButtonDiv>
 				</ArrowButtonBox>
@@ -99,11 +103,11 @@ const Ul = styled.ul<UIType>`
 	display: flex;
 	list-style: none;
 	padding: 0;
-	transform: ${({ scrollState }) => "translateX(" + scrollState + "%);"}
+	transform: ${({ scrollState }) => "translateX(" + scrollState + "px);"}
 	transition: all 0.5s;
 
 	@media ${(props) => props.theme.tabletS} {
-		transform: ${({ scrollState }) => "translateX(" + scrollState * 4 + "%);"}
+		transform: ${({ scrollState }) => "translateX(" + scrollState + "px);"}
 	}
 `;
 
@@ -136,16 +140,17 @@ const ArrowButton = styled(FontAwesomeIcon)`
 
 interface ArrowButtonType {
 	direction?: string;
-	scrollState: number;
+	totalPage: number;
+	scrollPage: number;
 }
 
 const ArrowButtonDiv = styled.div<ArrowButtonType>`
-	pointer-events: ${({ direction, scrollState }) =>
-		direction && scrollState === -100 ? "none" : ""};
-	pointer-events: ${({ direction, scrollState }) =>
-		!direction && scrollState === 0 ? "none" : ""};
-	opacity: ${({ direction, scrollState }) => (direction && scrollState === -100 ? "0.2" : "")};
-	opacity: ${({ direction, scrollState }) => (!direction && scrollState === 0 ? "0.2" : "")};
+	pointer-events: ${({ direction, totalPage, scrollPage }) =>
+		direction && scrollPage === totalPage - 3 ? "none" : ""};
+	pointer-events: ${({ direction, scrollPage }) => (!direction && scrollPage === 0 ? "none" : "")};
+	opacity: ${({ direction, totalPage, scrollPage }) =>
+		direction && scrollPage === totalPage - 3 ? "0.2" : ""};
+	opacity: ${({ direction, scrollPage }) => (!direction && scrollPage === 0 ? "0.2" : "")};
 `;
 
 const ArrowButtonBox = styled.div`
