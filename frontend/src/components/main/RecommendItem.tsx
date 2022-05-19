@@ -16,18 +16,10 @@ function RecommendItem({ house }: HouseType) {
 			<Image src={house.main_image} alt="house-img" />
 			<Content>
 				<SaleType>
-					{house.contract_type === "전세" ? (
-						<>
-							{house.contract_type} {moneyUnitChange(house.deposit.toString())}
-						</>
-					) : (
-						<>
-							{house.contract_type} {house.deposit}
-							{house.monthly_rent && <span>/{house.monthly_rent}</span>}
-						</>
-					)}
+					{house.contract_type} {moneyUnitChange(house.deposit.toString())}
+					{house.monthly_rent && <span>/{moneyUnitChange(house.monthly_rent.toString())}</span>}
 				</SaleType>
-				<Fee>관리비 : {house.maintenance_fee} 만 원</Fee>
+				<Fee>관리비 : {moneyUnitChange(house.maintenance_fee.toString())}</Fee>
 				<Text>{house.description}</Text>
 			</Content>
 		</Li>
@@ -35,7 +27,7 @@ function RecommendItem({ house }: HouseType) {
 }
 
 const Li = styled.li`
-	margin: 10px;
+	margin: 30px;
 	cursor: pointer;
 `;
 

@@ -93,7 +93,7 @@ function ContractButton({ sendMessage }: Props) {
 		try {
 			await contractApi.agreeContractRequest(requestInfo);
 			autoMessage(`${username} 님이 계약 요청을 수락하였습니다.`);
-			setContractState("request");
+			setContractState("under");
 		} catch (error) {
 			console.log(error);
 		}

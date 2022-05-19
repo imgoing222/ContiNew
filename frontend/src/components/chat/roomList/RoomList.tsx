@@ -75,12 +75,15 @@ function RoomList() {
 				<h2>Messages</h2>
 			</Title>
 			<Content>
-				{chatListData.chat_rooms &&
-					chatListData.chat_rooms.map((chat) => (
-						<ContentContainer key={chat.room_id} onClick={() => toChattingRoom(chat)}>
-							<RoomListItem chat={chat} />
-						</ContentContainer>
-					))}
+				{chatListData.chat_rooms && (
+					<Wrap>
+						{chatListData.chat_rooms.map((chat) => (
+							<ContentContainer key={chat.room_id} onClick={() => toChattingRoom(chat)}>
+								<RoomListItem chat={chat} />
+							</ContentContainer>
+						))}
+					</Wrap>
+				)}
 			</Content>
 		</Container>
 	);
@@ -123,6 +126,7 @@ const Content = styled.div`
 
 	::-webkit-scrollbar {
 		width: 5px;
+		height: 8px;
 	}
 
 	::-webkit-scrollbar-thumb {
@@ -131,11 +135,12 @@ const Content = styled.div`
 
 	::-webkit-scrollbar-track {
     background-color: #fff;
+	
+`;
 
+const Wrap = styled.div`
 	@media ${(props) => props.theme.tabletS} {
 		display: flex;
-		align-items: center;
-		white-space: nowrap 
 	}
 `;
 
@@ -146,8 +151,9 @@ const ContentContainer = styled.div`
 	cursor: pointer;
 
 	@media ${(props) => props.theme.tabletS} {
-		width: 7rem;
-		margin: 1rem auto 0 0;
+		width: 100%;
+		height: 10rem;
+		margin: 0;
 	}
 `;
 

@@ -14,8 +14,8 @@ interface AddressType {
 function MainPage() {
 	const [addressData, setAddressData] = useState<AddressType>({
 		sido_name: "서울",
-		gungu_name: "동대문구",
-		dong_name: "이문동",
+		gungu_name: "관악구",
+		dong_name: "봉천동",
 	});
 
 	useEffect(() => {
