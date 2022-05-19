@@ -48,7 +48,7 @@ const Container = styled.div`
 	}
 
 	@media ${(props) => props.theme.tabletS} {
-		width: 7rem;
+		width: 10rem;
 		flex-direction: column;
 		justify-content: center;
 		border: none;
