@@ -21,7 +21,7 @@ const Nav = styled.nav`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid ${(props) => props.theme.borderColor};
 `;
 
 const Title = styled.a`
