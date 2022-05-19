@@ -8,6 +8,7 @@ import com.btt.continew.house.controller.dto.response.HouseIdResponse;
 import com.btt.continew.house.controller.dto.response.HouseListResponse;
 import com.btt.continew.house.controller.dto.response.HouseLocationResponse;
 import com.btt.continew.house.controller.dto.response.HouseSimpleResponse;
+import com.btt.continew.house.service.HouseDeleteService;
 import com.btt.continew.house.service.HouseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -39,9 +40,11 @@ import org.springframework.web.multipart.MultipartFile;
 public class HouseRestController {
 
     private final HouseService houseService;
+    private final HouseDeleteService houseDeleteService;
 
-    public HouseRestController(HouseService houseService) {
+    public HouseRestController(HouseService houseService, HouseDeleteService houseDeleteService) {
         this.houseService = houseService;
+        this.houseDeleteService = houseDeleteService;
     }
 
     @PostMapping("/auth/houses")
@@ -119,7 +122,8 @@ public class HouseRestController {
 
     @GetMapping("/auth/houses/mine")
     @ApiOperation(value = "내 매물 조회", notes = "내 매물을 조회하는 api")
-    public ResponseEntity<List<HouseSimpleResponse>> showMyHouses(@ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
+    public ResponseEntity<List<HouseSimpleResponse>> showMyHouses(
+        @ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
         return ResponseEntity.ok().body(houseService.showMyHouses(loginId));
     }
 
@@ -138,7 +142,7 @@ public class HouseRestController {
     @ApiImplicitParam(name = "house_id", value = "매물 id", readOnly = true)
     public ResponseEntity<Void> delete(@PathVariable(value = "house_id") Long houseId,
         @ApiParam(hidden = true) @AuthenticationPrincipal String loginId) {
-        houseService.delete(houseId, loginId);
+        houseDeleteService.delete(houseId, loginId);
         return ResponseEntity.noContent().build();
     }
 }
