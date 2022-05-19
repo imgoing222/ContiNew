@@ -155,4 +155,8 @@ public class House extends BaseEntity {
     public void changeMainImage(String url) {
         this.mainImage = url;
     }
+
+    public void saveExpiredAt() {
+        this.expiredAt = LocalDateTime.now();
+    }
 }
