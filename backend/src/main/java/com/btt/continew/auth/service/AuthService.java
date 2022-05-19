@@ -91,4 +91,9 @@ public class AuthService {
         refreshTokenRepository.save(refreshToken);
         setTokenToCookie(tokenResponse.getAccessToken(), refreshToken.getRefreshToken(), response);
     }
+
+    @Transactional
+    public void deleteRefreshTokenTable() {
+        refreshTokenRepository.deleteByExpiredAtBefore(LocalDateTime.now());
+    }
 }
