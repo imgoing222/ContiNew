@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { Input } from "./Input";
 import { Label } from "./Label";
 import { Section } from "./Section";
+import { Unit } from "./Unit";
 
 interface Props {
 	disabled: boolean;
@@ -47,6 +48,9 @@ function SaleInfo({ disabled, contractInfo }: Props) {
 							defaultValue={contractInfo.area}
 							width={25}
 						/>
+						<Unit>
+							m<sup>2</sup>
+						</Unit>
 					</Box>
 					<Box>
 						<Label>전용면적</Label>
@@ -57,6 +61,9 @@ function SaleInfo({ disabled, contractInfo }: Props) {
 							defaultValue={contractInfo.net_leasable_area}
 							width={25}
 						/>
+						<Unit>
+							m<sup>2</sup>
+						</Unit>
 					</Box>
 				</Container>
 			</Section>

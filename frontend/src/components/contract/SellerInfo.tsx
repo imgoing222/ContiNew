@@ -22,7 +22,6 @@ function SellerInfo({ step, role, contractInfo }: Props) {
 	const handleSellerInfoChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target as HTMLInputElement;
 		dispatch(SET_STEP1({ ...contractInfo, [name]: value }));
-		console.log(value);
 	}, 200);
 
 	useEffect(() => {

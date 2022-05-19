@@ -90,7 +90,6 @@ function Contract() {
 						<Step label="신규 임차인 정보 작성 및 서명" />
 						<Step label="임차인 서명" />
 					</Stepper>
-
 					<ContractForm />
 					<BreakButton onClick={handleBreakContractButton}>계약 파기</BreakButton>
 					{showButtons()}

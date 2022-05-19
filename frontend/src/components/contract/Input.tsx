@@ -4,16 +4,16 @@ interface InputProps {
 	margin?: number;
 }
 export const Input = styled.input<InputProps>`
-	width: ${({ width }) => (width ? `${width}rem` : "calc(100% - 12rem)")};
+	width: ${({ width }) => (width ? `${width}rem` : "calc(100% - 25rem)")};
 	margin-right: ${({ margin }) => margin && `${margin}rem`};
 	@media ${(props) => props.theme.tabletS} {
-		width: ${({ width }) => (width ? `${width - 10}rem` : "calc(100% - 12rem)")};
+		width: ${({ width }) => (width ? `${width - 10}rem` : "calc(100% - 17rem)")};
 	}
 	@media ${(props) => props.theme.mobile} {
-		width: ${({ width }) => (width ? `${width - 13}rem` : "calc(100% - 12rem)")};
+		width: ${({ width }) => (width ? `${width - 13}rem` : "calc(100% - 13rem)")};
 	}
 	@media ${(props) => props.theme.mobile} {
-		width: calc(100% - 10rem);
+		width: calc(100% - 13rem);
 	}
 `;
 

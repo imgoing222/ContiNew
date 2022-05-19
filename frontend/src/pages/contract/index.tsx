@@ -22,7 +22,6 @@ function MyContractsList() {
 				setCompletedContracts((prev) => [...prev, contract]);
 			} else setOnGoingContracts((prev) => [...prev, contract]);
 		});
-		console.log(onGoingContracts, completedContracts);
 	};
 
 	return (
