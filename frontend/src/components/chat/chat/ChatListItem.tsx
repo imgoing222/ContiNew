@@ -59,6 +59,7 @@ const TextContainer = styled.div<ContainerProps>`
 	justify-content: center;
 	border: solid 1px #d3d3d3;
 	border-radius: 10px;
+	word-break: break-all;
 	background-color: ${({ user, sender }) => (user === sender ? "#f5f5f5" : "#ffffff")};
 
 	@media ${(props) => props.theme.tabletS} {
