@@ -56,7 +56,7 @@ function Contract() {
 		const res = await contractApi.createContract(contractInfo);
 		if (res.status) {
 			alert(`${step}단계 계약서 작성이 완료되었습니다.`);
-			router.push("/contract");
+			window.location.href = "/contract";
 		}
 	};
 
