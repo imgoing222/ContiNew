@@ -54,12 +54,16 @@ const SubContainer = styled.div`
 `;
 
 const TextContainer = styled.div<ContainerProps>`
-	max-width: 30rem;
+	max-width: 45rem;
 	display: flex;
 	justify-content: center;
 	border: solid 1px #d3d3d3;
 	border-radius: 10px;
 	background-color: ${({ user, sender }) => (user === sender ? "#f5f5f5" : "#ffffff")};
+
+	@media ${(props) => props.theme.tabletS} {
+		max-width: 27rem;
+	}
 `;
 
 const Textarea = styled.div`
