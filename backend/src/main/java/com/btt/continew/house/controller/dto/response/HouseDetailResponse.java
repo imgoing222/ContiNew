@@ -167,4 +167,35 @@ public class HouseDetailResponse {
                 .collect(Collectors.toList())
         );
     }
+
+    public static HouseDetailResponse ofForUpdate(House house, List<String> imagesBase64) {
+        return new HouseDetailResponse(
+            house.getId(),
+            house.getMember().getLoginId(),
+            house.getMember().getUsername(),
+            house.getMember().getPhoneAuth(),
+            house.getSidoName(),
+            house.getGunguName(),
+            house.getDongName(),
+            house.getJibunAddress(),
+            house.getAddressDetail(),
+            house.getLatitude(),
+            house.getLongitude(),
+            house.getFloor(),
+            house.getSaleType(),
+            house.getHouseType(),
+            house.getContractType(),
+            house.getDeposit(),
+            house.getMonthlyRent(),
+            house.getMaintenanceFee(),
+            house.getMaintenanceDetail(),
+            house.getPeriod(),
+            house.getDescription(),
+            Arrays.stream(house.getOptions().split(", "))
+                .map(Long::parseLong).collect(Collectors.toList()),
+            imagesBase64
+        );
+    }
+
+
 }
