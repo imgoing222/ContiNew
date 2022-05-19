@@ -22,17 +22,21 @@ function MyArticle() {
 	return (
 		<Container>
 			{myArticles && myArticles.length > 0 ? (
-				myArticles.map((article) => (
-					<ArticleItem onClick={() => router.push(`/article/${article.house_id}`)}>
-						<img src={article.main_image} />
+				myArticles.map((article, idx) => (
+					<ArticleItem onClick={() => router.push(`/article/${article.house_id}`)} key={idx}>
+						<Image src={article.main_image} />
 						<div>
-							<p>{article.sale_type}</p>
-							<p>{article.house_type}</p>
-							<p>{article.jibun_address}</p>
-							<p>{article.description}</p>
-							<p>보증금 : {article.deposit}</p>
-							<p>월세 : {article.monthly_rent}</p>
-							<p>관리비 : {article.maintenance_fee}</p>
+							<Info>{article.sale_type}</Info>
+							<Info>{article.house_type}</Info>
+							<Info>{article.jibun_address}</Info>
+							<Info>
+								{article.description.length > 39
+									? `${article.description.slice(0, 40)}...`
+									: article.description}
+							</Info>
+							<Info>
+								{article.deposit} / {article.monthly_rent}
+							</Info>
 						</div>
 					</ArticleItem>
 				))
@@ -45,7 +49,23 @@ function MyArticle() {
 
 const ArticleItem = styled.div`
 	display: flex;
+	margin: 3rem 0;
+	border: 0.3px solid #dddddd;
 	cursor: pointer;
+	padding: 2rem;
+`;
+
+const Image = styled.img`
+	display: block;
+	width: 50%;
+	margin-right: 4rem;
+	height: 20vh;
+	border-radius: 0.5rem;
+`;
+
+const Info = styled.p`
+	margin: 1rem 0 0;
+	font-size: 1.4rem;
 `;
 
 const Text = styled.p`
