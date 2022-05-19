@@ -74,7 +74,7 @@ function RecommendSection({ addressData }: DataProps) {
 }
 
 const Section = styled.section`
-	width: 900px;
+	width: 1020px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -82,7 +82,7 @@ const Section = styled.section`
 	overflow: hidden;
 
 	@media ${(props) => props.theme.tabletS} {
-		width: 300px;
+		width: 340px;
 	}
 `;
 

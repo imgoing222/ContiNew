@@ -27,7 +27,7 @@ function RecommendItem({ house }: HouseType) {
 }
 
 const Li = styled.li`
-	margin: 10px;
+	margin: 30px;
 	cursor: pointer;
 `;
 
