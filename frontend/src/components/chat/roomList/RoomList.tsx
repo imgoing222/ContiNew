@@ -135,6 +135,7 @@ const Content = styled.div`
 	@media ${(props) => props.theme.tabletS} {
 		display: flex;
 		align-items: center;
+		white-space: nowrap 
 	}
 `;
 
