@@ -49,7 +49,7 @@ const Menu = styled.div<IsToggle>`
 		left: 0;
 		background: #ffffff;
 		width: 25rem;
-		height: 100vh;
+		height: 100%;
 		justify-content: center;
 		z-index: 1;
 		transform: ${(props) => (props.isToggle ? "translateX(0)" : "translateX(-30rem)")};
