@@ -80,6 +80,10 @@ const Section = styled.section`
 	justify-content: center;
 	margin: 10rem auto;
 	overflow: hidden;
+
+	@media ${(props) => props.theme.tabletS} {
+		width: 300px;
+	}
 `;
 
 const Title = styled.div`
@@ -97,6 +101,10 @@ const Ul = styled.ul<UIType>`
 	padding: 0;
 	transform: ${({ scrollState }) => "translateX(" + scrollState + "%);"}
 	transition: all 0.5s;
+
+	@media ${(props) => props.theme.tabletS} {
+		transform: ${({ scrollState }) => "translateX(" + scrollState * 4 + "%);"}
+	}
 `;
 
 const TextBox = styled.div`
