@@ -31,7 +31,7 @@ function DetailOfSale({ saleList }: SaleListProps) {
 								{item.sido_name} {item.gungu_name} {item.dong_name}
 							</Text>
 							<Text fontSize={1.2}>
-								{item.floor}층 {moneyUnitChange(item.monthly_rent.toString())}
+								{item.floor}층 {moneyUnitChange(item.maintenance_fee.toString())}
 							</Text>
 							<Text fontSize={1.2}>
 								{item.description.length > 24
