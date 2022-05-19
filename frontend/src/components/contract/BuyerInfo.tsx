@@ -21,7 +21,6 @@ function BuyerInfo({ step, role, contractInfo }: Props) {
 	const handleBuyerInfoChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target as HTMLInputElement;
 		dispatch(SET_STEP2({ ...contractInfo, [name]: value }));
-		console.log(name, value);
 	}, 200);
 
 	useEffect(() => {
@@ -50,6 +49,7 @@ function BuyerInfo({ step, role, contractInfo }: Props) {
 						name="buyer_name"
 						defaultValue={contractInfo.buyer_name}
 						onChange={handleBuyerInfoChange}
+						width={25}
 					/>
 				</Box>
 				<Box>
