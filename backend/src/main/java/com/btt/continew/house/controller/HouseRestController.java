@@ -95,6 +95,20 @@ public class HouseRestController {
         return ResponseEntity.ok().body(houseService.show(houseId));
     }
 
+    @GetMapping("/auth/houses/{house_id}/base64")
+    @ApiOperation(value = "매물 수정 조회", notes = "매물 수정 시 정보를 조회 api")
+    @ApiImplicitParam(name = "house_id", value = "매물 id", required = true)
+    public ResponseEntity<HouseDetailResponse> showForUpdate(@PathVariable(value = "house_id") Long houseId) {
+        return ResponseEntity.ok().body(houseService.showForUpdate(houseId));
+    }
+
+//    @GetMapping("/auth/houses/{house_id}/mpf")
+//    @ApiOperation(value = "매물 수정 조회", notes = "매물 수정 시 정보를 조회 api")
+//    @ApiImplicitParam(name = "house_id", value = "매물 id", required = true)
+//    public ResponseEntity<HouseUpdateResponse> showForUpdateMultipartFile(@PathVariable(value = "house_id") Long houseId) {
+//        return ResponseEntity.ok().body(houseService.showForUpdateMultipartFile(houseId));
+//    }
+
     @PostMapping("/houses/around")
     @ApiOperation(value = "주변 매물 조회", notes = "주변 매물 조회 api")
     public ResponseEntity<HouseListResponse> showAroundHouses(@RequestBody HouseAroundRequest request,
