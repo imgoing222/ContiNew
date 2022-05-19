@@ -9,5 +9,4 @@ export const Container = styled.div<Props>`
 	flex-direction: column;
 	border: ${({ border }) => (border ? "0.1px solid #dedede;" : "none")};
 	padding: 4rem;
-	margin-top: 4rem;
 `;

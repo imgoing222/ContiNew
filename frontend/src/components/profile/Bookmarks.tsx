@@ -61,7 +61,7 @@ function Bookmarks() {
 					)}
 				</>
 			) : (
-				<h2>등록한 관심 매물 목록이 없습니다</h2>
+				<Text>등록한 북마크가 없습니다</Text>
 			)}
 		</Container>
 	);
@@ -88,5 +88,11 @@ const Button = styled.button`
 	cursor: pointer;
 	width: 4rem;
 	margin: 1rem auto;
+`;
+
+const Text = styled.p`
+	font-size: 1.6rem;
+	text-align: center;
+	margin-top: 20rem;
 `;
 export default Bookmarks;
