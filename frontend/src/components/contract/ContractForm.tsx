@@ -14,7 +14,6 @@ function ContractForm() {
 	const contractInfo: ContractType = contract.contract;
 	const step = contract.step.current_step;
 	const role = contract.role.user_role;
-	console.log(disabled);
 
 	useEffect(() => {
 		if (step === 1 && role === "seller") {

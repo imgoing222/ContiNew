@@ -16,16 +16,15 @@ interface ButtonProps {
 function Contract() {
 	const router = useRouter();
 	const dispatch = useDispatch();
+
 	const buyerId = router.query.buyerId as string;
 	const sellerId = router.query.sellerId as string;
 	const articleId = Number(router.query.articleId as string);
 
 	const contract: ContractStore = useSelector((state: RootState) => state.contractInfo);
 	const loginId = useSelector((state: RootState) => state.userInfo.login_id);
-	console.log(contract);
-
 	const step = contract.step.current_step;
-
+	const role = contract.role.user_role;
 	const value = { buyer: buyerId, seller: sellerId, house_id: articleId };
 
 	useEffect(() => {
@@ -51,8 +50,6 @@ function Contract() {
 
 	const handleNextStepClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		const { id } = e.target as HTMLElement;
-		console.log(id);
-
 		if (id === "next") dispatch(SET_LEVEL(true));
 		else if (id === "save") dispatch(SET_LEVEL(false));
 		const contractInfo = { ...contract.id, ...contract.contract, ...contract.level };
@@ -60,6 +57,25 @@ function Contract() {
 		if (res.status) {
 			alert(`${step}단계 계약서 작성이 완료되었습니다.`);
 			router.push("/contract");
+		}
+	};
+
+	const showButtons = () => {
+		if (
+			(step === 1 && role === "seller") ||
+			(step === 2 && role === "buyer") ||
+			(step === 3 && role === "seller")
+		) {
+			return (
+				<StyledDiv>
+					<Button id="save" onClick={handleNextStepClick}>
+						임시 저장
+					</Button>
+					<Button id="next" onClick={handleNextStepClick} isColor={true}>
+						다음 단계
+					</Button>
+				</StyledDiv>
+			);
 		}
 	};
 
@@ -77,15 +93,7 @@ function Contract() {
 
 					<ContractForm />
 					<BreakButton onClick={handleBreakContractButton}>계약 파기</BreakButton>
-
-					<StyledDiv>
-						<Button id="save" onClick={handleNextStepClick}>
-							임시 저장
-						</Button>
-						<Button id="next" onClick={handleNextStepClick} isColor={true}>
-							다음 단계
-						</Button>
-					</StyledDiv>
+					{showButtons()}
 				</>
 			)}
 		</>
