@@ -29,7 +29,7 @@ function RoomListItem({ chat }: ChatProps) {
 				<MainImage src={chat.main_image} alt="Img" />
 			</LeftSection>
 			<RightSection>
-				<h1>{name}</h1>
+				<Name>{name}</Name>
 				<Text>{chat.last_message}</Text>
 			</RightSection>
 		</Container>
@@ -46,6 +46,13 @@ const Container = styled.div`
 	&:hover {
 		background-color: #fffafa;
 	}
+
+	@media ${(props) => props.theme.tabletS} {
+		width: 7rem;
+		flex-direction: column;
+		justify-content: center;
+		border: none;
+	}
 `;
 
 const LeftSection = styled.div`
@@ -54,6 +61,12 @@ const LeftSection = styled.div`
 	flex-direction: column;
 	border-radius: 20%;
 	overflow: hidden;
+
+	@media ${(props) => props.theme.tabletS} {
+		width: 6rem;
+		height: 6rem;
+		border-radius: 50%;
+	}
 `;
 
 const RightSection = styled.div`
@@ -61,11 +74,22 @@ const RightSection = styled.div`
 	display: flex;
 	margin: 1rem;
 	flex-direction: column;
+
+	@media ${(props) => props.theme.tabletS} {
+		width: 6rem;
+		text-align: center;
+	}
 `;
 
 const MainImage = styled.img`
 	width: 100%;
 	max-height: 6rem;
+`;
+
+const Name = styled.h1`
+	@media ${(props) => props.theme.tabletS} {
+		font-size: 1rem;
+	}
 `;
 
 const Text = styled.div`
@@ -75,6 +99,10 @@ const Text = styled.div`
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+
+	@media ${(props) => props.theme.tabletS} {
+		display: none;
+	}
 `;
 
 export default RoomListItem;

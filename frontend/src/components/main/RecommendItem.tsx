@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import House from "src/types/getListType";
+import { moneyUnitChange } from "@utils/index";
 
 interface HouseType {
 	house: House;
@@ -15,8 +16,16 @@ function RecommendItem({ house }: HouseType) {
 			<Image src={house.main_image} alt="house-img" />
 			<Content>
 				<SaleType>
-					{house.contract_type} {house.deposit}
-					{house.monthly_rent && <span>/{house.monthly_rent}</span>}
+					{house.contract_type === "전세" ? (
+						<>
+							{house.contract_type} {moneyUnitChange(house.deposit.toString())}
+						</>
+					) : (
+						<>
+							{house.contract_type} {house.deposit}
+							{house.monthly_rent && <span>/{house.monthly_rent}</span>}
+						</>
+					)}
 				</SaleType>
 				<Fee>관리비 : {house.maintenance_fee} 만 원</Fee>
 				<Text>{house.description}</Text>
