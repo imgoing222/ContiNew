@@ -49,8 +49,8 @@ const Label = styled.label<LabelProps>`
 	@media ${(props) => props.theme.mobile} {
 		font-size: 1.4rem;
 	}
-	@media ${(props) => props.theme.mobileXS} {
-		font-size: 0.9rem;
-		/* margin-right: 0.1rem; */
+	@media ${(props) => props.theme.mobileS} {
+		font-size: 0.8rem;
+		margin-right: 0.5rem;
 	}
 `;

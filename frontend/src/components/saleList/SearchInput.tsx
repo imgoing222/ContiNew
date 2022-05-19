@@ -75,16 +75,17 @@ const SearchForm = styled.form`
 `;
 
 const Input = styled.input`
-	width: 30rem;
+	width: 24rem;
 	height: 4rem;
 	font-size: 1.5rem;
 	outline: none;
 	border: none;
+
 	@media ${(props) => props.theme.mobile} {
-		width: 17rem;
+		width: 12rem;
 	}
 	@media ${(props) => props.theme.mobileXS} {
-		width: 6rem;
+		width: 6.5rem;
 	}
 `;
 

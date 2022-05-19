@@ -43,7 +43,7 @@ function SaleList({ saleList, searchCondition, totalPage, currentPage, setData }
 export default SaleList;
 
 const Container = styled.section`
-	min-width: 38rem;
+	min-width: 33rem;
 	max-height: calc(100vh - 12.5rem);
 	display: flex;
 	flex-direction: column;
@@ -51,8 +51,12 @@ const Container = styled.section`
 	&::-webkit-scrollbar {
 		display: none;
 	}
+
 	@media ${(props) => props.theme.mobile} {
-		min-width: 25rem;
+		min-width: 20rem;
+	}
+	@media ${(props) => props.theme.mobileS} {
+		min-width: 10rem;
 	}
 	@media ${(props) => props.theme.mobileXS} {
 		min-width: 11rem;
