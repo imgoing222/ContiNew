@@ -8,6 +8,7 @@ interface TextProp {
 	fontSize?: number;
 	bold?: boolean;
 	color?: string;
+	disapper?: boolean;
 }
 
 function DetailOfSale({ saleList }: SaleListProps) {
@@ -27,13 +28,13 @@ function DetailOfSale({ saleList }: SaleListProps) {
 									"/ " + moneyUnitChange(item.monthly_rent.toString())}
 							</Text>
 							<Text fontSize={1.2}>{item.house_type}</Text>
-							<Text fontSize={1.2}>
+							<Text fontSize={1.2} disapper={true}>
 								{item.sido_name} {item.gungu_name} {item.dong_name}
 							</Text>
 							<Text fontSize={1.2}>
 								{item.floor}층 {moneyUnitChange(item.maintenance_fee.toString())}
 							</Text>
-							<Text fontSize={1.2}>
+							<Text fontSize={1.2} disapper={true}>
 								{item.description.length > 24
 									? item.description.slice(0, 24) + "..."
 									: item.description}
@@ -82,6 +83,7 @@ const Text = styled.p<TextProp>`
 	margin-bottom: 0.5rem;
 	@media ${(props) => props.theme.mobile} {
 		font-size: ${({ fontSize }) => (fontSize ? "1.3rem" : "1rem")};
+		display: ${({ disapper }) => disapper && "none"};
 	}
 	@media ${(props) => props.theme.mobileXS} {
 		font-size: 0.7rem;

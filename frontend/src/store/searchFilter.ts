@@ -27,7 +27,7 @@ export const setCoodinates = (data: actionProps) => ({
 	type: COORDINATES,
 	data,
 });
-export const sethouseType = (data: actionProps) => ({
+export const setHouseType = (data: actionProps) => ({
 	type: HOUSE_TYPE,
 	data,
 });

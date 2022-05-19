@@ -35,4 +35,8 @@ export default wrapper.withRedux(MyApp);
 
 const Container = styled.div`
 	padding: 1rem 1rem 0 1rem;
+
+	@media ${(props) => props.theme.mobile} {
+		padding: 0;
+	}
 `;
