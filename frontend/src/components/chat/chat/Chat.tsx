@@ -120,7 +120,7 @@ const Container = styled.div`
 
 	@media ${(props) => props.theme.tabletS} {
 		width: 40rem;
-		min-height: 50rem;
+		height: 50rem;
 		border-bottom: solid 2px #d3d3d3;
 	}
 `;

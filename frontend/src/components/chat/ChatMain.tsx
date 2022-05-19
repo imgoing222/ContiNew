@@ -27,6 +27,11 @@ const Container = styled.div`
 	height: 100%;
 	display: flex;
 	justify-content: center;
+
+	@media ${(props) => props.theme.tabletS} {
+		width: 40rem;
+		
+	}
 `;
 
 const Content = styled.div`
@@ -38,14 +43,22 @@ const Content = styled.div`
 
 const Title = styled.h1`
 	font-size: 4rem;
+
+	@media ${(props) => props.theme.tabletS} {
+		font-size: 2.5rem;
+	}
 `;
 
 const Message = styled.p`
 	font-size: 2rem;
+
+	@media ${(props) => props.theme.tabletS} {
+		font-size: 1.5rem;
+	}
 `;
 
 const Div = styled.div`
-  margin: 1rem;
+	margin: 1rem;
 `;
 
 const Span = styled.span`
@@ -58,6 +71,11 @@ const FontAwesome = styled(FontAwesomeIcon)`
 	height: 20rem;
 	// color: #dc143c;
 	margin-right: 1.5rem;
+
+	@media ${(props) => props.theme.tabletS} {
+		width: 15rem;
+		height: 15rem;
+	}
 `;
 
 export default ChatMain;
