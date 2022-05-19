@@ -21,6 +21,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -95,11 +96,11 @@ public class HouseRestController {
         return ResponseEntity.ok().body(houseService.show(houseId));
     }
 
-    @GetMapping("/auth/houses/{house_id}/base64")
+    @GetMapping("/auth/houses/{house_id}/imgs")
     @ApiOperation(value = "매물 수정 조회", notes = "매물 수정 시 정보를 조회 api")
     @ApiImplicitParam(name = "house_id", value = "매물 id", required = true)
-    public ResponseEntity<HouseDetailResponse> showForUpdate(@PathVariable(value = "house_id") Long houseId) {
-        return ResponseEntity.ok().body(houseService.showForUpdate(houseId));
+    public ResponseEntity<MultiValueMap<String, Object>> showForUpdate(@PathVariable(value = "house_id") Long houseId) {
+        return ResponseEntity.ok().body(houseService.showForUpdateMultipartFile(houseId));
     }
 
 //    @GetMapping("/auth/houses/{house_id}/mpf")
