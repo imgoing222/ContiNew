@@ -1,17 +1,16 @@
 package com.btt.continew.house.controller.dto.response;
 
 import com.btt.continew.house.domain.House;
-import com.btt.continew.house.domain.Image;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Getter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
-public class HouseDetailResponse {
-
+public class HouseUpdateResponse {
     @JsonProperty("house_id")
     @ApiModelProperty(position = 0, notes = "매물 id", example = "1")
     private Long id;
@@ -102,16 +101,16 @@ public class HouseDetailResponse {
 
     @JsonProperty("images")
     @ApiModelProperty(position = 22, notes = "이미지", example = "")
-    private List<String> images;
+    private List<MultipartFile> images;
 
-    public HouseDetailResponse() {
+    public HouseUpdateResponse() {
     }
 
-    public HouseDetailResponse(Long id, String loginId, String username, Boolean phoneAuth, String sidoName,
+    public HouseUpdateResponse(Long id, String loginId, String username, Boolean phoneAuth, String sidoName,
         String gunguName, String dongName, String jibunAddress, String addressDetail, Double latitude, Double longitude,
         Integer floor, String saleType, String houseType, String contractType, Long deposit, Long monthlyRent,
         Long maintenanceFee, String maintenanceDetail, Integer period, String description, List<Long> options,
-        List<String> images) {
+        List<MultipartFile> images) {
         this.id = id;
         this.loginId = loginId;
         this.username = username;
@@ -137,8 +136,8 @@ public class HouseDetailResponse {
         this.images = images;
     }
 
-    public static HouseDetailResponse of(House house, List<Image> images) {
-        return new HouseDetailResponse(
+    public static HouseUpdateResponse of(House house, List<MultipartFile> images){
+        return new HouseUpdateResponse(
             house.getId(),
             house.getMember().getLoginId(),
             house.getMember().getUsername(),
@@ -162,40 +161,7 @@ public class HouseDetailResponse {
             house.getDescription(),
             Arrays.stream(house.getOptions().split(", "))
                 .map(Long::parseLong).collect(Collectors.toList()),
-            images.stream()
-                .map(Image::getUrl)
-                .collect(Collectors.toList())
+            images
         );
     }
-
-    public static HouseDetailResponse ofForUpdate(House house, List<String> imagesBase64) {
-        return new HouseDetailResponse(
-            house.getId(),
-            house.getMember().getLoginId(),
-            house.getMember().getUsername(),
-            house.getMember().getPhoneAuth(),
-            house.getSidoName(),
-            house.getGunguName(),
-            house.getDongName(),
-            house.getJibunAddress(),
-            house.getAddressDetail(),
-            house.getLatitude(),
-            house.getLongitude(),
-            house.getFloor(),
-            house.getSaleType(),
-            house.getHouseType(),
-            house.getContractType(),
-            house.getDeposit(),
-            house.getMonthlyRent(),
-            house.getMaintenanceFee(),
-            house.getMaintenanceDetail(),
-            house.getPeriod(),
-            house.getDescription(),
-            Arrays.stream(house.getOptions().split(", "))
-                .map(Long::parseLong).collect(Collectors.toList()),
-            imagesBase64
-        );
-    }
-
-
 }

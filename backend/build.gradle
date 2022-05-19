@@ -54,6 +54,11 @@ dependencies {
 
 	implementation 'com.querydsl:querydsl-jpa'
 	implementation 'com.querydsl:querydsl-apt'
+
+	implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
+	compile group: 'commons-io', name: 'commons-io', version: '2.4'
+	implementation group: 'commons-codec', name: 'commons-codec', version: '1.8'
+
 }
 
 tasks.named('test') {
