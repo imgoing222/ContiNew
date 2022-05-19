@@ -189,6 +189,52 @@ public class HouseService {
         return HouseUpdateResponse.of(house, imagesMultipartFile);
     }
 
+    private String imageToBase64Str(Image image){
+        try{
+            String url = image.getUrl();
+            URL imageUrl = new URL(url);
+            BufferedImage img = ImageIO.read(imageUrl);
+
+            File file = new File("downloaded.jpg");
+            ImageIO.write(img, "jpg", file);
+
+            InputStream finput = new FileInputStream(file);
+            byte[] imageBytes = new byte[(int)file.length()];
+            finput.read(imageBytes, 0, imageBytes.length);
+            finput.close();
+            String filePathName = url.replace("file:///", "");
+            String fileExtName = filePathName.substring(filePathName.lastIndexOf(".")+1);
+
+            return Base64.encodeBase64String(imageBytes);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private MultipartFile imageToMultipartFile(Image image){
+        try{
+            String url = image.getUrl();
+            URL imageUrl = new URL(url);
+            BufferedImage img = ImageIO.read(imageUrl);
+
+            File file = new File("downloaded.jpg");
+            FileItem fileItem = new DiskFileItem("originFile", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length(), file.getParentFile());
+
+            InputStream finput = new FileInputStream(file);
+            OutputStream os = fileItem.getOutputStream();
+            IOUtils.copy(finput, os);
+            finput.close();
+            os.close();
+            MultipartFile mFile = new CommonsMultipartFile(fileItem);
+            return mFile;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @Transactional(readOnly = true)
     public HouseListResponse showAroundHouses(HouseAroundRequest request, Pageable pageable) {
         Page<House> houses = houseRepository.findAllBySidoNameAndGunguNameAndDongNameAndExpiredAtAfter(request.getSidoName(),
