@@ -98,9 +98,7 @@ function Chat({ sendMessage, roomId, receivedChatData }: Props) {
 
 	return (
 		<Container>
-			<Title>
-				<h2>{name} 님</h2>
-			</Title>
+			<Title>{name}</Title>
 			<Content>
 				{roomId && (
 					<>
@@ -139,9 +137,16 @@ const Title = styled.div`
 	width: 100%;
 	height: 8rem;
 	display: flex;
-	justify-content: center;
 	align-items: center;
+	font-size: 2rem;
+	font-weight: bold;
+	padding-left: 2rem;
 	border-bottom: solid 2px #d3d3d3;
+
+	@media ${(props) => props.theme.tabletS} {
+		justify-content: center;
+		padding-left: none;
+	}
 `;
 
 const Content = styled.div`
