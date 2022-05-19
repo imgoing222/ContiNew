@@ -78,7 +78,7 @@ public class HouseService {
     public HouseIdResponse create(HouseSaveRequest request, List<MultipartFile> images, String email) {
         Member member = memberService.findByLoginId(email);
 
-        if(houseRepository.existsByMemberAndExpiredAtAfter(member, LocalDateTime.now())){
+        if (houseRepository.existsByMemberAndExpiredAtAfter(member, LocalDateTime.now())) {
             throw new BusinessException(ErrorCode.HOUSE_ALREADY_EXISTS_BY_LOGINID);
         }
 
@@ -102,7 +102,7 @@ public class HouseService {
             .contractType(request.getContractType())
             .period(request.getPeriod())
             .expiredAt(LocalDateTime.now().plusMonths(LISTING_PERIOD))
-            .options(request.getOptions().toString().substring(1, request.getOptions().toString().length()-1))
+            .options(request.getOptions().toString().substring(1, request.getOptions().toString().length() - 1))
             .build();
         houseRepository.save(house);
 
@@ -113,23 +113,23 @@ public class HouseService {
 
     private void saveImages(List<MultipartFile> images, House house) {
         int idx = 0;
-        for (MultipartFile file: images) {
-           try{
-               String url = imageUploader.upload(file, "house");
-               if(idx == 0) {
-                   house.changeMainImage(url);
-               }
-               Image image = Image.builder()
-                   .house(house)
-                   .url(url)
-                   .build();
+        for (MultipartFile file : images) {
+            try {
+                String url = imageUploader.upload(file, "house");
+                if (idx == 0) {
+                    house.changeMainImage(url);
+                }
+                Image image = Image.builder()
+                    .house(house)
+                    .url(url)
+                    .build();
 
-               imageRepository.save(image);
-           } catch (IOException e) {
-               throw new BusinessException(ErrorCode.GLOBAL_ILLEGAL_ERROR);
-           }
-           idx++;
-       }
+                imageRepository.save(image);
+            } catch (IOException e) {
+                throw new BusinessException(ErrorCode.GLOBAL_ILLEGAL_ERROR);
+            }
+            idx++;
+        }
     }
 
 //    private void saveHouseOptions(HouseSaveRequest request, House house) {
@@ -180,8 +180,8 @@ public class HouseService {
         List<Image> images = imageRepository.findAllByHouse(house);
 
         List<String> imagesBase64 = images.stream()
-                .map(i -> imageToBase64Str(i))
-                .collect(Collectors.toList());
+            .map(i -> imageToBase64Str(i))
+            .collect(Collectors.toList());
 
         return HouseDetailResponse.ofForUpdate(house, imagesBase64);
     }
@@ -200,15 +200,18 @@ public class HouseService {
         List<MultipartFile> imagesMultipartFile = images.stream()
             .map(i -> imageToMultipartFile(i))
             .collect(Collectors.toList());
-
-        for(MultipartFile file: imagesMultipartFile) {
-            body.add("file", file.getResource());
+        try {
+            for (MultipartFile file : imagesMultipartFile) {
+                body.add("file", new ByteArrayResource(file.getBytes()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return body;
     }
 
-    private String imageToBase64Str(Image image){
-        try{
+    private String imageToBase64Str(Image image) {
+        try {
             String url = image.getUrl();
             URL imageUrl = new URL(url);
             BufferedImage img = ImageIO.read(imageUrl);
@@ -217,11 +220,11 @@ public class HouseService {
             ImageIO.write(img, "jpg", file);
 
             InputStream finput = new FileInputStream(file);
-            byte[] imageBytes = new byte[(int)file.length()];
+            byte[] imageBytes = new byte[(int) file.length()];
             finput.read(imageBytes, 0, imageBytes.length);
             finput.close();
             String filePathName = url.replace("file:///", "");
-            String fileExtName = filePathName.substring(filePathName.lastIndexOf(".")+1);
+            String fileExtName = filePathName.substring(filePathName.lastIndexOf(".") + 1);
 
             return Base64.encodeBase64String(imageBytes);
 
@@ -231,15 +234,16 @@ public class HouseService {
         return null;
     }
 
-    private MultipartFile imageToMultipartFile(Image image){
-        try{
+    private MultipartFile imageToMultipartFile(Image image) {
+        try {
             String url = image.getUrl();
             URL imageUrl = new URL(url);
             BufferedImage img = ImageIO.read(imageUrl);
 
             File file = new File("downloaded.jpg");
             ImageIO.write(img, "jpg", file);
-            FileItem fileItem = new DiskFileItem("originFile", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length(), file.getParentFile());
+            FileItem fileItem = new DiskFileItem("originFile", Files.probeContentType(file.toPath()), false, file.getName(),
+                (int) file.length(), file.getParentFile());
 
             InputStream finput = new FileInputStream(file);
             OutputStream os = fileItem.getOutputStream();
