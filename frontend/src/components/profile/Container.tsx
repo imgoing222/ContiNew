@@ -1,8 +1,13 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-	width: 60rem;
-	margin: 5rem auto;
+interface Props {
+	border?: boolean;
+}
+
+export const Container = styled.div<Props>`
 	display: flex;
 	flex-direction: column;
+	border: ${({ border }) => (border ? "0.1px solid #dedede;" : "none")};
+	padding: 4rem;
+	margin-top: 4rem;
 `;

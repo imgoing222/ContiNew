@@ -1,9 +1,12 @@
 import { Button } from "@components/account/Button";
 import { Input } from "@components/account/Input";
 import { Label } from "@components/account/Label";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import profileApi from "src/api/profile";
+import styled from "styled-components";
 
 interface Props {
 	username: string;
@@ -48,31 +51,70 @@ function UserInfoEdit({ username }: Props) {
 	return (
 		<>
 			<Label>닉네임</Label>
-			<div>
-				<Input value={newUsername} onChange={handleUsernameChange} />
-				<Button onClick={handleEditClick} id="username">
+			<Box>
+				<Input value={newUsername} onChange={handleUsernameChange} width={60} marginRight={3} />
+				<Button
+					onClick={handleEditClick}
+					id="username"
+					backgroundColor="#dc143c"
+					color="white"
+					width={10}
+					margin={"1rem 0 0"}
+				>
 					수정
 				</Button>
-			</div>
+			</Box>
 			<Label>비밀번호</Label>
-			<Input
-				placeholder="기존 비밀번호"
-				type="password"
-				name="before_password"
-				onChange={handlePasswordsChange}
-			/>
-			<Input
-				placeholder="새로운 비밀번호"
-				type={hidePassword ? "password" : "text"}
-				name="new_password"
-				onChange={handlePasswordsChange}
-			/>
-			<button onClick={toggleHidePassword}>{hidePassword ? "show" : "hide"}</button>
-			<Button onClick={handleEditClick} id="password">
+			<PasswordBox>
+				<Input
+					placeholder="기존 비밀번호"
+					type="password"
+					name="before_password"
+					onChange={handlePasswordsChange}
+				/>
+				<Input
+					placeholder="새로운 비밀번호"
+					type={hidePassword ? "password" : "text"}
+					name="new_password"
+					onChange={handlePasswordsChange}
+				/>
+				<EyeButton onClick={toggleHidePassword}>
+					{hidePassword ? (
+						<FontAwesomeIcon icon={faEye} size="lg" color="#888888" />
+					) : (
+						<FontAwesomeIcon icon={faEyeSlash} size="lg" color="#888888" />
+					)}
+				</EyeButton>
+			</PasswordBox>
+			<Button
+				onClick={handleEditClick}
+				id="password"
+				backgroundColor="#dc143c"
+				color="white"
+				margin="2rem 0 0.5rem"
+			>
 				수정
 			</Button>
 		</>
 	);
 }
 
+const EyeButton = styled.button`
+	border: none;
+	outline: none;
+	cursor: pointer;
+	background-color: inherit;
+	position: absolute;
+	top: 70%;
+	left: 92%;
+`;
+
+const Box = styled.div`
+	display: flex;
+	align-items: center;
+`;
+
+const PasswordBox = styled.div`
+	position: relative;
+`;
 export default UserInfoEdit;
