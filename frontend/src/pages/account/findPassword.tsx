@@ -1,7 +1,5 @@
 import { Button } from "@components/account/Button";
 import { Header } from "@components/account/Header";
-import { Input } from "@components/account/Input";
-import { Label } from "@components/account/Label";
 import { FormContainer } from "@components/account/Container";
 import { useState } from "react";
 import authApi from "src/api/auth";
@@ -10,7 +8,6 @@ import Timer from "@components/account/Timer";
 import getErrorMessage from "@utils/getErrorMessage";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { Container } from "@components/profile/Container";
 
 function findPassword() {
 	const router = useRouter();
@@ -76,10 +73,10 @@ function findPassword() {
 				<FormContainer onSubmit={handleUserInfoSubmit}>
 					<InputSection>
 						<Label>아이디</Label>
-						<Input name="login_id" onChange={handleUserInfoChange} />
+						<Input name="login_id" onChange={handleUserInfoChange} width={80} />
 						<Label>휴대폰 번호</Label>
-						<Input name="phone_number" onChange={handleUserInfoChange} />
-						<Button color="white" backgroundColor="#DC143C">
+						<Input name="phone_number" onChange={handleUserInfoChange} width={80} />
+						<Button color="white" backgroundColor="#DC143C" margin={"3rem auto"} width={80}>
 							코드 전송
 						</Button>
 					</InputSection>
@@ -89,16 +86,39 @@ function findPassword() {
 	);
 }
 
+const Container = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+	margin: 5rem auto 0;
+`;
+
 const Description = styled.p`
 	font-size: 1.5rem;
 	text-align: center;
 	margin-bottom: 1.2rem;
 `;
 
+const Label = styled.label`
+	width: 80%;
+	margin: 0 auto;
+	font-size: 1.5rem;
+`;
+
+const Input = styled.input`
+	border: 0.2px solid #dedede;
+	outline: none;
+	background-color: inherit;
+	margin: 1rem auto 2rem;
+	padding: 1rem;
+	display: block;
+	width: 80%;
+`;
+
 const InputSection = styled.div`
 	width: 70%;
 	display: flex;
 	flex-direction: column;
-	margin: 2rem auto;
+	margin: 3rem auto;
 `;
 export default findPassword;
