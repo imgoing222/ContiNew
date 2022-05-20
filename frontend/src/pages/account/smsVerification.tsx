@@ -50,7 +50,9 @@ function smsVerification() {
 			<Label>휴대폰 번호</Label>
 			<div>
 				<Input placeholder="-없이 숫자만 입력" name="phoneNumber" onChange={handleInputChange} />
-				<Button onClick={handleSendClick}>인증번호 전송</Button>
+				<Button onClick={handleSendClick} backgroundColor="#dc143c" color="white">
+					인증번호 전송
+				</Button>
 			</div>
 			<Label>인증 번호</Label>
 			<div>
@@ -60,7 +62,12 @@ function smsVerification() {
 					name="code"
 					onChange={handleInputChange}
 				/>
-				<Button disabled={disabled} onClick={handleConfirmClick}>
+				<Button
+					disabled={disabled}
+					onClick={handleConfirmClick}
+					backgroundColor="#dc143c"
+					color="white"
+				>
 					인증번호 확인
 				</Button>
 				{!disabled && <Timer />}
