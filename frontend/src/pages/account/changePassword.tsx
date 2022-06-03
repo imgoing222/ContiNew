@@ -2,6 +2,7 @@ import { Button } from "@components/account/Button";
 import { Container } from "@components/account/Container";
 import { Header } from "@components/account/Header";
 import { Input } from "@components/account/Input";
+import { Text } from "@components/createSale/Table";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import authApi from "src/api/auth";
@@ -24,9 +25,11 @@ function ChangePassword() {
 	return (
 		<Container>
 			<Header>비밀번호 변경</Header>
-			<p>새로운 비밀번호를 입력하세요</p>
+			<Text>새로운 비밀번호를 입력하세요</Text>
 			<Input onChange={handleNewPasswordChange} />
-			<Button onClick={handleChangeClick}>변경</Button>
+			<Button onClick={handleChangeClick} backgroundColor="#dc143c" color="white" margin="2rem 0">
+				변경
+			</Button>
 		</Container>
 	);
 }
