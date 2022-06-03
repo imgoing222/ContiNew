@@ -99,7 +99,7 @@
 
 #### 매물 등록 및 검색
 
-<img src="./img/search.png" width="90%" height="40%">
+![search](https://user-images.githubusercontent.com/97500667/171806927-8d3e9777-f6b6-49bd-a629-97e263ebdfd4.png)
 
 
 
@@ -110,7 +110,7 @@
 
 #### 채팅
 
-<img src="./img/chatting.png" width="80%" height="80%">
+![chatting](https://user-images.githubusercontent.com/97500667/171807032-84aef7ab-601d-4a71-8794-9b920410d39d.png)
 
 
 
@@ -120,7 +120,7 @@
 
 #### 온라인 계약
 
-<img src="./img/contract.png" width="50%" height="40%">
+![contract](https://user-images.githubusercontent.com/97500667/171807097-7015b051-63b8-483c-b24f-9a5278c43813.png)
 
 
 
