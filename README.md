@@ -93,6 +93,12 @@
 
 ### 😎 주요 기능
 
+[ERD](https://cdn.discordapp.com/attachments/962869113766707270/982186583476301894/unknown.png)
+
+[Skills](https://user-images.githubusercontent.com/97500667/171811829-3e353947-8c26-4fb8-a15e-6f0839e732a5.png)
+
+[Architecture](https://user-images.githubusercontent.com/97500667/171812103-68bb150a-d704-4bdc-bebc-fa33ba1d33e5.png)
+
 #### 인증
 
 - ContiNew는 휴대폰 인증을 통해 인증된 유저인지를 확인할 수 있습니다. 인증된 유저라면 좀 더 안심하고 거래를 진행할 수 있을 것입니다.
