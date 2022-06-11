@@ -1,8 +1,8 @@
-import { Button } from "@components/account/Button";
-import { Header } from "@components/account/Header";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "src/store";
+
+import { Button, Header } from "@components/account/Index";
 
 function signupComplete() {
 	const router = useRouter();

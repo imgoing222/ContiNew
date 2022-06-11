@@ -1,23 +1,21 @@
-import { Button } from "@components/account/Button";
-import { Container } from "@components/account/Container";
-import { Header } from "@components/account/Header";
-import { Input } from "@components/account/Input";
-import { Text } from "@components/createSale/Table";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+
+import { Button, Input, Header, Container } from "@components/account/Index";
+import { Text } from "@components/createSale/Table";
 import authApi from "src/api/auth";
 
 function ChangePassword() {
 	const router = useRouter();
 	const changeToken = router.query.name as string;
-	const [value, setValue] = useState({ new_password: "", change_token: changeToken });
+	const [newPassword, setNewPassword] = useState("");
 
 	const handleNewPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setValue({ ...value, new_password: e.target.value });
+		setNewPassword(e.target.value);
 	};
 
 	const handleChangeClick = async () => {
-		await authApi.changePassword(value);
+		await authApi.changePassword({ new_password: newPassword, change_token: changeToken });
 		alert("비밀번호가 변경되었습니다.");
 		router.push("/account/signin");
 	};

@@ -1,13 +1,11 @@
-import { Button } from "@components/account/Button";
-import { Header } from "@components/account/Header";
-import { FormContainer } from "@components/account/Container";
 import { useState } from "react";
-import authApi from "src/api/auth";
 import { toast } from "react-toastify";
-import Timer from "@components/account/Timer";
-import getErrorMessage from "@utils/getErrorMessage";
 import { useRouter } from "next/router";
 import styled from "styled-components";
+
+import { Button, Header, FormContainer, Timer } from "@components/account/Index";
+import authApi from "src/api/auth";
+import getErrorMessage from "@utils/getErrorMessage";
 
 function findPassword() {
 	const router = useRouter();
