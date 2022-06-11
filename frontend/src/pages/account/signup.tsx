@@ -1,20 +1,24 @@
-import { Button } from "@components/account/Button";
-import { Container, FormContainer } from "@components/account/Container";
-import { Header } from "@components/account/Header";
-import { Input } from "@components/account/Input";
-import { Label } from "@components/account/Label";
-import { LinkButton } from "@components/account/LinkButton";
-import { LinkSection } from "@components/account/LinkSection";
-import useForm from "@hooks/useForm";
-import getErrorMessage from "@utils/getErrorMessage";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import styled from "styled-components";
+
+import {
+	Button,
+	Header,
+	FormContainer,
+	Container,
+	Input,
+	Label,
+	LinkButton,
+	LinkSection,
+} from "@components/account/Index";
+import useForm from "@hooks/useForm";
+import getErrorMessage from "@utils/getErrorMessage";
 import authApi from "src/api/auth";
 import profileApi from "src/api/profile";
 import { SET_USER } from "src/store/user";
-import styled from "styled-components";
 
 function Signup() {
 	const router = useRouter();

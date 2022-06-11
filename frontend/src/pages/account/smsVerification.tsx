@@ -1,14 +1,17 @@
-import { Button } from "@components/account/Button";
-import { Container } from "@components/account/Container";
-import { Header } from "@components/account/Header";
-import { Input } from "@components/account/Input";
-import { Label } from "@components/account/Label";
-import { LinkButton } from "@components/account/LinkButton";
-import Timer from "@components/account/Timer";
 import getErrorMessage from "@utils/getErrorMessage";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "react-toastify";
+
+import {
+	Button,
+	Header,
+	Timer,
+	Container,
+	Input,
+	Label,
+	LinkButton,
+} from "@components/account/Index";
 import authApi from "src/api/auth";
 
 function smsVerification() {
