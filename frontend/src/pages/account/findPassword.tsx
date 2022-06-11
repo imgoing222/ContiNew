@@ -3,8 +3,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
-import { Button, Header, FormContainer } from "@components/account/Index";
-import Timer from "@components/account/Timer";
+import { Button, Header, FormContainer, Timer } from "@components/account/Index";
 import authApi from "src/api/auth";
 import getErrorMessage from "@utils/getErrorMessage";
 
