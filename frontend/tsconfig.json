@@ -21,7 +21,7 @@
 			"@components/*": ["src/components/*"],
 			"@styles/*": ["src/styles/*"]
 		},
-		"types": ["kakao.maps.d.ts"]
+		"types": ["kakao.maps.d.ts", "jest"]
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "@/*.tsx"],
 	"exclude": ["node_modules"]
