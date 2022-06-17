@@ -4,7 +4,7 @@ import { RootState } from "src/store";
 
 import { Button, Header } from "@components/account/Index";
 
-function signupComplete() {
+function SignupComplete() {
 	const router = useRouter();
 
 	const username = useSelector((state: RootState) => state.userInfo.username);
@@ -21,4 +21,4 @@ function signupComplete() {
 	);
 }
 
-export default signupComplete;
+export default SignupComplete;
