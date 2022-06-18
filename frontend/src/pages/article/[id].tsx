@@ -21,7 +21,7 @@ export interface HouseInfoProps {
 	houseInfo: ArticleType;
 }
 
-function index() {
+function Article() {
 	const router = useRouter();
 	const [houseInfo, setHouseInfo] = useState<ArticleType | null>(null);
 	const [isBookmark, setIsBookmark] = useState(false);
@@ -83,7 +83,7 @@ function index() {
 	);
 }
 
-export default index;
+export default Article;
 
 const Container = styled.div`
 	display: flex;
