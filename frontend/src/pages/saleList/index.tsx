@@ -35,7 +35,7 @@ export interface ArticleData {
 	currentPage: number;
 }
 
-function index() {
+function SaleListPage() {
 	const kakaoMap = useRef<kakao.maps.Map>();
 	const searchCondition = useSelector((state: RootState) => state.searchFilter);
 	const [data, setData] = useState<ArticleData>({ houses: [], totalPage: 0, currentPage: 0 });
@@ -73,7 +73,7 @@ function index() {
 		</>
 	);
 }
-export default index;
+export default SaleListPage;
 
 const Container = styled.div`
 	display: flex;
