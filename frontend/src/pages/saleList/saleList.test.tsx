@@ -1,9 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import SaleList from "@components/saleList/SaleList";
-import * as reactRedux from "react-redux";
 
-const useDispatchMock = jest.spyOn(reactRedux, "useDispatch");
-useDispatchMock.mockReturnValue(jest.fn());
+jest.mock("react-redux");
+
 const setData = jest.fn();
 it("saleList rendering test when there's nothing", () => {
 	render(
@@ -14,6 +13,23 @@ it("saleList rendering test when there's nothing", () => {
 });
 
 it("saleList render test when ther are sales", () => {
+	const searchCondition = {
+		yBottom: 37.464403462045794,
+		yTop: 37.64268459862409,
+		xLeft: 126.77103447067478,
+		xRight: 127.16968636277439,
+		saleType: "",
+		houseType: "",
+		contractType: "",
+		minDeposit: 0,
+		maxDeposit: 10000,
+		minMonthlyRent: 0,
+		maxMonthlyRent: 500,
+		minMaintenanceFee: 0,
+		maxMaintenanceFee: 50,
+		period: 13,
+		options: [],
+	};
 	const sales = [
 		{
 			address_detail: "203호",
@@ -39,11 +55,15 @@ it("saleList render test when ther are sales", () => {
 	render(
 		<SaleList
 			saleList={sales}
-			searchCondition={{}}
+			searchCondition={searchCondition}
 			totalPage={1}
 			currentPage={0}
 			setData={setData}
 		/>,
 	);
 	expect(screen.getByText("서울 동대문구 이문동"));
+	expect(screen.getByText(1));
+	expect(screen.getByText("쉐어하우스"));
+	expect(screen.getByText("투룸"));
+	expect(screen.getByText("이어살기"));
 });
